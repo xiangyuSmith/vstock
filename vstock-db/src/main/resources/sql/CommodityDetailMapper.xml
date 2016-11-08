@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.ICommodityDetail">
+
+    <sql id="Select_Where_Clause">
+        <where>
+            1=1
+            <if test="commodityDetail.id != null and commodityDetail.id != ''">
+                AND id = #{commodityDetail.id,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDetail.commodityDataId != null and commodityDetail.commodityDataId != ''">
+                and commodityDataId = #{commodityDetail.commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDetail.transactionRecord != null and commodityDetail.transactionRecord != ''">
+                and transactionRecord = #{commodityDetail.transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDetail.colorSize != null and commodityDetail.colorSize != ''">
+                and colorSize = #{commodityDetail.colorSize,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDetail.createDate != null and commodityDetail.createDate != ''">
+                and createDate = #{commodityDetail.createDate,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Select_Where_Count">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDataId != null and commodityDataId != ''">
+                and commodityDataId = #{commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionRecord != null and transactionRecord != ''">
+                and transactionRecord = #{transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="colorSize != null and colorSize != ''">
+                and colorSize = #{colorSize,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and createDate = #{createDate,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <!--???????????-->
+    <select id="findPageAll" resultType="com.vstock.db.entity.CommodityDetail" parameterType="com.vstock.db.entity.CommodityDetail">
+        SELECT * FROM `commoditydetail`
+        <include refid="Select_Where_Clause" />
+        ORDER BY createDate DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <!--????????-->
+    <select id="findAllCount" parameterType="com.vstock.db.entity.CommodityDetail" resultType="Long">
+        SELECT COUNT(*) FROM `commoditydetail`
+        <include refid="Select_Where_Count" />
+    </select>
+
+    <!--??????-->
+    <select id="findCommAll" resultType="com.vstock.db.entity.CommodityDetail">
+        SELECT * FROM `commoditydetail`
+        <include refid="Select_Where_Count" />
+        ORDER BY createDate DESC
+    </select>
+
+    <select id="findAllComm" resultType="com.vstock.db.entity.CommodityDetail">
+        SELECT * FROM `commoditydetail`
+        <include refid="Select_Where_Clause" />
+        <if test="createDateStart != null and createDateStart != ''">
+            and createDate &gt;= #{createDateStart,jdbcType=VARCHAR}
+        </if>
+        <if test="createDateEnd != null and createDateEnd != ''">
+            and createDate &lt;= #{createDateEnd,jdbcType=VARCHAR}
+        </if>
+        ORDER BY createDate DESC
+    </select>
+
+    <select id="findDictionaries" resultType="com.vstock.db.entity.Dictionaries">
+        SELECT * FROM `dictionaries` dr
+        WHERE dr.commodityDataId = #{commodityId}
+    </select>
+
+    <insert id="insertDic" parameterType="com.vstock.db.entity.Dictionaries" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `dictionaries`
+        (`id`,`commodityDataId`,`colorly`,`createTime`)
+        VALUES(null,#{commodityDataId},#{colorly},now())
+    </insert>
+
+    <insert id="saveResultData" parameterType="com.vstock.db.entity.ResultData" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `resultData`
+        (`id`,`commodityDataId`,`storeId`,`storeName`,`productName`,`sizePrice`,`transactionRecord`,`brand`,`createTime`)
+        VALUES(null,#{commodityDataId},#{storeId},#{storeName},#{productName},#{sizePrice},#{transactionRecord},#{brand},now())
+    </insert>
+
+</mapper>

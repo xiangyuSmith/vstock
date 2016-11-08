@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IAdminDao">
+
+    <insert id="addAdmin" parameterType="com.vstock.db.entity.Admin" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `admin`
+        (`id`,`username`,`password`,`salt`,`create_time`)
+        VALUES(null,#{username},#{password},#{salt},now())
+    </insert>
+
+    <select id="findAdmin" resultType="com.vstock.db.entity.Admin">
+        SELECT *
+        FROM `admin`
+        <if test="username != null">
+        WHERE `username` = #{username}
+        </if>
+    </select>
+
+    <update id="updateAdmin">
+        UPDATE `admin`
+        SET `last_login`=#{last_login}
+        WHERE `id` = #{id}
+    </update>
+
+</mapper>

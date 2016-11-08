@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IBasicinformation">
+
+    <insert id="insert" parameterType="com.vstock.db.entity.Basicinformation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `basicinformation`
+        (`id`,`brand`,`name`,`artNo`,`colores`,`csaledate`,`esaledate`,`cofferprice`,`eofferprice`,`chineselogo`,`imgUrl`,`smallImgUrl`,`createTime`,`state`)
+        VALUES(null,#{brand},#{name},#{artNo},#{colores},#{csaledate},#{esaledate},#{cofferprice},#{eofferprice},#{chineselogo},#{imgUrl},#{smallImgUrl},now(),1)
+    </insert>
+
+    <update id="update" parameterType="com.vstock.db.entity.Basicinformation">
+        UPDATE `basicinformation`
+        <include refid="update_Where_Clause"/>
+        WHERE `id` = #{id}
+    </update>
+
+    <update id="updateState">
+        UPDATE `basicinformation` SET
+        <if test="state != null and state != ''">
+             state = #{state,jdbcType=VARCHAR}
+        </if>
+        WHERE `id` = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE 'basicinformation' where 'id' = #{id}
+    </delete>
+
+    <!--分页查询所有-->
+    <select id="findLimitAll" resultType="com.vstock.db.entity.Basicinformation">
+        SELECT * FROM `basicinformation`
+        <include refid="SelectAll_Where_Clause"/>
+        <include refid="Select_Where_Time"/>
+        ORDER BY id DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findAll" resultType="com.vstock.db.entity.Basicinformation">
+        SELECT * FROM `basicinformation`
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
+    <select id="findNames" resultType="com.vstock.db.entity.Basicinformation">
+      SELECT b.name FROM `basicinformation` b
+      GROUP By b.name
+    </select>
+
+    <select id="findGirard" resultType="com.vstock.db.entity.Basicinformation">
+      SELECT b.artNo FROM `basicinformation` b
+      WHERE b.name LIKE CONCAT('%',#{productName,jdbcType=VARCHAR},'%')
+    </select>
+
+    <select id="findLimitCount" parameterType="com.vstock.db.entity.Basicinformation" resultType="Long">
+        SELECT COUNT(*) FROM `basicinformation`
+        <include refid="SelectAll_Where_Clause"/>
+        <include refid="Select_Where_Time"/>
+    </select>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="basicinformation.id != null and basicinformation.id != ''">
+                AND id = #{basicinformation.id,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.brand != null and basicinformation.brand != ''">
+                and brand LIKE CONCAT('%',#{basicinformation.brand,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="basicinformation.name != null and basicinformation.name != ''">
+                and name LIKE CONCAT('%',#{basicinformation.name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
+                and artNo LIKE CONCAT('%',#{basicinformation.artNo,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="basicinformation.colores != null and basicinformation.colores != ''">
+                and colores LIKE CONCAT('%',#{basicinformation.colores,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
+                and csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
+                and esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
+                and cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
+                and eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
+                and chineselogo LIKE CONCAT('%',#{basicinformation.chineselogo,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
+                and imgUrl LIKE CONCAT('%',#{basicinformation.imgUrl,jdbcType=VARCHAR}.'%')
+            </if>
+            <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
+                and smallImgUrl LIKE CONCAT('%',#{basicinformation.smallImgUrl,jdbcType=VARCHAR}.'%')
+            </if>
+            <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
+                and createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.state != null and basicinformation.state != ''">
+                and state = #{basicinformation.state,jdbcType=VARCHAR}
+            </if>
+
+        </where>
+    </sql>
+
+    <sql id="Select_Where_Clause">
+    <where>
+        1=1
+        <if test="basicinformation.id != null and basicinformation.id != ''">
+            AND id = #{basicinformation.id,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.brand != null and basicinformation.brand != ''">
+            and brand = #{basicinformation.brand,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.name != null and basicinformation.name != ''">
+            and name = #{basicinformation.name,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
+            and artNo = #{basicinformation.artNo,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.colores != null and basicinformation.colores != ''">
+            and colores = #{basicinformation.colores,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
+            and csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
+            and esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
+            and cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
+            and eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
+            and chineselogo = #{basicinformation.chineselogo,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
+            and imgUrl = #{basicinformation.imgUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
+            and smallImgUrl = #{basicinformation.smallImgUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
+            and createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
+        </if>
+        <if test="basicinformation.state != null and basicinformation.state != ''">
+            and state = #{basicinformation.state,jdbcType=VARCHAR}
+        </if>
+    </where>
+
+</sql>
+
+    <sql id="update_Where_Clause">
+        <set>
+            <if test="basicinformation.brand != null and basicinformation.brand != ''">
+                brand = #{basicinformation.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.name != null and basicinformation.name != ''">
+                , name = #{basicinformation.name,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
+                , artNo = #{basicinformation.artNo,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.colores != null and basicinformation.colores != ''">
+                , colores = #{basicinformation.colores,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
+                , csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
+                , esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
+                , cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
+                , eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
+                , chineselogo = #{basicinformation.chineselogo,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
+                , imgUrl = #{basicinformation.imgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
+                , smallImgUrl = #{basicinformation.smallImgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
+                , createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.state != null and basicinformation.state != ''">
+                , state = #{basicinformation.state,jdbcType=VARCHAR}
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Select_Where_Time">
+       <if test="startCsaledate != null and startCsaledate != ''">
+          and csaledate &gt;= #{startCsaledate,jdbcType=VARCHAR}
+       </if>
+       <if test="endCsaledate != null and endCsaledate != ''">
+          and csaledate &lt;= #{endCsaledate,jdbcType=VARCHAR}
+       </if>
+       <if test="startEsaledate != null and startEsaledate != ''">
+          and esaledate &gt;= #{startEsaledate,jdbcType=VARCHAR}
+       </if>
+       <if test="endEsaledate != null and endEsaledate != ''">
+          and esaledate &lt;= #{endEsaledate,jdbcType=VARCHAR}
+       </if>
+       <if test="startCreatetime != null and startCreatetime != ''">
+          and createtime &gt;= #{startCreatetime,jdbcType=VARCHAR}
+       </if>
+       <if test="endCreatetime != null and endCreatetime != ''">
+          and createtime &lt;= #{endCreatetime,jdbcType=VARCHAR}
+       </if>
+    </sql>
+</mapper>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IResultData">
+
+    <!--分页查询所有-->
+    <select id="findResultData" resultType="com.vstock.db.entity.ResultData">
+        SELECT * FROM `resultdata`
+        <include refid="SelectAll_Where_Clause"/>
+         ORDER BY id DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <!--查询所有-->
+    <select id="findResultDataAll" resultType="com.vstock.db.entity.ResultData">
+        SELECT * FROM `resultdata`
+        <include refid="SelectAll_Where_Count"/>
+        ORDER BY createTime DESC
+    </select>
+
+    <!--查询总记录数-->
+    <select id="findResultDataCount" parameterType="com.vstock.db.entity.ResultData" resultType="Long">
+        SELECT count(*) FROM `resultdata`
+        <include refid="SelectAll_Where_Clause"/>
+        ORDER BY createTime DESC
+    </select>
+
+    <!--分页查询所有-->
+    <select id="findResultDataTime" resultType="com.vstock.db.entity.ResultData">
+        SELECT * FROM `resultdata`
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
+    <!-- 根据名字查询所有 -->
+    <select id="findByProductName" resultType="com.vstock.db.entity.ResultData">
+        SELECT * FROM `resultdata`
+        where 1=1
+        <if test="productName != null and productName != ''">
+            and productName = #{productName,jdbcType=VARCHAR}
+        </if>
+        GROUP BY storeId ORDER BY createTime DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="getStoreResultDataCount" resultType="Long">
+        SELECT count(*) FROM `resultdata`
+        where 1=1
+        <if test="productName != null and productName != ''">
+            and productName = #{productName,jdbcType=VARCHAR}
+        </if>
+        GROUP BY storeId  ORDER BY createTime DESC
+    </select>
+
+    <update id="update">
+        UPDATE `resultdata` SET
+         <if test="productNameNew != null and productNameNew != ''">
+             productName = #{productNameNew,jdbcType=VARCHAR}
+         </if>
+        WHERE productName = #{productName,jdbcType=VARCHAR}
+    </update>
+
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="resultData.id != null and resultData.id != ''">
+                AND id = #{resultData.id,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.commodityDataId != null and resultData.commodityDataId != ''">
+                and commodityDataId = #{resultData.commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.storeId != null and resultData.storeId != ''">
+                and storeId = #{resultData.storeId,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.storeName != null and resultData.storeName != ''">
+                and storeName like CONCAT('%',#{resultData.storeName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="resultData.productName != null and resultData.productName != ''">
+                and productName like CONCAT('%',#{resultData.productName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="resultData.sizePrice != null and resultData.sizePrice != ''">
+                and sizePrice = #{resultData.sizePrice,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.transactionRecord != null and resultData.transactionRecord != ''">
+                and transactionRecord = #{resultData.transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.createTime != null and resultData.createTime != ''">
+                and createTime = #{resultData.createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and createTime &gt;= #{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createTime &lt;= #{endTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Select_Where_Clause">
+        <where>
+            1=1
+            <if test="resultData.id != null and resultData.id != ''">
+                AND id = #{resultData.id,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.commodityDataId != null and resultData.commodityDataId != ''">
+                and commodityDataId = #{resultData.commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.storeId != null and resultData.storeId != ''">
+                and storeId = #{resultData.storeId,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.storeName != null and resultData.storeName != ''">
+                and storeName = #{resultData.storeName,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.productName != null and resultData.productName != ''">
+                and productName = #{resultData.productName,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.sizePrice != null and resultData.sizePrice != ''">
+                and sizePrice = #{resultData.sizePrice,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.transactionRecord != null and resultData.transactionRecord != ''">
+                and transactionRecord = #{resultData.transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.createTime != null and resultData.createTime != ''">
+                and createTime = #{resultData.createTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="select_time">
+        <if test="startTime != null and startTime != ''">
+            and createTime &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and createTime &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
+    <sql id="SelectAll_Where_Count">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDataId != null and commodityDataId != ''">
+                and commodityDataId = #{commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="storeId != null and storeId != ''">
+                and storeId = #{storeId,jdbcType=VARCHAR}
+            </if>
+            <if test="storeName != null and storeName != ''">
+                and storeName like CONCAT('%',#{storeName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="productName != null and productName != ''">
+                and productName like CONCAT('%',#{productName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sizePrice != null and sizePrice != ''">
+                and sizePrice = #{sizePrice,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionRecord != null and transactionRecord != ''">
+                and transactionRecord = #{transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and createTime = #{createTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Select_Where_Count">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityDataId != null and commodityDataId != ''">
+                and commodityDataId = #{commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="storeId != null and storeId != ''">
+                and storeId = #{storeId,jdbcType=VARCHAR}
+            </if>
+            <if test="storeName != null and storeName != ''">
+                and storeName = #{storeName,jdbcType=VARCHAR}
+            </if>
+            <if test="productName != null and productName != ''">
+                and productName = #{productName,jdbcType=VARCHAR}
+            </if>
+            <if test="sizePrice != null and sizePrice != ''">
+                and sizePrice = #{sizePrice,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionRecord != null and transactionRecord != ''">
+                and transactionRecord = #{transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and createTime = #{createTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+</mapper>

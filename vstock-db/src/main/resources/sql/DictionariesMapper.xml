@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IDictionariesDao">
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="dictionaries.id != null and dictionaries.id != ''">
+                AND id = #{dictionaries.id,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.commodityDataId != null and dictionaries.commodityDataId != ''">
+                and commodityDataId = #{dictionaries.commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.colorly != null and dictionaries.colorly != ''">
+                and colorly = #{dictionaries.colorly,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.identification != null and dictionaries.identification != ''">
+            and identification = #{resultData.identification,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.createTime != null and dictionaries.createTime != ''">
+                and createTime = #{dictionaries.createTime,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.updatetime != null and dictionaries.updatetime != ''">
+                and updatetime = #{dictionaries.updatetime,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.updateUser != null and dictionaries.updateUser != ''">
+                and updateUser = #{dictionaries.updateUser,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findDcList" resultMap="dicBlogResultMap">
+        SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.girard,dic.createTime FROM `dictionaries` dic
+        LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
+        <include refid="SelectAll_Where_Count" />
+        ORDER BY dic.createTime DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <resultMap id="dicBlogResultMap" type="com.vstock.db.entity.Dictionaries">
+        <id property="id" column="id" />
+        <result property="colorly" column="colorly" />
+        <result property="identification" column="identification" />
+        <result property="girard" column="girard" />
+        <result property="createTime" column="createTime" />
+        <association property="commodityData" column="commodityData" javaType="com.vstock.db.entity.CommodityData" >
+            <id column="id" property="id" />
+            <result column="commodityName" property="commodityName" />
+            <result column="productUrl" property="productUrl" />
+        </association>
+    </resultMap>
+
+    <!-- 根据ID查询 -->
+    <select id="findById" resultType="com.vstock.db.entity.Dictionaries">
+        SELECT * FROM `dictionaries`
+        WHERE id = #{dicId}
+    </select>
+
+    <!-- 修改 -->
+    <update id="update">
+        UPDATE `dictionaries`
+        SET `identification`=#{identification},`girard`=#{girard}
+        WHERE `id` = #{id}
+    </update>
+
+    <!-- 获取总记录数 -->
+    <select id="getCount" resultMap="dicBlogResultMap">
+        SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.createTime FROM `dictionaries` dic
+        LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
+        <include refid="SelectAll_Where_Count" />
+    </select>
+
+    <!-- 条件拼接 -->
+    <sql id="SelectAll_Where_Count">
+        <where>
+            1=1
+            <if test="dictionaries.id != null and dictionaries.id != ''">
+                AND dic.id = #{dictionaries.id,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.identification != null and dictionaries.identification != ''">
+                and dic.identification LIKE CONCAT('%',#{dictionaries.identification,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="dictionaries.commodityData != null and dictionaries.commodityData.commodityName != ''">
+                and cd.commodityName LIKE CONCAT('%',#{dictionaries.commodityData.commodityName},'%')
+            </if>
+            <choose>
+                <when test="status == 1">
+                    and dic.identification is not null
+                </when>
+                <when test="status == 0">
+                    and dic.identification is null
+                </when>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="findDcListAll" resultType="com.vstock.db.entity.Dictionaries">
+        SELECT * FROM `dictionaries` dic
+        <include refid="SelectAll_Where_Clause"/>
+        ORDER BY cd.createDate DESC
+    </select>
+
+</mapper>
