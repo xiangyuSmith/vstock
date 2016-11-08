@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/data/mongo
+			http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util.xsd
+            ">
+
+    <!--这里使用mongo:mongo-client-->
+    <mongo:mongo-client id="mongo" host="${db.host}" port="${db.port}" ></mongo:mongo-client>
+
+    <mongo:db-factory id="mongoDbFactory" mongo-ref="mongo" dbname="vstock"/>
+
+    <bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+
+    <bean id="mappingConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg ref="mongoDbFactory" />
+        <constructor-arg ref="mappingContext" />
+    </bean>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="mappingConverter" />
+        <property name="writeConcern">
+            <util:constant static-field="com.mongodb.WriteConcern.SAFE" />
+        </property>
+        <property name="writeResultChecking" value="EXCEPTION" />
+    </bean>
+
+    <mongo:repositories base-package="com.vstock.db.model" mongo-template-ref="mongoTemplate"/>
+
+</beans>

@@ -1,0 +1,15 @@
+input[type='date']{
+    height:32px;
+}
+.xy-search{
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 10px!important;
+}
+.xy-search label{
+    font-size: 14px;
+    font-weight: normal;
+}
+.xy-submit{
+    float: right;
+}
