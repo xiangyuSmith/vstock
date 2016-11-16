@@ -47,7 +47,7 @@
             <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">数据中心</strong> / <small>数据审查</small></div>
         </div>
         <div class="am-cf am-padding">
-            <form action="/stockx/dataAudit/list" class="am-form am-form-inline" id="selectTiao"  method="POST">
+            <form action="/dataAudit/list" class="am-form am-form-inline" id="selectTiao"  method="POST">
                 <div class="xy-search">
                     <label>编号:</label>
                     <div class="am-form-group"><input id="bidvalue" type="text" name="bid" placeholder="编号" value="<c:if test="${dictionaries.bid != 0}">${dictionaries.bid}</c:if>"></div>
@@ -127,7 +127,7 @@
             </form>
             <div>
                 当前选中：
-                <a href="" id="viewImgHref" target="_blank"><img id="viewImg" src="/stockx/assets/admin/image/1-1.jpg" style="width:150px;"></a><br/>
+                <a href="" id="viewImgHref" target="_blank"><img id="viewImg" src="/assets/admin/image/1-1.jpg" style="width:150px;"></a><br/>
                 <span id="viewImgSpan"></span>
             </div>
 
@@ -270,7 +270,7 @@
                 $.toaster({ priority : 'warning', title : '无法提交', message : '标识列或货号为空！'});
                 return;
             }else{
-                $.post("/stockx/dataAudit/updateDataAudit",{
+                $.post("/dataAudit/updateDataAudit",{
                     'dicid':dicid,
                     'identification':identification,
                     'girard':girard,
@@ -299,7 +299,7 @@
                     $select.append(html.join(""));
                 }
             }else{
-                $.post("/stockx/basicinfrom/getNames",{
+                $.post("/basicinfrom/getNames",{
                 },function(dataRes){
                     data = dataRes;
                     //获取select 下 option 的数量
@@ -328,7 +328,7 @@
                     $select.append(html.join(""));
                 }
             }
-            $.post("/stockx/basicinfrom/getGirard",{
+            $.post("/basicinfrom/getGirard",{
             },function(resData){
                 res = resData;
                 var optionsNumber = $select.find("option").size();
@@ -354,7 +354,7 @@
                 var girard = $girard.find("select[class='girard']").val();
                 var identificationard = $identification.find("input[type='text']").val();
                 var id = $id.text();
-                $.post("/stockx/dataAudit/updateDictionResult",{
+                $.post("/dataAudit/updateDictionResult",{
                     'id': id,
                     'girard': girard,
                     'identification':identificationard
@@ -374,7 +374,7 @@
             var girard = $(this).parent().siblings().find("select").val();
             if(idenName != name){
                 $.post(
-                        "/stockx/basicinfrom/getGirard",
+                        "/basicinfrom/getGirard",
                         {"productName":name},
                         function(result){
                             artNoArray = result;
@@ -394,15 +394,15 @@
             smallImgUrl = $this.find("option").eq(0).attr("data-small-img");
             imgUrl = $this.find("option").eq(0).attr("data-img");
             viewImgSpan = $this.find("option").eq(0).attr("data-span");
-            $("#viewImg").attr("src","/stockx"+smallImgUrl);
-            $("#viewImgHref").attr("href","/stockx"+imgUrl);
+            $("#viewImg").attr("src",""+smallImgUrl);
+            $("#viewImgHref").attr("href",""+imgUrl);
             $("#viewImgSpan").text(viewImgSpan);
             var identification = $(this).parent().siblings().find("select").val();
             var $identificationObj = $(this).parent().siblings("td[class='identifications']").find("select[class='identification']");
             var artNo = $this.val();
             if(artNoText != artNo){
                 $.post(
-                        "/stockx/basicinfrom/getNames",
+                        "/basicinfrom/getNames",
                         {"artNo":artNo},
                         function(result){
                             $identificationObj.html("");
@@ -424,8 +424,8 @@
             imgUrl = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").attr("data-img");
             viewImgSpan = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").attr("data-span");
             var artNo = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").val();
-            $("#viewImg").attr("src","/stockx"+smallImgUrl);
-            $("#viewImgHref").attr("href","/stockx"+imgUrl);
+            $("#viewImg").attr("src",smallImgUrl);
+            $("#viewImgHref").attr("href",imgUrl);
             $("#viewImgSpan").text(viewImgSpan + "  " + artNo);
             //show(event,$obj);
         });

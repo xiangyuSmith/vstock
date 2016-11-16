@@ -257,7 +257,7 @@
                     <c:if test="${not empty basicinformationList}">
                         <c:forEach items="${basicinformationList}" var="basicinformation">
                             <tr>
-                                <td>${basicinformation.bid}</td>
+                                <td>${basicinformation.id}</td>
                                 <td>${basicinformation.brand}</td>
                                 <td>${basicinformation.name}</td>
                                 <td>${basicinformation.artNo}</td>

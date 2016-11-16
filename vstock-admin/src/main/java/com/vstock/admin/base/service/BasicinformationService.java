@@ -76,39 +76,21 @@ public class BasicinformationService {
 
     //不带分页查询
     public List<Basicinformation> findAll(Basicinformation record){
-        Query query = new Query();
-        if(record.getId() != null && !"".equals(record.getId())){
-            query.addCriteria(Criteria.where("id").is(record.getId()));
-        }
-        if(record.getBrand() != null && !"".equals(record.getBrand())){
-            query.addCriteria(Criteria.where("brand").is(record.getBrand()));
-        }
-        if(record.getName() != null && !"".equals(record.getName())){
-            query.addCriteria(Criteria.where("name").is(record.getName()));
-        }
-        return mongoTemplate.find(query,Basicinformation.class);
+        return basicinformationDao.findAll(record);
     }
 
     //获取所有名称
     public List<Basicinformation> findNames(String artNo){
-        List<Basicinformation> basicinformationList = null;
-        if("".equals(artNo) || artNo == null){
-            basicinformationList = mongoTemplate.findAll(Basicinformation.class);
-        }else{
-            Query query = new Query();
-            query.addCriteria(Criteria.where("artNo").regex(artNo));
-            basicinformationList = mongoTemplate.find(query,Basicinformation.class);
-        }
-        return basicinformationList;
+        Basicinformation basicinformation = new Basicinformation();
+        basicinformation.setArtNo(artNo);
+        return basicinformationDao.findAll(basicinformation);
     }
 
     //根据名称获取货号
     public List<Basicinformation> findGirard(String productName){
-        Query query = new Query();
-        if(productName != null && !"".equals(productName)){
-            query.addCriteria(Criteria.where("name").is(productName));
-        }
-        return mongoTemplate.find(query,Basicinformation.class);
+        Basicinformation basicinformation = new Basicinformation();
+        basicinformation.setName(productName);
+        return basicinformationDao.findAll(basicinformation);
     }
 
     //获取所有数据
