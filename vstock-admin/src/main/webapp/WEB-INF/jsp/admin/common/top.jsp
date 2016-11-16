@@ -52,4 +52,4 @@
 </header>
 
     <div class="am-cf admin-main">
-    <div id="mentContent" data-url="/stockx/admin/menuList" style="width: 260px;height: 100%;float: left;"></div>
+    <div id="mentContent" data-url="/admin/menuList" style="width: 260px;height: 100%;float: left;"></div>

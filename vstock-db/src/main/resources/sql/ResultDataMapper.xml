@@ -39,6 +39,12 @@
         GROUP BY storeId ORDER BY createTime DESC limit #{startPos},#{pageSize}
     </select>
 
+    <insert id="insertresultData">
+        INSERT INTO `resultdata`
+        (`id`,`commodityDataId`,`storeId`,`storeName`,`productName`,`brand`,`girard`,`sizePrice`,`transactionRecord`,`createTime`)
+        VALUES(null,#{commodityDataId},#{storeId},#{storeName},#{productName},#{brand},#{girard},#{sizePrice},#{transactionRecord},now())
+    </insert>
+
     <!-- 查询总数 -->
     <select id="getStoreResultDataCount" resultType="Long">
         SELECT count(*) FROM `resultdata`

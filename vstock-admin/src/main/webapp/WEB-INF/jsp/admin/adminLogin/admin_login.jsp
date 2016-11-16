@@ -45,7 +45,7 @@
     <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
         <hr/>
         <input type="hidden" id="status" value="${status}" />
-        <form action="/stockx/adminLogin/saveAdmin" method="post" class="am-form" id="form_login">
+        <form action="/adminLogin/saveAdmin" method="post" class="am-form" id="form_login">
             <label for="username">用户名:</label>
             <input type="text" name="username" id="username" value="">
             <br>

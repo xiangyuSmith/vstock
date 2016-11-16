@@ -26,7 +26,7 @@
         <property name="mapperLocations" value="classpath:/sql/*Mapper.xml"/>
     </bean>
 
-    <bean id="toolSpring" class="com.vstock.admin.base.util.ToolSpring"></bean>
+    <bean id="toolSpring" class="com.vstock.ext.util.ToolSpring"></bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.vstock.db.dao"/>

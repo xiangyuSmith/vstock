@@ -1,23 +1,18 @@
 package com.vstock.admin.base.service;
 
-import com.mongodb.BasicDBList;
-import com.vstock.admin.base.util.DateUtils;
+import com.vstock.db.dao.IDictionariesDao;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.db.dao.ICommodityData;
 import com.vstock.db.dao.ICommodityDetail;
 import com.vstock.db.dao.IResultData;
 import com.vstock.db.entity.*;
-import com.vstock.admin.base.util.JsonTool;
-import com.vstock.admin.base.util.Page;
-import com.vstock.admin.base.util.StringUtil;
-import org.apache.commons.lang.StringUtils;
+import com.vstock.ext.util.JsonTool;
+import com.vstock.ext.util.Page;
+import com.vstock.ext.util.StringUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
-import org.springframework.data.mongodb.core.mapreduce.GroupBy;
-import org.springframework.data.mongodb.core.mapreduce.GroupByResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -42,6 +37,9 @@ public class CommodityDataService {
     IResultData resultDataDao;
 
     @Autowired
+    IDictionariesDao dictionariesDao;
+
+    @Autowired
     MongoTemplate mongoTemplate;
 
     /**
@@ -51,61 +49,76 @@ public class CommodityDataService {
      * @param cmmodityData
      * @return
      */
-    public int insert(CommodityData cmmodityData){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is("cmmodityData"));
-        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
-        if(idsIsNull.size() == 0){
-            Ids ids = new Ids();
-            ids.setName("cmmodityData");
-            ids.setUpId(1);
-            mongoTemplate.save(ids);
-        }
-        Update update = new Update().inc("upId", 1);
-        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
-        cmmodityData.setBid(ids.getUpId());
-        mongoTemplate.save(cmmodityData);
-        return 1;
+//    public int insert(CommodityData cmmodityData){
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("name").is("cmmodityData"));
+//        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
+//        if(idsIsNull.size() == 0){
+//            Ids ids = new Ids();
+//            ids.setName("cmmodityData");
+//            ids.setUpId(1);
+//            mongoTemplate.save(ids);
+//        }
+//        Update update = new Update().inc("upId", 1);
+//        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
+//        cmmodityData.setBid(ids.getUpId());
+//        mongoTemplate.save(cmmodityData);
+//        return 1;
+//    }
+    public int insertCommodityData(CommodityData cmmodityData){
+        return commodityDataDao.insertcommodityData(cmmodityData);
     }
+
 
     /**
      * 商品数据详情
      */
-    public int insertInfo(CommodityDetail commodityDetail){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is("commodityDetail"));
-        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
-        if(idsIsNull.size() == 0){
-            Ids ids = new Ids();
-            ids.setName("commodityDetail");
-            ids.setUpId(1);
-            mongoTemplate.save(ids);
-        }
-        Update update = new Update().inc("upId", 1);
-        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
-        commodityDetail.setBid(ids.getUpId());
-        mongoTemplate.save(commodityDetail);
-        return 1;
+//    public int insertInfo(CommodityDetail commodityDetail){
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("name").is("commodityDetail"));
+//        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
+//        if(idsIsNull.size() == 0){
+//            Ids ids = new Ids();
+//            ids.setName("commodityDetail");
+//            ids.setUpId(1);
+//            mongoTemplate.save(ids);
+//        }
+//        Update update = new Update().inc("upId", 1);
+//        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
+//        commodityDetail.setBid(ids.getUpId());
+//        mongoTemplate.save(commodityDetail);
+//        return 1;
+//    }
+
+    public int insertcommodityDetail(CommodityDetail commodityDetail){
+        return commodityDataDao.insertcommodityDetail(commodityDetail);
     }
 
     /**
      * 模糊查询单个商品
      * @return
      */
-    public CommodityData findByName(String name,String girard){
-        Query query = new Query();
-        if(name != null && !"".equals(name)){
-            query.addCriteria(Criteria.where("commodityName").is(name));
-        }
-        if(girard != null && !"".equals(girard)){
-            query.addCriteria(Criteria.where("girard").is(girard));
-        }
-        List<CommodityData> result = mongoTemplate.find(query,CommodityData.class);
-
-        if(result.size() == 0){
+//    public CommodityData findByName(String name,String girard){
+//        Query query = new Query();
+//        if(name != null && !"".equals(name)){
+//            query.addCriteria(Criteria.where("commodityName").is(name));
+//        }
+//        if(girard != null && !"".equals(girard)){
+//            query.addCriteria(Criteria.where("girard").is(girard));
+//        }
+//        List<CommodityData> result = mongoTemplate.find(query,CommodityData.class);
+//
+//        if(result.size() == 0){
+//            return null;
+//        }
+//        return result.get(0);
+//    }
+    public CommodityData findByNames(String name,String girard){
+        List<CommodityData> commodityDataList = commodityDataDao.findByName(name,girard);
+        if(commodityDataList.size()==0){
             return null;
         }
-        return result.get(0);
+        return commodityDataDao.findByName(name,girard).get(0);
     }
 
     public List<CommodityData> findList(){
@@ -182,13 +195,16 @@ public class CommodityDataService {
     /**
      * 判断字典数据是否存在
      */
-    public List<Dictionaries> finddictionariesList(String commodityId){
-        Query query = new Query();
-        if(commodityId != null && !"".equals(commodityId)){
-            query.addCriteria(Criteria.where("commodityDataId").regex(commodityId));
-        }
-        List<Dictionaries> dictionariesList = mongoTemplate.find(query,Dictionaries.class);
-        return dictionariesList;
+//    public List<Dictionaries> finddictionariesList(String commodityId){
+//        Query query = new Query();
+//        if(commodityId != null && !"".equals(commodityId)){
+//            query.addCriteria(Criteria.where("commodityDataId").regex(commodityId));
+//        }
+//        List<Dictionaries> dictionariesList = mongoTemplate.find(query,Dictionaries.class);
+//        return dictionariesList;
+//    }
+    public List<Dictionaries> finddictionaries(String commodityId){
+        return dictionariesDao.findByCommodityId(commodityId);
     }
 
     /**
@@ -205,41 +221,48 @@ public class CommodityDataService {
     /**
      * 添加字典数据
      */
-    public int insertDic(Dictionaries dictionarie){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is("dictionarie"));
-        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
-        if(idsIsNull.size() == 0){
-            Ids ids = new Ids();
-            ids.setName("dictionarie");
-            ids.setUpId(1);
-            mongoTemplate.save(ids);
-        }
-        Update update = new Update().inc("upId", 1);
-        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
-        dictionarie.setBid(ids.getUpId());
-        mongoTemplate.insert(dictionarie);
-        return 1;
+//    public int insertDic(Dictionaries dictionarie){
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("name").is("dictionarie"));
+//        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
+//        if(idsIsNull.size() == 0){
+//            Ids ids = new Ids();
+//            ids.setName("dictionarie");
+//            ids.setUpId(1);
+//            mongoTemplate.save(ids);
+//        }
+//        Update update = new Update().inc("upId", 1);
+//        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
+//        dictionarie.setBid(ids.getUpId());
+//        mongoTemplate.insert(dictionarie);
+//        return 1;
+//    }
+    public int insertDicInfo(Dictionaries dictionarie){
+        return dictionariesDao.insertdictionaries(dictionarie);
     }
+
 
     /**
      * 添加最终结果数据
      */
-    public int saveResultData(ResultData resultData){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is("resultData"));
-        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
-        if(idsIsNull.size() == 0){
-            Ids ids = new Ids();
-            ids.setName("resultData");
-            ids.setUpId(1);
-            mongoTemplate.save(ids);
-        }
-        Update update = new Update().inc("upId", 1);
-        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
-        resultData.setBid(ids.getUpId());
-        mongoTemplate.insert(resultData);
-        return 1;
+//    public int saveResultData(ResultData resultData){
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("name").is("resultData"));
+//        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
+//        if(idsIsNull.size() == 0){
+//            Ids ids = new Ids();
+//            ids.setName("resultData");
+//            ids.setUpId(1);
+//            mongoTemplate.save(ids);
+//        }
+//        Update update = new Update().inc("upId", 1);
+//        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
+//        resultData.setBid(ids.getUpId());
+//        mongoTemplate.insert(resultData);
+//        return 1;
+//    }
+    public int saveResultDatas(ResultData resultData){
+        return resultDataDao.insertresultData(resultData);
     }
 
     /**

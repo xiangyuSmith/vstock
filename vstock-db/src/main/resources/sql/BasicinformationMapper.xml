@@ -5,7 +5,7 @@
     <insert id="insert" parameterType="com.vstock.db.entity.Basicinformation" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `basicinformation`
         (`id`,`brand`,`name`,`artNo`,`colores`,`csaledate`,`esaledate`,`cofferprice`,`eofferprice`,`chineselogo`,`imgUrl`,`smallImgUrl`,`createTime`,`state`)
-        VALUES(null,#{brand},#{name},#{artNo},#{colores},#{csaledate},#{esaledate},#{cofferprice},#{eofferprice},#{chineselogo},#{imgUrl},#{smallImgUrl},now(),1)
+        VALUES(null,#{brand},#{name},#{artNo},#{colores},#{csaledate},#{esaledate},#{cofferprice},#{eofferprice},#{chineselogo},#{imgUrl},#{smallImgUrl},now(),#{state})
     </insert>
 
     <update id="update" parameterType="com.vstock.db.entity.Basicinformation">

@@ -1,7 +1,7 @@
 package com.vstock.admin.data.bean;
 
 import com.vstock.admin.base.service.StockxStoreService;
-import com.vstock.admin.base.util.ToolSpring;
+import com.vstock.ext.util.ToolSpring;
 import com.vstock.admin.data.spider.GithubRepoPageProcessor;
 import com.vstock.db.entity.StockxStore;
 import org.apache.log4j.Logger;

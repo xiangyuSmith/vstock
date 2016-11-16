@@ -55,6 +55,18 @@
         WHERE id = #{dicId}
     </select>
 
+    <!-- 添加字典记录 -->
+    <insert id="insertdictionaries">
+        INSERT INTO `dictionaries`
+        (`id`,`commodityDataId`,`colorly`,`identification`,`girard`,`createTime`)
+        VALUES(null,#{commodityDataId},#{colorly},#{identification},#{girard},now())
+    </insert>
+
+    <select id="findByCommodityId" resultType="com.vstock.db.entity.Dictionaries">
+        SELECT * FROM `dictionaries`
+        WHERE commodityDataId = #{commodityId}
+    </select>
+
     <!-- 修改 -->
     <update id="update">
         UPDATE `dictionaries`

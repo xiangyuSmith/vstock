@@ -55,7 +55,8 @@
                 AND id = #{brand.id,jdbcType=VARCHAR}
             </if>
             <if test="brand.brandName != null and brand.brandName != ''">
-                and brandName = #{brand.brandName,jdbcType=VARCHAR}
+                and brandName LIKE CONCAT('%',#{brand.brandName},'%')
+
             </if>
         </where>
     </sql>

@@ -21,8 +21,10 @@ public interface ICommodityDetail {
     //添加最终结果数据
     int saveResultData(ResultData resultData);
 
+    int insertCommoditydetail(CommodityDetail commodityDetail);
+
     //公共分页查询方法
-    List<CommodityDetail> findPageAll(@Param("commodityDetail") CommodityDetail commodityDetail, @Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize);
+    List<CommodityDetail> findPageAll(@Param("commodityDetail")CommodityDetail commodityDetail, @Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize);
 
     //公共查询总记录数
     Long findAllCount(CommodityDetail record);
@@ -31,5 +33,5 @@ public interface ICommodityDetail {
     List<Dictionaries> findDictionaries(@Param("commodityId") String commodityId);
 
     //带时间区间查询
-    List<CommodityDetail> findAllComm(@Param("commodityDetail") CommodityDetail commodityDetail, @Param("createDateStart") String createDateStart, @Param("createDateEnd") String createDateEnd);
+    List<CommodityDetail> findAllComm(@Param("commodityDetail")CommodityDetail commodityDetail,@Param("createDateStart") String createDateStart,@Param("createDateEnd") String createDateEnd);
 }

@@ -1,10 +1,9 @@
 package com.vstock.admin.base.service;
 
-import com.vstock.admin.data.spider.GithubRepoPageProcessor;
 import com.vstock.db.dao.IStockxStore;
 import com.vstock.db.entity.StockxInfo;
 import com.vstock.db.entity.StockxStore;
-import com.vstock.admin.base.util.Page;
+import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

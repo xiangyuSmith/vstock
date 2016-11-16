@@ -2,7 +2,7 @@ package com.vstock.admin.base.service.interceptor;
 
 import com.vstock.db.dao.IAdminDao;
 import com.vstock.db.entity.Admin;
-import com.vstock.admin.base.util.CookieTool;
+import com.vstock.ext.util.CookieTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

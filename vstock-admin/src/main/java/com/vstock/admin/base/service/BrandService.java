@@ -2,7 +2,7 @@ package com.vstock.admin.base.service;
 
 import com.vstock.db.dao.IBrandDao;
 import com.vstock.db.entity.Brand;
-import com.vstock.admin.base.util.Page;
+import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

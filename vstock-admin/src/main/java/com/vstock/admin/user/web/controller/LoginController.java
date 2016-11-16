@@ -1,6 +1,7 @@
 package com.vstock.admin.user.web.controller;
 
-import com.vstock.admin.base.util.DictKeys;
+import com.vstock.ext.base.BaseController;
+import com.vstock.ext.util.DictKeys;
 import com.vstock.admin.user.service.LoginService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * Created by xiangyu on 2016/7/18.
  */
 @Controller
 @RequestMapping("/adminLogin")
-public class LoginController {
+public class LoginController extends BaseController{
 
     Logger log = Logger.getLogger(getClass());
 
@@ -27,7 +29,8 @@ public class LoginController {
     LoginService loginService;
 
     @RequestMapping("index")
-    public String login(@RequestParam(value = "status", defaultValue = "") String status, HttpServletRequest request, ModelMap model, RedirectAttributes attr) {
+    public String login(HttpServletRequest request, ModelMap model, RedirectAttributes attr) {
+        String status  = getParam(request,"status","1");
         model.addAttribute("status", status);
         return "admin/adminLogin/admin_login";
     }

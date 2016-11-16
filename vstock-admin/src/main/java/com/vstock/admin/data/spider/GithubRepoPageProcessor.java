@@ -2,9 +2,9 @@ package com.vstock.admin.data.spider;
 
 import com.vstock.admin.base.service.CommodityDataService;
 import com.vstock.admin.base.service.StockxStoreService;
-import com.vstock.admin.base.util.ConstUtil;
-import com.vstock.admin.base.util.DateUtils;
-import com.vstock.admin.base.util.ToolSpring;
+import com.vstock.ext.util.ConstUtil;
+import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolSpring;
 import com.vstock.db.entity.*;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -370,7 +370,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                             int d = 0;
                             try {
                                 //检查是否存在该数据
-                                CommodityData commodityDataInfo = commodityDataService.findByName(name, girard);
+                                CommodityData commodityDataInfo = commodityDataService.findByNames(name, girard);
                                 if (commodityDataInfo == null) {
                                     //添加商品信息
                                     record.setStockxName(s_name);
@@ -383,7 +383,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                     record.setBrand(brand);
                                     record.setProductUrl(nowUrl);
                                     record.setCreateDate(DateUtils.getCurrentTimeAsString());
-                                    i = commodityDataService.insert(record);
+                                    i = commodityDataService.insertCommodityData(record);
                                     //添加详情信息
                                     detail.setCommodityDataId(record.getId());
                                 } else {
@@ -394,7 +394,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                     detail.setTransactionRecord(sales);
                                     detail.setColorSize(colorSize);
                                     detail.setCreateDate(DateUtils.getCurrentTimeAsString());
-                                    d = commodityDataService.insertInfo(detail);
+                                    d = commodityDataService.insertcommodityDetail(detail);
                                     if (d == 1) {
                                         logger.info("insert dataInfo success，dateTime:" + DateUtils.getCurrentTimeAs14String());
                                     } else {
@@ -403,9 +403,9 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                     //判断审核字典是否存在
                                     List<Dictionaries> dictionariesList = new ArrayList<Dictionaries>();
                                     if (commodityDataInfo == null) {
-                                        dictionariesList = commodityDataService.finddictionariesList(record.getId());
+                                        dictionariesList = commodityDataService.finddictionaries(record.getId());
                                     } else {
-                                        dictionariesList = commodityDataService.finddictionariesList(commodityDataInfo.getId());
+                                        dictionariesList = commodityDataService.finddictionaries(commodityDataInfo.getId());
                                     }
                                     String[] colorNames = null;
                                     if (colorType != null && !"".equals(colorType)) {
@@ -428,7 +428,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                             dictionarie.setColorly(colorly);
                                             dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
                                             //添加字典数据
-                                            commodityDataService.insertDic(dictionarie);
+                                            commodityDataService.insertDicInfo(dictionarie);
                                         }
                                     } else {
                                         //校验字段是否匹配，若不匹配则补齐
@@ -452,16 +452,16 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                                 dictionarie.setColorly(colorly);
                                                 //添加字典数据
                                                 dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                                commodityDataService.insertDic(dictionarie);
+                                                commodityDataService.insertDicInfo(dictionarie);
                                             }
                                         }
                                     }
                                     //查询字典商品标签名     &     验证该店铺下字典表数据是否全部已审核
                                     List<Dictionaries> dicObjList = new ArrayList<Dictionaries>();
                                     if (commodityDataInfo == null) {
-                                        dicObjList = commodityDataService.finddictionariesList(record.getId());
+                                        dicObjList = commodityDataService.finddictionaries(record.getId());
                                     } else {
-                                        dicObjList = commodityDataService.finddictionariesList(commodityDataInfo.getId());
+                                        dicObjList = commodityDataService.finddictionaries(commodityDataInfo.getId());
                                     }
                                     for (Dictionaries dic : dicObjList) {
                                         if (!"".equals(dic.getIdentification()) && dic.getIdentification() != null) {
@@ -490,7 +490,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                                         resultData.setTransactionRecord(sales);
                                                         resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
                                                         //保存最终结果
-                                                        int dataReultBool = commodityDataService.saveResultData(resultData);
+                                                        int dataReultBool = commodityDataService.saveResultDatas(resultData);
                                                         if (dataReultBool == 1) {
                                                             logger.info("save final result data success ! ! ! ");
                                                         } else {

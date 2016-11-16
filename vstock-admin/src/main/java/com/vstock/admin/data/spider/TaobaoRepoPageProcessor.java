@@ -1,25 +1,13 @@
 package com.vstock.admin.data.spider;
 
-import com.vstock.admin.base.service.CommodityDataService;
-import com.vstock.admin.base.test.Webmagic;
-import com.vstock.admin.base.util.ConstUtil;
-import com.vstock.admin.base.util.DateUtils;
-import com.vstock.admin.base.util.ToolSpring;
-import com.vstock.db.entity.*;
+import com.vstock.ext.util.ConstUtil;
+import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolSpring;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.selector.Html;
-
-import java.util.*;
 
 /**
  * Created by xiangyu on 2016/5/5.

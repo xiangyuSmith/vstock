@@ -40,9 +40,9 @@
                 <div class="am-input-group am-input-group-sm">
                     <input id="brandName" type="text" class="am-form-field" placeholder="请输入品牌名称">
                     <input id="brandNameNew" type="hidden" value="${brandName}">
-          <span class="am-input-group-btn">
-            <button class="am-btn am-btn-default" type="button" id="selectAll">搜索</button>
-          </span>
+                      <span class="am-input-group-btn">
+                        <button class="am-btn am-btn-default" type="button" id="selectAll">搜索</button>
+                      </span>
                 </div>
             </div>
         </div>
@@ -113,8 +113,8 @@
 
         //绑定添加事件
         $("body").on("click","#save-data",function(){
-            var brandName = $("#brandName").val();
-            $.post("/stockx/brand/insertBrand",{
+            var brandName = $("#insert-data").find("input").val();
+            $.post("/brand/insertBrand",{
                 'brandName': brandName
             },function(res){
                 if(res.result == 1){
@@ -139,7 +139,7 @@
                 var $brandId = $this.parent().parent().parent().parent().siblings("td[class='brandId']");
                 var brandName = $brandName.find("input[type='text']").val();
                 var brandId = $brandId.text();
-                $.post("/stockx/brand/insertBrand",{
+                $.post("/brand/insertBrand",{
                     'brandName': brandName,
                     'brandId': brandId
                 },function(res){
@@ -158,7 +158,7 @@
             if($this.parent().attr("class") == undefined || $this.parent().attr("class") == ""){
                 var $brandId = $this.parent().parent().parent().parent().siblings("td[class='brandId']");
                 var brandId = $brandId.text();
-                $.post("/stockx/brand/deleteBrand",{
+                $.post("/brand/deleteBrand",{
                     'brandId': brandId
                 },function(res){
                     if(res.result == 1){
@@ -196,7 +196,7 @@
         //搜索查询
         $("#selectAll").click(function () {
             var brand = $('#brandName').val();
-            location.href="/stockx/brand/brandList?brandName="+brand;
+            location.href="/brand/brandList?brandName="+brand;
         });
 
         if ($("#brandNameNew").val()){

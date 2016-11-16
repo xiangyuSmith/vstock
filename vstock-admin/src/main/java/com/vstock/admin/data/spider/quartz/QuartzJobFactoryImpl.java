@@ -3,10 +3,9 @@ package com.vstock.admin.data.spider.quartz;
 import com.vstock.admin.base.service.BasicinformationService;
 import com.vstock.admin.base.service.CommodityDataService;
 import com.vstock.admin.base.service.StockxStoreService;
-import com.vstock.admin.base.util.DateUtils;
-import com.vstock.admin.base.util.ToolSpring;
+import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolSpring;
 import com.vstock.admin.data.bean.MyThread;
-import com.vstock.admin.data.spider.GithubRepoPageProcessor;
 import com.vstock.db.entity.*;
 import org.apache.log4j.Logger;
 import org.quartz.DisallowConcurrentExecution;
@@ -15,7 +14,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 

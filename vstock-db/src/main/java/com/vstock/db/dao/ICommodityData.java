@@ -17,15 +17,15 @@ public interface ICommodityData {
 
     List<CommodityData> findCommodityDatalist();
 
-    List<CommodityData> findByName(@Param("name") String name, @Param("girard") String girard);
+    List<CommodityData> findByName(@Param("name") String name,@Param("girard") String girard);
 
     List<CommodityData> findCommodityData(@Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize);
 
-    Long getCommodityCount(@Param("commodityData") CommodityData commodityData, @Param(value = "startTime") String startTime, @Param(value = "endTime") String endTime);
+    Long getCommodityCount(@Param("commodityData")CommodityData commodityData,@Param(value = "startTime") String startTime,@Param(value = "endTime") String endTime);
 
     Long getAllCount(CommodityData record);
 
-    List<CommodityData> findAll(@Param("commodityData") CommodityData commodityData, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize, @Param(value = "startTime") String startTime, @Param(value = "endTime") String endTime);
+    List<CommodityData> findAll(@Param("commodityData")CommodityData commodityData,@Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize,@Param(value = "startTime") String startTime,@Param(value = "endTime") String endTime);
 
-    List<CommodityData> findCommodityDataAll(@Param("commodityData") CommodityData commodityData);
+    List<CommodityData> findCommodityDataAll(@Param("commodityData")CommodityData commodityData);
 }

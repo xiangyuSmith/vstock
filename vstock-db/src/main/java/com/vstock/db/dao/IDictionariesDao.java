@@ -13,11 +13,15 @@ public interface IDictionariesDao {
 
     Dictionaries findById(@Param(value = "dicId") String dicId);
 
+    List<Dictionaries> findByCommodityId(@Param(value = "commodityId") String commodityId);
+
     int update(Dictionaries dictionaries);
 
-    List<Dictionaries> findDcList(@Param(value = "dictionaries") Dictionaries dictionaries, @Param(value = "status") String status, @Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize);
+    int insertdictionaries(Dictionaries dictionaries);
 
-    List<Dictionaries> getCount(@Param(value = "dictionaries") Dictionaries dictionaries, @Param(value = "status") String status);
+    List<Dictionaries> findDcList(@Param(value = "dictionaries") Dictionaries dictionaries,@Param(value = "status") String status,@Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize);
+
+    List<Dictionaries> getCount(@Param(value = "dictionaries") Dictionaries dictionaries,@Param(value = "status") String status);
 
     List<Dictionaries> findDcListAll(@Param("dictionaries") Dictionaries dictionaries);
 

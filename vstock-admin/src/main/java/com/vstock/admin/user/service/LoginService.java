@@ -1,8 +1,8 @@
 package com.vstock.admin.user.service;
 
-import com.vstock.admin.base.util.CookieTool;
-import com.vstock.admin.base.util.DictKeys;
-import com.vstock.admin.base.util.MD5Util;
+import com.vstock.ext.util.CookieTool;
+import com.vstock.ext.util.DictKeys;
+import com.vstock.ext.util.MD5Util;
 import com.vstock.db.dao.IAdminDao;
 import com.vstock.db.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
