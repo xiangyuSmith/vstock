@@ -70,6 +70,7 @@
     <resultMap id="dicBlogResultMap" type="com.vstock.db.entity.Dictionaries">
         <id property="id" column="id" />
         <result property="colorly" column="colorly" />
+        <result property="status" column="status" />
         <result property="identification" column="identification" />
         <result property="girard" column="girard" />
         <result property="createTime" column="createTime" />

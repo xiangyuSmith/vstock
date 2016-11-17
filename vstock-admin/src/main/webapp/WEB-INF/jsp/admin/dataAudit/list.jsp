@@ -61,7 +61,7 @@
                         <label class="am-padding-right">店铺名称:</label>
                         <div class="am-form-group">
                             <select data-am-selected="{searchBox: 1,maxHeight: 240}" placeholder="店铺名称" name="storeName" >
-                                <option value="">店铺名称</option>
+                                <option value="1">--请选择店铺--</option>
                                 <c:if test="${not empty stockxStores}">
                                     <c:forEach items="${stockxStores}" var="store">
                                         <option value="${store.name}" <c:if test="${storeName==store.name}">selected</c:if> >${store.name}</option>
@@ -73,10 +73,10 @@
                     <div class="am-u-md-4">
                         <label class="am-padding-right">颜色状态:</label>
                         <div class="am-form-group">
-                            <select data-am-selected name="colorStatus">
-                                <option value="">--请选择--</option>
-                                <option value="无" <c:if test="${colorStatus=='无'}">selected</c:if> >无</option>
-                                <option value="null" <c:if test="${colorStatus=='null'}">selected</c:if>>null</option>
+                            <select data-am-selected name="colorly">
+                                <option value="1">--请选择--</option>
+                                <option value="无" <c:if test="${dictionaries.colorly=='无'}">selected</c:if> >无</option>
+                                <option value="null" <c:if test="${dictionaries.colorly=='null'}">selected</c:if>>null</option>
                             </select>
                         </div>
                     </div>
