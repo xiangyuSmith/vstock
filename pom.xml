@@ -14,6 +14,7 @@
         <module>vstock-server</module>
         <module>vstock-ext</module>
         <module>vstock-web</module>
+        <module>vstock-spider</module>
     </modules>
 
     <properties>

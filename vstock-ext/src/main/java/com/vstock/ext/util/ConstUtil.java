@@ -60,4 +60,20 @@ public final class ConstUtil {
         return prop;
     }
 
+    /**
+     * 读取爬虫的属性文件
+     *
+     * @return
+     */
+    public static Properties getSpiderProperties() {
+        Properties prop = new Properties();
+        try {
+            InputStream in = ConstUtil.class.getResourceAsStream("/spider.properties");
+            prop.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return prop;
+    }
+
 }

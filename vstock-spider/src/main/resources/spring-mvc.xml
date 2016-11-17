@@ -8,16 +8,6 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-
-    <mvc:interceptors>
-
-        <mvc:interceptor>
-            <mvc:mapping path="/admin/**" />
-            <bean class="com.vstock.admin.service.interceptor.AuthorizedInterceptor" />
-        </mvc:interceptor>
-    </mvc:interceptors>
-
-
     <mvc:resources mapping="/assets/**" location="/assets/"/>
     <mvc:default-servlet-handler/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
