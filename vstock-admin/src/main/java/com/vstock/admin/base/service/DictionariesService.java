@@ -1,17 +1,10 @@
 package com.vstock.admin.base.service;
 
 import com.vstock.db.dao.IDictionariesDao;
-import com.vstock.db.entity.CommodityData;
 import com.vstock.db.entity.Dictionaries;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,18 +16,9 @@ public class DictionariesService {
     @Autowired
     IDictionariesDao dictionariesDao;
 
-    @Autowired
-    MongoTemplate mongoTemplate;
-
-    //获取对象
-    public Dictionaries findById(String dicId){
-        return mongoTemplate.findById(dicId,Dictionaries.class);
-    }
-
     //修改
     public int update(Dictionaries dictionaries){
-        mongoTemplate.save(dictionaries);
-        return 1;
+        return dictionariesDao.update(dictionaries);
     }
 
     public List<Dictionaries> dictionariesList(Dictionaries dictionaries,String status,String productName,String storeName,String colorStatus,Page page){
@@ -46,9 +30,24 @@ public class DictionariesService {
         return dictionariesDao.getCount(dictionaries,status);
     }
 
-    //不分页查询所有记录
+    //不分页查询所有
     public List<Dictionaries> findDcListAll(Dictionaries record){
         return dictionariesDao.findDcListAll(record);
+    }
+
+    //链表commodity_data查询所有分页记录
+    public List<Dictionaries> findAll(Dictionaries record, String stockxName, String commodityName, Page page){
+        return dictionariesDao.findAll(record,stockxName,commodityName,page.getStartPos(),page.getPageSize());
+    }
+
+    //链表commodity_data查询所有总数
+    public int findCount(Dictionaries record, String stockxName, String commodityName){
+        return dictionariesDao.findCount(record,stockxName,commodityName);
+    }
+
+    //根据ID查询
+    public Dictionaries findById(String id){
+        return dictionariesDao.findById(id);
     }
 
 }

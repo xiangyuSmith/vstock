@@ -1,25 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: administor
-  Date: 2016/5/11
-  Time: 10:43
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/top.jsp"%>
-<%-- 传入参数时用 <jsp:param name="parameterName" value="{parameterValue | EL表达式 }" />--%>
 <style type="text/css">
-    .am-g{
-        padding-bottom: 15px;
-    }
     .xy-dis{
         display: none;
-    }
-    .xy-input-set{
-        padding-left:5px;
-    }
-    .Lg-text-color{
-        color: #1a1a1a;
     }
     span{
         font-size: 14px;
@@ -41,94 +24,103 @@
     }
 </style>
 <!-- content start -->
-<div class="admin-content am-text-primary Lg-text-color">
+<div class="admin-content">
     <div class="admin-content-body">
         <div class="am-cf am-padding">
             <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">数据中心</strong> / <small>数据审查</small></div>
         </div>
-        <div class="am-cf am-padding">
+        <div class="am-g">
             <form action="/dataAudit/list" class="am-form am-form-inline" id="selectTiao"  method="POST">
-                <div class="xy-search">
-                    <label>编号:</label>
-                    <div class="am-form-group"><input id="bidvalue" type="text" name="bid" placeholder="编号" value="<c:if test="${dictionaries.bid != 0}">${dictionaries.bid}</c:if>"></div>
-                </div>
-                <div class="xy-search">
-                    <label>店铺名称:</label>
-                    <div class="am-form-group">
-                        <select data-am-selected="{searchBox: 1,maxHeight: 240}" placeholder="店铺名称" name="storeName" >
-                            <option value="">店铺名称</option>
-                            <c:if test="${not empty stockxStores}">
-                                <c:forEach items="${stockxStores}" var="store">
-                                    <option value="${store.name}" <c:if test="${storeName==store.name}">selected</c:if> >${store.name}</option>
-                                </c:forEach>
-                            </c:if>
-                        </select>
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">商品编号:</label>
+                        <div class="am-form-group"><input id="bidvalue" type="text" name="id" placeholder="编号" value="<c:if test="${dictionaries.id != 0}">${dictionaries.id}</c:if>"></div>
+                    </div>
+                    <div class="am-u-md-4 am-u-end">
+                        <label class="am-padding-right">商品名称:</label>
+                        <div class="am-form-group"><input type="text" name="productName" placeholder="商品名称" value="${productName}"></div>
+                    </div>
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">商品货号:</label>
+                        <div class="am-form-group">
+                            <select data-am-selected="{searchBox: 1,maxHeight: 240}" class="girard"  name="girard" placeholder="货号">
+                                <c:choose>
+                                    <c:when test="${not empty dictionaries.girard}">
+                                        <option value="${dictionaries.girard}">${dictionaries.girard}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option></option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="xy-search">
-                    <label>商品名称:</label>
-                    <div class="am-form-group"><input type="text" name="productName" placeholder="商品名称" value="${productName}"></div>
-                </div>
-                <div class="xy-search">
-                    <label>颜色状态:</label>
-                    <div class="am-form-group">
-                        <select data-am-selected name="colorStatus">
-                            <option value="">--请选择--</option>
-                            <option value="无" <c:if test="${colorStatus=='无'}">selected</c:if> >无</option>
-                            <option value="null" <c:if test="${colorStatus=='null'}">selected</c:if>>null</option>
-                        </select>
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">店铺名称:</label>
+                        <div class="am-form-group">
+                            <select data-am-selected="{searchBox: 1,maxHeight: 240}" placeholder="店铺名称" name="storeName" >
+                                <option value="">店铺名称</option>
+                                <c:if test="${not empty stockxStores}">
+                                    <c:forEach items="${stockxStores}" var="store">
+                                        <option value="${store.name}" <c:if test="${storeName==store.name}">selected</c:if> >${store.name}</option>
+                                    </c:forEach>
+                                </c:if>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="xy-search">
-                    <label>标识:</label>
-                    <div class="am-form-group">
-                        <select data-am-selected="{searchBox: 1,maxHeight: 240}" class="identification" name="identification" placeholder="标识">
-                            <c:choose>
-                                <c:when test="${not empty dictionaries.identification}">
-                                    <option value="${dictionaries.identification}">${dictionaries.identification}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value=""></option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">颜色状态:</label>
+                        <div class="am-form-group">
+                            <select data-am-selected name="colorStatus">
+                                <option value="">--请选择--</option>
+                                <option value="无" <c:if test="${colorStatus=='无'}">selected</c:if> >无</option>
+                                <option value="null" <c:if test="${colorStatus=='null'}">selected</c:if>>null</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="xy-search">
-                    <label>货号:</label>
-                    <div class="am-form-group">
-                        <select data-am-selected="{searchBox: 1,maxHeight: 240}" class="girard"  name="girard" placeholder="货号">
-                            <c:choose>
-                                <c:when test="${not empty dictionaries.girard}">
-                                    <option value="${dictionaries.girard}">${dictionaries.girard}</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option></option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">商品标识:</label>
+                        <div class="am-form-group">
+                            <select data-am-selected="{searchBox: 1,maxHeight: 240}" class="identification" name="identification" placeholder="标识">
+                                <c:choose>
+                                    <c:when test="${not empty dictionaries.identification}">
+                                        <option value="${dictionaries.identification}">${dictionaries.identification}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value=""></option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-
-                <div class="xy-search">
-                    <label>状态:</label>
-                    <div class="am-form-group">
-                        <select data-am-selected="{maxHeight: 200}" name="status">
-                            <option value="-1">所有</option>
-                            <option value="0" <c:if test="${status==0}">selected</c:if>>已爬取</option>
-                            <option value="1" <c:if test="${status==1}">selected</c:if> >已审核</option>
-                            <option value="2" <c:if test="${status==2}">selected</c:if>>延期待审</option>
-                            <option value="3" <c:if test="${status==3}">selected</c:if>>无用数据</option>
-                        </select>
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">商品状态:</label>
+                        <div class="am-form-group">
+                            <select data-am-selected="{maxHeight: 200}" name="status">
+                                <option value="9">所有</option>
+                                <option value="0" <c:if test="${dictionaries.status==0}">selected</c:if>>已爬取</option>
+                                <option value="1" <c:if test="${dictionaries.status==1}">selected</c:if> >已审核</option>
+                                <option value="2" <c:if test="${dictionaries.status==2}">selected</c:if>>延期待审</option>
+                                <option value="3" <c:if test="${dictionaries.status==3}">selected</c:if>>无用数据</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-u-md-8">
+                        <button type="submit" class="am-btn am-btn-primary am-fr">查 询</button>
                     </div>
                 </div>
-                <input type="button" class="am-btn am-btn-primary btn-loading-example xy-submit" id="selectSubmit" value=" 查 询 " />
             </form>
-            <div>
-                当前选中：
-                <a href="" id="viewImgHref" target="_blank"><img id="viewImg" src="/assets/admin/image/1-1.jpg" style="width:150px;"></a><br/>
-                <span id="viewImgSpan"></span>
+            <div class="am-u-md-12">
+                <div class="am-u-md-8 am-u-end">
+                    当前选中：
+                    <a href="" id="viewImgHref" target="_blank"><img id="viewImg" src="/assets/admin/image/1-1.jpg" style="width:150px;"></a><br/>
+                    <span id="viewImgSpan"></span>
+                </div>
             </div>
 
             <!--详细提交form表单-->
@@ -150,7 +142,6 @@
                         <th>标识</th>
                         <th>货号</th>
                         <th>状态</th>
-                        <%--<th>获取时间</th>--%>
                         <th width="10%">操作</th>
                     </tr>
                     </thead>
@@ -159,7 +150,7 @@
                     <c:if test="${not empty dCList}">
                         <c:forEach items="${dCList}" var="dictionariesData">
                             <tr>
-                                <td class="id">${dictionariesData.bid}</td>
+                                <td class="id">${dictionariesData.id}</td>
                                 <td><span title="${dictionariesData.commodityData.commodityName}">${fn:substring(dictionariesData.commodityData.commodityName, 0, 50)}</span></td>
                                 <td><a href="${dictionariesData.commodityData.productUrl}" target="_blank"  style="color: royalblue;">商品地址</a></td>
                                 <td>${dictionariesData.colorly}</td>
@@ -173,11 +164,6 @@
                                                 <option value=""></option>
                                             </c:otherwise>
                                         </c:choose>
-                                        <%--<c:if test="${not empty nameLists}">--%>
-                                            <%--<c:forEach items="${nameLists}" var="data">--%>
-                                                <%--<option value="${data.name}">${data.name} ${data.chineselogo}</option>--%>
-                                            <%--</c:forEach>--%>
-                                        <%--</c:if>--%>
                                     </select>
                                 </td>
                                 <td class="girards">
@@ -194,23 +180,10 @@
                                 </td>
                                 <td>
                                     <select class="status">
-                                        <c:choose>
-                                            <c:when test="${not empty dictionariesData.girard}">
-                                                <option value="">已审查</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="">已爬取</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <c:choose>
-                                            <c:when test="${status==2}">
-                                                <option value="-1" selected>延期待审</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="2">延期待审</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <option value="3" <c:if test="${status==3}">selected</c:if> >无用数据</option>
+                                        <option value="0" <c:if test="${dictionariesData.status==0}">selected</c:if>>已爬取</option>
+                                        <option value="1" <c:if test="${dictionariesData.status==1}">selected</c:if> >已审核</option>
+                                        <option value="2" <c:if test="${dictionariesData.status==2}">selected</c:if>>延期待审</option>
+                                        <option value="3" <c:if test="${dictionariesData.status==3}">selected</c:if>>无用数据</option>
                                     </select>
                                 </td>
                                 <td>
@@ -251,12 +224,19 @@
         var viewImgSpan = "";
         var mouseX = 300;
         var mouseY = 300;
-        //查询事件
-        $("#selectSubmit").click(function () {
-            if ($("#bidvalue").val() == ""){
-                $("#bidvalue").val(0);
-            }
-            $("#selectTiao").submit();
+
+        //删除事件
+        $(".deleteItem").click(function () {
+            var dicid = $(this).attr("data-id");
+            $.post("/dataAudit/updateDataAudit",{
+                'dicid':dicid,
+                'status':9
+            },function(res){
+                $.toaster({ priority : 'info', title : '删除成功', message : '页面即将刷新！'});
+                setTimeout(function(){
+                    window.location.reload();
+                },800);
+            });
         });
 
         <!--点击提交触发事件-->

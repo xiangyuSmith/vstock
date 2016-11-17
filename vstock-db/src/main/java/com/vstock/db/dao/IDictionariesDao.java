@@ -25,4 +25,7 @@ public interface IDictionariesDao {
 
     List<Dictionaries> findDcListAll(@Param("dictionaries") Dictionaries dictionaries);
 
+    List<Dictionaries> findAll(@Param(value = "dictionaries") Dictionaries dictionaries,@Param(value = "stockxName") String stockxName,@Param(value = "commodityName") String commodityName,@Param(value = "startPos") Integer startPos, @Param(value = "pageSize") Integer pageSize);
+
+    int findCount(@Param("dictionaries") Dictionaries dictionaries,@Param("stockxName") String stockxName,@Param("commodityName")String commodityName);
 }

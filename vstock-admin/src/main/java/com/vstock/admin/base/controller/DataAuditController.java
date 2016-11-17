@@ -43,16 +43,15 @@ public class DataAuditController {
     public String dataAudit(Dictionaries dictionaries, HttpServletRequest request, ModelMap model) {
         String artNo = "";
         String pageNow = request.getParameter("pageNow");
-        String status = request.getParameter("status");
         String productName = request.getParameter("productName");
         String storeName = request.getParameter("storeName");
         String colorStatus = request.getParameter("colorStatus");
-        if(status == null){
-            status = "0";
+        if(dictionaries.getStatus() == null ||  "".equals(dictionaries.getStatus())){
+            dictionaries.setStatus("0");
         }
         String linkAddress = request.getRequestURI()+"?";
-        if (status != null && !"".equals(status)) {
-            linkAddress = linkAddress + "&status=" + status;
+        if (dictionaries.getStatus() != null && !"".equals(dictionaries.getStatus())) {
+            linkAddress = linkAddress + "&status=" + dictionaries.getStatus();
         }
         if (productName != null && !"".equals(productName)) {
             linkAddress = linkAddress + "&productName=" + productName;
@@ -63,9 +62,9 @@ public class DataAuditController {
         if (colorStatus != null && !"".equals(colorStatus)) {
             linkAddress = linkAddress + "&colorStatus=" + colorStatus;
         }
-        List<Dictionaries> dCListCount = dictionariesService.getCount(dictionaries, status, productName,storeName,colorStatus);
-        Page page = new Page(dCListCount.size(), pageNow);
-        List<Dictionaries> dCList = dictionariesService.dictionariesList(dictionaries, status, productName,storeName,colorStatus,page);
+        int dCListCount = dictionariesService.findCount(dictionaries,storeName,productName);
+        Page page = new Page(dCListCount, pageNow);
+        List<Dictionaries> dCList = dictionariesService.findAll(dictionaries, storeName,productName,page);
         List<StockxStore> stockxStores = stockxStoreService.findList();
         List<StockxStore> list1 = new ArrayList<StockxStore>();
         Set<String> set = new HashSet<String>();
@@ -86,7 +85,6 @@ public class DataAuditController {
 
         model.addAttribute("dCList", dCList);
         model.addAttribute("page", page);
-        model.addAttribute("status", status);
         model.addAttribute("productName", productName);
         model.addAttribute("colorStatus", colorStatus);
         model.addAttribute("storeName", storeName);
@@ -114,14 +112,10 @@ public class DataAuditController {
         int result = 0;
         if (dictionaries != null) {
             //修改该方法
-            dictionaries.setIdentification(identification);
-            dictionaries.setGirard(girard);
-            if(!"".equals(status)){
-                if("-1".equals(status)){
-                    dictionaries.setStatus(null);
-                }else{
-                    dictionaries.setStatus(status);
-                }
+            dictionaries.setStatus(status);
+            if (!status.equals("9")) {
+                dictionaries.setIdentification(identification);
+                dictionaries.setGirard(girard);
             }
             dictionaries.setUpdatetime(DateUtils.getCurrentTimeAsString());
             result = dictionariesService.update(dictionaries);

@@ -6,28 +6,59 @@
         <where>
             1=1
             <if test="dictionaries.id != null and dictionaries.id != ''">
-                AND id = #{dictionaries.id,jdbcType=VARCHAR}
+                AND dic.id = #{dictionaries.id,jdbcType=VARCHAR}
+            </if>
+            <if test="dictionaries.status != 9">
+                AND dic.status IN (#{dictionaries.status,jdbcType=VARCHAR})
+            </if>
+            <if test="dictionaries.status == 9">
+                AND dic.status NOT IN (#{dictionaries.status,jdbcType=VARCHAR})
             </if>
             <if test="dictionaries.commodityDataId != null and dictionaries.commodityDataId != ''">
-                and commodityDataId = #{dictionaries.commodityDataId,jdbcType=VARCHAR}
+                and dic.commodityDataId = #{dictionaries.commodityDataId,jdbcType=VARCHAR}
             </if>
             <if test="dictionaries.colorly != null and dictionaries.colorly != ''">
-                and colorly = #{dictionaries.colorly,jdbcType=VARCHAR}
+                and dic.colorly = #{dictionaries.colorly,jdbcType=VARCHAR}
             </if>
             <if test="dictionaries.identification != null and dictionaries.identification != ''">
-            and identification = #{resultData.identification,jdbcType=VARCHAR}
+                and dic.identification LIKE CONCAT('%',#{dictionaries.identification,jdbcType=VARCHAR},'%')
             </if>
             <if test="dictionaries.createTime != null and dictionaries.createTime != ''">
-                and createTime = #{dictionaries.createTime,jdbcType=VARCHAR}
+                and dic.createTime = #{dictionaries.createTime,jdbcType=VARCHAR}
             </if>
             <if test="dictionaries.updatetime != null and dictionaries.updatetime != ''">
-                and updatetime = #{dictionaries.updatetime,jdbcType=VARCHAR}
+                and dic.updatetime = #{dictionaries.updatetime,jdbcType=VARCHAR}
             </if>
             <if test="dictionaries.updateUser != null and dictionaries.updateUser != ''">
-                and updateUser = #{dictionaries.updateUser,jdbcType=VARCHAR}
+                and dic.updateUser = #{dictionaries.updateUser,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>
+
+    <select id="findAll" resultMap="dicBlogResultMap">
+        SELECT dic.id,dic.colorly,dic.identification,dic.status,dic.girard,dic.createTime,dic.updatetime,cd.commodityName,cd.productUrl FROM `dictionaries` dic
+        LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
+        <include refid="SelectAll_Where_Clause" />
+        <if test="stockxName != null and stockxName != ''">
+            and cd.stockxName = #{stockxName,jdbcType=VARCHAR}
+        </if>
+        <if test="commodityName != null and commodityName != ''">
+            and cd.commodityName LIKE CONCAT('%',#{commodityName,jdbcType=VARCHAR},'%')
+        </if>
+        ORDER BY dic.createTime DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" resultType="Integer">
+        SELECT COUNT(*) FROM `dictionaries` dic
+        LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
+        <include refid="SelectAll_Where_Clause" />
+        <if test="stockxName != null and stockxName != ''">
+            and cd.stockxName = #{stockxName,jdbcType=VARCHAR}
+        </if>
+        <if test="commodityName != null and commodityName != ''">
+            and cd.commodityName LIKE CONCAT('%',#{commodityName,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
 
     <select id="findDcList" resultMap="dicBlogResultMap">
         SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.girard,dic.createTime FROM `dictionaries` dic
@@ -70,7 +101,7 @@
     <!-- 修改 -->
     <update id="update">
         UPDATE `dictionaries`
-        SET `identification`=#{identification},`girard`=#{girard}
+        SET `identification`=#{identification},`girard`=#{girard},`status`=#{status}
         WHERE `id` = #{id}
     </update>
 
