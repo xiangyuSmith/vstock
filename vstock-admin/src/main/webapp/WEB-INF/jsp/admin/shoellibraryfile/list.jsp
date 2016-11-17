@@ -28,142 +28,151 @@
         <hr>
         <div class="am-g">
             <form action="shoeLibraryFile" class="am-form am-form-inline" method="post">
-                <div class="xy-search Lg-border-left">
-                    <label><b>编号:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group"><input type="text" id="sid" name="id" placeholder="编号" value="${basicinformation.id}"></div>
-                </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>品牌:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group">
-                        <select id="searchBrand" name="brand" placeholder="品牌">
-                            <c:choose>
-                                <c:when test="${not empty basicinformation.brand}">
-                                    <option value="${basicinformation.brand}">${basicinformation.brand}</option>
-                                    <option value="">全部</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="">全部</option>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:if test="${not empty brandList}">
-                                <c:forEach items="${brandList}" var="brand">
-                                    <option value="${brand.brandName}">${brand.brandName}</option>
-                                </c:forEach>
-                            </c:if>
-                        </select>
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>编号:</b></label>
+                        <div class="am-form-group"><input type="text" id="sid" name="id" placeholder="编号" value="${basicinformation.id}"></div>
+                    </div>
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>标识:&nbsp;&nbsp;</b></label>
+                        <div class="am-form-group"><input type="text" id="chineselogo" name="chineselogo" placeholder="中文标识" value="${basicinformation.chineselogo}"></div>
+                    </div>
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>名称:</b></label>
+                        <div class="am-form-group"><input type="text" id="sname" name="name" placeholder="鞋名" value="${basicinformation.name}"></div>
+                    </div>
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>货号:</b></label>
+                        <div class="am-form-group"><input type="text" id="sartNo" name="artNo" placeholder="商品货号" value="${basicinformation.artNo}"></div>
                     </div>
                 </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>名称:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group"><input type="text" id="sname" name="name" placeholder="鞋名" value="${basicinformation.name}"></div>
-                </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>货号:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group"><input type="text" id="sartNo" name="artNo" placeholder="商品货号" value="${basicinformation.artNo}"></div>
-                </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>中文标识:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group"><input type="text" id="chineselogo" name="chineselogo" placeholder="中文标识" value="${basicinformation.chineselogo}"></div>
-                </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>是否有中文标识:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group" id="chineselogos">
-                        <select name="chineselogos" style="width: 80px;">
-                            <c:choose>
-                                <c:when test="${basicinformation.chineselogos == 1}">
-                                    <option value="${basicinformation.chineselogos}">有</option>
-                                    <option value="0">全部</option>
-                                    <option value="2">无</option>
-                                </c:when>
-                                <c:when test="${basicinformation.chineselogos == 2}">
-                                    <option value="${basicinformation.chineselogos}">无</option>
-                                    <option value="0">全部</option>
-                                    <option value="1">有</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="0">全部</option>
-                                    <option value="1">有</option>
-                                    <option value="2">无</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>品牌:</b></label>
+                        <div class="am-form-group">
+                            <select id="searchBrand" name="brand" placeholder="品牌">
+                                <c:choose>
+                                    <c:when test="${not empty basicinformation.brand}">
+                                        <option value="${basicinformation.brand}">${basicinformation.brand}</option>
+                                        <option value="">全部</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="">全部</option>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${not empty brandList}">
+                                    <c:forEach items="${brandList}" var="brand">
+                                        <option value="${brand.brandName}">${brand.brandName}</option>
+                                    </c:forEach>
+                                </c:if>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>是否有中文标识:</b></label>
+                        <div class="am-form-group" id="chineselogos">
+                            <select name="chineselogos" style="width: 80px;">
+                                <c:choose>
+                                    <c:when test="${basicinformation.chineselogos == 1}">
+                                        <option value="${basicinformation.chineselogos}">有</option>
+                                        <option value="0">全部</option>
+                                        <option value="2">无</option>
+                                    </c:when>
+                                    <c:when test="${basicinformation.chineselogos == 2}">
+                                        <option value="${basicinformation.chineselogos}">无</option>
+                                        <option value="0">全部</option>
+                                        <option value="1">有</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="0">全部</option>
+                                        <option value="1">有</option>
+                                        <option value="2">无</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>国内发售价:</b></label>
+                        <div class="am-form-group" id="bscofferprice">
+                            <select name="bscofferprice" style="width: 80px;">
+                                <c:choose>
+                                    <c:when test="${basicinformation.bscofferprice == 1}">
+                                        <option value="${basicinformation.bscofferprice}">有</option>
+                                        <option value="0">全部</option>
+                                        <option value="2">无</option>
+                                    </c:when>
+                                    <c:when test="${basicinformation.bscofferprice == 2}">
+                                        <option value="${basicinformation.bscofferprice}">无</option>
+                                        <option value="0">全部</option>
+                                        <option value="1">有</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="0">全部</option>
+                                        <option value="1">有</option>
+                                        <option value="2">无</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="am-u-md-3">
+                        <label class="am-padding-right"><b>国内发售日期:</b></label>
+                        <div class="am-form-group" id="csaledate">
+                            <select name="csaledate" style="width: 80px;">
+                                <c:choose>
+                                    <c:when test="${basicinformation.csaledate == 1}">
+                                        <option value="${basicinformation.csaledate}">有</option>
+                                        <option value="0">全部</option>
+                                        <option value="2">无</option>
+                                    </c:when>
+                                    <c:when test="${basicinformation.csaledate == 2}">
+                                        <option value="${basicinformation.csaledate}">无</option>
+                                        <option value="0">全部</option>
+                                        <option value="1">有</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="0">全部</option>
+                                        <option value="1">有</option>
+                                        <option value="2">无</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>是否有国内发售价:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group" id="bscofferprice">
-                        <select name="bscofferprice" style="width: 80px;">
-                            <c:choose>
-                                <c:when test="${basicinformation.bscofferprice == 1}">
-                                    <option value="${basicinformation.bscofferprice}">有</option>
-                                    <option value="0">全部</option>
-                                    <option value="2">无</option>
-                                </c:when>
-                                <c:when test="${basicinformation.bscofferprice == 2}">
-                                    <option value="${basicinformation.bscofferprice}">无</option>
-                                    <option value="0">全部</option>
-                                    <option value="1">有</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="0">全部</option>
-                                    <option value="1">有</option>
-                                    <option value="2">无</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
+
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right"><b>国内发售价(低):</b></label>
+                        <div class="am-form-group"><input type="text" id="cofferprice" name="cofferprice" placeholder="国内发售价（低）" value="${basicinformation.cofferprice}"></div>
+                    </div>
+                    <div class="am-u-md-4 am-u-end">
+                        <label class="am-padding-right"><b>国内发售价(高):</b></label>
+                        <div class="am-form-group"><input type="text" id="cofferprices" name="cofferprices" placeholder="国内发售价（高）" value="${basicinformation.cofferprices}"></div>
                     </div>
                 </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>是否有国内发售日期:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group" id="csaledate">
-                        <select name="csaledate" style="width: 80px;">
-                            <c:choose>
-                                <c:when test="${basicinformation.csaledate == 1}">
-                                    <option value="${basicinformation.csaledate}">有</option>
-                                    <option value="0">全部</option>
-                                    <option value="2">无</option>
-                                </c:when>
-                                <c:when test="${basicinformation.csaledate == 2}">
-                                    <option value="${basicinformation.csaledate}">无</option>
-                                    <option value="0">全部</option>
-                                    <option value="1">有</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="0">全部</option>
-                                    <option value="1">有</option>
-                                    <option value="2">无</option>
-                                </c:otherwise>
-                            </c:choose>
-                        </select>
-                    </div>
-                </div>
-                <br/>
-                <div class="xy-search Lg-border-left">
-                    <label><b>国内发售价（低）:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group"><input type="text" id="cofferprice" name="cofferprice" placeholder="国内发售价（低）" value="${basicinformation.cofferprice}"></div>
-                </div>
-                <div class="xy-search Lg-border-left">
-                    <label><b>国内发售价（高）:&nbsp;&nbsp;</b></label>
-                    <div class="am-form-group"><input type="text" id="cofferprices" name="cofferprices" placeholder="国内发售价（高）" value="${basicinformation.cofferprices}"></div>
-                </div>
-                <br/>
-                <div class="xy-search Lg-border-left">
+                <div class="xy-search Lg-border-left am-margin-left-xs">
                     <label><b>国内发售开始时间:&nbsp;&nbsp;</b></label>
                     <div class="am-form-group">
                         <input type="text" id="sstartCsaledate" name="startCsaledate" placeholder="" value="${startCsaledate}">
                         <div class="dateStartTime"></div>
                     </div>
                 </div>
-                <div class="xy-search Lg-border-left">
+                <div class="xy-search Lg-border-left am-margin-left">
                     <label><b>国内发售结束时间:&nbsp;&nbsp;</b></label>
                     <div class="am-form-group">
                         <input type="text" id="sendCsaledate" name="endCsaledate" placeholder="" value="${endCsaledate}">
                         <div class="dateEndTime"></div>
                     </div>
                 </div>
-                <br/>
-                <input type="submit" class="am-btn am-btn-primary  am-btn-sm btn-loading-example am-fr am-margin-right-sm" value=" 查 询 " />
-                <a href="/basicinfrom/insertbasicinfromjsp?id="><button type="button" id="add" class="am-btn am-btn-default am-btn-sm am-fr  am-margin-right-sm"><i class="am-icon-plus am-margin-right-xs"></i> 新增</button></a>
+                <div class="am-u-md-12">
+                    <input type="submit" class="am-btn am-btn-primary  am-btn-sm btn-loading-example am-fr am-margin-right-sm" value=" 查 询 " />
+                    <a href="/basicinfrom/insertbasicinfromjsp?id="><button type="button" id="add" class="am-btn am-btn-default am-btn-sm am-fr  am-margin-right-sm"><i class="am-icon-plus am-margin-right-xs"></i> 新增</button></a>
+                </div>
             </form>
         </div>
 
