@@ -45,22 +45,18 @@ public class DataAuditController {
         String pageNow = request.getParameter("pageNow");
         String productName = request.getParameter("productName");
         String storeName = request.getParameter("storeName");
-        String colorStatus = request.getParameter("colorStatus");
         if(dictionaries.getStatus() == null ||  "".equals(dictionaries.getStatus())){
             dictionaries.setStatus("0");
+        }
+        if ("1".equals(dictionaries.getColorly())){
+            dictionaries.setColorly("");
+        }
+        if ("1".equals(storeName)){
+            storeName = "";
         }
         String linkAddress = request.getRequestURI()+"?";
         if (dictionaries.getStatus() != null && !"".equals(dictionaries.getStatus())) {
             linkAddress = linkAddress + "&status=" + dictionaries.getStatus();
-        }
-        if (productName != null && !"".equals(productName)) {
-            linkAddress = linkAddress + "&productName=" + productName;
-        }
-        if (storeName != null && !"".equals(storeName)) {
-            linkAddress = linkAddress + "&storeName=" + storeName;
-        }
-        if (colorStatus != null && !"".equals(colorStatus)) {
-            linkAddress = linkAddress + "&colorStatus=" + colorStatus;
         }
         int dCListCount = dictionariesService.findCount(dictionaries,storeName,productName);
         Page page = new Page(dCListCount, pageNow);
@@ -83,10 +79,21 @@ public class DataAuditController {
             }
         }
 
+        if ("".equals(dictionaries.getColorly())){
+            dictionaries.setColorly("1");
+        }
+        if (dictionaries.getColorly() != null && !"".equals(dictionaries.getColorly())) {
+            linkAddress = linkAddress + "&colorStatus=" + dictionaries.getColorly();
+        }
+        if (productName != null && !"".equals(productName)) {
+            linkAddress = linkAddress + "&productName=" + productName;
+        }
+        if (storeName != null && !"".equals(storeName)) {
+            linkAddress = linkAddress + "&storeName=" + storeName;
+        }
         model.addAttribute("dCList", dCList);
         model.addAttribute("page", page);
         model.addAttribute("productName", productName);
-        model.addAttribute("colorStatus", colorStatus);
         model.addAttribute("storeName", storeName);
         model.addAttribute("stockxStores", list1);
         model.addAttribute("dictionaries", dictionaries);
