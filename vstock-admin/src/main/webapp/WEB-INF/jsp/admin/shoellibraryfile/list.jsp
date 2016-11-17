@@ -1,13 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: administor
-  Date: 2016/7/12
-  Time: 15:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/top.jsp"%>
-<%-- 传入参数时用 <jsp:param name="parameterName" value="{parameterValue | EL表达式 }" />--%>
 <style type="text/css">
     .am-g{
         padding-bottom: 15px;
@@ -158,7 +150,6 @@
                 <div class="xy-search Lg-border-left">
                     <label><b>国内发售开始时间:&nbsp;&nbsp;</b></label>
                     <div class="am-form-group">
-                        <%--<input type="date" id="sstartCsaledate" name="startCsaledate" value="${startCsaledate}"/>--%>
                         <input type="text" id="sstartCsaledate" name="startCsaledate" placeholder="" value="${startCsaledate}">
                         <div class="dateStartTime"></div>
                     </div>
@@ -166,29 +157,14 @@
                 <div class="xy-search Lg-border-left">
                     <label><b>国内发售结束时间:&nbsp;&nbsp;</b></label>
                     <div class="am-form-group">
-                        <%--<input type="date" id="sendCsaledate" name="endCsaledate" value="${endCsaledate}" />--%>
                         <input type="text" id="sendCsaledate" name="endCsaledate" placeholder="" value="${endCsaledate}">
                         <div class="dateEndTime"></div>
                     </div>
                 </div>
                 <br/>
-                <%--<div class="xy-search Lg-border-left">--%>
-                    <%--<label><b>国外发售开始时间:&nbsp;&nbsp;</b></label>--%>
-                    <%--<div class="am-form-group"><input type="date" name="startEsaledate" value="${startEsaledate}"/></div>--%>
-                <%--</div>--%>
-                <%--<div class="xy-search Lg-border-left">--%>
-                    <%--<label><b>国外发售结束时间:&nbsp;&nbsp;</b></label>--%>
-                    <%--<div class="am-form-group"><input type="date" name="endEsaledate" value="${endEsaledate}" /></div>--%>
-                <%--</div>--%>
-                <input type="submit" class="am-btn am-btn-primary btn-loading-example xy-submit" value=" 查 询 " />
+                <input type="submit" class="am-btn am-btn-primary  am-btn-sm btn-loading-example am-fr am-margin-right-sm" value=" 查 询 " />
+                <a href="/basicinfrom/insertbasicinfromjsp?id="><button type="button" id="add" class="am-btn am-btn-default am-btn-sm am-fr  am-margin-right-sm"><i class="am-icon-plus am-margin-right-xs"></i> 新增</button></a>
             </form>
-            <div class="am-u-sm-12 am-u-md-6">
-                <div class="am-btn-toolbar">
-                    <div class="am-btn-group am-btn-group-xs">
-                        <a href="/stockx/basicinfrom/insertbasicinfromjsp?id="><button type="button" id="add" class="am-btn am-btn-default Lg-asize"><span class="am-icon-plus"></span> 新增</button></a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <form id="insertUpdate" action="insertbasicinfromjsp" method="post">
@@ -207,7 +183,7 @@
             <input type="hidden" name="endCsaledate" id="endCsaledate"/>
         </form>
 
-        <form id="deletebas" action="insertbasicinfrom" method="post">
+        <form id="deletebas" action="insertbasicinfrom" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" id="baid"/>
             <input type="hidden" name="bid" id="bkid"/>
             <input type="hidden" name="brand" id="barand"/>
@@ -236,57 +212,55 @@
             <div class="am-u-sm-12">
                 <table class="am-table am-table-bd am-table-striped admin-content-table">
                     <thead>
-                    <tr>
-                        <th>编号</th>
-                        <th>品牌</th>
-                        <th>名称</th>
-                        <th>货号</th>
-                        <th>颜色</th>
-                        <th>国内发售日期</th>
-                        <th>国外发售日期</th>
-                        <th>国内发售价</th>
-                        <th>国外发售价</th>
-                        <th>中文标识</th>
-                        <th>图片</th>
-                        <%--<th>爬取日期</th>--%>
-                        <th>管理</th>
-                    </tr>
+                        <tr>
+                            <th>编号</th>
+                            <th>品牌</th>
+                            <th>名称</th>
+                            <th>货号</th>
+                            <th>颜色</th>
+                            <th>国内发售日期</th>
+                            <th>国外发售日期</th>
+                            <th>国内发售价</th>
+                            <th>国外发售价</th>
+                            <th>中文标识</th>
+                            <th>图片</th>
+                            <th>管理</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr id="insert-data" class="xy-dis"></tr>
-                    <c:if test="${not empty basicinformationList}">
-                        <c:forEach items="${basicinformationList}" var="basicinformation">
-                            <tr>
-                                <td>${basicinformation.id}</td>
-                                <td>${basicinformation.brand}</td>
-                                <td>${basicinformation.name}</td>
-                                <td>${basicinformation.artNo}</td>
-                                <td>${basicinformation.colores}</td>
-                                <td>${basicinformation.csaledate}</td>
-                                <td>${basicinformation.esaledate}</td>
-                                <td>${basicinformation.cofferprice}</td>
-                                <td>${basicinformation.eofferprice}</td>
-                                <td>${basicinformation.chineselogo}</td>
-                                <td><%--${basicinformation.smallImgUrl}--%>
-                                    <a href="/stockx${basicinformation.imgUrl}" target="_blank" title="查看大图"><img src="/stockx${basicinformation.smallImgUrl}" style="height: 40px; width: 55px;"/></a>
-                                </td>
-                                <%--<td>${basicinformation.createtime}</td>--%>
-                                <td>
-                                    <div class="am-dropdown" data-am-dropdown>
-                                        <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle><span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span></button>
-                                        <ul class="am-dropdown-content">
-                                            <li><a href="javascript:void(0)" class="updatebasic" data-comid="${basicinformation.id}" date-state="${basicinformation.state}"> 编辑</a></li>
-                                            <li><a href="javascript:void(0)" class="deletebasic" data-cid="${basicinformation.id}" data-bid="${basicinformation.bid}" data-brand="${basicinformation.brand}"
-                                                   data-name="${basicinformation.name}" data-artNo="${basicinformation.artNo}" data-colores="${basicinformation.colores}"
-                                                   data-csaledate="${basicinformation.csaledate}" data-esaledate="${basicinformation.esaledate}"
-                                                   data-cofferprice="${basicinformation.cofferprice}" data-eofferprice="${basicinformation.eofferprice}" data-chineselogo="${basicinformation.chineselogo}"
-                                                   data-imgUrl="${basicinformation.imgUrl}" data-smallImgUrl="${basicinformation.smallImgUrl}" data-createtime="${basicinformation.createtime}"> 删除</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </c:if>
+                        <tr id="insert-data" class="xy-dis"></tr>
+                        <c:if test="${not empty basicinformationList}">
+                            <c:forEach items="${basicinformationList}" var="basicinformation">
+                                <tr>
+                                    <td>${basicinformation.id}</td>
+                                    <td>${basicinformation.brand}</td>
+                                    <td>${basicinformation.name}</td>
+                                    <td>${basicinformation.artNo}</td>
+                                    <td>${basicinformation.colores}</td>
+                                    <td>${basicinformation.csaledate}</td>
+                                    <td>${basicinformation.esaledate}</td>
+                                    <td>${basicinformation.cofferprice}</td>
+                                    <td>${basicinformation.eofferprice}</td>
+                                    <td>${basicinformation.chineselogo}</td>
+                                    <td>
+                                        <a href="${basicinformation.imgUrl}" target="_blank" title="查看大图"><img src="${basicinformation.smallImgUrl}" style="height: 40px; width: 55px;"/></a>
+                                    </td>
+                                    <td>
+                                        <div class="am-dropdown" data-am-dropdown>
+                                            <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle><span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span></button>
+                                            <ul class="am-dropdown-content">
+                                                <li><a href="javascript:void(0)" class="updatebasic" data-comid="${basicinformation.id}" date-state="${basicinformation.state}"> 编辑</a></li>
+                                                <li><a href="javascript:void(0)" class="deletebasic" data-cid="${basicinformation.id}" data-bid="${basicinformation.bid}" data-brand="${basicinformation.brand}"
+                                                       data-name="${basicinformation.name}" data-artNo="${basicinformation.artNo}" data-colores="${basicinformation.colores}"
+                                                       data-csaledate="${basicinformation.csaledate}" data-esaledate="${basicinformation.esaledate}"
+                                                       data-cofferprice="${basicinformation.cofferprice}" data-eofferprice="${basicinformation.eofferprice}" data-chineselogo="${basicinformation.chineselogo}"
+                                                       data-imgUrl="${basicinformation.imgUrl}" data-smallImgUrl="${basicinformation.smallImgUrl}" data-createtime="${basicinformation.createtime}"> 删除</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
                     </tbody>
                 </table>
                 <jsp:include page="../common/paging.jsp" flush="true">
@@ -306,7 +280,7 @@
 
         //绑定添加事件
         $("body").on("click","#save-data",function(){
-            $.post("/stockx/admin/insertjsp",{
+            $.post("/admin/insertjsp",{
             },function(res){
                 setTimeout(function(){window.location.reload();},50);
             });

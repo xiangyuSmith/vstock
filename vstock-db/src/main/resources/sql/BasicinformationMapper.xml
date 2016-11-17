@@ -22,10 +22,6 @@
         WHERE `id` = #{id}
     </update>
 
-    <delete id="delete">
-        DELETE 'basicinformation' where 'id' = #{id}
-    </delete>
-
     <!--分页查询所有-->
     <select id="findLimitAll" resultType="com.vstock.db.entity.Basicinformation">
         SELECT * FROM `basicinformation`
@@ -73,20 +69,38 @@
             <if test="basicinformation.colores != null and basicinformation.colores != ''">
                 and colores LIKE CONCAT('%',#{basicinformation.colores,jdbcType=VARCHAR},'%')
             </if>
-            <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
-                and csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
-            </if>
             <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
                 and esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
             </if>
             <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
-                and cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
+                and cofferprice &gt;= #{basicinformation.cofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.cofferprices != null and basicinformation.cofferprices != ''">
+                and cofferprice &lt;= #{basicinformation.cofferprices,jdbcType=VARCHAR}
             </if>
             <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
                 and eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
             </if>
             <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
                 and chineselogo LIKE CONCAT('%',#{basicinformation.chineselogo,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="basicinformation.chineselogos == 1">
+                and chineselogo IS NOT NULL
+            </if>
+            <if test="basicinformation.chineselogos == 2">
+                and chineselogo IS NULL
+            </if>
+            <if test="basicinformation.bscofferprice == 1">
+                and cofferprice IS NOT NULL
+            </if>
+            <if test="basicinformation.bscofferprice == 2">
+                and cofferprice IS NULL
+            </if>
+            <if test="basicinformation.csaledate == 1">
+                and csaledate IS NOT NULL
+            </if>
+            <if test="basicinformation.csaledate == 2">
+                and csaledate IS NULL
             </if>
             <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
                 and imgUrl LIKE CONCAT('%',#{basicinformation.imgUrl,jdbcType=VARCHAR}.'%')
@@ -121,9 +135,6 @@
         </if>
         <if test="basicinformation.colores != null and basicinformation.colores != ''">
             and colores = #{basicinformation.colores,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
-            and csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
         </if>
         <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
             and esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
@@ -166,9 +177,6 @@
             </if>
             <if test="basicinformation.colores != null and basicinformation.colores != ''">
                 , colores = #{basicinformation.colores,jdbcType=VARCHAR}
-            </if>
-            <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
-                , csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
             </if>
             <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
                 , esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}

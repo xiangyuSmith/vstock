@@ -46,27 +46,13 @@ public class BasicinformationService {
 
     //添加数据
     public int insertbasicinfrom(Basicinformation record){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("name").is("basicinformation"));
-        List<Ids> idsIsNull = mongoTemplate.find(query,Ids.class);
-        if(idsIsNull.size() == 0){
-            Ids ids = new Ids();
-            ids.setName("basicinformation");
-            ids.setUpId(1);
-            mongoTemplate.save(ids);
-        }
-        Update update = new Update().inc("upId", 1);
-        Ids ids = mongoTemplate.findAndModify(query,update, Ids.class);
-        record.setBid(ids.getUpId());
-        mongoTemplate.save(record);
-        return 1;
+        return basicinformationDao.insert(record);
     }
 
     //修改数据
-    public int updatebasicinfrom(Basicinformation record){return basicinformationDao.update(record,record.getId());}
-
-    //删除数据
-    public int deletebasicinfrom(String id){return basicinformationDao.delete(id);}
+    public int updatebasicinfrom(Basicinformation record){
+        return basicinformationDao.update(record,record.getId());
+    }
 
     //修改状态
     public int updatesicinState(Basicinformation basicinformation){

@@ -2,6 +2,7 @@ package com.vstock.admin.base.controller;
 
 import com.vstock.admin.base.service.BasicinformationService;
 import com.vstock.admin.base.service.BrandService;
+import com.vstock.ext.base.BaseController;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.PictureUpload;
@@ -22,20 +23,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by xiangyu on 2016/7/18.
- */
 @Controller
 @RequestMapping("/basicinfrom")
-public class BasicinfromController {
+public class BasicinfromController extends BaseController{
 
-    Logger log = Logger.getLogger(getClass());
+    Logger logger = Logger.getLogger(getClass());
 
     @Autowired
     BasicinformationService basicinformationService;
+
     @Autowired
     BrandService brandService;
-
 
     @RequestMapping("updateData")
     public void updateData(HttpServletRequest request){
@@ -60,14 +58,12 @@ public class BasicinfromController {
     @RequestMapping("shoeLibraryFile")
     public String shoeLibraryFile(Basicinformation record, HttpServletRequest request, ModelMap model){
         //初始化变量
-        Basicinformation basicinformation = record;
         int i = 0;
+        record.setState("1");
         String startCsaledates = "";
         String endCsaledates = "";
         String startEsaledates = "";
         String endEsaledates ="";
-
-        //获取前台传回来的参数
         String pageNow = request.getParameter("pageNow");
         String startCsaledate = request.getParameter("startCsaledate");
         if (startCsaledate != null && !"".equals(startCsaledate)){
@@ -82,9 +78,7 @@ public class BasicinfromController {
         String startCreatetime = request.getParameter("startCreatetime");
         String endCreatetime = request.getParameter("endCreatetime");
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
         String linkAddress = request.getRequestURI();
-
         //判断是否为空
         if(record.getId() != null && !"".equals(record.getId())){//不为空拼接跳转地址
             linkAddress = linkAddress +"?id="+record.getId();
@@ -160,12 +154,12 @@ public class BasicinfromController {
             }
         }
         if (record.getCofferprice() != null && !"".equals(record.getCofferprice())){
-                if (i > 0){
-                    linkAddress = linkAddress + "&cofferprice=" + record.getCofferprice();
-                }else {
-                    linkAddress = linkAddress + "?cofferprice=" + record.getCofferprice();
-                }
-                i = linkAddress.indexOf("?");
+            if (i > 0){
+                linkAddress = linkAddress + "&cofferprice=" + record.getCofferprice();
+            }else {
+                linkAddress = linkAddress + "?cofferprice=" + record.getCofferprice();
+            }
+            i = linkAddress.indexOf("?");
         }
         if (record.getCofferprices() != null && !"".equals(record.getCofferprices())){
             if (i > 0){
@@ -184,12 +178,12 @@ public class BasicinfromController {
             i = linkAddress.indexOf("?");
         }
         if (record.getChineselogo() != null && !"".equals(record.getChineselogo())){
-                if (i > 0){
-                    linkAddress = linkAddress + "&chineselogo=" + record.getChineselogo();
-                }else {
-                    linkAddress = linkAddress + "?chineselogo=" + record.getChineselogo();
-                }
-                i = linkAddress.indexOf("?");
+            if (i > 0){
+                linkAddress = linkAddress + "&chineselogo=" + record.getChineselogo();
+            }else {
+                linkAddress = linkAddress + "?chineselogo=" + record.getChineselogo();
+            }
+            i = linkAddress.indexOf("?");
         }
         if (record.getChineselogos() != null && !"".equals(record.getChineselogos())){
             if (i > 0){
@@ -234,7 +228,6 @@ public class BasicinfromController {
         if (startEsaledate != null){
             if (!startEsaledate.equals("")){
                 startEsaledates = startEsaledate;
-//                startEsaledate = startEsaledate +" 00:00:00";
                 if (i > 0){
                     linkAddress = linkAddress + "&startEsaledates=" + startEsaledates;
                 }else {
@@ -246,7 +239,6 @@ public class BasicinfromController {
         if (endEsaledate != null){
             if (!endEsaledate.equals("")){
                 endEsaledates = endEsaledate;
-//                endEsaledate = endEsaledate +" 23:59:59";
                 if (i > 0){
                     linkAddress = linkAddress + "&endEsaledates=" + endEsaledates;
                 }else {
@@ -263,7 +255,6 @@ public class BasicinfromController {
                 endCreatetime = endCreatetime +" 23:59:59";
             }
         }
-        record.setState("1");
         Long totalCount = basicinformationService.findLimitCount(record,startCsaledate,endCsaledate,startEsaledate,endEsaledate,startCreatetime,endCreatetime);
         Page page = new Page(totalCount.intValue(),pageNow);
         List<Basicinformation> basicinformationList = basicinformationService.findbasicAll(record,page,startCsaledate,endCsaledate,startEsaledate,endEsaledate,startCreatetime,endCreatetime);
@@ -271,7 +262,7 @@ public class BasicinfromController {
         List<Brand> brandList = brandService.findAllList(brand);
         model.addAttribute("brandList",brandList);
         model.addAttribute("basicinformationList",basicinformationList);
-        model.addAttribute("basicinformation",basicinformation);
+        model.addAttribute("basicinformation",record);
         model.addAttribute("startCsaledate",startCsaledates);
         model.addAttribute("endCsaledate",endCsaledates);
         model.addAttribute("startEsaledate",startEsaledates);
@@ -289,7 +280,6 @@ public class BasicinfromController {
     */
     @RequestMapping("insertbasicinfromjsp")
     public String insertbasicinfromjsp(HttpServletRequest request,ModelMap model) {
-        //获取前台闯入的查询条件、和参数
         String id = request.getParameter("id");
         String pageNow = request.getParameter("pageNow");
         String brid = request.getParameter("brid");
@@ -306,30 +296,21 @@ public class BasicinfromController {
         String cofferprices = request.getParameter("cofferprices");
         String bscofferprice = request.getParameter("bscofferprice");
         String csaledates = request.getParameter("csaledate");
-
-        //初始化变量
         Brand brand = new Brand();
         List<Basicinformation> list = new ArrayList<Basicinformation>();
         Basicinformation basicinformation = new Basicinformation();
         SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy/MM/dd");
-        //根据条件查询数据
         List<Brand> brandList = brandService.findAllList(brand);
-
-        //判断id是否为空
         if (id != null && !"".equals(id)){
-            //获取ID查询
             basicinformation.setId(id);
-            //查询值
             list = basicinformationService.findAll(basicinformation);
-            if (list.size() > 0){//判断是否有值
-                //有值，获取值
+            if (list.size() > 0){
                 basicinformation = list.get(0);
                 try {
                     Calendar now = Calendar.getInstance();
                     //年份
                     String year = String.valueOf( now.get(Calendar.YEAR));
                     int nowDate = Integer.parseInt(year.substring(2,4));
-
                     //对国外发售日期进行格式化处理
                     if(basicinformation.getCsaledate() != null){
                         String csaledate = dateFormater.format(dateFormater.parse(basicinformation.getCsaledate()));
@@ -358,7 +339,6 @@ public class BasicinfromController {
                 }
             }
         }
-        //传查询条件到前台
         basicinformation.setState(request.getParameter("state"));
         model.addAttribute("basicinformation",basicinformation);
         model.addAttribute("brandList",brandList);
@@ -386,23 +366,21 @@ public class BasicinfromController {
      * @return
      */
     @RequestMapping("insertbasicinfrom")
-    public String insertbasicinfrom(HttpServletRequest request, Basicinformation basicinformation) {
+    public String insertbasicinfrom(Basicinformation basicinformation,HttpServletRequest request) {
         String state = request.getParameter("state");
-        //获取前台request转换为MultipartRequest
         MultipartRequest multipartRequest = (MultipartRequest) request;
-        //获取request中上传的值
         MultipartFile multipartFile = multipartRequest.getFile("file");
         MultipartFile multipartFiles = multipartRequest.getFile("files");
-        //判断是否上传照片
-        if (multipartFile.getOriginalFilename() != null && !"".equals(multipartFile.getOriginalFilename())) {
-            //存在，传入公共方法进行保存
-            basicinformation.setImgUrl(PictureUpload.localUploadImg(multipartFile,multipartFile.getOriginalFilename(), 0));
+        if(multipartFile != null){
+            if (multipartFile.getOriginalFilename() != null && !"".equals(multipartFile.getOriginalFilename())) {
+                basicinformation.setImgUrl(PictureUpload.localUploadImg(multipartFile,multipartFile.getOriginalFilename(), 0));
+            }
         }
-        if (multipartFiles.getOriginalFilename() != null && !"".equals(multipartFiles.getOriginalFilename())) {
-            basicinformation.setSmallImgUrl(PictureUpload.localUploadImg(multipartFiles,multipartFile.getOriginalFilename(), 1));
+        if(multipartFiles != null){
+            if (multipartFiles.getOriginalFilename() != null && !"".equals(multipartFiles.getOriginalFilename())) {
+                basicinformation.setSmallImgUrl(PictureUpload.localUploadImg(multipartFiles,multipartFile.getOriginalFilename(), 1));
+            }
         }
-
-        //获取查询条件的值
         String pageNow = request.getParameter("pageNow");
         String brid = request.getParameter("brid");
         String startCsaledate = request.getParameter("bstartCsaledate");
@@ -417,9 +395,8 @@ public class BasicinfromController {
         String cofferprice = request.getParameter("bcofferprice");
         String cofferprices = request.getParameter("bcofferprices");
         String bscofferprice = request.getParameter("bscofferprice");
-        String csaledates = request.getParameter("csaledate");
-
-        //判断并且拼接值
+        String csaledates = request.getParameter("bscsaledate");
+        //拼接参数
         String Url = "admin/shoellibraryfiles";
         String NewUrl = "/basicinfrom/shoeLibraryFile";
         if (pageNow != null && !"".equals(pageNow)){
@@ -490,30 +467,19 @@ public class BasicinfromController {
         int resultCount = 0;
         if (state != null && !"".equals(state)){
             basicinformation.setState(state);
-            resultCount = basicinformationService.updatesicinState(basicinformation);
+            resultCount = basicinformationService.updatebasicinfrom(basicinformation);
         }else {
             if (basicinformation.getId() == null || basicinformation.getId().equals("")) {
                 basicinformation.setState("1");
                 resultCount = basicinformationService.insertbasicinfrom(basicinformation);
             } else {
-                resultCount = basicinformationService.updatesicinState(basicinformation);
+                resultCount = basicinformationService.updatebasicinfrom(basicinformation);
             }
         }
         if (resultCount > 0){
             return "redirect:"+NewUrl;
         }
         return Url;
-    }
-
-    @RequestMapping("deletebasicinfrom")
-    public String deletebasicinfrom(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        int resultCount = 0;
-        resultCount = basicinformationService.deletebasicinfrom(id);
-        if (resultCount > 0){
-            return "redirect:/admin/shoeLibraryFile";
-        }
-        return "admin/shoellibraryfiles";
     }
 
     /**
@@ -540,30 +506,5 @@ public class BasicinfromController {
         String productName = request.getParameter("productName");
         List<Basicinformation> nameLists = basicinformationService.findGirard(productName);
         return nameLists;
-    }
-
-    //数据迁移（临时方法，待删）
-    @RequestMapping("moveData")
-    public void moveData(){
-        List<Basicinformation> baList = basicinformationService.moveData();
-        for (Basicinformation b : baList) {
-            Basicinformation basi = new Basicinformation();
-            basi.setName(b.getName());
-            List<Basicinformation> balist = basicinformationService.findAll(basi);
-            if(balist.size() != 0){
-                Basicinformation b2 = balist.get(0);
-                b2.setChineselogo(b.getChineselogo());
-                b2.setCofferprice(b.getCofferprice());
-                String csaledate = b.getCsaledate();
-                if(csaledate != null){
-                    String[] s  = csaledate.split(" ");
-                    b2.setCsaledate(s[0]);
-                }else{
-                    b2.setCsaledate(csaledate);
-                }
-
-                basicinformationService.updatesicinState(b2);
-            }
-        }
     }
 }
