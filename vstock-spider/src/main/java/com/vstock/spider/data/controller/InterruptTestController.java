@@ -24,6 +24,8 @@ public class InterruptTestController {
 
     private static Logger logger = Logger.getLogger(InterruptTestController.class);
 
+    private static Integer timeThread = Integer.parseInt(ConstUtil.getSpiderProperties().getProperty("timeThread"));
+
     @RequestMapping("index")
     public String index() throws InterruptedException {
         Integer numberThread = Integer.parseInt(ConstUtil.getSpiderProperties().getProperty("numberThread"));
@@ -69,7 +71,7 @@ public class InterruptTestController {
                 String name = i + "-" + numberThread;
                 MyThread t1 = new MyThread(name);
                 t1.start();
-                Thread.sleep(10000);
+                Thread.sleep(timeThread);
             }
         }else {
             MyThread t1 = new MyThread("MyThread1");
