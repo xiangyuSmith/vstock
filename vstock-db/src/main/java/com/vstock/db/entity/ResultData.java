@@ -12,6 +12,7 @@ public class ResultData implements Serializable {
     @Id
     private String id;
     private int bid;
+    private String basiciformationId;
     private String commodityDataId;
     private String storeId;
     private String storeName;
@@ -26,9 +27,10 @@ public class ResultData implements Serializable {
     public ResultData() {
     }
 
-    public ResultData(String id, int bid, String commodityDataId, String storeId, String storeName, String productName, String brand, String girard, String sizePrice, String transactionRecord, String createTime, String reservedField) {
+    public ResultData(String id, int bid, String basiciformationId, String commodityDataId, String storeId, String storeName, String productName, String brand, String girard, String sizePrice, String transactionRecord, String createTime, String reservedField) {
         this.id = id;
         this.bid = bid;
+        this.basiciformationId = basiciformationId;
         this.commodityDataId = commodityDataId;
         this.storeId = storeId;
         this.storeName = storeName;
@@ -135,5 +137,13 @@ public class ResultData implements Serializable {
 
     public void setReservedField(String reservedField) {
         this.reservedField = reservedField;
+    }
+
+    public String getBasiciformationId() {
+        return basiciformationId;
+    }
+
+    public void setBasiciformationId(String basiciformationId) {
+        this.basiciformationId = basiciformationId;
     }
 }

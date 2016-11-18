@@ -4,6 +4,7 @@ import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.ToolSpring;
 import com.vstock.db.entity.*;
+import com.vstock.spider.data.service.BasicinformationService;
 import com.vstock.spider.data.service.CommodityDataService;
 import com.vstock.spider.data.service.StockxStoreService;
 import org.apache.log4j.Logger;
@@ -65,6 +66,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
     public void process(Page page) {
         CommodityDataService commodityDataService = (CommodityDataService) ToolSpring.getBean("commodityData");
         StockxStoreService stockxStoreService = (StockxStoreService) ToolSpring.getBean("stockxStore");
+        BasicinformationService basicinformationService = (BasicinformationService) ToolSpring.getBean("basicinformation");
         //实例化bean保存数据
         TaobaoRepo taobaoRepo = new TaobaoRepo();
         //当前 url
@@ -238,11 +240,6 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                         iAttempts++;
                                     }
                                 }
-
-//                                if (rememberColorList.size() == 1 && rememberSizeMeList.size() == 1) {
-//                                    webElement2.click();
-//                                }
-
                                 //打印搜索到的页面
                                 getHtmlResult = webElement.getAttribute("outerHTML");
                                 size = Html.create(getHtmlResult).xpath("//div[@class='tb-skin']/dl[@class='J_Prop J_TMySizeProp tb-prop tb-clear  J_Prop_measurement ']/dd/ul/li[@class='tb-selected']/a/span/text()").toString();
@@ -481,20 +478,28 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                                     String keyStr = keys.next().toString();
                                                     //判断是否和字典匹配
                                                     if (dic.getColorly().equals(keyStr)) {
-                                                        resultData.setStoreId(stockxStore.getId());
-                                                        resultData.setStoreName(stockxStore.getName());
-                                                        resultData.setProductName(dic.getIdentification());
-                                                        resultData.setGirard(dic.getGirard());
-                                                        resultData.setSizePrice(jsonObject.get(keyStr).toString());
-                                                        resultData.setBrand(brand);
-                                                        resultData.setTransactionRecord(sales);
-                                                        resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                                        //保存最终结果
-                                                        int dataReultBool = commodityDataService.saveResultDatas(resultData);
-                                                        if (dataReultBool == 1) {
-                                                            logger.info("save final result data success ! ! ! ");
-                                                        } else {
-                                                            logger.error("save final result data Error ! ! ! ");
+                                                        //从鞋库取数据
+                                                        Basicinformation b = new Basicinformation();
+                                                        b.setName(stockxStore.getName());
+                                                        List<Basicinformation> baciList = basicinformationService.findAll(b);
+                                                        //基于鞋库保存数据
+                                                        if(baciList.size() > 0){
+                                                            resultData.setBasiciformationId(baciList.get(0).getId());
+                                                            resultData.setStoreId(stockxStore.getId());
+                                                            resultData.setStoreName(stockxStore.getName());
+                                                            resultData.setProductName(dic.getIdentification());
+                                                            resultData.setGirard(dic.getGirard());
+                                                            resultData.setSizePrice(jsonObject.get(keyStr).toString());
+                                                            resultData.setBrand(brand);
+                                                            resultData.setTransactionRecord(sales);
+                                                            resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
+                                                            //保存最终结果
+                                                            int dataReultBool = commodityDataService.saveResultDatas(resultData);
+                                                            if (dataReultBool == 1) {
+                                                                logger.info("save final result data success ! ! ! ");
+                                                            } else {
+                                                                logger.error("save final result data Error ! ! ! ");
+                                                            }
                                                         }
                                                     }
                                                 }
