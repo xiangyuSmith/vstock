@@ -480,7 +480,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                                     if (dic.getColorly().equals(keyStr)) {
                                                         //从鞋库取数据
                                                         Basicinformation b = new Basicinformation();
-                                                        b.setName(stockxStore.getName());
+                                                        b.setName(dic.getIdentification());
                                                         List<Basicinformation> baciList = basicinformationService.findAll(b);
                                                         //基于鞋库保存数据
                                                         if(baciList.size() > 0){
