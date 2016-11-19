@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/top.jsp"%>
-<%-- 传入参数时用 <jsp:param name="parameterName" value="{parameterValue | EL表达式 }" />--%>
 <style type="text/css">
     .am-g{
         padding-bottom: 15px;
@@ -125,7 +124,7 @@
             var footage = $(":checkbox:checked").closest('tr').find('td:eq(1)').map(function(){return this.innerHTML}).get().join();
             $.ajax({
                 type: 'POST',
-                url: '/stockx/dataCore/findLineGraph',
+                url: '/dataCore/findLineGraph',
                 dataType: 'json',
                 data: {
                     "footage": footage,

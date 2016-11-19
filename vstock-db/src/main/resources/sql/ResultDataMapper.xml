@@ -83,7 +83,7 @@
                 and productName like CONCAT('%',#{resultData.productName,jdbcType=VARCHAR},'%')
             </if>
             <if test="resultData.sizePrice != null and resultData.sizePrice != ''">
-                and sizePrice = #{resultData.sizePrice,jdbcType=VARCHAR}
+                and sizePrice like CONCAT('%',#{resultData.sizePrice,jdbcType=VARCHAR},'%')
             </if>
             <if test="resultData.transactionRecord != null and resultData.transactionRecord != ''">
                 and transactionRecord = #{resultData.transactionRecord,jdbcType=VARCHAR}
@@ -158,7 +158,7 @@
                 and productName like CONCAT('%',#{productName,jdbcType=VARCHAR},'%')
             </if>
             <if test="sizePrice != null and sizePrice != ''">
-                and sizePrice = #{sizePrice,jdbcType=VARCHAR}
+                and sizePrice like CONCAT('%',#{sizePrice,jdbcType=VARCHAR},'%')
             </if>
             <if test="transactionRecord != null and transactionRecord != ''">
                 and transactionRecord = #{transactionRecord,jdbcType=VARCHAR}

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IResultDataFactory">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.ResultDataFactory">
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="commodityDataId" property="commodityDataId" jdbcType="VARCHAR" />
+        <result column="basiciformationId" property="basiciformationId" jdbcType="VARCHAR" />
+        <result column="productName" property="productName" jdbcType="VARCHAR" />
+        <result column="brand" property="brand" jdbcType="VARCHAR" />
+        <result column="girard" property="girard" jdbcType="VARCHAR" />
+        <result column="sizePrice" property="sizePrice" jdbcType="VARCHAR" />
+        <result column="transactionRecord" property="transactionRecord" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="VARCHAR" />
+        <result column="countTransactionRecord" property="countTransactionRecord" jdbcType="VARCHAR" />
+        <result column="difference" property="difference" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND id = #{id,jdbcType=DECIMAL}
+            </if>
+            <if test="commodityDataId != null and commodityDataId != ''">
+                and commodityDataId = #{commodityDataId,jdbcType=DECIMAL}
+            </if>
+            <if test="basiciformationId != null and basiciformationId != ''">
+                and basiciformationId = #{basiciformationId,jdbcType=DECIMAL}
+            </if>
+            <if test="productName != null and productName != ''">
+                and productName = #{productName,jdbcType=VARCHAR}
+            </if>
+            <if test="brand != null and brand != ''">
+                and brand = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="girard != null and girard != ''">
+                and girard = #{girard,jdbcType=VARCHAR}
+            </if>
+            <if test="sizePrice != null and sizePrice != ''">
+                and sizePrice = #{sizePrice,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionRecord != null and transactionRecord != ''">
+                and transactionRecord = #{transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and createTime = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="countTransactionRecord != null and countTransactionRecord != ''">
+                and countTransactionRecord = #{countTransactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="difference != null and difference != ''">
+                and difference = #{difference,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND id = #{obj.id,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.commodityDataId != null and obj.commodityDataId != ''">
+                AND commodityDataId = #{obj.commodityDataId,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.basiciformationId != null and obj.basiciformationId != ''">
+                AND basiciformationId = #{obj.basiciformationId,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.productName != null and obj.productName != ''">
+                AND productName = #{obj.productName,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.brand != null and obj.brand != ''">
+                AND brand = #{obj.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.girard != null and obj.girard != ''">
+                and girard = #{obj.girard,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.sizePrice != null and obj.sizePrice != ''">
+                AND sizePrice = #{obj.sizePrice,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.transactionRecord != null and obj.transactionRecord != ''">
+                AND transactionRecord = #{obj.transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createTime != null and obj.createTime != ''">
+                AND createTime = #{obj.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.countTransactionRecord != null and obj.countTransactionRecord != ''">
+                AND countTransactionRecord = #{obj.countTransactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.difference != null and obj.difference != ''">
+                AND difference = #{obj.difference,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                and id = #{id,jdbcType=DECIMAL}
+            </if>
+            <if test="commodityDataId != null and commodityDataId != ''">
+                and commodityDataId = #{commodityDataId,jdbcType=DECIMAL}
+            </if>
+            <if test="basiciformationId != null and basiciformationId != ''">
+                and basiciformationId = #{basiciformationId,jdbcType=DECIMAL}
+            </if>
+            <if test="productName != null and productName != ''">
+                and productName LIKE CONCAT('%',#{productName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="brand != null and brand != ''">
+                and brand LIKE CONCAT('%',#{brand,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="girard != null and girard != ''">
+                and girard LIKE CONCAT('%',#{girard,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sizePrice != null and sizePrice != ''">
+                and sizePrice LIKE CONCAT('%',#{sizePrice,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="transactionRecord != null and transactionRecord != ''">
+                and transactionRecord LIKE CONCAT('%',#{transactionRecord,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and createTime = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="countTransactionRecord != null and countTransactionRecord != ''">
+                and countTransactionRecord LIKE CONCAT('%',#{countTransactionRecord,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="difference != null and difference != ''">
+                and difference LIKE CONCAT('%',#{difference,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                and id = #{obj.id,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.commodityDataId != null and obj.commodityDataId != ''">
+                and commodityDataId = #{obj.commodityDataId,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.basiciformationId != null and obj.basiciformationId != ''">
+                and basiciformationId = #{obj.basiciformationId,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.productName != null and obj.productName != ''">
+                and productName LIKE CONCAT('%',#{obj.productName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.brand != null and obj.brand != ''">
+                and brand LIKE CONCAT('%',#{obj.brand,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.girard != null and obj.girard != ''">
+                and girard LIKE CONCAT('%',#{obj.girard,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.sizePrice != null and obj.sizePrice != ''">
+                and sizePrice LIKE CONCAT('%',#{obj.sizePrice,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.transactionRecord != null and obj.transactionRecord != ''">
+                and transactionRecord LIKE CONCAT('%',#{obj.transactionRecord,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.createTime != null and obj.createTime != ''">
+                and createTime = #{obj.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.countTransactionRecord != null and obj.countTransactionRecord != ''">
+                and countTransactionRecord LIKE CONCAT('%',#{obj.countTransactionRecord,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.difference != null and obj.difference != ''">
+                and difference LIKE CONCAT('%',#{obj.difference,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        id as id
+        , commodityDataId as commodityDataId
+        , basiciformationId as basiciformationId
+        , productName as productName
+        , brand as brand
+        ,girard as girard
+        , sizePrice as sizePrice
+        , transactionRecord as transactionRecord
+        , createTime as createTime
+        , countTransactionRecord as countTransactionRecord
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.ResultDataFactory" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM resultdata_factory
+        <include refid="SearchAllByPage_Where_Clause" />
+        <if test="startTime != null and startTime != ''">
+            AND createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND createTime &lt; #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY createTime DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="Integer">
+        SELECT COUNT(*) FROM resultdata_factory
+        <include refid="SearchAllByPage_Where_Clause" />
+        <if test="startTime != null and startTime != ''">
+            AND createTime &gt; #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND createTime 	&lt; #{endTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+</mapper>

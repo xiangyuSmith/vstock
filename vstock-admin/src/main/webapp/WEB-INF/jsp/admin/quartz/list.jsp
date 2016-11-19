@@ -1,13 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: administor
-  Date: 2016/5/11
-  Time: 10:43
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/top.jsp"%>
-<%-- 传入参数时用 <jsp:param name="parameterName" value="{parameterValue | EL表达式 }" />--%>
 <style type="text/css">
     .am-g{
         padding-bottom: 15px;
@@ -134,7 +126,7 @@
             var $this = $(this);
             var jobName = $this.attr("data-jobName");
             var jobGroup = $this.attr("data-jobGroup");
-            $.post("/stockx/quartz/stopTask",{
+            $.post("/quartz/stopTask",{
                 'jobName': jobName,
                 'jobGroup' : jobGroup
             },function(res){
@@ -149,11 +141,10 @@
 
         //绑定添加事件
         $("body").on("click","#save-data",function(){
-
             return;
             var storeName = $("#storeName").val();
             var storeUrl = $("#storeUrl").val();
-            $.post("/stockx/stockxStore/insert",{
+            $.post("/stockxStore/insert",{
                 'storeName': storeName,
                 'storeUrl' : storeUrl
             },function(res){
@@ -169,7 +160,7 @@
 
         //启动定时器时间
         $("#startD").click(function () {
-            $.post("/stockx/quartz/index",{
+            $.post("/quartz/index",{
             },function(res){
                 if (res.suc == "1"){
                     alert("启动成功");

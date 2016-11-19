@@ -25,4 +25,8 @@ public interface IResultDataFactory {
     Long getStoreResultDataCount(@Param("productName") String productName);
 
     int update(@Param(value = "productName") String productName, @Param(value = "productNameNew") String productNameNew);
+
+    List<ResultDataFactory> findAll(@Param("obj")ResultDataFactory record, @Param("startTime") String startTime, @Param("endTime") String endTime, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
+    int findCount(@Param("obj")ResultDataFactory record, @Param("startTime") String startTime, @Param("endTime") String endTime);
 }

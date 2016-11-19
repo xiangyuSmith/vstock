@@ -84,7 +84,7 @@
                                 <td>${re.sizePrice}</td>
                                 <td>${re.createTime}</td>
                                 <td>${re.reservedField}</td>
-                                <td><a href="/stockx/dataCore/getStoreTrend?storeName=${re.storeName}&productName=${re.productName}&footage=${footage}">详情</a></td>
+                                <td><a href="/dataCore/getStoreTrend?storeName=${re.storeName}&productName=${re.productName}&footage=${footage}">详情</a></td>
                             </tr>
                         </c:forEach>
                     </c:if>

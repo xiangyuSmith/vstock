@@ -548,4 +548,23 @@ public class DateUtils {
     private final static String DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private final static String FORMAT_14 = "yyyyMMddHHmmss";
+
+    /**
+     * 日期格式字符串转换成时间戳
+     * @param date_str 字符串日期
+     * @param format 如：yyyy-MM-dd HH:mm:ss
+     * @return
+     */
+    public static String date2TimeStamp(String date_str,String format){
+        try {
+            if("".equals(date_str)){
+                return "";
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            return String.valueOf(sdf.parse(date_str).getTime()/1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

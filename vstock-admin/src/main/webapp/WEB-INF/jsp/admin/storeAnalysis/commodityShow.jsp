@@ -1,13 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: administor
-  Date: 2016/5/11
-  Time: 10:43
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/top.jsp"%>
-<%-- 传入参数时用 <jsp:param name="parameterName" value="{parameterValue | EL表达式 }" />--%>
 <style type="text/css">
     .am-g{
         padding-bottom: 15px;
@@ -29,10 +21,10 @@
             <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">数据中心</strong> / <small>球鞋数据分析</small></div>
         </div>
         <div class="am-cf am-padding">
-            <form action="commodityData" class="am-form am-form-inline" method="post">
+            <form action="/dataCore/index" class="am-form am-form-inline" method="post">
                 <div class="xy-search">
                     <label>编号:</label>
-                    <div class="am-form-group"><input type="text" name="bids" placeholder="编号" value="<c:if test='${resultData.bid != 0}'>${resultData.bid}</c:if>"></div>
+                    <div class="am-form-group"><input type="text" name="basiciformationId" placeholder="编号" value="<c:if test='${resultData.basiciformationId != 0}'>${resultData.basiciformationId}</c:if>"></div>
                 </div>
                 <div class="xy-search">
                     <label>商品名称:</label>
@@ -62,7 +54,7 @@
             </form>
 
             <!--详细提交form表单-->
-            <form action="/stockx/dataCore/findMeasurement" method="post" id="details">
+            <form action="/dataCore/findMeasurement" method="post" id="details">
                 <input type="hidden" id="commid" name="id"/>
                 <input type="hidden" id="commodityName" name="commodityName"/>
             </form>
@@ -86,7 +78,7 @@
                     <c:if test="${not empty commodityDataList}">
                         <c:forEach items="${commodityDataList}" var="commodityData">
                             <tr>
-                                <td>${commodityData.bid}</td>
+                                <td>${commodityData.basiciformationId}</td>
                                 <td>${commodityData.productName}</td>
                                 <td>${commodityData.girard}</td>
                                 <td>${commodityData.countTransactionRecord}</td>

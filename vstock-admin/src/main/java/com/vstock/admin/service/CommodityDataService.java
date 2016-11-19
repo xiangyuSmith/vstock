@@ -1,10 +1,7 @@
 package com.vstock.admin.service;
 
-import com.vstock.db.dao.IDictionariesDao;
+import com.vstock.db.dao.*;
 import com.vstock.ext.util.DateUtils;
-import com.vstock.db.dao.ICommodityData;
-import com.vstock.db.dao.ICommodityDetail;
-import com.vstock.db.dao.IResultData;
 import com.vstock.db.entity.*;
 import com.vstock.ext.util.JsonTool;
 import com.vstock.ext.util.Page;
@@ -36,7 +33,59 @@ public class CommodityDataService {
     IResultData resultDataDao;
 
     @Autowired
+    IResultDataFactory resultDataFactoryDao;
+
+    @Autowired
     IDictionariesDao dictionariesDao;
+
+    /**
+     * 数据列表查询方法
+     * @param record
+     * @return
+     */
+    public List<ResultDataFactory> findResultDataFactoryAll(ResultDataFactory record, String startTime, String endTime, Page page){
+        return resultDataFactoryDao.findAll(record,startTime,endTime,page.getStartPos(),page.getPageSize());
+    }
+
+    /**
+     * 查询总数
+     * @param record
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public int findResultDataFactoryCount(ResultDataFactory record, String startTime, String endTime){
+        return resultDataFactoryDao.findCount(record,startTime,endTime);
+    }
+
+    /**
+     * 下一页查询条件封装
+     * @param linkAddress
+     * @param list
+     * @param record
+     * @return
+     */
+    public String linkAddress(String linkAddress, List<String> list, ResultDataFactory record){
+        if (list.size() > 0){
+            for (String strLink : list){
+                String[] strs = strLink.split("=");
+                linkAddress += strs[0] + strs[1];
+            }
+        }
+        if (StringUtil.isNotBlank(record.getBasiciformationId())) {
+            linkAddress += "&basiciformationId=" + record.getBasiciformationId();
+        }
+        if (StringUtil.isNotBlank(record.getCommodityDataId())) {
+            linkAddress += "&brand=" + record.getCommodityDataId();
+        }
+        if (StringUtil.isNotBlank(record.getProductName())) {
+            linkAddress += "&productName=" + record.getProductName();
+        }
+        if (StringUtil.isNotBlank(record.getGirard())) {
+            linkAddress += "&girard=" + record.getGirard();
+        }
+        return linkAddress;
+    }
 
     /**
      * 商品数据的新增方法
@@ -103,6 +152,10 @@ public class CommodityDataService {
 
     public List<CommodityDetail> findAllComm( CommodityDetail record,String createDateStart,String createDateEnd){
         return commodityDetailDao.findAllComm(record,createDateStart,createDateEnd);
+    }
+
+    public List<ResultData> findResultDataAll(ResultData record){
+        return resultDataDao.findResultDataAll(record);
     }
 
     /**
@@ -172,6 +225,17 @@ public class CommodityDataService {
      */
     public int saveResultDatas(ResultData resultData){
         return resultDataDao.insertresultData(resultData);
+    }
+
+    /**
+     * 根据时间区间查询
+     * @param record
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public List<ResultData> findResultDataTime(ResultData record, String startTime, String endTime){
+        return resultDataDao.findResultDataTime(record,startTime,endTime);
     }
 
     /**
@@ -794,14 +858,14 @@ public class CommodityDataService {
                                     " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                     " <td>" + string + "</td>\n" +
                                     " <td>" + comm.getAveragePrice() + "</td>\n" +
-                                    " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                    " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                     " </tr>");
                         }else {
                             return divTr.append("<tr>\n" +
                                     " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                     " <td>"+string+"</td>\n" +
                                     " <td>"+comm.getAveragePrice()+"</td>\n" +
-                                    " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                    " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                     " </tr>");
                         }
                     }else if ("5".equals(shoeCode)){
@@ -812,14 +876,14 @@ public class CommodityDataService {
                                             " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                             " <td>" + string + "</td>\n" +
                                             " <td>" + comm.getAveragePrice() + "</td>\n" +
-                                            " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                            " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                             " </tr>");
                                 }else {
                                     return divTr.append("<tr>\n" +
                                             " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                             " <td>"+string+"</td>\n" +
                                             " <td>"+comm.getAveragePrice()+"</td>\n" +
-                                            " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                            " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                             " </tr>");
                                 }
                             }else {
@@ -837,14 +901,14 @@ public class CommodityDataService {
                                             " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                             " <td>" + string + "</td>\n" +
                                             " <td>" + comm.getAveragePrice() + "</td>\n" +
-                                            " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                            " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                             " </tr>");
                                 }else {
                                     return divTr.append("<tr>\n" +
                                             " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                             " <td>"+string+"</td>\n" +
                                             " <td>"+comm.getAveragePrice()+"</td>\n" +
-                                            " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                            " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                             " </tr>");
                                 }
                             }else {
@@ -863,14 +927,14 @@ public class CommodityDataService {
                                 " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                 " <td>" + string + "</td>\n" +
                                 " <td>" + comm.getAveragePrice() + "</td>\n" +
-                                " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                 " </tr>");
                     }else {
                         return divTr.append("<tr>\n" +
                                 " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                                 " <td>" + string + "</td>\n" +
                                 " <td>" + comm.getAveragePrice() + "</td>\n" +
-                                " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                                " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                                 " </tr>");
                     }
                 }
@@ -880,19 +944,140 @@ public class CommodityDataService {
                             " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                             " <td>" + string + "</td>\n" +
                             " <td>" + comm.getAveragePrice() + "</td>\n" +
-                            " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                            " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                             " </tr>");
                 }else {
                     return divTr.append("<tr>\n" +
                             " <td><input class=\"lineGraph\" type=\"checkbox\"/></td>\n" +
                             " <td>"+string+"</td>\n" +
                             " <td>"+comm.getAveragePrice()+"</td>\n" +
-                            " <td><a href=\"/stockx/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
+                            " <td><a href=\"/dataCore/storeDataAnalysis?shopName=" + comm.getShopName() + "&footage=" + string + "\">详情</a></td>\n" +
                             " </tr>");
                 }
             }
         }
         return divTr;
+    }
+
+    public Map<String, Object> findLineGraph(ResultData record, String colorly, String footage, Integer dateTime){
+        Map<String, Object> params = new HashMap<String, Object>();
+        List<ResultData> resultDataList = new ArrayList<ResultData>();
+//        List<CommodityDetailys> commList = new ArrayList<CommodityDetailys>();
+        Map<String, Map<String, CommodityDetailys>> sizeMap = new HashMap<String, Map<String, CommodityDetailys>>();
+        String str = "";
+        String[] arr = new String[]{};
+        //获取当前时间
+        Date date = new Date();
+        //尺码数量
+        int sizeNum = 0;
+        //判断鞋码是否为空
+        if (footage != null && !"".equals(footage)) {
+            //分割获取值
+            String[] strfootage = footage.split(",");
+            sizeNum = strfootage.length;
+            for (int x = 0; x < sizeNum; x++) {
+                record.setSizePrice(strfootage[x]);
+                List<List> list = new ArrayList<List>();
+                //获取一个月前的时间
+                Date thdate = DateUtils.wantToLose(date, dateTime);
+                for (int i = 0; i <= dateTime; i++) {
+                    //拼接日期
+                    String startTime = DateUtils.dateToString(DateUtils.addDaysToDate(thdate, i), "yyyy-MM-dd") + " 00:00:00";
+                    String endTime = DateUtils.dateToString(DateUtils.addDaysToDate(thdate, i), "yyyy-MM-dd") + " 23:59:59";
+                    //查询所有数据
+                    resultDataList = this.findResultDataTime(record, startTime, endTime);
+                    //判断是否存在值
+                    if (resultDataList.size() != 0) {//存在
+                        List<ResultData> resultDatas = this.verificationDateShoeCode(resultDataList,record.getSizePrice());
+                        if (resultDatas.size() != 0) {
+                            //添加并记录时间
+                            list.add(resultDataList);
+                            str = str + "," + DateUtils.dateToString(DateUtils.addDaysToDate(thdate, i)).substring(6, 10);
+                        }
+                    }
+                }
+                if (str.length() > 1) {
+                    //X轴日期存入数组
+                    arr = str.substring(1, str.length()).split(",");
+                    arr = StringUtil.array_unique(arr);
+                    Arrays.sort(arr);
+                }
+
+                Map<String, CommodityDetailys> priceMap = new HashMap<String, CommodityDetailys>();
+                String createDate = "";
+
+                //初始化变量，并且获取尺码颜色的值
+                CommodityDetailys commodityDetailys = new CommodityDetailys();
+                commodityDetailys.setFootage(strfootage[x]);
+                commodityDetailys.setColorly(colorly);
+                if (list.size() > 0) {
+                    //循环取值
+                    for (List<ResultData> commlist : list) {
+                        //初始化变量用于结果算法
+                        int a = 0;
+                        Double price = Double.parseDouble("0");
+                        CommodityDetailys commodityDetailysT = new CommodityDetailys();
+                        //遍历取值
+                        for (int y = 0; y < commlist.size(); y++) {
+                            ResultData resultData = commlist.get(y);
+                            float b = StringUtil.getSimilarityRatio(resultData.getProductName(), resultData.getProductName());
+                            if (b == 1.0) {
+                                //去掉鞋码前面{}
+//                                String averagePrice = resultData.getSizePrice().substring(1, resultData.getSizePrice().length() - 1);
+                                //截取，左右的值
+                                String[] strArr = resultData.getSizePrice().split(",");
+                                int i = 0;
+                                List<String[]> sizapricelist = new ArrayList<String[]>();
+                                String[] sizePrices = new String[]{};
+                                //循环取鞋码价格
+                                for (int z = 0; z < strArr.length; z++) {
+                                    String[] sizePrice = strArr[z].split("=");
+                                    if (!"".equals(commodityDetailys.getFootage()) && commodityDetailys.getFootage() != null) {
+                                        sizePrice = this.taobaoShoeCodeRule(sizePrice, commodityDetailys.getFootage());
+                                        //判断尺码是否相等
+                                        if (sizePrice[0].contains(commodityDetailys.getFootage())) {
+                                            i++;
+                                            sizePrices = sizePrice;
+                                            sizapricelist.add(sizePrice);
+                                        }
+                                    }
+                                }
+                                if (i >= 1) {
+                                    String[] strings = this.judgeprice(sizapricelist, commodityDetailys);
+                                    if (strings.length > 1) {
+                                        a = a + Integer.parseInt(strings[1]);
+                                        price = price + Double.parseDouble(strings[0]);
+                                        createDate = resultData.getCreateTime();
+                                    }
+                                }
+                            }
+                        }
+                        if (price > 0) {
+                            price = price / a;
+                            commodityDetailys.setAveragePrice(price.toString());
+                            String shopName = commodityDetailys.getShopName();
+                            String createDates = commodityDetailys.getCreateDate();
+                            String footages = commodityDetailys.getFootage();
+                            String averagePrice = commodityDetailys.getAveragePrice();
+                            String colorlys = commodityDetailys.getColorly();
+                            commodityDetailysT.setShopName(shopName);
+                            commodityDetailysT.setCreateDate(createDates);
+                            commodityDetailysT.setFootage(footages);
+                            commodityDetailysT.setAveragePrice(averagePrice);
+                            commodityDetailysT.setColorly(colorlys);
+                            priceMap.put(createDate,commodityDetailysT);
+                        }
+                    }
+                }
+//                else {
+//                    commodityDetailys.setAveragePrice(price.toString());
+//                    priceMap.put(createDate,commodityDetailys);
+//                }
+                sizeMap.put(record.getSizePrice(),priceMap);
+            }
+        }
+        params = this.shoeCodeChartMosaic(sizeMap,arr);
+        return params;
     }
 
     public String[] judgeprice(List<String[]> sizePriceList, CommodityDetailys commodityDetailys){
@@ -1124,6 +1309,12 @@ public class CommodityDataService {
         return  reData;
     }
 
+    /**
+     * 分割获取鞋码信息
+     * @param sizePriceList
+     * @param shoeSize
+     * @return
+     */
     public String shopSize(List<String[]> sizePriceList, String shoeSize){
         int i = 0;
         Double parseDouble = Double.parseDouble("0");
@@ -1182,107 +1373,112 @@ public class CommodityDataService {
         return str;
     }
 
-//    public List<CommodityDetailys> shoesCodeInformation(ResultData record){
-//        //初始化变量
-//        List<ResultData> resultDatalist = new ArrayList<ResultData>();
-//        List<CommodityDetailys> commodityDetailysList = new ArrayList<CommodityDetailys>();
-//        DecimalFormat df = new DecimalFormat("#.00");
-//        String[] shoeSize = new String[]{"35","35.5","36","36.5","37","37.5","38","38.5","39","39.5","40","40.5","41","41.5",
-//                "42","42.5","43","43.5","44","44.5","45","45.5","46","46.5","47","47.5","48","48.5"};
-//
-//        //循环获取固定的鞋码
-//        for (String shoeSizes : shoeSize) {
-//            record.setSizePrice(shoeSizes);
-//            //查询数据
-//            resultDatalist = this.findResultDataAll(record);
-//            Double price = Double.parseDouble("0");
-//            int z = 0;
-//            if (resultDatalist.size() > 0) {
-//                String nowDate = "";
-//                for (int y = 0; y < resultDatalist.size(); y++) {
-//                    ResultData resultData = resultDatalist.get(resultDatalist.size() - (y + 1));
-//                    if (!"".equals(nowDate)) {
-//                        String createDate = DateUtils.compareDateDown(resultData.getCreateTime(),nowDate);
-//                        if (createDate.equals(nowDate)) {
-//                            //去掉前后{}
-//                            String averagePrices = resultData.getSizePrice().substring(1, resultData.getSizePrice().length() - 1);
-//                            //根据逗号分隔获取鞋码对应的价格
-//                            String[] strarr = averagePrices.split(",");
-//                            List<String[]> list = new ArrayList<String[]>();
-//                            String[] sizePrices = new String[]{};
-//                            int i = 0;
-//                            //循环获取鞋码和价格
-//                            for (int x = 0; x < strarr.length; x++) {
-//                                //根据等于分隔分别获取鞋码和价格
-//                                String[] sizePrice = strarr[x].split("=");
-//                                sizePrice = this.taobaoShoeCodeRule(sizePrice, shoeSizes);
-//                                //判断是否包含鞋码
-//                                if (sizePrice[0].contains(shoeSizes)) {
-//                                    i++;
-//                                    sizePrices = sizePrice;
-//                                    list.add(sizePrices);
-//                                    record.setGirard(resultData.getGirard());
-//                                }
-//                            }
-//                            if (i >= 1) {
-//                                String str = this.shopSize(list, shoeSizes);
-//                                String[] strings = str.split("=");
-//                                if (Double.parseDouble(strings[0]) > 0) {
-//                                    z = z + Integer.parseInt(strings[1]);
-//                                    price = price + Double.parseDouble(strings[0]);
-//                                }
-//                            } else {
-//                                price = price + Double.parseDouble("0");
-//                            }
-//                        }
-//                    }else {
-//                        //去掉前后{}
-//                        String averagePrices = resultData.getSizePrice().substring(1, resultData.getSizePrice().length() - 1);
-//                        //根据逗号分隔获取鞋码对应的价格
-//                        String[] strarr = averagePrices.split(",");
-//                        List<String[]> list = new ArrayList<String[]>();
-//                        String[] sizePrices = new String[]{};
-//                        int i = 0;
-//                        //循环获取鞋码和价格
-//                        for (int x = 0; x < strarr.length; x++) {
-//                            //根据等于分隔分别获取鞋码和价格
-//                            String[] sizePrice = strarr[x].split("=");
-//                            sizePrice = this.taobaoShoeCodeRule(sizePrice, shoeSizes);
-//                            //判断是否包含鞋码
-//                            if (sizePrice[0].contains(shoeSizes)) {
-//                                i++;
-//                                sizePrices = sizePrice;
-//                                list.add(sizePrices);
-//                                record.setGirard(resultData.getGirard());
-//                            }
-//                        }
-//                        if (i >= 1) {
-//                            String str = this.shopSize(list, shoeSizes);
-//                            String[] strings = str.split("=");
-//                            if (Double.parseDouble(strings[0]) > 0) {
-//                                z = z + Integer.parseInt(strings[1]);
-//                                price = price + Double.parseDouble(strings[0]);
-//                                nowDate = resultData.getCreateTime().substring(0,10) + " 00:00:00";
-//                            }
-//                        } else {
-//                            price = price + Double.parseDouble("0");
-//                        }
-//                    }
-//                }
-//                if (price != 0) {
-//                    CommodityDetailys commodityDetailys = new CommodityDetailys();
-//                    price = price / z;
-//                    commodityDetailys.setShopName(record.getProductName());
-//                    commodityDetailys.setCreateDate(nowDate);
-//                    commodityDetailys.setFootage(shoeSizes);
-//                    commodityDetailys.setColorly(record.getGirard());
-//                    commodityDetailys.setAveragePrice(df.format(price));
-//                    commodityDetailysList.add(commodityDetailys);
-//                }
-//            }
-//        }
-//        return  commodityDetailysList;
-//    }
+    /**
+     * 查询尺码数据
+     * @param record
+     * @return
+     */
+    public List<CommodityDetailys> shoesCodeInformation(ResultData record){
+        //初始化变量
+        List<ResultData> resultDatalist = new ArrayList<ResultData>();
+        List<CommodityDetailys> commodityDetailysList = new ArrayList<CommodityDetailys>();
+        DecimalFormat df = new DecimalFormat("#.00");
+        String[] shoeSize = new String[]{"35","35.5","36","36.5","37","37.5","38","38.5","39","39.5","40","40.5","41","41.5",
+                "42","42.5","43","43.5","44","44.5","45","45.5","46","46.5","47","47.5","48","48.5"};
+
+        //循环获取固定的鞋码
+        for (String shoeSizes : shoeSize) {
+            record.setSizePrice(shoeSizes);
+            //查询数据
+            resultDatalist = this.findResultDataAll(record);
+            Double price = Double.parseDouble("0");
+            int z = 0;
+            if (resultDatalist.size() > 0) {
+                String nowDate = "";
+                for (int y = 0; y < resultDatalist.size(); y++) {
+                    ResultData resultData = resultDatalist.get(resultDatalist.size() - (y + 1));
+                    if (!"".equals(nowDate)) {
+                        String createDate = DateUtils.compareDateDown(resultData.getCreateTime(),nowDate);
+                        if (createDate.equals(nowDate)) {
+                            //去掉前后{}
+                            String averagePrices = resultData.getSizePrice().substring(1, resultData.getSizePrice().length() - 1);
+                            //根据逗号分隔获取鞋码对应的价格
+                            String[] strarr = averagePrices.split(",");
+                            List<String[]> list = new ArrayList<String[]>();
+                            String[] sizePrices = new String[]{};
+                            int i = 0;
+                            //循环获取鞋码和价格
+                            for (int x = 0; x < strarr.length; x++) {
+                                //根据等于分隔分别获取鞋码和价格
+                                String[] sizePrice = strarr[x].split("=");
+                                sizePrice = this.taobaoShoeCodeRule(sizePrice, shoeSizes);
+                                //判断是否包含鞋码
+                                if (sizePrice[0].contains(shoeSizes)) {
+                                    i++;
+                                    sizePrices = sizePrice;
+                                    list.add(sizePrices);
+                                    record.setGirard(resultData.getGirard());
+                                }
+                            }
+                            if (i >= 1) {
+                                String str = this.shopSize(list, shoeSizes);
+                                String[] strings = str.split("=");
+                                if (Double.parseDouble(strings[0]) > 0) {
+                                    z = z + Integer.parseInt(strings[1]);
+                                    price = price + Double.parseDouble(strings[0]);
+                                }
+                            } else {
+                                price = price + Double.parseDouble("0");
+                            }
+                        }
+                    }else {
+                        //去掉前后{}
+                        String averagePrices = resultData.getSizePrice().substring(1, resultData.getSizePrice().length() - 1);
+                        //根据逗号分隔获取鞋码对应的价格
+                        String[] strarr = averagePrices.split(",");
+                        List<String[]> list = new ArrayList<String[]>();
+                        String[] sizePrices = new String[]{};
+                        int i = 0;
+                        //循环获取鞋码和价格
+                        for (int x = 0; x < strarr.length; x++) {
+                            //根据等于分隔分别获取鞋码和价格
+                            String[] sizePrice = strarr[x].split("=");
+                            sizePrice = this.taobaoShoeCodeRule(sizePrice, shoeSizes);
+                            //判断是否包含鞋码
+                            if (sizePrice[0].contains(shoeSizes)) {
+                                i++;
+                                sizePrices = sizePrice;
+                                list.add(sizePrices);
+                                record.setGirard(resultData.getGirard());
+                            }
+                        }
+                        if (i >= 1) {
+                            String str = this.shopSize(list, shoeSizes);
+                            String[] strings = str.split("=");
+                            if (Double.parseDouble(strings[0]) > 0) {
+                                z = z + Integer.parseInt(strings[1]);
+                                price = price + Double.parseDouble(strings[0]);
+                                nowDate = resultData.getCreateTime().substring(0,10) + " 00:00:00";
+                            }
+                        } else {
+                            price = price + Double.parseDouble("0");
+                        }
+                    }
+                }
+                if (price != 0) {
+                    CommodityDetailys commodityDetailys = new CommodityDetailys();
+                    price = price / z;
+                    commodityDetailys.setShopName(record.getProductName());
+                    commodityDetailys.setCreateDate(nowDate);
+                    commodityDetailys.setFootage(shoeSizes);
+                    commodityDetailys.setColorly(record.getGirard());
+                    commodityDetailys.setAveragePrice(df.format(price));
+                    commodityDetailysList.add(commodityDetailys);
+                }
+            }
+        }
+        return  commodityDetailysList;
+    }
 
     //淘宝店铺鞋子鞋码匹配规则
     public String[] taobaoShoeCodeRule(String[] str,String shoeSizes){
@@ -1442,4 +1638,352 @@ public class CommodityDataService {
         params.put("arr", arr);
         return params;
     }
+
+    /**
+     * 店铺鞋码价格趋势分析
+     * @param nameSet
+     * @param startTime
+     * @param endTime
+     * @param storeName
+     * @param footage
+     * @return
+     */
+    public List<ResultData> storeDataAnalysis(Set<String> nameSet,
+                                              String startTime, String endTime, String storeName, String footage){
+        List<ResultData> resultDatalist = new ArrayList<ResultData>();
+        if(!"".equals(startTime)){
+            startTime = DateUtils.dateTime(startTime);
+            startTime = startTime + " 00:00:00";
+        }
+        if(!"".equals(endTime)){
+            endTime = DateUtils.dateTime(endTime);
+            endTime = endTime + " 23:59:59";
+        }
+        String statUninx = DateUtils.date2TimeStamp(startTime,"yyyy-MM-dd HH:mm:ss");
+        String endUninx = DateUtils.date2TimeStamp(endTime,"yyyy-MM-dd HH:mm:ss");
+        for (String stockxStore : nameSet) {
+            ResultData resultDataes = new ResultData();
+            resultDataes.setProductName(storeName);
+            resultDataes.setStoreName(stockxStore);
+            //根据商品名查询所有结果
+            List<ResultData> reslist = this.findResultDataAll(resultDataes);
+            String nowDate = "";
+            for (int x = 0; reslist.size() > x ; x++) {
+                ResultData res = reslist.get(reslist.size() - (x+1));
+                if (!"".equals(nowDate)) {
+                    String createDate = DateUtils.compareDateDown(nowDate,res.getCreateTime());
+                    if (nowDate.equals(createDate)) {
+                        String sizePric = res.getSizePrice().substring(1, res.getSizePrice().length() - 1);
+                        String[] strArr = sizePric.split(",");
+                        List<String[]> list = new ArrayList<String[]>();
+                        String[] sizePrices = new String[]{};
+                        int i = 0;
+                        //循环取鞋码价格
+                        for (int z = 0; z < strArr.length; z++) {
+                            String[] sizePrice = strArr[z].split("=");
+                            sizePrice = this.taobaoShoeCodeRule(sizePrice, footage);
+                            //判断尺码是否相等
+                            if (sizePrice[0].contains(footage)) {
+                                sizePrices = sizePrice;
+                                i++;
+                                list.add(sizePrices);
+                            }
+                        }
+                        if (i >= 1) {
+                            List<ResultData> resultDataListxs = this.shopName(list, res, footage);
+                            for (ResultData resultData : resultDataListxs) {
+                                if (resultData != null) {
+                                    int ifNum = 0;
+                                    for(ResultData re : resultDatalist){
+                                        if(re.getStoreName().equals(resultData.getStoreName()) && re.getSizePrice().equals(resultData.getSizePrice())){
+                                            ifNum = 1;
+                                        }
+                                    }
+                                    if(ifNum != 1){
+                                        //判断时间statUninx endUninx
+                                        Long statUninxL = Long.valueOf(0);
+                                        Long endUninxL = Long.valueOf(2099999999);
+                                        if(!"".equals(statUninx)){
+                                            statUninxL = Long.parseLong(statUninx);
+                                        }
+                                        if(!"".equals(endUninx)){
+                                            endUninxL = Long.parseLong(endUninx);
+                                        }
+                                        Long nowDateUninx = Long.parseLong(DateUtils.date2TimeStamp(resultData.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
+                                        if(statUninxL < nowDateUninx && nowDateUninx < endUninxL){
+                                            resultDatalist.add(resultData);
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }else {
+                    String sizePric = res.getSizePrice().substring(1, res.getSizePrice().length() - 1);
+                    String[] strArr = sizePric.split(",");
+                    List<String[]> list = new ArrayList<String[]>();
+                    String[] sizePrices = new String[]{};
+                    int i = 0;
+                    //循环取鞋码价格
+                    for (int z = 0; z < strArr.length; z++) {
+                        String[] sizePrice = strArr[z].split("=");
+                        sizePrice = this.taobaoShoeCodeRule(sizePrice, footage);
+                        //判断尺码是否相等
+                        if (sizePrice[0].contains(footage)) {
+                            sizePrices = sizePrice;
+                            i++;
+                            list.add(sizePrices);
+                        }
+                    }
+                    if (i >= 1) {
+                        List<ResultData> resultDataList = this.shopName(list, res, footage);
+                        for (ResultData resultData : resultDataList) {
+                            if (resultData != null) {
+                                //判断时间statUninx endUninx
+                                Long statUninxL = Long.valueOf(0);
+                                Long endUninxL = Long.valueOf(2099999999);
+                                if(!"".equals(statUninx)){
+                                    statUninxL = Long.parseLong(statUninx);
+                                }
+                                if(!"".equals(endUninx)){
+                                    endUninxL = Long.parseLong(endUninx);
+                                }
+                                Long nowDateUninx = Long.parseLong(DateUtils.date2TimeStamp(resultData.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
+                                if(statUninxL < nowDateUninx && nowDateUninx < endUninxL){
+                                    resultDatalist.add(resultData);
+                                }
+                                nowDate = res.getCreateTime().substring(0,10) +" 00:00:00";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return resultDatalist;
+    }
+
+    /**
+     * 店铺尺码月趋势
+     * @param record
+     * @param footage
+     * @param statUninx
+     * @param endUninx
+     * @return
+     */
+    public List<ResultData> getResultDataList(ResultData record,String footage,String statUninx,String endUninx){
+        List<ResultData> resultDatalist = new ArrayList<ResultData>();
+        List<ResultData> reslist = this.findResultDataAll(record);
+        String nowDate = "";
+        for (int x = 0; reslist.size() > x ; x++) {
+            ResultData res = reslist.get(reslist.size() - (x+1));
+            if (!"".equals(nowDate)) {
+                String createDate = DateUtils.compareDateDown(nowDate,res.getCreateTime());
+                if (nowDate.equals(createDate)) {
+                    String sizePric = res.getSizePrice().substring(1, res.getSizePrice().length() - 1);
+                    String[] strArr = sizePric.split(",");
+                    List<String[]> list = new ArrayList<String[]>();
+                    String[] sizePrices = new String[]{};
+                    int i = 0;
+                    //循环取鞋码价格
+                    for (int z = 0; z < strArr.length; z++) {
+                        String[] sizePrice = strArr[z].split("=");
+                        sizePrice = this.taobaoShoeCodeRule(sizePrice, footage);
+                        //判断尺码是否相等
+                        if (sizePrice[0].contains(footage)) {
+                            sizePrices = sizePrice;
+                            i++;
+                            list.add(sizePrices);
+                        }
+                    }
+                    if (i >= 1) {
+                        List<ResultData> resultDataListxs = this.shopName(list, res, footage);
+                        for (ResultData resultData : resultDataListxs) {
+                            if (resultData != null) {
+                                int ifNum = 0;
+                                for(ResultData re : resultDatalist){
+                                    if(re.getStoreName().equals(resultData.getStoreName()) && re.getSizePrice().equals(resultData.getSizePrice())){
+                                        ifNum = 1;
+                                    }
+                                }
+                                if(ifNum != 1){
+                                    resultDatalist.add(resultData);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }else {
+                String sizePric = res.getSizePrice().substring(1, res.getSizePrice().length() - 1);
+                String[] strArr = sizePric.split(",");
+                List<String[]> list = new ArrayList<String[]>();
+                String[] sizePrices = new String[]{};
+                int i = 0;
+                //循环取鞋码价格
+                for (int z = 0; z < strArr.length; z++) {
+                    String[] sizePrice = strArr[z].split("=");
+                    sizePrice = this.taobaoShoeCodeRule(sizePrice, footage);
+                    //判断尺码是否相等
+                    if (sizePrice[0].contains(footage)) {
+                        sizePrices = sizePrice;
+                        i++;
+                        list.add(sizePrices);
+                    }
+                }
+                if (i >= 1) {
+                    List<ResultData> resultDataList = this.shopName(list, res, footage);
+                    for (ResultData resultDatax2 : resultDataList) {
+                        if (resultDatax2 != null) {
+                            resultDatalist.add(resultDatax2);
+                            nowDate = res.getCreateTime().substring(0,10) +" 00:00:00";
+                        }
+                    }
+                }
+            }
+        }
+        return resultDatalist;
+    }
+
+    /**
+     *尺码数据分析
+     * @param storeName
+     * @param productName
+     * @param footage
+     * @param startTime
+     * @param endTime
+     * @param sizeView
+     * @return
+     */
+    public Map<String, Object> getResultDataLineGraph(String storeName, String productName, String footage,
+                                                      String startTime, String endTime, String sizeView){
+        if(!"".equals(startTime)){
+            startTime = DateUtils.dateTime(startTime);
+            startTime = startTime + " 00:00:00";
+        }
+        if(!"".equals(endTime)){
+            endTime = DateUtils.dateTime(endTime);
+            endTime = endTime + " 23:59:59";
+        }
+        String statUninx = DateUtils.date2TimeStamp(startTime,"yyyy-MM-dd HH:mm:ss");
+        String endUninx = DateUtils.date2TimeStamp(endTime,"yyyy-MM-dd HH:mm:ss");
+
+        String[] sizeViews = sizeView.split(",");
+        ResultData resultData = new ResultData();
+        resultData.setStoreName(storeName);
+        resultData.setProductName(productName);
+        //获取该店铺商品数据
+        List<ResultData> resultDataList = this.findResultDataAll(resultData);
+        //时间
+        List<Object> timeList= new ArrayList<Object>();
+        //价格
+        List<Object> priceList = new ArrayList<Object>();
+        List<String[]> rePriceList = new ArrayList<String[]>();
+
+        if(resultDataList.size() != 0){
+            //遍历结果集
+            for (String size :sizeViews) {
+                String[] strResult = new String[1024];
+                String strTime = "";
+                int xnum = 0;
+                for (ResultData reData: resultDataList) {
+                    String sizePric = reData.getSizePrice().substring(1,reData.getSizePrice().length()-1);
+                    String[] strArr = sizePric.split(",");
+                    int i = 0;
+                    if(i<30) {
+                        i++;
+                        int x = 0;
+                        List<String[]> list = new ArrayList<String[]>();
+                        String[] sizePrices = new String[]{};
+                        //循环取鞋码价格
+                        for (int z = 0; z < strArr.length; z++) {
+                            String[] sizePrice = strArr[z].split("=");
+                            sizePrice = this.taobaoShoeCodeRule(sizePrice,footage);
+                            //判断尺码是否相等
+                            if (sizePrice[0].contains(footage)) {
+                                //校验是否匹配选中的类型
+                                if(sizePrice[0].equals(size)){
+                                    x++;
+                                    sizePrices = sizePrice;
+                                    list.add(sizePrices);
+                                }
+                            }
+                        }
+                        if (x >= 1){
+                            reData = this.individualPrice(list,reData,footage);
+                            if(reData != null) {
+                                //判断时间
+                                Long statUninxL = Long.valueOf(0);
+                                Long endUninxL = Long.valueOf(2099999999);
+                                if(!"".equals(statUninx)){
+                                    statUninxL = Long.parseLong(statUninx);
+                                }
+                                if(!"".equals(endUninx)){
+                                    endUninxL = Long.parseLong(endUninx);
+                                }
+                                Long createTime = Long.parseLong(DateUtils.date2TimeStamp(reData.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
+                                if(statUninxL < createTime && createTime < endUninxL){
+                                    timeList.add(reData.getCreateTime());
+                                    strResult[xnum] = reData.getReservedField()+"!"+reData.getCreateTime();
+                                    xnum++;
+                                }
+
+                            }
+                        }
+                    }
+                }
+                if(!"".equals(strResult[0]) && strResult[0]!=null){
+                    String resultStr = "";
+                    for (String str:strResult) {
+                        if("".equals(str) || str == null){
+                            break;
+                        }
+                        resultStr = resultStr + str + ",";
+                    }
+                    resultStr = resultStr.substring(0,resultStr.length()-1);
+                    String[] resultPrices = resultStr.split(",");
+                    rePriceList.add(resultPrices);
+                }
+            }
+        }
+        List<String[]> result = new ArrayList<String[]>();
+        for (String[] prices : rePriceList) {
+            String[] resuPrices = new String[1024];
+            String resuStr = "";
+            String[] priSS = new String[2];
+            int ii = 0;
+            for (Object time:timeList) {
+                int iix = 0;
+                for (String pri : prices) {
+                    String times = String.valueOf(time);
+                    priSS = pri.split("!");
+                    //如果时间匹配则存在
+                    if(times.equals(priSS[1])){
+                        iix = 1;
+                    }
+                }
+                if(iix == 1){
+                    resuPrices[ii] = priSS[0];
+                    resuStr = resuStr + priSS[0] + ",";
+                }else{
+                    resuPrices[ii] = "0";
+                    resuStr = resuStr + 0 + ",";
+                }
+                ii++;
+            }
+            resuStr = resuStr.substring(0,resuStr.length()-1);
+            result.add(resuPrices);
+        }
+
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        params.put("result",result);
+
+        params.put("sizeViewsResult",sizeViews);
+        params.put("timeList",timeList);
+        params.put("priceList",priceList);
+        return params;
+    }
+
 }

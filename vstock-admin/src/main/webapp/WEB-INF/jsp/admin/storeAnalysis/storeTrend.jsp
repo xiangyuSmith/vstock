@@ -159,7 +159,7 @@
             var dtd = $("#dtd").val();
             $.ajax({
                 type: 'POST',
-                url: '/stockx/dataCore/getResultDataLineGraph',
+                url: '/dataCore/getResultDataLineGraph',
                 dataType: 'json',
                 data: {
                     "footage": footage,
