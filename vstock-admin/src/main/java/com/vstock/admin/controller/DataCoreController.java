@@ -32,6 +32,14 @@ public class DataCoreController {
     @Autowired
     StockxStoreService stockxStoreService;
 
+    /**
+     * 球鞋数据分析查询
+     *
+     * @param resultDataFactory
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("index")
     public String index(ResultDataFactory resultDataFactory, HttpServletRequest request, ModelMap model) {
         List<String> list = new ArrayList<String>();
@@ -73,79 +81,6 @@ public class DataCoreController {
         return "admin/storeAnalysis/commodityShow";
     }
 
-    /**
-     * 球鞋数据分析查询
-     *
-     * @param resultDataFactory
-     * @param request
-     * @param model
-     * @return
-     */
-//    @RequestMapping("commodityData")
-//    public String commodityData(ResultDataFactory resultDataFactory, HttpServletRequest request, ModelMap model) {
-//        //获取前台传过来的页面参数
-//        String pageNow = request.getParameter("pageNow");
-//        String startTime = request.getParameter("startTime");
-//        if (startTime != null && !"".equals(startTime)){
-//            startTime = DateUtils.dateTime(startTime);
-//        }
-//        String endTime = request.getParameter("endTime");
-//        if (endTime != null && !"".equals(endTime)){
-//            endTime = DateUtils.dateTime(endTime);
-//        }
-//        String bids = request.getParameter("bids");
-//        if("".equals(bids) || bids == null){
-//            resultDataFactory.setBid(0);
-//        }else{
-//            resultDataFactory.setBid(Integer.parseInt(bids));
-//        }
-//
-//        Calendar   cal   =   Calendar.getInstance();
-//        cal.add(Calendar.DATE,   -1);
-//        String yesterday = new SimpleDateFormat( "yyyy-MM-dd ").format(cal.getTime());
-//        if (startTime == null || startTime.equals("")) {
-//            startTime = yesterday.substring(0,yesterday.length()-1);
-//        }
-//        model.addAttribute("startTime", startTime);
-//        startTime = startTime + " 00:00:00";
-//
-//        if (endTime == null || endTime.equals("")) {
-//            endTime = yesterday.substring(0,yesterday.length()-1);
-//        }
-//        model.addAttribute("endTime", endTime);
-//        endTime = endTime + " 23:59:59";
-//        //获取查询总记录数
-//        Long totalCount = commodityDataService.findResultDataFactoryCount(resultDataFactory, startTime, endTime);
-//        //传入分页工具类
-//        Page page = new Page(totalCount.intValue(), pageNow);
-//        //进行分页查询
-//        List<ResultDataFactory> commod = this.commodityDataService.findResultDataFactory(resultDataFactory, page, startTime, endTime);
-//        //获取当前方法名
-//        String linkAddress = request.getRequestURI() + "?";
-//        if (resultDataFactory.getBid() != 0) {
-//            linkAddress += "&bid=" + resultDataFactory.getBid();
-//        }
-//        if (StringUtil.isNotBlank(resultDataFactory.getCommodityDataId())) {
-//            linkAddress += "&brand=" + resultDataFactory.getCommodityDataId();
-//        }
-//        if (StringUtil.isNotBlank(resultDataFactory.getProductName())) {
-//            linkAddress += "&productName=" + resultDataFactory.getProductName();
-//        }
-//        if (StringUtil.isNotBlank(resultDataFactory.getGirard())) {
-//            linkAddress += "&girard=" + resultDataFactory.getGirard();
-//        }
-//        if (StringUtil.isNotBlank(startTime)) {
-//            linkAddress += "&startTime=" + startTime;
-//        }
-//        if (StringUtil.isNotBlank(endTime)) {
-//            linkAddress += "&endTime=" + endTime;
-//        }
-//        model.addAttribute("commodityDataList", commod);
-//        model.addAttribute("page", page);
-//        model.addAttribute("resultData", resultDataFactory);
-//        model.addAttribute("linkAddress", linkAddress);
-//        return "admin/storeAnalysis/commodityShow";
-//    }
 
     /**
      * 查询尺码数据

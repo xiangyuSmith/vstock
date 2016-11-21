@@ -69,7 +69,7 @@ public class CommodityDataService {
         if (list.size() > 0){
             for (String strLink : list){
                 String[] strs = strLink.split("=");
-                linkAddress += strs[0] + strs[1];
+                linkAddress += strs[0] + "=" + strs[1];
             }
         }
         if (StringUtil.isNotBlank(record.getBasiciformationId())) {
