@@ -58,17 +58,15 @@ public class DataCoreController {
         if (startTime == null || startTime.equals("")) {
             startTime = yesterday.substring(0,yesterday.length()-1);
         }
-        model.addAttribute("startTime", startTime);
-        startTime = startTime + " 00:00:00";
-
         if (endTime == null || endTime.equals("")) {
             endTime = yesterday.substring(0,yesterday.length()-1);
         }
+        model.addAttribute("startTime", startTime);
         model.addAttribute("endTime", endTime);
-        endTime = endTime + " 23:59:59";
-
         list.add("&startTime="+startTime);
         list.add("&endTime="+endTime);
+        startTime = startTime + " 00:00:00";
+        endTime = endTime + " 23:59:59";
         String linkAddress = request.getRequestURI() + "?1=1";
         linkAddress = commodityDataService.linkAddress(linkAddress,list,resultDataFactory);
         int totalCount = commodityDataService.findResultDataFactoryCount(resultDataFactory, startTime, endTime);
@@ -176,14 +174,11 @@ public class DataCoreController {
         }
         String statUninx = DateUtils.date2TimeStamp(startTime,"yyyy-MM-dd HH:mm:ss");
         String endUninx = DateUtils.date2TimeStamp(endTime,"yyyy-MM-dd HH:mm:ss");
-
-
         ResultData resultData = new ResultData();
         resultData.setStoreName(storeName);
         resultData.setProductName(productName);
         //根据商品名查询所有结果
         List<ResultData> resultDatalist = commodityDataService.getResultDataList(resultData,footage,statUninx,endUninx);
-
         model.addAttribute("resultDatalist",resultDatalist);
         model.put("footage",footage);
         model.put("productName",productName);
