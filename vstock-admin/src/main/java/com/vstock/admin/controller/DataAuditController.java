@@ -41,7 +41,6 @@ public class DataAuditController {
      */
     @RequestMapping("list")
     public String dataAudit(Dictionaries dictionaries, HttpServletRequest request, ModelMap model) {
-        String artNo = "";
         String pageNow = request.getParameter("pageNow");
         String productName = request.getParameter("productName");
         String storeName = request.getParameter("storeName");

@@ -35,20 +35,6 @@ public class BasicinfromController extends BaseController{
     @Autowired
     BrandService brandService;
 
-//    @RequestMapping("updateData")
-//    public void updateData(HttpServletRequest request){
-//        String brand = request.getParameter("brand");
-//        int num = Integer.parseInt(request.getParameter("num"));
-//        Basicinformation b = new Basicinformation();
-//        b.setBrand(brand);
-//        List<Basicinformation> basicinformationList = basicinformationService.findAll(b);
-//        for (Basicinformation ba : basicinformationList) {
-//            ba.setBid(num);
-//            basicinformationService.updatesicinState(ba);
-//            num++;
-//        }
-//    }
-
     /**
      * 鞋库基本数据查询
      * @param request

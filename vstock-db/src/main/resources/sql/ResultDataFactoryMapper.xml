@@ -227,7 +227,7 @@
         <if test="endTime != null and endTime != ''">
             AND rf.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
         </if>
-        ORDER BY rf.createTime DESC limit #{startPos},#{pageSize}
+        ORDER BY rf.basiciformationId ASC limit #{startPos},#{pageSize}
     </select>
 
     <select id="findrdfAndBasiCount" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="Integer">

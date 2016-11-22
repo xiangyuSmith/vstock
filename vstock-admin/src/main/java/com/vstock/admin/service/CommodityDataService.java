@@ -201,17 +201,6 @@ public class CommodityDataService {
         return dictionariesDao.findByCommodityId(commodityId);
     }
 
-//    /**
-//     * 获取工厂数据
-//     */
-//    public List<ResultDataFactory> getFactory(String productName){
-//        Query query = new Query();
-//        query.with(new Sort(new Sort.Order(Sort.Direction.DESC,"createTime")));
-//        query.addCriteria(Criteria.where("productName").is(productName));
-//        List<ResultDataFactory> resultDataFactoryList = mongoTemplate.find(query,ResultDataFactory.class);
-//        return resultDataFactoryList;
-//    }
-
     /**
      * 添加字典数据
      */
@@ -548,7 +537,6 @@ public class CommodityDataService {
     public Map<String, Object> findLineGraph(ResultData record, String colorly, String footage, Integer dateTime){
         Map<String, Object> params = new HashMap<String, Object>();
         List<ResultData> resultDataList = new ArrayList<ResultData>();
-//        List<CommodityDetailys> commList = new ArrayList<CommodityDetailys>();
         Map<String, Map<String, CommodityDetailys>> sizeMap = new HashMap<String, Map<String, CommodityDetailys>>();
         String str = "";
         String[] arr = new String[]{};
@@ -608,8 +596,6 @@ public class CommodityDataService {
                             ResultData resultData = commlist.get(y);
                             float b = StringUtil.getSimilarityRatio(resultData.getProductName(), resultData.getProductName());
                             if (b == 1.0) {
-                                //去掉鞋码前面{}
-//                                String averagePrice = resultData.getSizePrice().substring(1, resultData.getSizePrice().length() - 1);
                                 //截取，左右的值
                                 String[] strArr = resultData.getSizePrice().split(",");
                                 int i = 0;
@@ -735,7 +721,6 @@ public class CommodityDataService {
         String transactionRecord = res.getTransactionRecord();
         String createTime = res.getCreateTime();
         String reservedField = res.getReservedField();
-
         for (String[] sizePrice : sizePriceList) {
             ResultData resultDatas = new ResultData();
             resultDatas.setId(id);
@@ -904,11 +889,11 @@ public class CommodityDataService {
             //获取字符所在的位置
             int index = sizePrice[0].indexOf(shoeSize);
             //判断字符的长度是否超过下标的位置
-            if (sizePrice[0].length() > index + 2) {//超过长度
+            if (sizePrice[0].length() > index + 2) {
                 //获取字符后面第一个的值
                 String shoeCode = sizePrice[0].substring(index + 2, index + 3);
-                //判断后面一个值是否是.
-                if (shoeCode.equals(".")) {//是
+                //判断后面一个值是否为 '.'
+                if (shoeCode.equals(".")) {
                     //获取后面两位的值
                     shoeCode = sizePrice[0].substring(index + 3, index + 4);
                     if (!"5".equals(shoeCode)) {
@@ -932,7 +917,7 @@ public class CommodityDataService {
                             }
                         }
                     }
-                } else {//不是
+                } else {
                     if (sizePrice.length > 1) {
                         i++;
                         parseDouble = parseDouble + Double.parseDouble(sizePrice[1]);
@@ -967,7 +952,6 @@ public class CommodityDataService {
         DecimalFormat df = new DecimalFormat("#.00");
         String[] shoeSize = new String[]{"35","35.5","36","36.5","37","37.5","38","38.5","39","39.5","40","40.5","41","41.5",
                 "42","42.5","43","43.5","44","44.5","45","45.5","46","46.5","47","47.5","48","48.5"};
-
         //循环获取固定的鞋码
         for (String shoeSizes : shoeSize) {
             record.setSizePrice(shoeSizes);
@@ -1450,7 +1434,6 @@ public class CommodityDataService {
         }
         String statUninx = DateUtils.date2TimeStamp(startTime,"yyyy-MM-dd HH:mm:ss");
         String endUninx = DateUtils.date2TimeStamp(endTime,"yyyy-MM-dd HH:mm:ss");
-
         String[] sizeViews = sizeView.split(",");
         ResultData resultData = new ResultData();
         resultData.setStoreName(storeName);
@@ -1462,7 +1445,6 @@ public class CommodityDataService {
         //价格
         List<Object> priceList = new ArrayList<Object>();
         List<String[]> rePriceList = new ArrayList<String[]>();
-
         if(resultDataList.size() != 0){
             //遍历结果集
             for (String size :sizeViews) {
@@ -1557,11 +1539,8 @@ public class CommodityDataService {
             resuStr = resuStr.substring(0,resuStr.length()-1);
             result.add(resuPrices);
         }
-
         Map<String, Object> params = new HashMap<String, Object>();
-
         params.put("result",result);
-
         params.put("sizeViewsResult",sizeViews);
         params.put("timeList",timeList);
         params.put("priceList",priceList);

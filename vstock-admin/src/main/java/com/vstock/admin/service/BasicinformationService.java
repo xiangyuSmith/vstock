@@ -48,12 +48,6 @@ public class BasicinformationService {
         return basicinformationDao.update(record,record.getId());
     }
 
-//    //修改状态
-//    public int updatesicinState(Basicinformation basicinformation){
-//        mongoTemplate.save(basicinformation);
-//        return 1;
-//    }
-
     //不带分页查询
     public List<Basicinformation> findAll(Basicinformation record){
         return basicinformationDao.findAll(record);
