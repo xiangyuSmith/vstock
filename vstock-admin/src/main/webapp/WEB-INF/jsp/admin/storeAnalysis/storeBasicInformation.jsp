@@ -33,7 +33,7 @@
                     <div class="am-btn-group am-btn-group-xs">
                         <button type="button" id="add" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
 
-                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
+                        <%--<button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>--%>
 
                     </div>
                 </div>

@@ -28,21 +28,21 @@
                     <div class="am-btn-group am-btn-group-xs">
                         <button type="button" id="add" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
 
-                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
+                        <%--<button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>--%>
 
-                        <button type="button" id="startD" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 启动定时器</button>
+                        <%--<button type="button" id="startD" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 启动定时器</button>--%>
                     </div>
                 </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-3">
-                <div class="am-input-group am-input-group-sm">
-                    <input type="text" class="am-form-field">
-          <span class="am-input-group-btn">
-            <button class="am-btn am-btn-default" type="button">搜索</button>
-          </span>
-                </div>
-            </div>
+            <%--<div class="am-u-sm-12 am-u-md-3">--%>
+                <%--<div class="am-input-group am-input-group-sm">--%>
+                    <%--<input type="text" class="am-form-field">--%>
+          <%--<span class="am-input-group-btn">--%>
+            <%--<button class="am-btn am-btn-default" type="button">搜索</button>--%>
+          <%--</span>--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </div>
         <div class="am-g">
             <div class="am-u-sm-12">
