@@ -12,7 +12,8 @@ import us.codecraft.webmagic.model.annotation.TargetUrl;
  * Created by xiangyu on 2016/5/5.
  * 数据收集日志
  */
-@TargetUrl("https://github.com/\\w+/\\w+")@HelpUrl("https://github.com/\\w+")
+@TargetUrl("https://github.com/\\w+/\\w+")
+@HelpUrl("https://github.com/\\w+")
 public class TaobaoRepoUtil {
 
     @ExtractBy(value = "//h1[@class='entry-title public']/strong/a/text()", notNull = true)
@@ -24,17 +25,29 @@ public class TaobaoRepoUtil {
     @ExtractBy("//div[@id='readme']/tidyText()")
     private String readme;
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getAuthor() { return author;}
+    public String getAuthor() {
+        return author;
+    }
 
-    public void setAuthor() { this.author = author; }
+    public void setAuthor() {
+        this.author = author;
+    }
 
-    public String getReadme() { return readme; }
+    public String getReadme() {
+        return readme;
+    }
 
-    public void setReadme () { this.readme = readme; }
+    public void setReadme() {
+        this.readme = readme;
+    }
 
     public static void main(String[] args) {
         OOSpider.create(Site.me().setSleepTime(1000)

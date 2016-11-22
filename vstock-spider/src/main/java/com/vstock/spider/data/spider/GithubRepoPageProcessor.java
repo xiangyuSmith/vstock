@@ -1,9 +1,9 @@
 package com.vstock.spider.data.spider;
 
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.ToolSpring;
-import com.vstock.db.entity.*;
 import com.vstock.spider.data.service.BasicinformationService;
 import com.vstock.spider.data.service.CommodityDataService;
 import com.vstock.spider.data.service.StockxStoreService;
@@ -42,10 +42,10 @@ public class GithubRepoPageProcessor implements PageProcessor {
     List<String> str = new ArrayList<>();
     List<String> recrawlingUrl = new ArrayList<String>();
     List<String> recordData = new ArrayList<String>();
-    Map<String,Map<String,String>> colorMap;
-    Map<String,String> sizePriceMap;
+    Map<String, Map<String, String>> colorMap;
+    Map<String, String> sizePriceMap;
     private String name = "";
-    private String price ="";
+    private String price = "";
     private String sales = "";
     private String readme = "";
     private String colorSize = "";
@@ -71,28 +71,28 @@ public class GithubRepoPageProcessor implements PageProcessor {
         TaobaoRepo taobaoRepo = new TaobaoRepo();
         //当前 url
         if (i == 1) {
-            if(xnum < stockxStoreList.size()){
+            if (xnum < stockxStoreList.size()) {
                 nowUrl = stockxStoreList.get(xnum).getUrl();
 //                nowUrl="http://item.taobao.com/item.htm?id=4547349024";
                 stockxStore = stockxStoreList.get(xnum);
                 s_name = stockxStoreList.get(xnum).getName();
-            }else{
+            } else {
                 nowUrl = "";
                 xnum = 0;
             }
-        }else {
+        } else {
             if (x < str.size()) {
                 //判断获取的值是否是最后一个
-                if(str.size()-x > 1) {
+                if (str.size() - x > 1) {
                     nowUrl = this.updateNowUrl(str.get(x));
                     x++;
-                }else {//是最后一个值
+                } else {//是最后一个值
                     //判断重复爬取是否有值
-                    if (recrawlingUrl.size() > 0){
+                    if (recrawlingUrl.size() > 0) {
                         recordData = new ArrayList<String>();
                         //循环去重
-                        for (String duplicate : recrawlingUrl){
-                            if (!recordData.contains(duplicate)){
+                        for (String duplicate : recrawlingUrl) {
+                            if (!recordData.contains(duplicate)) {
                                 recordData.add(duplicate);
                             }
                         }
@@ -102,21 +102,21 @@ public class GithubRepoPageProcessor implements PageProcessor {
                         nowUrl = this.updateNowUrl(recrawlingUrl.get(0));
                         recordData.add(recrawlingUrl.get(0));
                         recrawlingUrl.remove(0);
-                    }else {//最后一个地址
+                    } else {//最后一个地址
                         nowUrl = this.updateNowUrl(str.get(x));
                         x++;
                     }
                 }
-            }else{
+            } else {
                 xnum++;
                 nowUrl = "";
                 x = 0;
                 i = 1;
             }
         }
-        if("".equals(nowUrl)){
+        if ("".equals(nowUrl)) {
             logger.info("getData exit ...");
-        }else {
+        } else {
             logger.info("=================================================");
             logger.info("地址有值进入成功");
             logger.info("=================================================");
@@ -126,7 +126,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
             logger.info("获取谷歌地址成功！地址：" + chromeDriver);
             logger.info("=================================================");
             String sysPro = System.getProperty("webdriver.chrome.driver");
-            if(!"".equals(sysPro)){
+            if (!"".equals(sysPro)) {
                 System.getProperties().setProperty("webdriver.chrome.driver", chromeDriver);
             }
             logger.info("=================================================");
@@ -148,7 +148,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                 logger.info("=================================================");
                 logger.info("下载网页界面........");
                 logger.info("=================================================");
-            }catch (Exception e){
+            } catch (Exception e) {
                 logger.error("WebDriver Runtime request for nowUrl ~!!!!");
                 xnum--;
             }
@@ -272,7 +272,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                 }
                                 Thread.sleep(250);
                             }
-                        }else{
+                        } else {
                             //没有尺码
                             getHtmlResult = webElement.getAttribute("outerHTML");
                             price = Html.create(getHtmlResult).xpath("//em[@id='J_PromoPriceNum']/text()").toString();
@@ -291,7 +291,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                         if (color != null && !"".equals(color)) {
                             colorType = colorType + color + ",";
                             colorMap.put(color, sizePriceMap);
-                        }else {
+                        } else {
                             if (!recordData.contains(nowUrl)) {
                                 recrawlingUrl.add(nowUrl);
                                 page.addTargetRequests(recrawlingUrl);
@@ -483,7 +483,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                                                         b.setName(dic.getIdentification());
                                                         List<Basicinformation> baciList = basicinformationService.findAll(b);
                                                         //基于鞋库保存数据
-                                                        if(baciList.size() > 0){
+                                                        if (baciList.size() > 0) {
                                                             resultData.setBasiciformationId(baciList.get(0).getId());
                                                             resultData.setStoreId(stockxStore.getId());
                                                             resultData.setStoreName(stockxStore.getName());
@@ -562,7 +562,8 @@ public class GithubRepoPageProcessor implements PageProcessor {
     public Site getSite() {
         return site;
     }
-    public static void main(StockxStore roeced,List<StockxStore> list) {
+
+    public static void main(StockxStore roeced, List<StockxStore> list) {
         stockxStoreList = list;
         stockxStore = roeced;
         //调用抓取功能
@@ -594,30 +595,30 @@ public class GithubRepoPageProcessor implements PageProcessor {
         this.s_name = s_name;
     }
 
-    public static String shoeroue(String sizes){
+    public static String shoeroue(String sizes) {
         //初始化变量
         String rule = "1/3";
-        String taobaoRule= "2/3";
+        String taobaoRule = "2/3";
         int i = 0;
         String shoe = null;
         String size = null;
         //判断是否包含1/3
-        if (sizes.contains(rule)){//包含
-           i = sizes.indexOf(rule);
-            if (i > 1){
-                shoe = sizes.trim().substring(0,i-1) + ".5";
-                if (sizes.length() > (i+3)){
-                    size = sizes.trim().substring(i+3,sizes.length());
+        if (sizes.contains(rule)) {//包含
+            i = sizes.indexOf(rule);
+            if (i > 1) {
+                shoe = sizes.trim().substring(0, i - 1) + ".5";
+                if (sizes.length() > (i + 3)) {
+                    size = sizes.trim().substring(i + 3, sizes.length());
                 }
                 sizes = shoe + size;
             }
         }//判断是否包含2/3
-        else if (sizes.contains(taobaoRule)){
+        else if (sizes.contains(taobaoRule)) {
             i = sizes.indexOf(rule);
-            if (i > 1){
-                shoe = sizes.trim().substring(0,i-1) + ".5";
-                if (sizes.length() > (i+3)){
-                    size = sizes.trim().substring(i+3,sizes.length());
+            if (i > 1) {
+                shoe = sizes.trim().substring(0, i - 1) + ".5";
+                if (sizes.length() > (i + 3)) {
+                    size = sizes.trim().substring(i + 3, sizes.length());
                 }
                 sizes = shoe + size;
             }
@@ -626,14 +627,14 @@ public class GithubRepoPageProcessor implements PageProcessor {
     }
 
     //验证Url地址是否正确拼接
-    public String updateNowUrl(String url){
-        if (url.contains("http")){
-            if (url.contains("http:")){
+    public String updateNowUrl(String url) {
+        if (url.contains("http")) {
+            if (url.contains("http:")) {
                 url = url;
-            }else {
-                url = url.replaceAll("http","http:");
+            } else {
+                url = url.replaceAll("http", "http:");
             }
-        }else {
+        } else {
             url = "http:" + url;
         }
         return url;

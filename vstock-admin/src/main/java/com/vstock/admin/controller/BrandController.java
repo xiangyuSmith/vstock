@@ -31,20 +31,20 @@ public class BrandController {
      * 品牌列表
      */
     @RequestMapping("brandList")
-    public String brandList(Brand brand, HttpServletRequest request, ModelMap model){
+    public String brandList(Brand brand, HttpServletRequest request, ModelMap model) {
         String pageNow = request.getParameter("pageNow");
         String brandName = request.getParameter("brandName");
         String linkAddress = request.getRequestURI();
-        if (brandName != null && !"".equals(brandName)){
-            linkAddress = linkAddress +"?brandName=" + brandName;
+        if (brandName != null && !"".equals(brandName)) {
+            linkAddress = linkAddress + "?brandName=" + brandName;
         }
         Long totalCount = brandService.getBrandCount(brand);
         Page page = new Page(totalCount.intValue(), pageNow);
         //获取品牌列表
-        List<Brand> brandList = brandService.findList(brand,page);
-        model.addAttribute("brandList",brandList);
+        List<Brand> brandList = brandService.findList(brand, page);
+        model.addAttribute("brandList", brandList);
         model.addAttribute("page", page);
-        model.addAttribute("brandName",brandName);
+        model.addAttribute("brandName", brandName);
         model.addAttribute("linkAddress", linkAddress);
         return "admin/brand/list";
     }
@@ -54,38 +54,38 @@ public class BrandController {
      */
     @RequestMapping("insertBrand")
     @ResponseBody
-    public Map<String,Object> insertBrand(HttpServletRequest request){
-        Map<String,Object> params = new HashMap<String,Object>();
+    public Map<String, Object> insertBrand(HttpServletRequest request) {
+        Map<String, Object> params = new HashMap<String, Object>();
         String brandName = request.getParameter("brandName");
         String brandId = request.getParameter("brandId");
         int result = 0;
-        if(brandId != null && !"".equals(brandId)){
+        if (brandId != null && !"".equals(brandId)) {
             //执行修改 , 查询是否有该品牌
             Brand brand = brandService.findBrandById(brandId);
-            if(brand != null){
+            if (brand != null) {
                 brand.setBrandName(brandName);
                 result = brandService.update(brand);
                 logger.info("success :　update brand success");
-                params.put("result",result);
+                params.put("result", result);
                 return params;
-            }else{
+            } else {
                 logger.error("fail :　insert brand error");
-                params.put("result",result);
+                params.put("result", result);
                 return params;
             }
-        }else{
+        } else {
             //新增品牌
             Brand brand = new Brand();
             brand.setBrandName(brandName);
             result = brandService.inser(brand);
         }
 
-        if(result == 1){
+        if (result == 1) {
             logger.info("success ：insert brand success");
-        }else{
+        } else {
             logger.error("fail :　insert brand error");
         }
-        params.put("result",result);
+        params.put("result", result);
         return params;
     }
 
@@ -94,11 +94,11 @@ public class BrandController {
      */
     @RequestMapping("deleteBrand")
     @ResponseBody
-    public Map<String,Object> deleteBrand(HttpServletRequest request){
-        Map<String,Object> params = new HashMap<String,Object>();
+    public Map<String, Object> deleteBrand(HttpServletRequest request) {
+        Map<String, Object> params = new HashMap<String, Object>();
         String brandId = request.getParameter("brandId");
         int result = brandService.deleteById(brandId);
-        params.put("result",result);
+        params.put("result", result);
         return params;
     }
 }

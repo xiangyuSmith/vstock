@@ -45,28 +45,29 @@
     </sql>
 
     <!--???????????-->
-    <select id="findPageAll" resultType="com.vstock.db.entity.CommodityDetail" parameterType="com.vstock.db.entity.CommodityDetail">
+    <select id="findPageAll" resultType="com.vstock.db.entity.CommodityDetail"
+            parameterType="com.vstock.db.entity.CommodityDetail">
         SELECT * FROM `commoditydetail`
-        <include refid="Select_Where_Clause" />
+        <include refid="Select_Where_Clause"/>
         ORDER BY createDate DESC limit #{startPos},#{pageSize}
     </select>
 
     <!--????????-->
     <select id="findAllCount" parameterType="com.vstock.db.entity.CommodityDetail" resultType="Long">
         SELECT COUNT(*) FROM `commoditydetail`
-        <include refid="Select_Where_Count" />
+        <include refid="Select_Where_Count"/>
     </select>
 
     <!--??????-->
     <select id="findCommAll" resultType="com.vstock.db.entity.CommodityDetail">
         SELECT * FROM `commoditydetail`
-        <include refid="Select_Where_Count" />
+        <include refid="Select_Where_Count"/>
         ORDER BY createDate DESC
     </select>
 
     <select id="findAllComm" resultType="com.vstock.db.entity.CommodityDetail">
         SELECT * FROM `commoditydetail`
-        <include refid="Select_Where_Clause" />
+        <include refid="Select_Where_Clause"/>
         <if test="createDateStart != null and createDateStart != ''">
             and createDate &gt;= #{createDateStart,jdbcType=VARCHAR}
         </if>
@@ -87,7 +88,8 @@
         VALUES(null,#{commodityDataId},#{colorly},now())
     </insert>
 
-    <insert id="saveResultData" parameterType="com.vstock.db.entity.ResultData" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveResultData" parameterType="com.vstock.db.entity.ResultData" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO `resultData`
         (`id`,`commodityDataId`,`storeId`,`storeName`,`productName`,`sizePrice`,`transactionRecord`,`brand`,`createTime`)
         VALUES(null,#{commodityDataId},#{storeId},#{storeName},#{productName},#{sizePrice},#{transactionRecord},#{brand},now())

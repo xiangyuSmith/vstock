@@ -13,38 +13,39 @@ public class PictureUpload {
 
     /**
      * 本地上传图片
-     * @author Ligang
-     * @Date 2016.08.09
+     *
      * @param multipartFile
      * @param type
      * @return
+     * @author Ligang
+     * @Date 2016.08.09
      */
-    public static String localUploadImg(MultipartFile multipartFile,String imgName, int type){
+    public static String localUploadImg(MultipartFile multipartFile, String imgName, int type) {
         BufferedInputStream bis = null;
         BufferedImage bfimg = null;
         //存储文件路径
         String saveUrl = "";
-       try {
-           InputStream inputStream = multipartFile.getInputStream();
+        try {
+            InputStream inputStream = multipartFile.getInputStream();
             bis = new BufferedInputStream(inputStream);
             bfimg = ImageIO.read(inputStream);
             String ursl = ConstUtil.getProperties().getProperty("projectPath");
-            if(type == 1){
+            if (type == 1) {
                 //缩略图
                 saveUrl = "/assets/shoesImg/small/";
-            }else{
+            } else {
                 //大图
                 saveUrl = "/assets/shoesImg/";
             }
 
-           imgName = imgName.substring(0,imgName.lastIndexOf("."));
-           imgName = imgName + DateUtils.getCurrentTimeAs14String()+".jpg";
-           File file = new File(ursl + saveUrl);
+            imgName = imgName.substring(0, imgName.lastIndexOf("."));
+            imgName = imgName + DateUtils.getCurrentTimeAs14String() + ".jpg";
+            File file = new File(ursl + saveUrl);
             // 判断文件夹是否创建，没有创建则创建新文件夹
             if (!file.exists()) {
                 file.mkdirs();
             }
-            file = new File(file,imgName);
+            file = new File(file, imgName);
             saveUrl = saveUrl + imgName;
             BufferedOutputStream bos = new BufferedOutputStream(
                     new FileOutputStream(file.getAbsolutePath()));
@@ -65,7 +66,7 @@ public class PictureUpload {
             // 关闭字节流
             bos.close();
             ImageIO.write(bfimg, "jpg", file);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
         return saveUrl;

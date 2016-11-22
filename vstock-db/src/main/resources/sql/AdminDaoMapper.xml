@@ -12,7 +12,7 @@
         SELECT *
         FROM `admin`
         <if test="username != null">
-        WHERE `username` = #{username}
+            WHERE `username` = #{username}
         </if>
     </select>
 

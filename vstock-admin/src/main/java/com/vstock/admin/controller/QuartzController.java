@@ -28,6 +28,7 @@ public class QuartzController {
 
     /**
      * 定时器管理列表
+     *
      * @param request
      * @param model
      * @return
@@ -42,19 +43,19 @@ public class QuartzController {
     //暂停任务
     @RequestMapping("stopTask")
     @ResponseBody
-    public Map<String, Object> stopTask(HttpServletRequest request){
+    public Map<String, Object> stopTask(HttpServletRequest request) {
         Map<String, Object> params = new HashMap<String, Object>();
         String jobName = request.getParameter("jobName");
         String jobGroup = request.getParameter("jobGroup");
         //schedulerFactoryBean 由spring创建注入
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        Scheduler scheduler = (Scheduler)ctx.getBean("schedulerFactoryBean");
-        JobKey jobKey = JobKey.jobKey(jobName,jobGroup);
+        Scheduler scheduler = (Scheduler) ctx.getBean("schedulerFactoryBean");
+        JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
         try {
             scheduler.pauseJob(jobKey);
             params.put("result", 1);
             return params;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         params.put("result", 0);
@@ -64,58 +65,58 @@ public class QuartzController {
     //恢复任务
     @RequestMapping("recoveryTask")
     @ResponseBody
-    public void recoveryTask(CustomJob customJob){
+    public void recoveryTask(CustomJob customJob) {
         //schedulerFactoryBean 由spring创建注入
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        Scheduler scheduler = (Scheduler)ctx.getBean("schedulerFactoryBean");
-        JobKey jobKey = JobKey.jobKey(customJob.getJobName(),customJob.getJobGroup());
+        Scheduler scheduler = (Scheduler) ctx.getBean("schedulerFactoryBean");
+        JobKey jobKey = JobKey.jobKey(customJob.getJobName(), customJob.getJobGroup());
         try {
             scheduler.resumeJob(jobKey);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
     }
 
     //删除任务
     @RequestMapping("delTask")
-    public void delTask(CustomJob customJob){
+    public void delTask(CustomJob customJob) {
         //schedulerFactoryBean 由spring创建注入
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        Scheduler scheduler = (Scheduler)ctx.getBean("schedulerFactoryBean");
-        JobKey jobKey = JobKey.jobKey(customJob.getJobName(),customJob.getJobGroup());
+        Scheduler scheduler = (Scheduler) ctx.getBean("schedulerFactoryBean");
+        JobKey jobKey = JobKey.jobKey(customJob.getJobName(), customJob.getJobGroup());
         try {
             scheduler.deleteJob(jobKey);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
     }
 
     //立即运行任务
     @RequestMapping("startTask")
-    public void startTask(CustomJob customJob){
+    public void startTask(CustomJob customJob) {
         //schedulerFactoryBean 由spring创建注入
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        Scheduler scheduler = (Scheduler)ctx.getBean("schedulerFactoryBean");
-        JobKey jobKey = JobKey.jobKey(customJob.getJobName(),customJob.getJobGroup());
+        Scheduler scheduler = (Scheduler) ctx.getBean("schedulerFactoryBean");
+        JobKey jobKey = JobKey.jobKey(customJob.getJobName(), customJob.getJobGroup());
         try {
             scheduler.triggerJob(jobKey);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
     }
 
     //更新任务的时间表达式
     @RequestMapping("updateTaskTime")
-    public void updateTaskTime(CustomJob customJob){
+    public void updateTaskTime(CustomJob customJob) {
         //schedulerFactoryBean 由spring创建注入
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        Scheduler scheduler = (Scheduler)ctx.getBean("schedulerFactoryBean");
-        TriggerKey triggerKey = TriggerKey.triggerKey(customJob.getJobName(),customJob.getJobGroup());
+        Scheduler scheduler = (Scheduler) ctx.getBean("schedulerFactoryBean");
+        TriggerKey triggerKey = TriggerKey.triggerKey(customJob.getJobName(), customJob.getJobGroup());
         //获取trigger，即在spring配置文件中定义的 bean id="myTrigger"
         CronTrigger trigger = null;
         try {
             trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         //表达式调度构建器
@@ -124,8 +125,8 @@ public class QuartzController {
         trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
         //按新的trigger重新设置job执行
         try {
-            scheduler.rescheduleJob(triggerKey,trigger);
-        }catch (Exception e){
+            scheduler.rescheduleJob(triggerKey, trigger);
+        } catch (Exception e) {
             e.getMessage();
         }
     }

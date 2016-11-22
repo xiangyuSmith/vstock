@@ -1,7 +1,7 @@
 package com.vstock.admin.controller;
 
-import com.vstock.db.entity.StockxStore;
 import com.vstock.admin.service.StockxStoreService;
+import com.vstock.db.entity.StockxStore;
 import com.vstock.ext.util.CookieTool;
 import com.vstock.ext.util.DateUtils;
 import org.apache.log4j.Logger;
@@ -28,18 +28,18 @@ public class StockxStoreController {
     StockxStoreService stockxStoreService;
 
     @RequestMapping("storeBasicInformation")
-    public String storeBasicInformation(HttpServletRequest request){
+    public String storeBasicInformation(HttpServletRequest request) {
         return "admin/storeBasicInformation";
     }
 
     @RequestMapping("storeBasicUrl")
-    public String storeBasicUrl(HttpServletRequest request){
+    public String storeBasicUrl(HttpServletRequest request) {
         return "admin/storeBasicUrl";
     }
 
     @RequestMapping("insert")
     @ResponseBody
-    public Object  insert(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+    public Object insert(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         int resultCount = 0;
         DateUtils dateUtils = new DateUtils();
         StockxStore stockxStore = new StockxStore();

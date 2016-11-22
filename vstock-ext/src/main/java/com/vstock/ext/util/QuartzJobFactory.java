@@ -15,8 +15,8 @@ import java.util.Date;
 public class QuartzJobFactory extends QuartzJobBean {
     Logger log = Logger.getLogger(getClass());
 
-    public void query(){
-        log.info(" log "+new Date());
+    public void query() {
+        log.info(" log " + new Date());
     }
 
     @Override

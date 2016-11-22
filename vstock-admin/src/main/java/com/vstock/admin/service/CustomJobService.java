@@ -16,13 +16,14 @@ public class CustomJobService {
     @Autowired
     ICustomJob customJob;
 
-    /** 查询数据所有数据 */
-    public List<CustomJob> getAllJob(){
+    /**
+     * 查询数据所有数据
+     */
+    public List<CustomJob> getAllJob() {
         List<CustomJob> customJobList = null;
         try {
             customJobList = customJob.findCustomjob();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
         return customJobList;

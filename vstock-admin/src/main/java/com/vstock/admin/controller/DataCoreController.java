@@ -2,10 +2,12 @@ package com.vstock.admin.controller;
 
 import com.vstock.admin.service.CommodityDataService;
 import com.vstock.admin.service.StockxStoreService;
-import com.vstock.db.entity.*;
+import com.vstock.db.entity.CommodityDetailys;
+import com.vstock.db.entity.ResultData;
+import com.vstock.db.entity.ResultDataFactory;
+import com.vstock.db.entity.StockxStore;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
-import com.vstock.ext.util.StringUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,31 +49,31 @@ public class DataCoreController {
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String bids = request.getParameter("bids");
-        if("".equals(bids) || bids == null){
+        if ("".equals(bids) || bids == null) {
             resultDataFactory.setBid(0);
-        }else{
+        } else {
             resultDataFactory.setBid(Integer.parseInt(bids));
         }
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE,   -1);
-        String yesterday = new SimpleDateFormat( "yyyy-MM-dd ").format(cal.getTime());
+        cal.add(Calendar.DATE, -1);
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd ").format(cal.getTime());
         if (startTime == null || startTime.equals("")) {
-            startTime = yesterday.substring(0,yesterday.length()-1);
+            startTime = yesterday.substring(0, yesterday.length() - 1);
         }
         if (endTime == null || endTime.equals("")) {
-            endTime = yesterday.substring(0,yesterday.length()-1);
+            endTime = yesterday.substring(0, yesterday.length() - 1);
         }
         model.addAttribute("startTime", startTime);
         model.addAttribute("endTime", endTime);
-        list.add("&startTime="+startTime);
-        list.add("&endTime="+endTime);
+        list.add("&startTime=" + startTime);
+        list.add("&endTime=" + endTime);
         startTime = startTime + " 00:00:00";
         endTime = endTime + " 23:59:59";
         String linkAddress = request.getRequestURI() + "?1=1";
-        linkAddress = commodityDataService.linkAddress(linkAddress,list,resultDataFactory);
+        linkAddress = commodityDataService.linkAddress(linkAddress, list, resultDataFactory);
         int totalCount = commodityDataService.findResultDataFactoryCount(resultDataFactory, startTime, endTime);
         Page page = new Page(totalCount, pageNow);
-        List<ResultDataFactory> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultDataFactory, startTime, endTime,page);
+        List<ResultDataFactory> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultDataFactory, startTime, endTime, page);
         model.addAttribute("commodityDataList", resultDataFactoryList);
         model.addAttribute("page", page);
         model.addAttribute("resultData", resultDataFactory);
@@ -125,27 +127,31 @@ public class DataCoreController {
         String storeStockx = request.getParameter("storeStockx");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
-        if(startTime == null){startTime = ""; }
-        if(endTime == null){ endTime = "";}
-        model.addAttribute("endTime",endTime);
-        model.addAttribute("startTime",startTime);
+        if (startTime == null) {
+            startTime = "";
+        }
+        if (endTime == null) {
+            endTime = "";
+        }
+        model.addAttribute("endTime", endTime);
+        model.addAttribute("startTime", startTime);
         //获取店铺名称
         Set<String> nameSet = new HashSet<String>();
-        if("".equals(storeStockx) || storeStockx == null){
+        if ("".equals(storeStockx) || storeStockx == null) {
             List<StockxStore> stockxStores = stockxStoreService.findList();
             //店铺名称去重
-            for (int i = 0 ; i < stockxStores.size(); i++){
+            for (int i = 0; i < stockxStores.size(); i++) {
                 nameSet.add(stockxStores.get(i).getName());
             }
-            model.put("storeStockx","");
-        }else{
+            model.put("storeStockx", "");
+        } else {
             nameSet.add(storeStockx);
-            model.put("storeStockx",storeStockx);
+            model.put("storeStockx", storeStockx);
         }
-        List<ResultData> resultDatalist = commodityDataService.storeDataAnalysis(nameSet,startTime,endTime,storeName,footage);
-        model.addAttribute("storeName",storeName);
-        model.addAttribute("footage",footage);
-        model.addAttribute("resultDatalist",resultDatalist);
+        List<ResultData> resultDatalist = commodityDataService.storeDataAnalysis(nameSet, startTime, endTime, storeName, footage);
+        model.addAttribute("storeName", storeName);
+        model.addAttribute("footage", footage);
+        model.addAttribute("resultDatalist", resultDatalist);
         return "admin/storeAnalysis/storeDataAnalysis";
     }
 
@@ -153,36 +159,40 @@ public class DataCoreController {
      * 查看店铺尺码月趋势
      */
     @RequestMapping("getStoreTrend")
-    public String getStoreTrend(HttpServletRequest request,ModelMap model){
+    public String getStoreTrend(HttpServletRequest request, ModelMap model) {
         //获取店铺ID 和 商品名称
         String storeName = request.getParameter("storeName");
         String productName = request.getParameter("productName");
         String footage = request.getParameter("footage");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
-        if(startTime == null){startTime = ""; }
-        if(endTime == null){ endTime = "";}
-        model.addAttribute("endTime",endTime);
-        model.addAttribute("startTime",startTime);
-        if(!"".equals(startTime)){
+        if (startTime == null) {
+            startTime = "";
+        }
+        if (endTime == null) {
+            endTime = "";
+        }
+        model.addAttribute("endTime", endTime);
+        model.addAttribute("startTime", startTime);
+        if (!"".equals(startTime)) {
             startTime = DateUtils.dateTime(startTime);
             startTime = startTime + " 00:00:00";
         }
-        if(!"".equals(endTime)){
+        if (!"".equals(endTime)) {
             endTime = DateUtils.dateTime(endTime);
             endTime = endTime + " 23:59:59";
         }
-        String statUninx = DateUtils.date2TimeStamp(startTime,"yyyy-MM-dd HH:mm:ss");
-        String endUninx = DateUtils.date2TimeStamp(endTime,"yyyy-MM-dd HH:mm:ss");
+        String statUninx = DateUtils.date2TimeStamp(startTime, "yyyy-MM-dd HH:mm:ss");
+        String endUninx = DateUtils.date2TimeStamp(endTime, "yyyy-MM-dd HH:mm:ss");
         ResultData resultData = new ResultData();
         resultData.setStoreName(storeName);
         resultData.setProductName(productName);
         //根据商品名查询所有结果
-        List<ResultData> resultDatalist = commodityDataService.getResultDataList(resultData,footage,statUninx,endUninx);
-        model.addAttribute("resultDatalist",resultDatalist);
-        model.put("footage",footage);
-        model.put("productName",productName);
-        model.put("storeName",storeName);
+        List<ResultData> resultDatalist = commodityDataService.getResultDataList(resultData, footage, statUninx, endUninx);
+        model.addAttribute("resultDatalist", resultDatalist);
+        model.put("footage", footage);
+        model.put("productName", productName);
+        model.put("storeName", storeName);
         return "admin/storeAnalysis/storeTrend";
     }
 
@@ -196,9 +206,13 @@ public class DataCoreController {
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String sizeView = request.getParameter("sizeViews");
-        if(startTime == null){startTime = ""; }
-        if(endTime == null){ endTime = "";}
-        Map<String, Object> params = commodityDataService.getResultDataLineGraph(storeName,productName,footage,startTime,endTime,sizeView);
+        if (startTime == null) {
+            startTime = "";
+        }
+        if (endTime == null) {
+            endTime = "";
+        }
+        Map<String, Object> params = commodityDataService.getResultDataLineGraph(storeName, productName, footage, startTime, endTime, sizeView);
         return params;
     }
 
@@ -217,7 +231,7 @@ public class DataCoreController {
         record.setId(request.getParameter("id"));
 
         //封装前台数据
-        Map<String, Object> params = commodityDataService.findLineGraph(record,colorly,footage,dateTime);
+        Map<String, Object> params = commodityDataService.findLineGraph(record, colorly, footage, dateTime);
         return params;
     }
 }

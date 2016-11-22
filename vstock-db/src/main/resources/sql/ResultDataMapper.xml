@@ -6,7 +6,7 @@
     <select id="findResultData" resultType="com.vstock.db.entity.ResultData">
         SELECT * FROM `resultdata`
         <include refid="SelectAll_Where_Clause"/>
-         ORDER BY id DESC limit #{startPos},#{pageSize}
+        ORDER BY id DESC limit #{startPos},#{pageSize}
     </select>
 
     <!--查询所有-->
@@ -52,14 +52,14 @@
         <if test="productName != null and productName != ''">
             and productName = #{productName,jdbcType=VARCHAR}
         </if>
-        GROUP BY storeId  ORDER BY createTime DESC
+        GROUP BY storeId ORDER BY createTime DESC
     </select>
 
     <update id="update">
         UPDATE `resultdata` SET
-         <if test="productNameNew != null and productNameNew != ''">
-             productName = #{productNameNew,jdbcType=VARCHAR}
-         </if>
+        <if test="productNameNew != null and productNameNew != ''">
+            productName = #{productNameNew,jdbcType=VARCHAR}
+        </if>
         WHERE productName = #{productName,jdbcType=VARCHAR}
     </update>
 

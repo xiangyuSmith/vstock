@@ -1,8 +1,5 @@
 package com.vstock.spider.data.spider;
 
-import com.vstock.ext.util.ConstUtil;
-import com.vstock.ext.util.DateUtils;
-import com.vstock.ext.util.ToolSpring;
 import org.apache.log4j.Logger;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -28,6 +25,7 @@ public class TaobaoRepoPageProcessor implements PageProcessor {
     public Site getSite() {
         return site;
     }
+
     public static void main(String[] args) {
         Spider.create(new TaobaoRepoPageProcessor())
                 .addUrl("https://landaitiyu.taobao.com/")

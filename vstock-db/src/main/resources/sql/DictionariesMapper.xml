@@ -39,9 +39,11 @@
     </sql>
 
     <select id="findAll" resultMap="dicBlogResultMap">
-        SELECT dic.id,dic.colorly,dic.identification,dic.status,dic.girard,dic.createTime,dic.updatetime,cd.commodityName,cd.productUrl FROM `dictionaries` dic
+        SELECT
+        dic.id,dic.colorly,dic.identification,dic.status,dic.girard,dic.createTime,dic.updatetime,cd.commodityName,cd.productUrl
+        FROM `dictionaries` dic
         LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
-        <include refid="SelectAll_Where_Clause" />
+        <include refid="SelectAll_Where_Clause"/>
         <if test="stockxName != null and stockxName != ''">
             and cd.stockxName = #{stockxName,jdbcType=VARCHAR}
         </if>
@@ -54,7 +56,7 @@
     <select id="findCount" resultType="Integer">
         SELECT COUNT(*) FROM `dictionaries` dic
         LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
-        <include refid="SelectAll_Where_Clause" />
+        <include refid="SelectAll_Where_Clause"/>
         <if test="stockxName != null and stockxName != ''">
             and cd.stockxName = #{stockxName,jdbcType=VARCHAR}
         </if>
@@ -64,23 +66,24 @@
     </select>
 
     <select id="findDcList" resultMap="dicBlogResultMap">
-        SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.girard,dic.createTime FROM `dictionaries` dic
+        SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.girard,dic.createTime FROM
+        `dictionaries` dic
         LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
-        <include refid="SelectAll_Where_Count" />
+        <include refid="SelectAll_Where_Count"/>
         ORDER BY dic.createTime DESC limit #{startPos},#{pageSize}
     </select>
 
     <resultMap id="dicBlogResultMap" type="com.vstock.db.entity.Dictionaries">
-        <id property="id" column="id" />
-        <result property="colorly" column="colorly" />
-        <result property="status" column="status" />
-        <result property="identification" column="identification" />
-        <result property="girard" column="girard" />
-        <result property="createTime" column="createTime" />
-        <association property="commodityData" column="commodityData" javaType="com.vstock.db.entity.CommodityData" >
-            <id column="id" property="id" />
-            <result column="commodityName" property="commodityName" />
-            <result column="productUrl" property="productUrl" />
+        <id property="id" column="id"/>
+        <result property="colorly" column="colorly"/>
+        <result property="status" column="status"/>
+        <result property="identification" column="identification"/>
+        <result property="girard" column="girard"/>
+        <result property="createTime" column="createTime"/>
+        <association property="commodityData" column="commodityData" javaType="com.vstock.db.entity.CommodityData">
+            <id column="id" property="id"/>
+            <result column="commodityName" property="commodityName"/>
+            <result column="productUrl" property="productUrl"/>
         </association>
     </resultMap>
 
@@ -111,9 +114,10 @@
 
     <!-- 获取总记录数 -->
     <select id="getCount" resultMap="dicBlogResultMap">
-        SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.createTime FROM `dictionaries` dic
+        SELECT dic.id,cd.commodityName,cd.productUrl,dic.colorly,dic.identification,dic.createTime FROM `dictionaries`
+        dic
         LEFT JOIN `commodity_data` cd ON dic.commodityDataId = cd.id
-        <include refid="SelectAll_Where_Count" />
+        <include refid="SelectAll_Where_Count"/>
     </select>
 
     <!-- 条件拼接 -->

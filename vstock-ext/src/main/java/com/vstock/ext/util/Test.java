@@ -42,7 +42,7 @@ public class Test implements PageProcessor {
         page.addTargetRequests(urlList);
         page.putField("author", Html.create(getHtmlResult).regex("https://s.taobao\\.com/search?q=(\\w+).*").toString());
         page.putField("name", Html.create(getHtmlResult).xpath("//h3[@class='tb-main-title']/text()").toString());
-        if (page.getResultItems().get("name")==null){
+        if (page.getResultItems().get("name") == null) {
             //skip this page
             page.setSkip(true);
         }

@@ -32,29 +32,29 @@ public class InterruptTestController {
         List<StockxStore> finalList = stockxStoreService.finalList();
         //获取机器数量 & 机器号
         int listSize = finalList.size();
-        int machineCount = listSize/Integer.parseInt(ConstUtil.getSpiderProperties().getProperty("machineCount"));
+        int machineCount = listSize / Integer.parseInt(ConstUtil.getSpiderProperties().getProperty("machineCount"));
         int machineNum = Integer.parseInt(ConstUtil.getSpiderProperties().getProperty("machineNum"));
         //按机器数平局分配
-        int subCount = listSize%machineCount==0 ? listSize/machineCount : listSize/machineCount+1;
+        int subCount = listSize % machineCount == 0 ? listSize / machineCount : listSize / machineCount + 1;
         int startIndext = 0;
         int stopIndext = 0;
-        if(subCount == 1){
-            threadStockx(finalList,numberThread);
-        }else{
-            for(int k=0;k<subCount;k++){
-                stopIndext = (k==subCount-1) ? stopIndext + listSize%machineCount : stopIndext + machineCount;
-                List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, startIndext+stopIndext));
+        if (subCount == 1) {
+            threadStockx(finalList, numberThread);
+        } else {
+            for (int k = 0; k < subCount; k++) {
+                stopIndext = (k == subCount - 1) ? stopIndext + listSize % machineCount : stopIndext + machineCount;
+                List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, startIndext + stopIndext));
                 startIndext = stopIndext;
-                if(machineNum-1 == k) {
+                if (machineNum - 1 == k) {
                     //处理当前集合
-                    threadStockx(tempList,numberThread);
-                }else{
+                    threadStockx(tempList, numberThread);
+                } else {
                     if (k == subCount - 1) {
                         //判断是否有余
-                        if(listSize%machineCount != 0){
-                            if(machineNum == 1){
+                        if (listSize % machineCount != 0) {
+                            if (machineNum == 1) {
                                 //处理当前集合
-                                threadStockx(tempList,numberThread);
+                                threadStockx(tempList, numberThread);
                             }
                         }
                     }
@@ -64,16 +64,16 @@ public class InterruptTestController {
         return "base/index";
     }
 
-    public void threadStockx(List<StockxStore> tempList,int numberThread) throws InterruptedException{
+    public void threadStockx(List<StockxStore> tempList, int numberThread) throws InterruptedException {
         MyThread.setFinalList(tempList);
-        if (tempList.size() >= numberThread){
-            for (int i = 0; i < numberThread; i++){
+        if (tempList.size() >= numberThread) {
+            for (int i = 0; i < numberThread; i++) {
                 String name = i + "-" + numberThread;
                 MyThread t1 = new MyThread(name);
                 t1.start();
                 Thread.sleep(timeThread);
             }
-        }else {
+        } else {
             MyThread t1 = new MyThread("MyThread1");
             t1.start();
         }

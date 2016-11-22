@@ -13,7 +13,6 @@ import java.util.Date;
  */
 public class DateUtils {
     /**
-     *
      * addDaysToDate:(增加几天到当前的Date). <br/>
      *
      * @param date
@@ -32,12 +31,11 @@ public class DateUtils {
     }
 
     /**
-     *
      * addDaysToDate:(增加几天到当前的Date). <br/>
      *
-     * @paramdate
      * @param numDays
      * @return
+     * @paramdate
      * @since JDK 1.7
      */
     public static Date addDaysToStringDate(String sDate, int numDays,
@@ -53,7 +51,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * addHoursToDate:(增加几个小时到当前Date). <br/>
      *
      * @param date
@@ -74,7 +71,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * addMinutesToDate:(增加几分钟到当前Date). <br/>
      *
      * @param *date
@@ -95,7 +91,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * addMonthsToDate:(增加几个月到当前Date). <br/>
      *
      * @param *date
@@ -114,7 +109,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * addYearsToDate:(增加几年到当前Date). <br/>
      *
      * @param date
@@ -133,35 +127,32 @@ public class DateUtils {
     }
 
     /**
-     *
      * compareDateDown:比较两个日期返回小的. <br/>
      *
-     * @author:MINGYONGZHANG Date: 2016年3月1日 下午2:57:30
      * @return
+     * @author:MINGYONGZHANG Date: 2016年3月1日 下午2:57:30
      * @since JDK 1.7
      */
     public static String compareDateDown(String oneDate, String anotherDate) {
-        String[] compareDates = { oneDate, anotherDate };
+        String[] compareDates = {oneDate, anotherDate};
         Arrays.sort(compareDates);
         return compareDates[0];
     }
 
     /**
-     *
      * compareDateUp:比较两个日期返回大的. <br/>
      *
-     * @author:MINGYONGZHANG Date: 2016年3月1日 下午2:58:03
      * @return
+     * @author:MINGYONGZHANG Date: 2016年3月1日 下午2:58:03
      * @since JDK 1.7
      */
     public static String compareDateUp(String oneDate, String anotherDate) {
-        String[] compareDates = { oneDate, anotherDate };
+        String[] compareDates = {oneDate, anotherDate};
         Arrays.sort(compareDates);
         return compareDates[1];
     }
 
     /**
-     *
      * dateToString:(按照默认模式将时间转化为String. <br/>
      *
      * @param *date
@@ -174,7 +165,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * dateToString:(按照传入的模式将时间转化为String. <br/>
      *
      * @param *date
@@ -187,15 +177,13 @@ public class DateUtils {
     }
 
     /**
-     *
      * getCurrentAllDays:(获得两个时间的天数). <br/>
      *
-     * @author:Shipeng Tang Date: 2015年12月31日 上午9:53:28
      * @param dateFrom
      * @param dateTo
-     * @param isEgnoreTime
-     *            是否忽略时间
+     * @param isEgnoreTime 是否忽略时间
      * @return
+     * @author:Shipeng Tang Date: 2015年12月31日 上午9:53:28
      * @since JDK 1.7
      */
     public static final long getCurrentAllDays(Date dateFrom, Date dateTo,
@@ -217,7 +205,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * getCurrentTimeAs14String:(获取当前格式化String时间). <br/>
      *
      * @return
@@ -228,7 +215,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * getCurrentTimeAs14String:(获取当前格式化String时间). <br/>
      *
      * @return
@@ -239,15 +225,14 @@ public class DateUtils {
     }
 
     /**
-     *
      * getDate:(获取当前指定时间的Date). <br/>
      *
-     * @author:Shipeng Tang Date: 2015年12月31日 上午9:56:44
      * @param date
      * @param hour
      * @param min
      * @param sec
      * @return
+     * @author:Shipeng Tang Date: 2015年12月31日 上午9:56:44
      * @since JDK 1.7
      */
     public static Date getDate(Date date, int hour, int min, int sec) {
@@ -260,7 +245,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * getDate:(获取指定年月日的时间). <br/>
      *
      * @param year
@@ -276,7 +260,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * getDate:(将字符串转化为date). <br/>
      *
      * @param dateStr
@@ -296,7 +279,6 @@ public class DateUtils {
     }
 
     /**
-     *
      * getDateHaoMiao:(). <br/>
      *
      * @param dateStr
@@ -445,28 +427,25 @@ public class DateUtils {
         }
     }
 
-    public static String getNowYearJidu(){
+    public static String getNowYearJidu() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
         Calendar now = Calendar.getInstance();
         //年份
-        String year = String.valueOf( now.get(Calendar.YEAR));
+        String year = String.valueOf(now.get(Calendar.YEAR));
         //月份
         int month = now.get(Calendar.MONTH) + 1;
         //季度
         String jidu = "";
-        if(month == 1 || month ==2 || month ==3){
+        if (month == 1 || month == 2 || month == 3) {
             jidu = "Q1";
-        }
-        else if(month == 4 || month ==5 || month ==6){
+        } else if (month == 4 || month == 5 || month == 6) {
             jidu = "Q2";
-        }
-        else if(month == 7 || month ==8 || month ==9){
+        } else if (month == 7 || month == 8 || month == 9) {
             jidu = "Q3";
-        }
-        else if(month == 10 || month ==11 || month ==12){
+        } else if (month == 10 || month == 11 || month == 12) {
             jidu = "Q4";
         }
-        return year+jidu;
+        return year + jidu;
     }
 
     public static void main(String args[]) throws ParseException {
@@ -517,11 +496,11 @@ public class DateUtils {
     /**
      * 时间减去30天
      *
-     * @Date 2016.06.30 下午 17:20:08
      * @param dates
      * @return
+     * @Date 2016.06.30 下午 17:20:08
      */
-    public static Date wantToLose(Date dates,int day){
+    public static Date wantToLose(Date dates, int day) {
         SimpleDateFormat dft = new SimpleDateFormat(DEFAULT_FORMAT);
         Calendar date = Calendar.getInstance();
         date.setTime(dates);
@@ -534,12 +513,12 @@ public class DateUtils {
         return dates;
     }
 
-    public static String dateTime(String dateTime){
+    public static String dateTime(String dateTime) {
         SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         try {
             date = dateFormater.parse(dateTime);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.print(ex.getMessage());
         }
         return dateFormater.format(date);
@@ -551,17 +530,18 @@ public class DateUtils {
 
     /**
      * 日期格式字符串转换成时间戳
+     *
      * @param date_str 字符串日期
-     * @param format 如：yyyy-MM-dd HH:mm:ss
+     * @param format   如：yyyy-MM-dd HH:mm:ss
      * @return
      */
-    public static String date2TimeStamp(String date_str,String format){
+    public static String date2TimeStamp(String date_str, String format) {
         try {
-            if("".equals(date_str)){
+            if ("".equals(date_str)) {
                 return "";
             }
             SimpleDateFormat sdf = new SimpleDateFormat(format);
-            return String.valueOf(sdf.parse(date_str).getTime()/1000);
+            return String.valueOf(sdf.parse(date_str).getTime() / 1000);
         } catch (Exception e) {
             e.printStackTrace();
         }

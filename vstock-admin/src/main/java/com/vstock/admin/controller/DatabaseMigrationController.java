@@ -31,15 +31,15 @@ public class DatabaseMigrationController {
     ICommodityDetail iCommodityDetail;
 
     @RequestMapping("basicinformation")
-    public void Basicinformation(){
+    public void Basicinformation() {
         List<Basicinformation> basicinformationList = mongoTemplate.findAll(Basicinformation.class);
-        for (int i = 0; i < basicinformationList.size(); i++){
+        for (int i = 0; i < basicinformationList.size(); i++) {
             System.out.println("===============================================");
             System.out.println("                                               ");
-            System.out.println("              导入第" + i +"条数据             ");
+            System.out.println("              导入第" + i + "条数据             ");
             System.out.println("                                               ");
             System.out.println("===============================================");
-            if (i == 2237){
+            if (i == 2237) {
                 System.out.println(i);
             }
             Basicinformation basicinformation = new Basicinformation();
@@ -50,11 +50,11 @@ public class DatabaseMigrationController {
                     basicinformation.setCsaledate(basicinformation.getCsaledate().replace(",", ""));
                 }
             }
-            basicinformation.setEofferprice(basicinformation.getEofferprice().replaceAll("\\$",""));
-            if (basicinformation.getEofferprice().contains(",")){
-                basicinformation.setEofferprice(basicinformation.getEofferprice().replace(",",""));
+            basicinformation.setEofferprice(basicinformation.getEofferprice().replaceAll("\\$", ""));
+            if (basicinformation.getEofferprice().contains(",")) {
+                basicinformation.setEofferprice(basicinformation.getEofferprice().replace(",", ""));
             }
-            if ("".equals(basicinformation.getCsaledate())){
+            if ("".equals(basicinformation.getCsaledate())) {
                 basicinformation.setCsaledate(null);
             }
             iBasicinformation.insert(basicinformation);
@@ -67,12 +67,12 @@ public class DatabaseMigrationController {
     }
 
     @RequestMapping("commodityData")
-    public void CommodityData(){
+    public void CommodityData() {
         List<CommodityData> commodityDetailList = mongoTemplate.findAll(CommodityData.class);
-        for (int i = 0; i < commodityDetailList.size(); i++){
+        for (int i = 0; i < commodityDetailList.size(); i++) {
             System.out.println("===============================================");
             System.out.println("                                               ");
-            System.out.println("              导入第" + i +"条数据             ");
+            System.out.println("              导入第" + i + "条数据             ");
             System.out.println("                                               ");
             System.out.println("===============================================");
 //            if (i == 2237){
@@ -91,22 +91,22 @@ public class DatabaseMigrationController {
     }
 
     @RequestMapping("dictionaries")
-    public void Dictionaries(){
+    public void Dictionaries() {
         List<Dictionaries> dictionariesList = mongoTemplate.findAll(Dictionaries.class);
-        for (int i = 0; i < dictionariesList.size(); i++){
+        for (int i = 0; i < dictionariesList.size(); i++) {
             System.out.println("===============================================");
             System.out.println("                                               ");
-            System.out.println("              导入第" + i +"条数据             ");
+            System.out.println("              导入第" + i + "条数据             ");
             System.out.println("                                               ");
             System.out.println("===============================================");
-            if (i == 9714){
+            if (i == 9714) {
                 System.out.println(i);
             }
             Dictionaries dictionaries = new Dictionaries();
             dictionaries = dictionariesList.get(i);
             CommodityData commodityData = dictionaries.getCommodityData();
             commodityData.setId(null);
-            List<CommodityData> commodityDataList= iCommodityData.findCommodityDataAll(commodityData);
+            List<CommodityData> commodityDataList = iCommodityData.findCommodityDataAll(commodityData);
             dictionaries.setId(null);
             dictionaries.setCommodityDataId(commodityDataList.get(0).getId());
             iDictionariesDao.insertdictionaries(dictionaries);
@@ -119,22 +119,22 @@ public class DatabaseMigrationController {
     }
 
     @RequestMapping("resultdata")
-    public void ResultData(){
+    public void ResultData() {
         List<ResultData> resultDataList = mongoTemplate.findAll(ResultData.class);
-        for (int i = 0; i < resultDataList.size(); i++){
+        for (int i = 0; i < resultDataList.size(); i++) {
             System.out.println("===============================================");
             System.out.println("                                               ");
-            System.out.println("              导入第" + i +"条数据             ");
+            System.out.println("              导入第" + i + "条数据             ");
             System.out.println("                                               ");
             System.out.println("===============================================");
-            if (i == 9714){
+            if (i == 9714) {
                 System.out.println(i);
             }
             ResultData resultData = new ResultData();
             resultData = resultDataList.get(i);
-            CommodityData commodityData = mongoTemplate.findById(resultData.getCommodityDataId(),CommodityData.class);
+            CommodityData commodityData = mongoTemplate.findById(resultData.getCommodityDataId(), CommodityData.class);
             commodityData.setId(null);
-            List<CommodityData> commodityDataList= iCommodityData.findCommodityDataAll(commodityData);
+            List<CommodityData> commodityDataList = iCommodityData.findCommodityDataAll(commodityData);
             resultData.setId(null);
             resultData.setCommodityDataId(commodityDataList.get(0).getId());
             iResultData.insertresultData(resultData);
@@ -147,22 +147,22 @@ public class DatabaseMigrationController {
     }
 
     @RequestMapping("resultDataFactory")
-    public void ResultDataFactory(){
+    public void ResultDataFactory() {
         List<ResultDataFactory> resultDataFactoryList = mongoTemplate.findAll(ResultDataFactory.class);
-        for (int i = 0; i < resultDataFactoryList.size(); i++){
+        for (int i = 0; i < resultDataFactoryList.size(); i++) {
             System.out.println("===============================================");
             System.out.println("                                               ");
-            System.out.println("              导入第" + i +"条数据             ");
+            System.out.println("              导入第" + i + "条数据             ");
             System.out.println("                                               ");
             System.out.println("===============================================");
-            if (i == 9714){
+            if (i == 9714) {
                 System.out.println(i);
             }
             ResultDataFactory resultDataFactory = new ResultDataFactory();
             resultDataFactory = resultDataFactoryList.get(i);
-            CommodityData commodityData = mongoTemplate.findById(resultDataFactory.getCommodityDataId(),CommodityData.class);
+            CommodityData commodityData = mongoTemplate.findById(resultDataFactory.getCommodityDataId(), CommodityData.class);
             commodityData.setId(null);
-            List<CommodityData> commodityDataList= iCommodityData.findCommodityDataAll(commodityData);
+            List<CommodityData> commodityDataList = iCommodityData.findCommodityDataAll(commodityData);
             resultDataFactory.setId(null);
             resultDataFactory.setCommodityDataId(commodityDataList.get(0).getId());
             iResultDataFactory.insertresultData(resultDataFactory);
@@ -175,22 +175,22 @@ public class DatabaseMigrationController {
     }
 
     @RequestMapping("commodityDetail")
-    public void CommodityDetail(){
+    public void CommodityDetail() {
         List<CommodityDetail> commodityDetailList = mongoTemplate.findAll(CommodityDetail.class);
-        for (int i = 0; i < commodityDetailList.size(); i++){
+        for (int i = 0; i < commodityDetailList.size(); i++) {
             System.out.println("===============================================");
             System.out.println("                                               ");
-            System.out.println("              导入第" + i +"条数据             ");
+            System.out.println("              导入第" + i + "条数据             ");
             System.out.println("                                               ");
             System.out.println("===============================================");
-            if (i == 131920){
+            if (i == 131920) {
                 System.out.println(i);
             }
             CommodityDetail commodityDetail = new CommodityDetail();
             commodityDetail = commodityDetailList.get(i);
-            CommodityData commodityData = mongoTemplate.findById(commodityDetail.getCommodityDataId(),CommodityData.class);
+            CommodityData commodityData = mongoTemplate.findById(commodityDetail.getCommodityDataId(), CommodityData.class);
             commodityData.setId(null);
-            List<CommodityData> commodityDataList= iCommodityData.findCommodityDataAll(commodityData);
+            List<CommodityData> commodityDataList = iCommodityData.findCommodityDataAll(commodityData);
             commodityDetail.setId(null);
             commodityDetail.setCommodityDataId(commodityDataList.get(0).getId());
             iCommodityDetail.insertCommoditydetail(commodityDetail);

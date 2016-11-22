@@ -3,21 +3,22 @@
 <mapper namespace="com.vstock.db.dao.IResultDataFactory">
 
     <resultMap id="BaseResultMap" type="com.vstock.db.entity.ResultDataFactory">
-        <id property="id" column="id" />
-        <result column="commodityDataId" property="commodityDataId" />
-        <result column="basiciformationId" property="basiciformationId" />
-        <result column="productName" property="productName" />
-        <result column="brand" property="brand" />
-        <result column="girard" property="girard" />
-        <result column="sizePrice" property="sizePrice" />
-        <result column="transactionRecord" property="transactionRecord" />
-        <result column="createTime" property="createTime" />
-        <result column="countTransactionRecord" property="countTransactionRecord" />
-        <result column="difference" property="difference" />
-        <association property="basicinformation" column="basicinformation" javaType="com.vstock.db.entity.Basicinformation" >
-            <id column="id" property="id" />
-            <result column="name" property="baname" />
-            <result column="artNo" property="baartNo" />
+        <id property="id" column="id"/>
+        <result column="commodityDataId" property="commodityDataId"/>
+        <result column="basiciformationId" property="basiciformationId"/>
+        <result column="productName" property="productName"/>
+        <result column="brand" property="brand"/>
+        <result column="girard" property="girard"/>
+        <result column="sizePrice" property="sizePrice"/>
+        <result column="transactionRecord" property="transactionRecord"/>
+        <result column="createTime" property="createTime"/>
+        <result column="countTransactionRecord" property="countTransactionRecord"/>
+        <result column="difference" property="difference"/>
+        <association property="basicinformation" column="basicinformation"
+                     javaType="com.vstock.db.entity.Basicinformation">
+            <id column="id" property="id"/>
+            <result column="name" property="baname"/>
+            <result column="artNo" property="baartNo"/>
         </association>
     </resultMap>
 
@@ -190,11 +191,12 @@
         , rf.countTransactionRecord as countTransactionRecord
     </sql>
 
-    <select id="findAll" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="com.vstock.db.entity.ResultDataFactory">
+    <select id="findAll" parameterType="com.vstock.db.entity.ResultDataFactory"
+            resultType="com.vstock.db.entity.ResultDataFactory">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM resultdata_factory rf
-        <include refid="SearchAllByPage_Where_Clause" />
+        <include refid="SearchAllByPage_Where_Clause"/>
         <if test="startTime != null and startTime != ''">
             AND rf.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
         </if>
@@ -206,21 +208,21 @@
 
     <select id="findCount" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="Integer">
         SELECT COUNT(*) FROM resultdata_factory rf
-        <include refid="SearchAllByPage_Where_Clause" />
+        <include refid="SearchAllByPage_Where_Clause"/>
         <if test="startTime != null and startTime != ''">
             AND rf.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
         </if>
         <if test="endTime != null and endTime != ''">
-            AND rf.createTime 	&lt; #{endTime,jdbcType=TIMESTAMP}
+            AND rf.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
         </if>
     </select>
 
     <select id="findrdfAndBasiAll" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         FROM resultdata_factory rf
         LEFT JOIN basicinformation bf ON rf.basiciformationId = bf.id
-        <include refid="SearchAllByPage_Where_Clause" />
+        <include refid="SearchAllByPage_Where_Clause"/>
         <if test="startTime != null and startTime != ''">
             AND rf.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
         </if>
@@ -232,12 +234,12 @@
 
     <select id="findrdfAndBasiCount" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="Integer">
         SELECT COUNT(*) FROM resultdata_factory rf
-        <include refid="SearchAllByPage_Where_Clause" />
+        <include refid="SearchAllByPage_Where_Clause"/>
         <if test="startTime != null and startTime != ''">
             AND rf.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
         </if>
         <if test="endTime != null and endTime != ''">
-            AND rf.createTime 	&lt; #{endTime,jdbcType=TIMESTAMP}
+            AND rf.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
         </if>
     </select>
 

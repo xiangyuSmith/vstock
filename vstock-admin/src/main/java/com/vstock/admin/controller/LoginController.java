@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 @RequestMapping("/adminLogin")
-public class LoginController extends BaseController{
+public class LoginController extends BaseController {
 
     Logger log = Logger.getLogger(getClass());
 
@@ -28,7 +28,7 @@ public class LoginController extends BaseController{
 
     @RequestMapping("index")
     public String login(HttpServletRequest request, ModelMap model, RedirectAttributes attr) {
-        String status  = getParam(request,"status","1");
+        String status = getParam(request, "status", "1");
         model.addAttribute("status", status);
         return "admin/adminLogin/admin_login";
     }

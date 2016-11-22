@@ -44,41 +44,41 @@ public class DataAuditController {
         String pageNow = request.getParameter("pageNow");
         String productName = request.getParameter("productName");
         String storeName = request.getParameter("storeName");
-        if(dictionaries.getStatus() == null ||  "".equals(dictionaries.getStatus())){
+        if (dictionaries.getStatus() == null || "".equals(dictionaries.getStatus())) {
             dictionaries.setStatus("0");
         }
-        if ("1".equals(dictionaries.getColorly())){
+        if ("1".equals(dictionaries.getColorly())) {
             dictionaries.setColorly("");
         }
-        if ("1".equals(storeName)){
+        if ("1".equals(storeName)) {
             storeName = "";
         }
-        String linkAddress = request.getRequestURI()+"?";
+        String linkAddress = request.getRequestURI() + "?";
         if (dictionaries.getStatus() != null && !"".equals(dictionaries.getStatus())) {
             linkAddress = linkAddress + "&status=" + dictionaries.getStatus();
         }
-        int dCListCount = dictionariesService.findCount(dictionaries,storeName,productName);
+        int dCListCount = dictionariesService.findCount(dictionaries, storeName, productName);
         Page page = new Page(dCListCount, pageNow);
-        List<Dictionaries> dCList = dictionariesService.findAll(dictionaries, storeName,productName,page);
+        List<Dictionaries> dCList = dictionariesService.findAll(dictionaries, storeName, productName, page);
         List<StockxStore> stockxStores = stockxStoreService.findList();
         List<StockxStore> list1 = new ArrayList<StockxStore>();
         Set<String> set = new HashSet<String>();
         for (StockxStore stockxStore : stockxStores) {
-            if(stockxStore == null){
+            if (stockxStore == null) {
                 continue;
             }
             String storeNames = stockxStore.getName();
-            if(storeNames != null){
-                if(!set.contains(storeNames)){
+            if (storeNames != null) {
+                if (!set.contains(storeNames)) {
                     set.add(storeNames);
                     list1.add(stockxStore);
-                }else{
+                } else {
                     continue;
                 }
             }
         }
 
-        if ("".equals(dictionaries.getColorly())){
+        if ("".equals(dictionaries.getColorly())) {
             dictionaries.setColorly("1");
         }
         if (dictionaries.getColorly() != null && !"".equals(dictionaries.getColorly())) {
@@ -113,7 +113,7 @@ public class DataAuditController {
         String identification = request.getParameter("identification");
         String girard = request.getParameter("girard");
         String status = request.getParameter("status");
-        if("2".equals(status) || "3".equals(status)){
+        if ("2".equals(status) || "3".equals(status)) {
             identification = "";
             girard = "";
         }
@@ -136,8 +136,8 @@ public class DataAuditController {
 
     @RequestMapping("updateDictionResult")
     @ResponseBody
-    public Map<String,Object> updateDictionResult(HttpServletRequest request){
-        Map<String,Object> params = new HashMap<String,Object>();
+    public Map<String, Object> updateDictionResult(HttpServletRequest request) {
+        Map<String, Object> params = new HashMap<String, Object>();
         Dictionaries record = new Dictionaries();
         Dictionaries dictionaries = new Dictionaries();
         int resultCount = 0;
@@ -149,12 +149,12 @@ public class DataAuditController {
         dictionaries = dictionariesService.findById(record.getId());
         if (dictionaries != null) {
             resultCount = dictionariesService.update(record);
-            if (resultCount > 0){
-                commodityDataService.updateResultData(dictionaries.getIdentification(),record.getIdentification());
+            if (resultCount > 0) {
+                commodityDataService.updateResultData(dictionaries.getIdentification(), record.getIdentification());
             }
         }
 
-        params.put("resultCount",resultCount);
+        params.put("resultCount", resultCount);
         return params;
     }
 }

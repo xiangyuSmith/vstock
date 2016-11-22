@@ -19,7 +19,8 @@
         SELECT * FROM `stockxInfo` si
     </select>
 
-    <insert id="insertstockxStore" parameterType="com.vstock.db.entity.StockxStore" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertstockxStore" parameterType="com.vstock.db.entity.StockxStore" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO `stockx_store`
         (`id`,`name`,`brand`,`url`,`pageNo`,`create_user`,`create_time`)
         VALUES(null,#{name},#{brand},#{url},#{pageNo},#{create_user},#{create_time})
@@ -28,7 +29,7 @@
     <!-- 获取总记录数 -->
     <select id="getStockxStoreCount" resultType="Long">
         SELECT COUNT(*) FROM `stockx_store`
-        <include refid="SelectAll_Where_Count" />
+        <include refid="SelectAll_Where_Count"/>
     </select>
 
     <!-- 修改 -->

@@ -5,19 +5,19 @@
     <!--取得记录的总数-->
     <select id="getBrandCount" parameterType="com.vstock.db.entity.Brand" resultType="Long">
         SELECT COUNT(*) FROM `brand`
-        <include refid="SelectAll_Where_Clause" />
+        <include refid="SelectAll_Where_Clause"/>
     </select>
 
     <!-- 取得数据列表 -->
     <select id="findList" resultType="com.vstock.db.entity.Brand">
-      SELECT * FROM `brand`
-      <include refid="SelectAll_Where_Clause" />
-      ORDER BY id DESC limit #{startPos},#{pageSize}
+        SELECT * FROM `brand`
+        <include refid="SelectAll_Where_Clause"/>
+        ORDER BY id DESC limit #{startPos},#{pageSize}
     </select>
 
     <select id="findAllList" resultType="com.vstock.db.entity.Brand">
         SELECT * FROM `brand`
-        <include refid="SelectAll_Where_Clause" />
+        <include refid="SelectAll_Where_Clause"/>
     </select>
 
     <!-- 根据编号查询品牌 -->
@@ -25,7 +25,7 @@
         SELECT * FROM `brand`
         WHERE 1=1
         <if test="brandId != null and brandId != ''">
-          AND id = #{brandId}
+            AND id = #{brandId}
         </if>
     </select>
 

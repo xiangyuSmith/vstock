@@ -1,6 +1,7 @@
 package com.vstock.spider.data.controller;
 
-import com.vstock.db.entity.*;
+import com.vstock.db.entity.StockxInfo;
+import com.vstock.db.entity.StockxStore;
 import com.vstock.spider.data.service.BasicinformationService;
 import com.vstock.spider.data.service.CommodityDataService;
 import com.vstock.spider.data.service.StockxStoreService;
@@ -30,23 +31,23 @@ public class CommodityDataController {
     BasicinformationService basicinformationService;
 
     @RequestMapping("taobaoData")
-    public String taobaoData(){
+    public String taobaoData() {
         return "base/index";
     }
 
     @RequestMapping("index")
-    public String index(){
+    public String index() {
         //获取店铺表中录入的连接地址
         List<StockxStore> list = stockxStoreService.findList();
         List<StockxStore> finalList = new ArrayList<StockxStore>();
         //判断是否存在值
-        if (list.size() >0) {
+        if (list.size() > 0) {
             //调用爬虫方法
-            for (StockxStore stockxStore :list) {
+            for (StockxStore stockxStore : list) {
                 int num = Integer.parseInt(stockxStore.getPageNo());
                 String toUrl = stockxStore.getUrl();
-                for (int i = 1;i<=num;i++){
-                    String newUrl = toUrl+"&pageNo="+i;
+                for (int i = 1; i <= num; i++) {
+                    String newUrl = toUrl + "&pageNo=" + i;
                     StockxStore store = new StockxStore();
                     store.setId(stockxStore.getId());
                     store.setBrand(stockxStore.getBrand());
@@ -57,25 +58,25 @@ public class CommodityDataController {
                     finalList.add(store);
                 }
             }
-            for (StockxStore stockxStore:finalList) {
-                GithubRepoPageProcessor.main(stockxStore,finalList);
+            for (StockxStore stockxStore : finalList) {
+                GithubRepoPageProcessor.main(stockxStore, finalList);
             }
         }
         return "base/index";
     }
 
     @RequestMapping("stockInfo")
-    public String stockInfo(HttpServletRequest request){
+    public String stockInfo(HttpServletRequest request) {
         //获取stockx鞋子链接
         List<StockxInfo> stockxInfoList = stockxStoreService.findStockxInfo();
         for (StockxInfo stockxInfo : stockxInfoList) {
-            if("7".equals(stockxInfo.getBrandId()) || "8".equals(stockxInfo.getBrandId()) || "9".equals(stockxInfo.getBrandId()) || "10".equals(stockxInfo.getBrandId())
-                    || "11".equals(stockxInfo.getBrandId())){
+            if ("7".equals(stockxInfo.getBrandId()) || "8".equals(stockxInfo.getBrandId()) || "9".equals(stockxInfo.getBrandId()) || "10".equals(stockxInfo.getBrandId())
+                    || "11".equals(stockxInfo.getBrandId())) {
                 //拼接URL
                 String toUrl = "";
-                for (int i = 1;i <=  stockxInfo.getPageNum();i++){
-                    toUrl = stockxInfo.getInterfacesApi()+"?page="+i+"&category="+stockxInfo.getCategory();
-                    StockxInfoRepoPageProcessor.main(toUrl,stockxInfo.getName(),request);
+                for (int i = 1; i <= stockxInfo.getPageNum(); i++) {
+                    toUrl = stockxInfo.getInterfacesApi() + "?page=" + i + "&category=" + stockxInfo.getCategory();
+                    StockxInfoRepoPageProcessor.main(toUrl, stockxInfo.getName(), request);
                 }
             }
         }

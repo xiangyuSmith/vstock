@@ -3,46 +3,46 @@
 <mapper namespace="com.vstock.db.dao.ICommodityData">
 
     <sql id="SelectAll_Where_Clause">
-    <where>
+        <where>
             1=1
-        <if test="commodityData.id != null and commodityData.id != ''">
-            AND id = #{commodityData.id,jdbcType=VARCHAR}
-        </if>
-        <if test="commodityData.stockxName != null and commodityData.stockxName != ''">
-            and stockxName = #{commodityData.stockxName,jdbcType=VARCHAR}
-        </if>
-        <if test="commodityData.commodityName != null and commodityData.commodityName != ''">
-            and commodityName like CONCAT('%',#{commodityData.commodityName,jdbcType=VARCHAR},'%')
-        </if>
-        <if test="commodityData.commodityPrice != null and commodityData.commodityPrice != ''">
-            and commodityPrice = #{commodityData.commodityPrice,jdbcType=VARCHAR}
-        </if>
-        <if test="commodityData.transactionRecord != null and commodityData.transactionRecord != ''">
-            and transactionRecord = #{commodityData.transactionRecord,jdbcType=VARCHAR}
-        </if>
-        <if test="commodityData.colorSort != null and commodityData.colorSort != ''">
-            and colorSort = #{commodityData.colorSort,jdbcType=VARCHAR}
-        </if>
-        <if test="commodityData.girard != null and commodityData.girard != ''">
-            and girard like CONCAT('%',#{commodityData.girard,jdbcType=VARCHAR},'%')
-        </if>
-        <if test="commodityData.brand != null and commodityData.brand != ''">
-            and brand like CONCAT('%',#{commodityData.brand,jdbcType=VARCHAR},'%')
-        </if>
-        <if test="startTime != null and startTime != ''">
-            and createDate &gt;= #{startTime,jdbcType=VARCHAR}
-        </if>
-        <if test="endTime != null and endTime != ''">
-            and createDate &lt;= #{endTime,jdbcType=VARCHAR}
-        </if>
-    </where>
-</sql>
+            <if test="commodityData.id != null and commodityData.id != ''">
+                AND id = #{commodityData.id,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityData.stockxName != null and commodityData.stockxName != ''">
+                and stockxName = #{commodityData.stockxName,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityData.commodityName != null and commodityData.commodityName != ''">
+                and commodityName like CONCAT('%',#{commodityData.commodityName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="commodityData.commodityPrice != null and commodityData.commodityPrice != ''">
+                and commodityPrice = #{commodityData.commodityPrice,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityData.transactionRecord != null and commodityData.transactionRecord != ''">
+                and transactionRecord = #{commodityData.transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityData.colorSort != null and commodityData.colorSort != ''">
+                and colorSort = #{commodityData.colorSort,jdbcType=VARCHAR}
+            </if>
+            <if test="commodityData.girard != null and commodityData.girard != ''">
+                and girard like CONCAT('%',#{commodityData.girard,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="commodityData.brand != null and commodityData.brand != ''">
+                and brand like CONCAT('%',#{commodityData.brand,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and createDate &gt;= #{startTime,jdbcType=VARCHAR}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createDate &lt;= #{endTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
 
     <sql id="SelectAll_Where_Count">
         <where>
-               1=1
+            1=1
             <if test="id != null and id != ''">
-                 AND id = #{id,jdbcType=VARCHAR}
+                AND id = #{id,jdbcType=VARCHAR}
             </if>
             <if test="stockxName != null and stockxName != ''">
                 and stockxName = #{stockxName,jdbcType=VARCHAR}
@@ -98,13 +98,15 @@
         </where>
     </sql>
 
-    <insert id="insertcommodityData" parameterType="com.vstock.db.entity.CommodityData" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertcommodityData" parameterType="com.vstock.db.entity.CommodityData" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO `commodity_data`
         (`id`,`stockxId`,`stockxName`,`commodityName`,`commodityPrice`,`transactionRecord`,`colorSort`,`girard`,`brand`,`productUrl`,`createDate`)
         VALUES(null,#{stockxId},#{stockxName},#{commodityName},#{commodityPrice},#{transactionRecord},#{colorSort},#{girard},#{brand},#{productUrl},now())
     </insert>
 
-    <insert id="insertcommodityDetail" parameterType="com.vstock.db.entity.CommodityDetail" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertcommodityDetail" parameterType="com.vstock.db.entity.CommodityDetail" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO `commoditydetail`
         (`id`,`commodityDataId`,`colorSize`,`transactionRecord`,`createDate`)
         VALUES(null,#{commodityDataId},#{colorSize},#{transactionRecord},now())
@@ -113,7 +115,7 @@
     <!--取得记录的总数-->
     <select id="getCommodityCount" parameterType="com.vstock.db.entity.CommodityData" resultType="Long">
         SELECT COUNT(*) FROM `commodity_data`
-        <include refid="SelectAll_Where_Clause" />
+        <include refid="SelectAll_Where_Clause"/>
     </select>
 
     <!--分页查询所有-->
@@ -122,19 +124,21 @@
     </select>
 
     <!--公共查询方法-->
-    <select id="findAll" resultType="com.vstock.db.entity.CommodityData" parameterType="com.vstock.db.entity.CommodityData">
+    <select id="findAll" resultType="com.vstock.db.entity.CommodityData"
+            parameterType="com.vstock.db.entity.CommodityData">
         SELECT * FROM `commodity_data`
-        <include refid="SelectAll_Where_Clause" />
+        <include refid="SelectAll_Where_Clause"/>
         ORDER BY id DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="findCommodityDataAll" parameterType="com.vstock.db.entity.CommodityData" resultType="com.vstock.db.entity.CommodityData">
+    <select id="findCommodityDataAll" parameterType="com.vstock.db.entity.CommodityData"
+            resultType="com.vstock.db.entity.CommodityData">
         SELECT * FROM `commodity_data`
-        <include refid="Select_Where_Clause" />
+        <include refid="Select_Where_Clause"/>
     </select>
 
     <select id="findByName" resultType="com.vstock.db.entity.CommodityData">
-        SELECT * FROM `commodity_data` WHERE  1 = 1
+        SELECT * FROM `commodity_data` WHERE 1 = 1
         <if test="name != null">
             AND `commodityName` = #{name}
         </if>
@@ -146,7 +150,7 @@
     <!--公共查询记录总数-->
     <select id="getAllCount" parameterType="com.vstock.db.entity.CommodityData" resultType="Long">
         SELECT COUNT(*) FROM `commodity_data`
-        <include refid="SelectAll_Where_Count" />
+        <include refid="SelectAll_Where_Count"/>
     </select>
 
 </mapper>

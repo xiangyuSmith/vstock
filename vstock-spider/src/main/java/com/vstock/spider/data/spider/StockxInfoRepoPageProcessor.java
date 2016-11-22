@@ -1,10 +1,10 @@
 package com.vstock.spider.data.spider;
 
+import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.StockxStore;
 import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.JsonTool;
 import com.vstock.ext.util.ToolSpring;
-import com.vstock.db.entity.Basicinformation;
-import com.vstock.db.entity.StockxStore;
 import com.vstock.spider.data.service.BasicinformationService;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
@@ -64,8 +64,7 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
             Map map = JsonTool.toMap(json);
             String productss = map.get("Products").toString();
             JSONArray myJsonArray = new JSONArray(productss);
-            for(int i=0 ; i < myJsonArray.length() ;i++)
-            {
+            for (int i = 0; i < myJsonArray.length(); i++) {
                 //获取每一个JsonObject对象
                 JSONObject myjObject = myJsonArray.getJSONObject(i);
                 //获取每一个对象中的值
@@ -79,7 +78,7 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                 System.getProperties().setProperty("webdriver.chrome.driver", chromeDriver);
                 WebDriver driver = new ChromeDriver();
                 try {
-                    driver.get("https://stockx.com/"+urlKey);
+                    driver.get("https://stockx.com/" + urlKey);
                     WebElement webElement = driver.findElement(By.xpath("/html"));
                     //打印搜索到的页面 System.out.println(webElement.getAttribute("outerHTML"));
                     //获取页面
@@ -89,29 +88,29 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                     String colorWay = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.1.0.1.1']/text()").toString();
                     String releaseDate = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.2.1.1']/text()").toString();
                     String[] rels = releaseDate.split("\\.");
-                    releaseDate = rels[2]+"/"+ rels[0] + "/" + rels[1];
+                    releaseDate = rels[2] + "/" + rels[0] + "/" + rels[1];
                     Calendar now = Calendar.getInstance();
                     //年份
-                    String year = String.valueOf( now.get(Calendar.YEAR));
-                    int nowDate = Integer.parseInt(year.substring(2,4));
-                    int csdate = Integer.parseInt(releaseDate.substring(0,2));
-                    if(csdate > nowDate){
-                        releaseDate = "19"+releaseDate;
-                    }else{
-                        releaseDate = "20"+releaseDate;
+                    String year = String.valueOf(now.get(Calendar.YEAR));
+                    int nowDate = Integer.parseInt(year.substring(2, 4));
+                    int csdate = Integer.parseInt(releaseDate.substring(0, 2));
+                    if (csdate > nowDate) {
+                        releaseDate = "19" + releaseDate;
+                    } else {
+                        releaseDate = "20" + releaseDate;
                     }
                     String originalRetailPrice = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.3.1.1']/text()").toString();
                     String img1 = Html.create(getHtmlResult).xpath("//meta[@name='image']/@content").toString();
                     //保存数据
-                    if(productName != null && style != null){
+                    if (productName != null && style != null) {
                         Basicinformation basicinformation = new Basicinformation();
                         basicinformation.setBrand(brandName);
                         basicinformation.setName(productName);
                         List<Basicinformation> baList = basicinformationService.findAll(basicinformation);
-                        if(baList.size() == 0){
+                        if (baList.size() == 0) {
                             //添加图片
-                            String smallImgUrl =loadImg(smallImageUrl,urlKey,1);
-                            String imgUrl = loadImg(img1,urlKey,0);
+                            String smallImgUrl = loadImg(smallImageUrl, urlKey, 1);
+                            String imgUrl = loadImg(img1, urlKey, 0);
                             basicinformation.setArtNo(style);
                             basicinformation.setColores(colorWay);
                             basicinformation.setEsaledate(releaseDate);
@@ -120,21 +119,20 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                             basicinformation.setSmallImgUrl(smallImgUrl);
                             basicinformation.setState("1");
                             int result = basicinformationService.insertbasicinfrom(basicinformation);
-                            if(result == 1){
+                            if (result == 1) {
                                 logger.info("Info : insert basicinformation suceess");
-                            }else{
+                            } else {
                                 logger.error("Error : insert basicinformation error");
                             }
                         }
                     }
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     logger.error(e.getMessage());
-                }finally {
+                } finally {
                     driver.quit();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
     }
@@ -168,10 +166,11 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
 
     /**
      * 请求接口返回json数据
+     *
      * @param url
      * @return
      */
-    public static String loadJSON (String url) {
+    public static String loadJSON(String url) {
         StringBuilder json = new StringBuilder();
         try {
             URL oracle = new URL(url);
@@ -179,7 +178,7 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     yc.getInputStream()));
             String inputLine = null;
-            while ( (inputLine = in.readLine()) != null) {
+            while ((inputLine = in.readLine()) != null) {
                 json.append(inputLine);
             }
             in.close();
@@ -189,7 +188,7 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
         return json.toString();
     }
 
-    public static String loadImg(String imgUrl,String productName,int type){
+    public static String loadImg(String imgUrl, String productName, int type) {
         BufferedInputStream bis = null;
         HttpURLConnection httpurlConnection = null;
         File fileinput = null;
@@ -210,20 +209,20 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                     httpurlConnection.getInputStream());
             bfimg = ImageIO.read(inputStream);
             String ursl = ConstUtil.getProperties().getProperty("projectPath");
-            if(type == 1){
+            if (type == 1) {
                 //缩略图
                 saveUrl = "/assets/shoesImg/small/";
-            }else{
+            } else {
                 //大图
                 saveUrl = "/assets/shoesImg/";
             }
-            File file = new File(ursl+saveUrl);
+            File file = new File(ursl + saveUrl);
             // 判断文件夹是否创建，没有创建则创建新文件夹
             if (!file.exists()) {
                 file.mkdirs();
             }
-            file = new File(file,productName+".jpg");
-            saveUrl = saveUrl + productName+".jpg";
+            file = new File(file, productName + ".jpg");
+            saveUrl = saveUrl + productName + ".jpg";
             BufferedOutputStream bos = new BufferedOutputStream(
                     new FileOutputStream(file.getAbsolutePath()));
             // 创建输入流缓冲
@@ -243,7 +242,7 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
             // 关闭字节流
             bos.close();
             ImageIO.write(bfimg, "png", file);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.print(e.getMessage());
         }
         return saveUrl;

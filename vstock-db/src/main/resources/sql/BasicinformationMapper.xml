@@ -17,7 +17,7 @@
     <update id="updateState">
         UPDATE `basicinformation` SET
         <if test="state != null and state != ''">
-             state = #{state,jdbcType=VARCHAR}
+            state = #{state,jdbcType=VARCHAR}
         </if>
         WHERE `id` = #{id}
     </update>
@@ -119,50 +119,50 @@
     </sql>
 
     <sql id="Select_Where_Clause">
-    <where>
-        1=1
-        <if test="basicinformation.id != null and basicinformation.id != ''">
-            AND id = #{basicinformation.id,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.brand != null and basicinformation.brand != ''">
-            and brand = #{basicinformation.brand,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.name != null and basicinformation.name != ''">
-            and name = #{basicinformation.name,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
-            and artNo = #{basicinformation.artNo,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.colores != null and basicinformation.colores != ''">
-            and colores = #{basicinformation.colores,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
-            and esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
-            and cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
-            and eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
-            and chineselogo = #{basicinformation.chineselogo,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
-            and imgUrl = #{basicinformation.imgUrl,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
-            and smallImgUrl = #{basicinformation.smallImgUrl,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
-            and createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
-        </if>
-        <if test="basicinformation.state != null and basicinformation.state != ''">
-            and state = #{basicinformation.state,jdbcType=VARCHAR}
-        </if>
-    </where>
+        <where>
+            1=1
+            <if test="basicinformation.id != null and basicinformation.id != ''">
+                AND id = #{basicinformation.id,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.brand != null and basicinformation.brand != ''">
+                and brand = #{basicinformation.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.name != null and basicinformation.name != ''">
+                and name = #{basicinformation.name,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
+                and artNo = #{basicinformation.artNo,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.colores != null and basicinformation.colores != ''">
+                and colores = #{basicinformation.colores,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
+                and esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
+                and cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
+                and eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
+                and chineselogo = #{basicinformation.chineselogo,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
+                and imgUrl = #{basicinformation.imgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
+                and smallImgUrl = #{basicinformation.smallImgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
+                and createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
+            </if>
+            <if test="basicinformation.state != null and basicinformation.state != ''">
+                and state = #{basicinformation.state,jdbcType=VARCHAR}
+            </if>
+        </where>
 
-</sql>
+    </sql>
 
     <sql id="update_Where_Clause">
         <set>
@@ -206,23 +206,23 @@
     </sql>
 
     <sql id="Select_Where_Time">
-       <if test="startCsaledate != null and startCsaledate != ''">
-          and csaledate &gt;= #{startCsaledate,jdbcType=VARCHAR}
-       </if>
-       <if test="endCsaledate != null and endCsaledate != ''">
-          and csaledate &lt;= #{endCsaledate,jdbcType=VARCHAR}
-       </if>
-       <if test="startEsaledate != null and startEsaledate != ''">
-          and esaledate &gt;= #{startEsaledate,jdbcType=VARCHAR}
-       </if>
-       <if test="endEsaledate != null and endEsaledate != ''">
-          and esaledate &lt;= #{endEsaledate,jdbcType=VARCHAR}
-       </if>
-       <if test="startCreatetime != null and startCreatetime != ''">
-          and createtime &gt;= #{startCreatetime,jdbcType=VARCHAR}
-       </if>
-       <if test="endCreatetime != null and endCreatetime != ''">
-          and createtime &lt;= #{endCreatetime,jdbcType=VARCHAR}
-       </if>
+        <if test="startCsaledate != null and startCsaledate != ''">
+            and csaledate &gt;= #{startCsaledate,jdbcType=VARCHAR}
+        </if>
+        <if test="endCsaledate != null and endCsaledate != ''">
+            and csaledate &lt;= #{endCsaledate,jdbcType=VARCHAR}
+        </if>
+        <if test="startEsaledate != null and startEsaledate != ''">
+            and esaledate &gt;= #{startEsaledate,jdbcType=VARCHAR}
+        </if>
+        <if test="endEsaledate != null and endEsaledate != ''">
+            and esaledate &lt;= #{endEsaledate,jdbcType=VARCHAR}
+        </if>
+        <if test="startCreatetime != null and startCreatetime != ''">
+            and createtime &gt;= #{startCreatetime,jdbcType=VARCHAR}
+        </if>
+        <if test="endCreatetime != null and endCreatetime != ''">
+            and createtime &lt;= #{endCreatetime,jdbcType=VARCHAR}
+        </if>
     </sql>
 </mapper>

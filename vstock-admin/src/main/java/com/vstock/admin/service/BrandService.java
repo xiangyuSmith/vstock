@@ -17,30 +17,32 @@ public class BrandService {
     @Autowired
     IBrandDao brandDao;
 
-    public Long getBrandCount(Brand brand){
+    public Long getBrandCount(Brand brand) {
         return brandDao.getBrandCount(brand);
     }
 
-    public List<Brand> findList(Brand brand,Page page){
-        return brandDao.findList(brand,page.getStartPos(),page.getPageSize());
+    public List<Brand> findList(Brand brand, Page page) {
+        return brandDao.findList(brand, page.getStartPos(), page.getPageSize());
     }
 
-    public int inser(Brand brand){
+    public int inser(Brand brand) {
         return brandDao.insertBrand(brand);
     }
 
-    public Brand findBrandById(String brandId){
+    public Brand findBrandById(String brandId) {
         return brandDao.findBrandById(brandId);
     }
 
-    public int update(Brand brand){
+    public int update(Brand brand) {
         return brandDao.updateBrand(brand);
     }
 
-    public int deleteById(String brandId){
+    public int deleteById(String brandId) {
         return brandDao.deleteById(brandId);
     }
 
-    public List<Brand> findAllList(Brand brand){ return brandDao.findAllList(brand);}
+    public List<Brand> findAllList(Brand brand) {
+        return brandDao.findAllList(brand);
+    }
 
 }

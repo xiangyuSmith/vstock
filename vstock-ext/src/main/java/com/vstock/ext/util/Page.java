@@ -24,25 +24,27 @@ public class Page implements Serializable {
     @SuppressWarnings("unused")
     private boolean hasLast;// 是否有最后一页
 
-/**
- 034.
- * 通过构造函数 传入  总记录数  和  当前页
- * @param totalCount
- * @param pageNow
- */
+    /**
+     * 034.
+     * 通过构造函数 传入  总记录数  和  当前页
+     *
+     * @param totalCount
+     * @param pageNow
+     */
     public Page(int totalCount, String pageNow) {
         this.totalCount = totalCount;
-        this.pageNow = pageNow==null?"1" : pageNow;
+        this.pageNow = pageNow == null ? "1" : pageNow;
     }
 
-/**
- * 取得总页数，总页数=总记录数/总页数
- * @return
- */
+    /**
+     * 取得总页数，总页数=总记录数/总页数
+     *
+     * @return
+     */
     public int getTotalPageCount() {
         totalPageCount = getTotalCount() / getPageSize();
         return (totalCount % pageSize == 0) ? totalPageCount
-        : totalPageCount + 1;
+                : totalPageCount + 1;
     }
 
     public void setTotalPageCount(int totalPageCount) {
@@ -54,7 +56,7 @@ public class Page implements Serializable {
     }
 
     public void setPageNow(String pageNow) {
-        this.pageNow = pageNow == null?null : pageNow;
+        this.pageNow = pageNow == null ? null : pageNow;
     }
 
     public int getPageSize() {
@@ -72,10 +74,12 @@ public class Page implements Serializable {
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
     }
-/**
- * 取得选择记录的初始位置
- * @return
- */
+
+    /**
+     * 取得选择记录的初始位置
+     *
+     * @return
+     */
     public int getStartPos() {
         return (Integer.parseInt(pageNow) - 1) * pageSize;
     }
@@ -84,10 +88,11 @@ public class Page implements Serializable {
         this.startPos = startPos;
     }
 
-/**
- * 是否是第一页
- * @return
- */
+    /**
+     * 是否是第一页
+     *
+     * @return
+     */
     public boolean isHasFirst() {
         return (Integer.parseInt(pageNow) == 1) ? false : true;
     }
@@ -95,10 +100,12 @@ public class Page implements Serializable {
     public void setHasFirst(boolean hasFirst) {
         this.hasFirst = hasFirst;
     }
-/**
- * 是否有首页
- * @return
- */
+
+    /**
+     * 是否有首页
+     *
+     * @return
+     */
     public boolean isHasPre() {
 // 如果有首页就有前一页，因为有首页就不是第一页
         return isHasFirst() ? true : false;
@@ -107,10 +114,12 @@ public class Page implements Serializable {
     public void setHasPre(boolean hasPre) {
         this.hasPre = hasPre;
     }
-/**
- * 是否有下一页
- * @return
- */
+
+    /**
+     * 是否有下一页
+     *
+     * @return
+     */
     public boolean isHasNext() {
 // 如果有尾页就有下一页，因为有尾页表明不是最后一页
         return isHasLast() ? true : false;
@@ -119,10 +128,12 @@ public class Page implements Serializable {
     public void setHasNext(boolean hasNext) {
         this.hasNext = hasNext;
     }
-/**
- * 是否有尾页
- * @return
- */
+
+    /**
+     * 是否有尾页
+     *
+     * @return
+     */
     public boolean isHasLast() {
 // 如果不是最后一页就有尾页
         return (Integer.parseInt(pageNow) == getTotalCount()) ? false : true;

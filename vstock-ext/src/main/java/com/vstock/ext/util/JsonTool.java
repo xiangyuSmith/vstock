@@ -15,20 +15,20 @@ import java.util.Map;
 public class JsonTool {
 
     /**
-     *获取json中所有的key和value的值
+     * 获取json中所有的key和value的值
      *
-     * @Date 2016.06.24 下午 15:49:12
      * @param jsonObject
      * @return
      * @throws Exception
+     * @Date 2016.06.24 下午 15:49:12
      */
-    public static Map<String,Object> jsonObtainKey(JSONObject jsonObject) throws Exception{
+    public static Map<String, Object> jsonObtainKey(JSONObject jsonObject) throws Exception {
         Iterator keyIter = jsonObject.keys();
         String key;
         Object value;
-        Map<String,Object> valueMap = new HashMap();
-        while (keyIter.hasNext()){
-            key = (String)keyIter.next();
+        Map<String, Object> valueMap = new HashMap();
+        while (keyIter.hasNext()) {
+            key = (String) keyIter.next();
             value = jsonObject.get(key);
             valueMap.put(key, value);
         }
@@ -38,8 +38,7 @@ public class JsonTool {
     /**
      * 将Javabean转换为Map
      *
-     * @param javaBean
-     *            javaBean
+     * @param javaBean javaBean
      * @return Map对象
      */
     public static Map toMap(Object javaBean) {
@@ -75,8 +74,7 @@ public class JsonTool {
     /**
      * 将Json对象转换成Map
      *
-     * @param jsonString
-     *            json对象
+     * @param jsonString json对象
      * @return Map对象
      * @throws JSONException
      */
@@ -103,8 +101,7 @@ public class JsonTool {
     /**
      * 将JavaBean转换成JSONObject（通过Map中转）
      *
-     * @param bean
-     *            javaBean
+     * @param bean javaBean
      * @return json对象
      */
     public static JSONObject toJSON(Object bean) {
@@ -116,10 +113,8 @@ public class JsonTool {
     /**
      * 将Map转换成Javabean
      *
-     * @param javabean
-     *            javaBean
-     * @param data
-     *            Map数据
+     * @param javabean javaBean
+     * @param data     Map数据
      */
     public static Object toJavaBean(Object javabean, Map data) {
 
@@ -132,7 +127,7 @@ public class JsonTool {
                     String field = method.getName();
                     field = field.substring(field.indexOf("set") + 3);
                     field = field.toLowerCase().charAt(0) + field.substring(1);
-                    method.invoke(javabean, new Object[] {
+                    method.invoke(javabean, new Object[]{
 
                             data.get(field)
 
@@ -151,11 +146,9 @@ public class JsonTool {
     /**
      * JSONObject到JavaBean
      *
-     * @param javabean
-     *            javaBean
+     * @param javabean javaBean
      * @return json对象
-     * @throws ParseException
-     *             json解析异常
+     * @throws ParseException json解析异常
      * @throws JSONException
      */
     public static void toJavaBean(Object javabean, String jsonString)
@@ -199,8 +192,8 @@ public class JsonTool {
      * <p>4、如果当前字符是逗号。逗号后面换行，并缩进，不改变缩进次数。
      * <p>5、打印：当前字符。
      *
-     * @author  Ligang
-     * @version  [版本号, 2016年8月8日]
+     * @author Ligang
+     * @version [版本号, 2016年8月8日]
      */
     /**
      * 单位缩进字符串。
@@ -213,8 +206,7 @@ public class JsonTool {
      * @param json 未格式化的JSON字符串。
      * @return 格式化的JSON字符串。
      */
-    public static String formatJson(String json)
-    {
+    public static String formatJson(String json) {
         StringBuffer result = new StringBuffer();
 
         int length = json.length();
@@ -222,17 +214,14 @@ public class JsonTool {
         char key = 0;
 
         //遍历输入字符串。
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             //1、获取当前字符。
             key = json.charAt(i);
 
             //2、如果当前字符是前方括号、前花括号做如下处理：
-            if((key == '[') || (key == '{') )
-            {
+            if ((key == '[') || (key == '{')) {
                 //（1）如果前面还有字符，并且字符为“：”，打印：换行和缩进字符字符串。
-                if((i - 1 > 0) && (json.charAt(i - 1) == ':'))
-                {
+                if ((i - 1 > 0) && (json.charAt(i - 1) == ':')) {
                     result.append('\n');
                     result.append(indent(number));
                 }
@@ -252,8 +241,7 @@ public class JsonTool {
             }
 
             //3、如果当前字符是后方括号、后花括号做如下处理：
-            if((key == ']') || (key == '}') )
-            {
+            if ((key == ']') || (key == '}')) {
                 //（1）后方括号、后花括号，的前面必须换行。打印：换行。
                 result.append('\n');
 
@@ -265,8 +253,7 @@ public class JsonTool {
                 result.append(key);
 
                 //（4）如果当前字符后面还有字符，并且字符不为“，”，打印：换行。
-                if(((i + 1) < length) && (json.charAt(i + 1) != ','))
-                {
+                if (((i + 1) < length) && (json.charAt(i + 1) != ',')) {
                     result.append('\n');
                 }
 
@@ -275,8 +262,7 @@ public class JsonTool {
             }
 
             //4、如果当前字符是逗号。逗号后面换行，并缩进，不改变缩进次数。
-            if((key == ','))
-            {
+            if ((key == ',')) {
                 result.append(key);
                 result.append('\n');
                 result.append(indent(number));
@@ -296,11 +282,9 @@ public class JsonTool {
      * @param number 缩进次数。
      * @return 指定缩进次数的字符串。
      */
-    private static String indent(int number)
-    {
+    private static String indent(int number) {
         StringBuffer result = new StringBuffer();
-        for(int i = 0; i < number; i++)
-        {
+        for (int i = 0; i < number; i++) {
             result.append(SPACE);
         }
         return result.toString();
