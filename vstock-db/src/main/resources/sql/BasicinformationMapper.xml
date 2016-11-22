@@ -178,6 +178,9 @@
             <if test="basicinformation.colores != null and basicinformation.colores != ''">
                 , colores = #{basicinformation.colores,jdbcType=VARCHAR}
             </if>
+            <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
+                , csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
+            </if>
             <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
                 , esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
             </if>
