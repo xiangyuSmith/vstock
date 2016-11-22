@@ -84,6 +84,9 @@ public class DataAuditController {
         if (dictionaries.getColorly() != null && !"".equals(dictionaries.getColorly())) {
             linkAddress = linkAddress + "&colorStatus=" + dictionaries.getColorly();
         }
+        if (dictionaries.getGirard() != null && !"".equals(dictionaries.getGirard())) {
+            linkAddress = linkAddress + "&girard=" + dictionaries.getGirard();
+        }
         if (productName != null && !"".equals(productName)) {
             linkAddress = linkAddress + "&productName=" + productName;
         }

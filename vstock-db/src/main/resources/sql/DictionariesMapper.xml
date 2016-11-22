@@ -14,6 +14,9 @@
             <if test="dictionaries.status == 9">
                 AND dic.status NOT IN (#{dictionaries.status,jdbcType=VARCHAR})
             </if>
+            <if test="dictionaries.girard != null and dictionaries.girard != ''">
+                and dic.girard = #{dictionaries.girard,jdbcType=VARCHAR}
+            </if>
             <if test="dictionaries.commodityDataId != null and dictionaries.commodityDataId != ''">
                 and dic.commodityDataId = #{dictionaries.commodityDataId,jdbcType=VARCHAR}
             </if>
