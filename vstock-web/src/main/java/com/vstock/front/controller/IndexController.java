@@ -15,7 +15,12 @@ public class IndexController extends BaseController{
     public String index(){
         String sss = request.getParameter("sss");
         System.out.println(sss);
-        return "/index/index.jsp";
+        return "/index/index";
+    }
+
+    @RequestMapping("test")
+    public String test(){
+        return "/index/test";
     }
 
 }
