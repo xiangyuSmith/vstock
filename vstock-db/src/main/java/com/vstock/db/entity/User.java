@@ -4,14 +4,111 @@ package com.vstock.db.entity;
  * Created by sunson on 2015/11/21.
  */
 public class User {
-    private String name;
 
-    public String getName() {
-        return name;
+    private static final String REG_MD5_CODE = "vstock.user.register.md5.code";
+
+    private String uname;
+
+    private String password;
+
+    private String mobile;
+
+    private String nick;
+
+    private String last_login_ip;
+
+    private String last_login_time;
+
+    private int status;
+
+    private String create_time;
+
+    private String update_time;
+
+    public String getUname() {
+        return uname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getLast_login_ip() {
+        return last_login_ip;
+    }
+
+    public void setLast_login_ip(String last_login_ip) {
+        this.last_login_ip = last_login_ip;
+    }
+
+    public String getLast_login_time() {
+        return last_login_time;
+    }
+
+    public void setLast_login_time(String last_login_time) {
+        this.last_login_time = last_login_time;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(String update_time) {
+        this.update_time = update_time;
+    }
+
+    public User() {
+    }
+
+    public User(String uname, String password, String mobile, String nick, String last_login_ip, String last_login_time, int status, String create_time, String update_time) {
+        this.uname = uname;
+        this.password = password;
+        this.mobile = mobile;
+        this.nick = nick;
+        this.last_login_ip = last_login_ip;
+        this.last_login_time = last_login_time;
+        this.status = status;
+        this.create_time = create_time;
+        this.update_time = update_time;
+    }
 }

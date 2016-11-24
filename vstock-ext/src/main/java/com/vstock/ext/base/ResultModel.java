@@ -1,6 +1,6 @@
 package com.vstock.ext.base;
 
-public class BaseModel {
+public class ResultModel {
 
     public final static int RET_OK = 1;
 

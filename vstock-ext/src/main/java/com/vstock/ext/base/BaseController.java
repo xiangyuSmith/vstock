@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class BaseController {
 
     protected HttpServletRequest request;
+
     protected HttpServletResponse response;
+
     protected Logger log = Logger.getLogger(getClass());
+
     protected static final String ERROR_MSG_KEY = "errorMsg";
 
     Logger logger = Logger.getLogger(getClass());
@@ -25,12 +29,12 @@ public class BaseController {
     /**
      * spring 中request、response是线程安全的，可以直接注入
      *
-     * @ModelAttribute注解只有在被
-     * @Controller和@ControllerAdvice两个注解的类下使用 ModelAttribute的作用
-     *    1)放置在方法的形参上： 表示引用Model中的数据
-     *    2)放置在方法上面：表示请求该类的每个Action前都会首先执行它也可以将一些准备数据的操作放置在该方法里面。
      * @param request
      * @param response
+     * @ModelAttribute注解只有在被
+     * @Controller和@ControllerAdvice两个注解的类下使用 ModelAttribute的作用
+     * 1)放置在方法的形参上： 表示引用Model中的数据
+     * 2)放置在方法上面：表示请求该类的每个Action前都会首先执行它也可以将一些准备数据的操作放置在该方法里面。
      */
     @ModelAttribute
     public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
@@ -55,6 +59,7 @@ public class BaseController {
 
     /**
      * 获取请求属性封装为Map类型
+     *
      * @param request
      * @return
      */
@@ -68,20 +73,21 @@ public class BaseController {
         return conditions;
     }
 
-    protected String getParam(HttpServletRequest request,String param,String defaultValue){
-        Map<String,Object> map = getParamMap(request);
-        String result = (String)map.get(param);
+    protected String getParam(HttpServletRequest request, String param, String defaultValue) {
+        Map<String, Object> map = getParamMap(request);
+        String result = (String) map.get(param);
         return result != null && !"".equals(result) ? result : defaultValue;
     }
-    protected String getParam(HttpServletRequest request,String param){
-        Map<String,Object> map = getParamMap(request);
-        String result = (String)map.get(param);
+
+    protected String getParam(HttpServletRequest request, String param) {
+        Map<String, Object> map = getParamMap(request);
+        String result = (String) map.get(param);
         return result != null && !"".equals(result) ? result : "";
     }
 
-    protected Integer getParamToInt(HttpServletRequest request, String param){
-        Map<String,Object> map = getParamMap(request);
-        return toInt(String.valueOf(map.get(param)),null);
+    protected Integer getParamToInt(HttpServletRequest request, String param) {
+        Map<String, Object> map = getParamMap(request);
+        return toInt(String.valueOf(map.get(param)), null);
     }
 
     public final String getAppbaseUrl(HttpServletRequest request, String url) {
@@ -98,8 +104,7 @@ public class BaseController {
             if (value.startsWith("N") || value.startsWith("n"))
                 return -Integer.parseInt(value.substring(1));
             return Integer.parseInt(value);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.error("Can not parse the parameter \"" + value + "\" to Integer value.");
         }
         return null;
