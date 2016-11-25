@@ -28,8 +28,8 @@
                             <li <c:if test="${menu.isChild == 1}"> class="admin-parent"</c:if>>
                                 <c:choose>
                                     <c:when test="${menu.isChild == 1}">
-                                        <a class="am-cf am-collapsed" data-am-collapse="{target: '#${menu.enName}'}"><span class="${menu.imgIcon}"></span> ${menu.menuName} <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
-                                        <ul class="am-list admin-sidebar-sub am-collapse" id="${menu.enName}">
+                                        <a class="am-cf" data-am-collapse="{target: '#${menu.enName}'}"><span class="${menu.imgIcon}"></span> ${menu.menuName} <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                                        <ul class="am-list am-collapse admin-sidebar-sub" id="${menu.enName}">
                                             <c:forEach items="${menuList}" var="menuChild">
                                                 <c:if test="${menu.id==menuChild.parentId}">
                                                     <li><a href="${menuChild.toUrl}"><span class="${menuChild.imgIcon}"></span> ${menuChild.menuName}</a></li>
@@ -77,8 +77,5 @@
         $("#Mu1 li[class='admin-parent'] ul li a").click(function(){
             $.cookie("navstation", $(this).html(), { path: "/" });
         });
-
-
-
     });
 </script>
