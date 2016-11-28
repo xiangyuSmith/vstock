@@ -459,7 +459,7 @@
         <p class="am-copy">医云健康 版权所有 </p>
     </div>
 </footer>
-<%@include file="../layout/bottom.jsp" %>
+<%@include file="../layout/footer.jsp" %>
 <script type="text/javascript">
     $(function(){
         $("#collapse-head ul li").click(function(){
