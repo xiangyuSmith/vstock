@@ -35,7 +35,7 @@
 }
 .am-container {
     max-width: 1200px;
-    min-width: 750px;
+    /*min-width: 750px;*/
 }
 .am-sticky {
     position: fixed!important;

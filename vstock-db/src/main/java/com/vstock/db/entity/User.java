@@ -5,7 +5,7 @@ package com.vstock.db.entity;
  */
 public class User {
 
-    private static final String REG_MD5_CODE = "vstock.user.register.md5.code";
+    public static final String REG_MD5_CODE = "vstock.user.register.md5.code";
 
     private String uname;
 
@@ -14,6 +14,8 @@ public class User {
     private String mobile;
 
     private String nick;
+
+    private String salt;
 
     private String last_login_ip;
 
@@ -55,6 +57,14 @@ public class User {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getLast_login_ip() {
