@@ -1,0 +1,95 @@
+/** HEAD **/
+.v-logo{
+    display: block;
+    float: left;
+    width: 56px;
+    height: 50px;
+    text-indent: -9999px;
+    background: url('../../assets/i/logo.png') no-repeat left center;
+}
+.v-a-boder{
+    font-weight: bold;
+    width: 66px;
+    height: 38px;
+    line-height: 22px;
+    color: #ea5958!important;
+    border: 2px solid #ea5958;
+    border-radius: 10px!important;
+}
+.m-hd{
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    height: 80px;
+    padding: 15px 0 0 0;
+    box-shadow: 0 0 9px 0 #cecece;
+}
+.m-hd .am-sticky {
+    background: #f2f2f2;
+    padding: 15px 0;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=95);
+    opacity: 0.95;
+}
+.m-hd .am-container {
+    position: relative;
+}
+.am-container {
+    max-width: 1200px;
+    min-width: 750px;
+}
+.am-sticky {
+    position: fixed!important;
+    z-index: 1010;
+    -webkit-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+.m-services {
+    background: #1a1f2a;
+    padding: 40px 0 40px 0;
+    color: #fff;
+}
+.m-hd .m-nav a {
+    color: #828282;
+}
+/** BANNER **/
+.am-slider-i2 .am-slider-images {
+    height: 680px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+/** BOTTOM **/
+.m-footer {
+    background: #1a1f2a;
+    padding: 60px 0 0 0;
+    color: #fff;
+    font-size: 14px;
+    background: url("/assets/i/footer.png");
+}
+.m-footer a{
+    color: #fff;
+}
+.am-container {
+    max-width: 1200px;
+}
+.m-footer-container{
+    padding-bottom: 60px;
+}
+
+/** SIDE **/
+
+
+/** 统一样式 **/
+a, a:hover, .m-partner li img, .m-partner li img:hover, .m-contact-infobox, .m-contact-infobox:hover, .m-footer .ico i, .m-footer .ico i:hover, .m-service-page .ico ul li span, .m-service-page .ico ul li span:hover, .m-hd .am-sticky, .m-service-list li:hover {
+    -webkit-filter: none;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
