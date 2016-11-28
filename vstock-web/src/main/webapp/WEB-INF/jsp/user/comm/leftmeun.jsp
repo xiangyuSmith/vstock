@@ -38,7 +38,7 @@
             if ($thoes.length > 0) {
                 var th = $thoes.find("span");
                 var url = th.attr("data-url");
-                ajaxContent(url, "", "tradeforex_tilie");
+                ajaxContent(url, "", "tradeforex_tilie",1);
                 var divB = document.getElementsByClassName('text-color');
                 for (var a = 0; a < divB.length; a++) {
                     var divA = divB[a];
@@ -48,9 +48,8 @@
                 }
                 th.removeClass("am-link-muted");
             }else {
-                ajaxContent("../index/testSale", "" ,"tradeforex_tilie");
+                ajaxContent("../index/testSale", "" ,"tradeforex_tilie",1);
             }
-            loadingclose();
         }
         load("");
     });

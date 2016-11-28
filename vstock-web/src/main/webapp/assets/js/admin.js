@@ -33,11 +33,13 @@ function fileUpload(url, fileElement, data, callback) {
 
 /**
  * ajax请求url替换div content
- * @param url 请求地址
+ * @param url 请求地址 （必填）
  * @param data 参数
+ * @param content 异步加载容器DIV
+ * @param type 弹出层状态 1:存在
  * @param callback 回调
  */
-function ajaxContent(url, data, content){
+function ajaxContent(url, data, content,type){
     $('.loading-img').css('display','block');
     $.ajax({
         type : "post",
@@ -59,6 +61,9 @@ function ajaxContent(url, data, content){
 
         },
         complete: function(XMLHttpRequest, textStatus) {
+            if(type == 1){
+                loadingclose();
+            }
             // 请求完成后回调函数 (请求成功或失败时均调用)。参数： XMLHttpRequest 对象，成功信息字符串。
             // 调用本次AJAX请求时传递的options参数
         }
