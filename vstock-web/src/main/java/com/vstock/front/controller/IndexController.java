@@ -23,6 +23,11 @@ public class IndexController extends BaseController{
         return "/index/test";
     }
 
+    @RequestMapping("testIndex")
+    public String testIndex(){
+        return "/user/comm/leftmeun";
+    }
+
     @RequestMapping("testSale")
     public String testSale(){
         return "/user/saleRecord";

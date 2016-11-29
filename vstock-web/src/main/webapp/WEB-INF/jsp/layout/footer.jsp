@@ -1,5 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="inc.jsp" %>
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="vstock-loading">
+    <div class="am-modal-dialog">
+        <div id="loading-content" class="am-modal-hd"></div>
+        <div class="am-modal-bd">
+            <span class="am-icon-spinner am-icon-spin"></span>
+        </div>
+    </div>
+</div>
 <footer class="m-footer">
     <div class="am-container">
         <section class="am-g m-footer-container">
