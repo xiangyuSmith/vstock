@@ -13,14 +13,14 @@
                 手机号：<input id="mobile" type="text" placeholder="请输入用户名" /><br/>
                 密码：<input id="password" type="password" minlength="6" placeholder="请输入密码" /><br/>
                 确认密码：<input id="finalpassword" type="password" minlength="6" placeholder="确认密码" /><br/>
-                <input type="button" id="prLogin" value="提交" />
+                <input type="button" id="prReg" value="确定" />
             </form>
         </div>
     </div>
     <%@include file="../layout/bottom.jsp" %>
     <script>
         $(function(){
-            $("#prLogin").click(function(){
+            $("#prReg").click(function(){
                sendRequest("/register/insertUser",{
                    'mobile':$("#mobile").val(),
                    'password':$.md5($("#password").val())

@@ -16,7 +16,16 @@
                     <li><a href="#" rel="nofollow">即将发布</a></li>
                     <li><a href="#" rel="nofollow">作品集</a></li>
                     <li><a href="#" rel="nofollow">常见问题</a></li>
-                    <li><a href="#" rel="nofollow">注册/登录</a></li>
+                    <li>
+                        <c:choose>
+                            <c:when test="${not empty vUser}">
+                                <a href="#"><span>欢迎你：</span>${vUser.mobile}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="#" rel="nofollow">注册/登录</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
                     <li><a href="#" class="v-a-boder" rel="nofollow">SELL</a></li>
                 </ul>
             </nav>

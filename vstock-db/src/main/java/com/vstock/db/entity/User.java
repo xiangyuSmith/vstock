@@ -5,7 +5,11 @@ package com.vstock.db.entity;
  */
 public class User {
 
+    public static final String SESSION_USER_ID = "VSTOCK-VID";
+
     public static final String REG_MD5_CODE = "vstock.user.register.md5.code";
+
+    private String id;
 
     private String uname;
 
@@ -26,6 +30,14 @@ public class User {
     private String create_time;
 
     private String update_time;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUname() {
         return uname;

@@ -9,6 +9,13 @@
     </mvc:annotation-driven>
 
     <mvc:resources mapping="/assets/**" location="/assets/"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.vstock.front.support.interceptor.AccessInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <mvc:default-servlet-handler/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>

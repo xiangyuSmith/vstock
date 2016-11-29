@@ -8,4 +8,17 @@
         VALUES(null,#{mobile},#{password},#{salt},now())
     </insert>
 
+    <select id="findUser"  resultType="com.vstock.db.entity.User">
+        select * from `user` u
+        <include refid="SelectAll_Where_Count"/>
+    </select>
+
+    <sql id="SelectAll_Where_Count">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
 </mapper>

@@ -15,4 +15,10 @@ public class UserService {
         return userDao.insertUser(user);
     }
 
+    public User findById(String suid){
+        User u = new User();
+        u.setId(suid);
+        return userDao.findUser(u);
+    }
+
 }
