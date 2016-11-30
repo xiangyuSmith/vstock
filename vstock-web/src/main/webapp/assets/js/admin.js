@@ -51,6 +51,7 @@ function ajaxContent(url, data, content,type){
         cache: false,
         success:function(returnData){
             $("#"+content).html(returnData);
+            $("#"+content).fadeIn(200);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             // 这个方法有三个参数：XMLHttpRequest 对象，错误信息，（可能）捕获的错误对象。
@@ -89,4 +90,12 @@ function loadingshow(msg) {
 
 function loadingclose() {
     $('#vstock-loading').modal('close');
+}
+
+//提示弹框
+function alertshow(msg, callback) {
+    $("#alert-content").html(msg);
+    $('#forex-alert').modal({
+        onConfirm : function() { if (callback) callback(); $('#forex-alert').off('confirm.modal.amui'); },
+    });
 }

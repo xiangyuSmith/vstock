@@ -6,3 +6,4 @@
 <script src="${ctx}/assets/js/amazeui.min.js"></script>
 <script src="${ctx}/assets/js/md5.min.js"></script>
 <script src="${ctx}/assets/js/admin.js"></script>
+<script src="${ctx}/assets/js/echarts-all.js"></script>

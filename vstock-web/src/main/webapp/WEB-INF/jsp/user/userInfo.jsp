@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="saleRecord" action="${cxt}/index/testUserInfo" method="post">
+<form id="userInfo" action="${cxt}/index/testUserInfo" method="post">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-xl">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-sm" style="border-bottom: 1px solid #030303;">
             <span class="am-text-xl">个人信息</span>
@@ -75,4 +75,3 @@
         </tbody>
     </table>
 </form>
-<%@include file="../layout/commscript.jsp" %>

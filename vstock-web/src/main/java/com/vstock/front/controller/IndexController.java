@@ -43,4 +43,14 @@ public class IndexController extends BaseController{
         return "/user/userInfo";
     }
 
+    @RequestMapping("testUserAssets")
+    public String testUserAssets(){
+        return "/user/userAssets";
+    }
+
+    @RequestMapping("testloginwindow")
+    public String testloginwindow(){
+        return "/common/popup/loginwindow";
+    }
+
 }

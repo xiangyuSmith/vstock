@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="saleRecord" action="${cxt}/index/testPurchase" method="post">
+<form id="purchaseRecords" action="${cxt}/index/testPurchase" method="post">
     <table class="am-table am-table-striped am-table-hover am-margin-bottom-xl">
         <caption><p class="am-fl am-text-xl am-margin-bottom-0">最近出价</p><a href="#"><p class="am-fr am-margin-bottom-0">更多记录</p></a></caption>
         <thead>
@@ -59,4 +59,3 @@
         </tbody>
     </table>
 </form>
-<%@include file="../layout/commscript.jsp" %>
