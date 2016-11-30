@@ -1,11 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="inc.jsp" %>
+<style type="text/css">
+
+</style>
 <header class="m-hd am-margin-bottom-0">
     <section data-am-sticky class="am-show-md-up">
         <div class="am-container">
-            <a href="#" class="v-logo"></a>
+            <a href="#" class="v-logo am-fr"></a>
             <nav>
                 <ul class="m-nav am-nav am-nav-pills am-fr">
+                    <li class="am-hide-sm am-hide-md">
+                        <form class="am-topbar-left am-form-inline" role="search">
+                            <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
+                                <input type="text" class="am-form-field" placeholder="搜索颜色、款式......">
+                                <i class="am-icon-search"></i>
+                            </div>
+                        </form>
+                    </li>
                     <li class="am-dropdown" data-am-dropdown=""><a href="/anli.html" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle="">本店所有商品 <i class="am-icon-caret-down"></i></a>
                         <ul class="am-dropdown-content">
                             <li><a href="#" rel="nofollow">分类1...</a></li>
@@ -13,9 +24,9 @@
                             <li><a href="#" rel="nofollow">分类3...</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" rel="nofollow">即将发布</a></li>
+                    <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">即将发布</a></li>
                     <li><a href="#" rel="nofollow">作品集</a></li>
-                    <li><a href="#" rel="nofollow">常见问题</a></li>
+                    <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">常见问题</a></li>
                     <li>
                         <c:choose>
                             <c:when test="${not empty vUser}">
@@ -35,6 +46,14 @@
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav am-show-sm-only" style="background-color: #f8f8f8">
+            <li>
+                <form class="am-topbar-left am-form-inline" role="search">
+                    <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
+                        <input type="text" class="am-form-field" placeholder="搜索颜色、款式......">
+                        <i class="am-icon-search"></i>
+                    </div>
+                </form>
+            </li>
             <li class="am-dropdown" data-am-dropdown>
                 <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                     本店所有商品 <span class="am-icon-caret-down"></span>
@@ -49,7 +68,6 @@
             <li><a href="#">作品集</a></li>
             <li><a href="#">常见问题</a></li>
             <li><a href="#">注册/登录</a></li>
-
         </ul>
     </div>
 </header>

@@ -24,7 +24,7 @@
                 </ul>
             </nav>
             <div class="am-show-sm-up">
-                asdasd
+
             </div>
         </div>
 

@@ -4,6 +4,7 @@ import com.vstock.ext.util.ToolSpring;
 import com.vstock.spider.data.service.StockxStoreService;
 import com.vstock.spider.data.spider.GithubRepoPageProcessor;
 import com.vstock.db.entity.StockxStore;
+import com.vstock.spider.data.spider.SpiderPageProcessor;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -41,11 +42,10 @@ public class MyThread extends Thread{
         }
 
         logger.info("==========================================================");
-        logger.info("第" + a + "个线程" + fina.size());
+        logger.info("第" + (a++) + "个线程" + fina.size());
         logger.info("==========================================================");
-        for (StockxStore stockxStore : fina){
-            GithubRepoPageProcessor.main(stockxStore,fina);
-        }
+        SpiderPageProcessor spiderPageProcessor = new SpiderPageProcessor();
+        spiderPageProcessor.init(fina);
     }
 
     public static List<StockxStore> getFinalList() {

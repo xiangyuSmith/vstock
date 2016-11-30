@@ -21,7 +21,9 @@
                     'mobile':$("#mobile").val(),
                     'password':$.md5($("#password").val())
                 },function(data){
-
+                    if(data.retCode == 1){
+                        location.href = "/index";
+                    }
                 });
             });
         });
