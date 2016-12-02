@@ -53,4 +53,15 @@ public class IndexController extends BaseController{
         return "/common/popup/loginwindow";
     }
 
+    @RequestMapping("testbidwindow")
+    public String testbidwindow(){
+        return "/common/popup/bidwindow";
+    }
+
+    @RequestMapping("testdetailedlistwindow")
+    public String testdetailedlistwindow(){return "/common/popup/detailedlistwindow";}
+
+    @RequestMapping("testsalelistwindow")
+    public String testsalelistwindow(){return "/common/popup/salelistwindow";}
+
 }

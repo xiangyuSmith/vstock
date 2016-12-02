@@ -64,7 +64,12 @@
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
-                        <span class="am-margin-left-sm am-text-sm am-fl am-margin-left-0"><input type="checkbox"/>我已阅读并同意《<a href="#">用户使用协议</a>》</span>
+                        <div class="am-u-sm-1 am-u-md-1 am-u-lg-1 am-fl am-margin-left-0 am-padding-left-0">
+                            <input type="checkbox" class="am-padding-top-lg am-fl"/>
+                        </div>
+                        <div class="am-u-sm-11 am-u-md-11 am-u-lg-11 am-padding-left-0 am-margin-left-0">
+                            <span class="am-text-sm am-margin-left-0 am-text-left am-fl">我已阅读并同意《<a href="#">用户使用协议</a>》</span>
+                        </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <a href="#" class="am-btn am-btn-danger am-btn-sm am-fr">注册</a>
