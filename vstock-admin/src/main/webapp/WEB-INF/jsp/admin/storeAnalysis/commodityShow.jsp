@@ -76,15 +76,23 @@
                     <tbody>
                     <tr id="insert-data" class="xy-dis"></tr>
                     <c:if test="${not empty commodityDataList}">
-                        <c:forEach items="${commodityDataList}" var="commodityData">
+                        <c:forEach items="${commodityDataList}" var="basicinformation">
                             <tr>
-                                <td>${commodityData.basiciformationId}</td>
-                                <td>${commodityData.productName}</td>
-                                <td>${commodityData.girard}</td>
-                                <td>${commodityData.countTransactionRecord}</td>
-                                <td>${commodityData.createTime}</td>
-                                <input type="hidden" name="id" value="${commodityData.id}"/>
-                                <td><a href="javascript:void(0)" class="adetails" data-comid="${commodityData.id}" data-commoName="${commodityData.productName}">详情</a></td>
+                                    <td>${basicinformation.id}</td>
+                                    <td>${basicinformation.name}</td>
+                                    <td>${basicinformation.artNo}</td>
+                                    <td>${basicinformation.resultDataFactory.transactionRecord}</td>
+                                    <td>${basicinformation.resultDataFactory.createTime}</td>
+                                    <input type="hidden" name="id" value="${basicinformation.resultDataFactory.id}"/>
+                                    <td><a href="javascript:void(0)" class="adetails" data-comid="${basicinformation.resultDataFactory.id}" data-commoName="${basicinformation.name}">详情</a></td>
+
+                                <%--<td>${commodityData.basicinformation.id}</td>--%>
+                                <%--<td>${commodityData.basicinformation.name}</td>--%>
+                                <%--<td>${commodityData.basicinformation.artNo}</td>--%>
+                                <%--<td>${commodityData.transactionRecord}</td>--%>
+                                <%--<td>${commodityData.createTime}</td>--%>
+                                <%--<input type="hidden" name="id" value="${commodityData.id}"/>--%>
+                                <%--<td><a href="javascript:void(0)" class="adetails" data-comid="${commodityData.id}" data-commoName="${commodityData.productName}">详情</a></td>--%>
                             </tr>
                         </c:forEach>
                     </c:if>

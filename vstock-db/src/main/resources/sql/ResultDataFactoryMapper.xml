@@ -16,9 +16,29 @@
         <result column="difference" property="difference"/>
         <association property="basicinformation" column="basicinformation"
                      javaType="com.vstock.db.entity.Basicinformation">
-            <id column="id" property="id"/>
-            <result column="name" property="baname"/>
-            <result column="artNo" property="baartNo"/>
+            <id column="bid" property="id"/>
+            <result column="baname" property="name"/>
+            <result column="baartNo" property="artNo"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="BaseBasicinformationMap" type="com.vstock.db.entity.Basicinformation">
+        <id column="bid" property="id"/>
+        <result column="baname" property="name"/>
+        <result column="baartNo" property="artNo"/>
+        <association property="resultDataFactory" column="resultDataFactory"
+                     javaType="com.vstock.db.entity.ResultDataFactory">
+            <id property="id" column="id"/>
+            <result column="commodityDataId" property="commodityDataId"/>
+            <result column="basiciformationId" property="basiciformationId"/>
+            <result column="productName" property="productName"/>
+            <result column="brand" property="brand"/>
+            <result column="girard" property="girard"/>
+            <result column="sizePrice" property="sizePrice"/>
+            <result column="transactionRecord" property="transactionRecord"/>
+            <result column="createTime" property="createTime"/>
+            <result column="countTransactionRecord" property="countTransactionRecord"/>
+            <result column="difference" property="difference"/>
         </association>
     </resultMap>
 
@@ -217,30 +237,17 @@
         </if>
     </select>
 
-    <select id="findrdfAndBasiAll" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM resultdata_factory rf
-        LEFT JOIN basicinformation bf ON rf.basiciformationId = bf.id
-        <include refid="SearchAllByPage_Where_Clause"/>
-        <if test="startTime != null and startTime != ''">
-            AND rf.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
-        </if>
-        <if test="endTime != null and endTime != ''">
-            AND rf.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
-        </if>
-        ORDER BY rf.basiciformationId ASC limit #{startPos},#{pageSize}
+    <select id="findrdfAndBasiAll" resultMap="BaseBasicinformationMap">
+        select * from
+        (select b.id as bid,b.`name` as baname,b.artNo as baartNo,rf.transactionRecord,rf.createTime,rf.id from basicinformation b LEFT JOIN resultdata_factory rf ON rf.basiciformationId = b.id ORDER BY rf.createTime DESC) as resultdata_factory
+        GROUP BY `baname` ORDER BY bid ASC
+        limit #{startPos},#{pageSize}
     </select>
 
     <select id="findrdfAndBasiCount" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="Integer">
-        SELECT COUNT(*) FROM resultdata_factory rf
-        <include refid="SearchAllByPage_Where_Clause"/>
-        <if test="startTime != null and startTime != ''">
-            AND rf.createTime &gt; #{startTime,jdbcType=TIMESTAMP}
-        </if>
-        <if test="endTime != null and endTime != ''">
-            AND rf.createTime &lt; #{endTime,jdbcType=TIMESTAMP}
-        </if>
+        select COUNT(*) from
+        (select b.id as bid,b.`name`,b.artNo,rf.transactionRecord,rf.createTime from basicinformation b LEFT JOIN resultdata_factory rf ON rf.basiciformationId = b.id ORDER BY rf.createTime DESC) as temp
+        GROUP BY `name` ORDER BY bid ASC
     </select>
 
 </mapper>

@@ -30,8 +30,9 @@ public class Basicinformation implements Serializable {
     private String smallImgUrl;
     private String createtime;
     private String state;
+    private ResultDataFactory resultDataFactory;
 
-    public Basicinformation(String id, int bid, String brand, String name, String artNo, String colores, String csaledate, String esaledate, Double cofferprice, String eofferprice, String chineselogo, String imgUrl, String smallImgUrl, String createtime, String state) {
+    public Basicinformation(String id, int bid, String brand, String name, String artNo, String colores, String csaledate, String esaledate, Double cofferprice, Double cofferprices, String bscofferprice, String eofferprice, String chineselogo, String chineselogos, String imgUrl, String smallImgUrl, String createtime, String state, ResultDataFactory resultDataFactory) {
         this.id = id;
         this.bid = bid;
         this.brand = brand;
@@ -41,12 +42,16 @@ public class Basicinformation implements Serializable {
         this.csaledate = csaledate;
         this.esaledate = esaledate;
         this.cofferprice = cofferprice;
+        this.cofferprices = cofferprices;
+        this.bscofferprice = bscofferprice;
         this.eofferprice = eofferprice;
         this.chineselogo = chineselogo;
+        this.chineselogos = chineselogos;
         this.imgUrl = imgUrl;
         this.smallImgUrl = smallImgUrl;
         this.createtime = createtime;
         this.state = state;
+        this.resultDataFactory = resultDataFactory;
     }
 
     public static long getSerialVersionUID() {
@@ -198,5 +203,13 @@ public class Basicinformation implements Serializable {
 
     public void setBscofferprice(String bscofferprice) {
         this.bscofferprice = bscofferprice;
+    }
+
+    public ResultDataFactory getResultDataFactory() {
+        return resultDataFactory;
+    }
+
+    public void setResultDataFactory(ResultDataFactory resultDataFactory) {
+        this.resultDataFactory = resultDataFactory;
     }
 }

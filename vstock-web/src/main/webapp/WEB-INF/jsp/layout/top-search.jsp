@@ -5,7 +5,7 @@
 </style>
 <header class="m-hd am-margin-bottom-0">
     <section data-am-sticky class="am-show-md-up">
-        <div class="am-container">
+        <div class="am-container" style="line-height: 30px;">
             <a href="#" class="v-logo am-fr"></a>
             <nav>
                 <ul class="m-nav am-nav am-nav-pills am-fr">
@@ -30,7 +30,7 @@
                     <li>
                         <c:choose>
                             <c:when test="${not empty vUser}">
-                                <a href="${ctx}/index/testIndex"><span>欢迎你：</span>${vUser.mobile}</a>
+                                <a href="#"><span>欢迎你：</span>${vUser.mobile}</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="#" rel="nofollow">注册/登录</a>

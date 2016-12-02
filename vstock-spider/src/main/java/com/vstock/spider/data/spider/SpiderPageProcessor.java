@@ -265,6 +265,9 @@ public class SpiderPageProcessor {
                                 int i = 1;
                                 int d = 0;
                                 try {
+
+
+
                                     //检查是否存在该数据
                                     CommodityData commodityDataInfo = commodityDataService.findByNames(name, girard);
                                     if (commodityDataInfo == null) {
@@ -348,10 +351,15 @@ public class SpiderPageProcessor {
                                                     dictionarie.setColorly(colorly);
                                                     //添加字典数据
                                                     dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                                    commodityDataService.insertDicInfo(dictionarie);
+                                                    int iDic = commodityDataService.insertDicInfo(dictionarie);
+                                                    if(iDic == 1){
+                                                        logger.info("添加字典数据成功，dateTime:" + DateUtils.getCurrentTimeAs14String());
+                                                    }
+                                                }
                                                 }
                                             }
                                         }
+
                                         //查询字典商品标签名     &     验证该店铺下字典表数据是否全部已审核
                                         List<Dictionaries> dicObjList = new ArrayList<Dictionaries>();
                                         if (commodityDataInfo == null) {
@@ -373,39 +381,43 @@ public class SpiderPageProcessor {
                                                         resultData.setCommodityDataId(commodityDataInfo.getId());
                                                     }
                                                     Iterator keys = jsonObject.keys();
-                                                    while (keys.hasNext()) {
-                                                        String keyStr = keys.next().toString();
-                                                        //判断是否和字典匹配
-                                                        if (dic.getColorly().equals(keyStr)) {
-                                                            //从鞋库取数据
-                                                            Basicinformation b = new Basicinformation();
-                                                            b.setName(dic.getIdentification());
-                                                            List<Basicinformation> baciList = basicinformationService.findAll(b);
-                                                            //基于鞋库保存数据
-                                                            if (baciList.size() > 0) {
-                                                                resultData.setBasiciformationId(baciList.get(0).getId());
-                                                                resultData.setStoreId(stockxStore.getId());
-                                                                resultData.setStoreName(stockxStore.getName());
-                                                                resultData.setProductName(dic.getIdentification());
-                                                                resultData.setGirard(dic.getGirard());
-                                                                resultData.setSizePrice(jsonObject.get(keyStr).toString());
-                                                                resultData.setBrand(brand);
-                                                                resultData.setTransactionRecord(sales);
-                                                                resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                                                //保存最终结果
-                                                                int dataReultBool = commodityDataService.saveResultDatas(resultData);
-                                                                if (dataReultBool == 1) {
-                                                                    logger.info("save final result data success ! ! ! ");
-                                                                } else {
-                                                                    logger.error("save final result data Error ! ! ! ");
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                                    logger.info("添加最终商品数据");
+//                                                    while (keys.hasNext()) {
+//                                                        String keyStr = keys.next().toString();
+//                                                        //判断是否和字典匹配
+//                                                        if (dic.getColorly().equals(keyStr)) {
+//                                                            //从鞋库取数据
+//                                                            Basicinformation b = new Basicinformation();
+//                                                            b.setName(dic.getIdentification());
+//                                                            List<Basicinformation> baciList = basicinformationService.findAll(b);
+//                                                            //基于鞋库保存数据
+//                                                            if (baciList.size() > 0) {
+//                                                                resultData.setBasiciformationId(baciList.get(0).getId());
+//                                                                resultData.setStoreId(stockxStore.getId());
+//                                                                resultData.setStoreName(stockxStore.getName());
+//                                                                resultData.setProductName(dic.getIdentification());
+//                                                                resultData.setGirard(dic.getGirard());
+//                                                                resultData.setSizePrice(jsonObject.get(keyStr).toString());
+//                                                                resultData.setBrand(brand);
+//                                                                resultData.setTransactionRecord(sales);
+//                                                                resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
+//                                                                //保存最终结果
+//                                                                int dataReultBool = commodityDataService.saveResultDatas(resultData);
+//                                                                if (dataReultBool == 1) {
+//                                                                    logger.info("save final result data success ! ! ! ");
+//                                                                } else {
+//                                                                    logger.error("save final result data Error ! ! ! ");
+//                                                                }
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                }
                                             }
                                         }
                                     }
+
+
+
                                 } catch (Exception e) {
                                     logger.error(e.getMessage());
                                     driver.quit();

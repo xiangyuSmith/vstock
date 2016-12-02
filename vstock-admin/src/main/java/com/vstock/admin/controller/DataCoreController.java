@@ -2,10 +2,7 @@ package com.vstock.admin.controller;
 
 import com.vstock.admin.service.CommodityDataService;
 import com.vstock.admin.service.StockxStoreService;
-import com.vstock.db.entity.CommodityDetailys;
-import com.vstock.db.entity.ResultData;
-import com.vstock.db.entity.ResultDataFactory;
-import com.vstock.db.entity.StockxStore;
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.apache.log4j.Logger;
@@ -71,9 +68,9 @@ public class DataCoreController {
         endTime = endTime + " 23:59:59";
         String linkAddress = request.getRequestURI() + "?1=1";
         linkAddress = commodityDataService.linkAddress(linkAddress, list, resultDataFactory);
-        int totalCount = commodityDataService.findResultDataFactoryCount(resultDataFactory, startTime, endTime);
-        Page page = new Page(totalCount, pageNow);
-        List<ResultDataFactory> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultDataFactory, startTime, endTime, page);
+        List<Integer> totalCount = commodityDataService.findResultDataFactoryCount(resultDataFactory, startTime, endTime);
+        Page page = new Page(totalCount.size(), pageNow);
+        List<Basicinformation> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultDataFactory, startTime, endTime, page);
         model.addAttribute("commodityDataList", resultDataFactoryList);
         model.addAttribute("page", page);
         model.addAttribute("resultData", resultDataFactory);
