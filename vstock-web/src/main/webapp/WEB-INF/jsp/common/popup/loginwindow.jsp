@@ -37,7 +37,7 @@
                 <div data-tab-panel-1 class="am-tab-panel am-g">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="am-input-group am-input-group-lg am-center am-margin-top-sm">
-                            <input type="text" class="am-form-field" placeholder="昵称" required/>
+                            <input type="text" id="nickname" class="am-form-field" placeholder="昵称" required/>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -91,6 +91,10 @@
             },function(data){
 
             });
+        });
+
+        $('#nickname').change(function(){
+            if($.trim($('#nickname').val()).length>0){}
         });
     });
 </script>

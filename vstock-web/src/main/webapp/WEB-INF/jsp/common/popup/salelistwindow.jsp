@@ -6,17 +6,47 @@
         input::-webkit-input-placeholder{
             font-size: 14px;
         }
-        .left_circle {
-            width:25px;
-            height:50px;
-            border-radius:25px 0 0 25px;
-            background:red;
+        /*.left_circle {*/
+            /*width:36px;*/
+            /*height:70px;*/
+            /*border-radius:50px 0 0 50px;*/
+            /*background:red;*/
+        /*}*/
+        /*.right_circle {*/
+            /*width:36px;*/
+            /*height:70px;*/
+            /*border-radius:0 50px 50px 0;*/
+            /*background:red;*/
+        /*}*/
+        .circle {
+            width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            border:1px solid #ACA8A3;
         }
-        .right_circle {
-            width:25px;
-            height:50px;
-            border-radius:0 25px 25px 0;
-            background:red;
+        .right_half{
+            border: 1px solid #030303;
+            border-left: 1px solid #ffffff;
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            width: 50%;
+            margin-left: -37px;
+        }
+        .left_half{
+            border: 1px solid #030303;
+            border-right: 1px solid #ffffff;
+            border-top-left-radius: 50%;
+            border-bottom-left-radius: 50%;
+            width: 50%;
+            margin-right: -10px;
+        }
+        .half_span{
+            display: block;
+            line-height: 80px;
+            margin-left: -12px;
         }
     </style>
 </head>
@@ -55,33 +85,45 @@
                             <span class="am-text-lg" style="color: #646464;">6030</span><span class="am-margin-left-xs am-text-lg" style="color: #00D678;"><i class="am-icon-sort-down"></i>-320(17%)</span>
                         </div>
                     </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-lg">
-                        <div class="am-u-sm-3 am-u-md-3 am-u-lg-3">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span>最近最高叫价</span>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
+                        <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
+                                    <span class="am-text-default">最近最高叫价</span>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <span class="am-text-default am-fl" style="color: #030303">8000</span>
+                                </div>
                             </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span>8000</span>
-                            </div>
-                        </div>
-                        <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                            <a href="#" class="am-btn am-btn-success">叫价</a>
-                        </div>
-                        <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 left_circle"></div>
-                            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 right_circle"></div>
-                            <span>OR</span>
-                        </div>
-                        <div class="am-u-sm-3 am-u-md-3 am-u-lg-3">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span>最近最低叫价</span>
-                            </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span>8000</span>
+                            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-top-xs">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <a href="#" class="am-btn am-btn-success">叫价</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                            <a href="#" class="am-btn am-btn-success">出售</a>
+                        <%--<div class="am-u-sm-2 am-u-md-2 am-u-lg-2">--%>
+                            <%--<div class="am-u-sm-6 am-u-md-6 am-u-lg-6 left_half"></div>--%>
+                            <%--<div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 right_half" style="border-right: 1px solid #030303;">--%>
+                                <%--<span class="am-text-truncate am-text-sm half_span am-fl">OR</span>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="border-left: 1px solid #030303">
+                            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 right_half" style="border-right: 1px solid #030303;">--%>
+                                    <%--<span class="am-text-truncate am-text-sm half_span am-fl">OR</span>--%>
+                                <%--</div>--%>
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
+                                    <span class="am-text-default">最近最低叫价</span>
+                                </div>
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <span class="am-text-default am-fl" style="color: #030303">8000</span>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-top-xs">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <a href="#" class="am-btn am-btn-danger">出售</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
