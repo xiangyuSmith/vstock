@@ -13,8 +13,6 @@ public class IndexController extends BaseController{
 
     @RequestMapping
     public String index(){
-        String sss = request.getParameter("sss");
-        System.out.println(sss);
         return "/index/index";
     }
 

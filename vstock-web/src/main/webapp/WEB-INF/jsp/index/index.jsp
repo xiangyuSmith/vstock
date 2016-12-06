@@ -3,61 +3,24 @@
 <head>
     <%@include file="../layout/head.jsp" %>
     <title>首页</title>
-    <style>
-        .am-container-content{
-            max-width: 800px;
-            margin: auto;
-        }
-        .am-container-sell{
-            max-width: 800px;
-            margin: auto;
-        }
-        .am-imglist{
-            margin-top:50px;
-        }
-        .am_list_block {
-            padding: 10px;
-            background: #fff;
-            position: relative;
-        }
-        .am_img_bg {
-            display: block;
-        }
-        .am_listimg_info {
-            color:#060606;
-            padding-top: 5px;
-        }
-        .am_imglist_user {
-            color: #b7b7b7;
-            padding: 10px 0;
-            display: block;
-        }
-        .am_imglist_user_ico {
-            display: inline-block;
-            height: 20px;
-            padding-right: 8px;
-        }
-        .am_imglist_user_font {
-            font-size: 12px;
-        }
-        .am_news_load {
-            max-width: 810px;
-            margin: 0 auto;
-            color: #d1d1d1;
-            height: 43px;
-            line-height: 43px;
-            background: #fff;
-            text-align: center;
-            margin-top: 20px;
-            cursor: pointer;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
+    <style type="text/css">
+        .am-container-content{ max-width: 1000px; margin: auto; }
+        .am-container-sell{ max-width: 1000px; margin: auto; }
+        .am-imglist{ margin-top:50px; }
+        .am_list_block { padding: 10px; background: #fff; position: relative; }
+        .am_img_bg { display: block; }
+        .am_listimg_info { color:#060606; padding-top: 5px; }
+        .am_imglist_user { color: #b7b7b7; padding: 10px 0; display: block; }
+        .am_imglist_user_ico { display: inline-block; height: 20px; padding-right: 8px; }
+        .am_imglist_user_font { font-size: 12px; }
+        .am_news_load { max-width: 810px; margin: 0 auto; color: #d1d1d1; height: 43px; line-height: 43px; background: #fff; text-align: center; margin-top: 20px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
+        .am-container-content ul li{ padding: 20px; }
     </style>
 </head>
 <body>
 <%@include file="../layout/top.jsp" %>
-<div class="get">
+<div class="get-index">
     <div class="am-g">
         <div class="am-u-lg-12">
             <div class="get-title-search">
@@ -78,22 +41,26 @@
         </div>
     </div>
 </div>
-<article>
+<article class=" am-show-lg-only">
     <div class="am-container-sell" style="height: 135px;">
-        <div class="am-u-md-6" style="background-color: #EDFEF1;padding: 10px;">
-            <div class="am-u-md-3" style="height: 100%;border-right: 1px solid #3fcd65;line-height: 135px;"><span style="font-size: 26px;color: #3fcd65;">买家</span></div>
-            <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 6px;">
-                <p>138****6859</p>
-                <p>Adidas Yee idaBlack (2016)</p>
-                <p>出价：2500元</p>
+        <div class="am-u-md-6">
+            <div class="am-u-md-12" style="background-color: #EDFEF1;padding: 3px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #3fcd65;">买家</span></div>
+                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 6px;">
+                    <p>138****6859</p>
+                    <p>Adidas Yee idaBlack (2016)</p>
+                    <p>出价：2500元</p>
+                </div>
             </div>
         </div>
-        <div class="am-u-md-6 am-u-end" style="background-color: #EDFEF1;padding: 10px;">
-            <div class="am-u-md-3" style="height: 100%;border-right: 1px solid #3fcd65;line-height: 135px;"><span style="font-size: 26px;color: #3fcd65;">买家</span></div>
-            <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 6px;">
-                <p>138****6859</p>
-                <p>Adidas Yee idaBlack (2016)</p>
-                <p>出价：2500元</p>
+        <div class="am-u-md-6">
+            <div class="am-u-md-12" style="background-color: #FEEFEF;padding: 3px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #3fcd65;">卖家</span></div>
+                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 6px;">
+                    <p>138****6859</p>
+                    <p>Adidas Yee idaBlack (2016)</p>
+                    <p>出价：2500元</p>
+                </div>
             </div>
         </div>
     </div>
@@ -101,7 +68,7 @@
 <article>
     <div class="am-container-content">
         <div class="am-g am-imglist">
-            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right'}">
+            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
                 <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
                 <span style="font-size: 18px;color: #060606;">了解更多 ></span>
             </div>
@@ -164,7 +131,7 @@
                 </li>
             </ul>
         </div><div class="am-g am-imglist">
-        <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right'}">
+        <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
             <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
             <span style="font-size: 18px;color: #060606;">了解更多 ></span>
         </div>
@@ -227,7 +194,7 @@
             </li>
         </ul>
     </div><div class="am-g am-imglist">
-        <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right'}">
+        <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
             <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
             <span style="font-size: 18px;color: #060606;">了解更多 ></span>
         </div>
@@ -301,37 +268,8 @@
 </article>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
-<script>
+<script type="text/javascript">
     $(function(){
-//        $(window).resize(function(){
-//            $('.am_listimg_info .am_imglist_time').css('display', $('.am_list_block').width() <= 170 ?  'none' : 'block');
-//        });
-//
-//        //@首页 图片滑动效果
-//        $(".am_list_block").on('mouseover', function(){
-//            $('.am_img_bg').removeClass('am_img_bg');
-//            $(this).find('.am_img').addClass('bounceIn');
-//        });
-//        $('.am_img').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-//            $('.am_img').removeClass('bounceIn');
-//        });
-//        if($(window).width() < 700 ){
-//            $('.am_list_block').off();
-//        }
-//
-//        //@首页 图片列表长宽相等
-//        $(window).resize(function(){
-//            $('.am_img_bg').height($('.am_img_bg').width());
-//        });
-//
-//        //@首页 用户名截取
-//        $('.am_imglist_user_font').each(
-//                function(){
-//                    if($(this).text().length >= 13){
-//                        $(this).html($(this).text().substr(0,13));
-//                    }
-//                }
-//        );
 
         //@懒加载
         $("img.am_img").lazyload();

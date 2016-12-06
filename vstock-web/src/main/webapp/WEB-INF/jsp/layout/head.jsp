@@ -6,7 +6,7 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp"/>
-<link rel="alternate icon" type="image/png" href="${ctx}/assets/img/favicon.png">
+<link rel="alternate icon" type="image/png" href="${ctx}/assets/i/favicon.png">
 <link rel="stylesheet" href="${ctx}/assets/css/amazeui.min.css"/>
 <%--<link rel="stylesheet" href="${ctx}/assets/css/amaze.min.css"/>--%>
 <%--<link rel="stylesheet" href="${ctx}/assets/css/style.css"/>--%>

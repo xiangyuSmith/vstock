@@ -68,11 +68,17 @@
     background-repeat: no-repeat;
     color: #fff;
 }
-.get{
+.get-index{
     background: url("/assets/i/banner.png") top center no-repeat;
     color: #fff;
     text-align: center;
     height: 480px;
+}
+.get-sorts{
+    background: url("/assets/i/banner-sorts.png") top center no-repeat;
+    color: #fff;
+    text-align: center;
+    height: 252px;
 }
 .get-title {
     display: inline-block;
