@@ -21,6 +21,7 @@ public class Bid implements Serializable {
     private BigDecimal bidFreight;
     private BigDecimal bidBond;
     private BigDecimal latelyBid;
+    private String termValidity;
     private String status;
     private String type;
     private String sign;
@@ -31,7 +32,7 @@ public class Bid implements Serializable {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String status, String type, String sign, Date bidDate, Date invalidDate) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, Date bidDate, Date invalidDate) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -42,6 +43,7 @@ public class Bid implements Serializable {
         this.bidFreight = bidFreight;
         this.bidBond = bidBond;
         this.latelyBid = latelyBid;
+        this.termValidity = termValidity;
         this.status = status;
         this.type = type;
         this.sign = sign;
@@ -127,6 +129,14 @@ public class Bid implements Serializable {
 
     public void setLatelyBid(BigDecimal latelyBid) {
         this.latelyBid = latelyBid;
+    }
+
+    public String getTermValidity() {
+        return termValidity;
+    }
+
+    public void setTermValidity(String termValidity) {
+        this.termValidity = termValidity;
     }
 
     public String getStatus() {

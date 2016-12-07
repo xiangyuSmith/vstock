@@ -8,6 +8,7 @@ import com.vstock.front.service.BidService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -30,13 +31,14 @@ public class BidController extends BaseController{
     }
 
     @RequestMapping("sale")
-    public String testSale(){
+    public String testSale(ModelMap model){
         Bid bid = new Bid();
-        ModelAndView modelAndView = new ModelAndView();
+//        ModelAndView modelAndView = new ModelAndView();
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,"1");
         List<Bid> bidList = bidService.findAll(bid,page);
-        modelAndView.put("bidList",bidList);
+//        modelAndView.put("bidList",bidList);
+        model.addAttribute("bidList",bidList);
         return "/user/saleRecord";
     }
 }

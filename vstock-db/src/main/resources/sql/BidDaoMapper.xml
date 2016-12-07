@@ -13,6 +13,7 @@
         <result column="bid_freight" property="bidFreight" jdbcType="DECIMAL"/>
         <result column="bid_bond" property="bidBond" jdbcType="DECIMAL"/>
         <result column="lately_bid" property="latelyBid" jdbcType="DECIMAL"/>
+        <result column="term_validity" property="termValidity" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
@@ -58,6 +59,9 @@
             </if>
             <if test="latelyBid != null and latelyBid != ''">
                 and b.lately_bid = #{latelyBid,jdbcType=DECIMAL}
+            </if>
+            <if test="termValidity != null and termValidity != ''">
+                and b.term_validity = #{termValidity,jdbcType=VARCHAR}
             </if>
             <if test="status != null and status != ''">
                 and b.status = #{status,jdbcType=VARCHAR}
@@ -110,6 +114,9 @@
             <if test="obj.latelyBid != null and obj.latelyBid != ''">
                 and b.lately_bid = #{obj.latelyBid,jdbcType=DECIMAL}
             </if>
+            <if test="obj.termValidity != null and obj.termValidity != ''">
+                and b.term_validity = #{obj.termValidity,jdbcType=VARCHAR}
+            </if>
             <if test="obj.status != null and obj.status != ''">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
@@ -160,6 +167,9 @@
             </if>
             <if test="latelyBid != null and latelyBid != ''">
                 and b.lately_bid = #{latelyBid,jdbcType=DECIMAL}
+            </if>
+            <if test="termValidity != null and termValidity != ''">
+                and b.term_validity = #{termValidity,jdbcType=DECIMAL}
             </if>
             <if test="status != null and status != ''">
                 and b.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
@@ -212,6 +222,9 @@
             <if test="obj.latelyBid != null and obj.latelyBid != ''">
                 and b.lately_bid = #{obj.latelyBid,jdbcType=DECIMAL}
             </if>
+            <if test="obj.termValidity != null and obj.termValidity != ''">
+                and b.term_validity = #{obj.termValidity,jdbcType=DECIMAL}
+            </if>
             <if test="obj.status != null and obj.status != ''">
                 and b.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
             </if>
@@ -241,6 +254,7 @@
         b.bid_freight as bidFreight,
         b.bid_bond as bidBond,
         b.lately_bid as latelyBid,
+        b.term_validity as termValidity,
         b.status as status,
         b.type as `type`,
         b.sign as sign,
@@ -263,8 +277,8 @@
 
     <insert id="insert">
         INSERT INTO `bid`
-        (`id`,`user_id`,`basicinformation_id`,`payment_id`,`bft_name`,`bft_size`,`bid_money`,`bid_freight`,`bid_bond`,`lately_bid`,`status`,`type`,`bid_date`,`invalid_date`)
-        VALUES(null,#{userId},#{basicinformationId},#{paymentId},#{bftName},#{bftSize},#{bidMoney},#{bidFreight},#{bidBond},#{latelyBid},#{status},#{type},#{sign},#{bidDate},#{invalidDate})
+        (`id`,`user_id`,`basicinformation_id`,`payment_id`,`bft_name`,`bft_size`,`bid_money`,`bid_freight`,`bid_bond`,`lately_bid`,`term_validity`,`status`,`type`,`bid_date`,`invalid_date`)
+        VALUES(null,#{userId},#{basicinformationId},#{paymentId},#{bftName},#{bftSize},#{bidMoney},#{bidFreight},#{bidBond},#{latelyBid},#{termValidity},#{status},#{type},#{sign},#{bidDate},#{invalidDate})
     </insert>
 
     <update id="update">
