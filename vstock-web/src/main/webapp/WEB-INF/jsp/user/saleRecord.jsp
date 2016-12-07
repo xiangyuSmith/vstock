@@ -15,23 +15,46 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Jorrdan 2 Retro Doembecher Peacock</td>
-            <td>10</td>
-            <td>2016/4/20</td>
-            <td>8000</td>
-            <td>--</td>
-            <td>已过期</td>
-            <td>
-                <div class="am-dropdown" data-am-dropdown>
-                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"><span class="am-margin-left-xs"><i class="am-icon-gear"></i></span></a>
-                    <ul class="am-dropdown-content">
-                        <li><a class="am-btn am-btn-xs am-text-left" href="#"><i class="am-icon-eye am-margin-right-xs"></i>重新叫价</a></li>
-                        <li><a class="am-btn am-btn-xs am-text-left" href="#"><i class="am-icon-eye am-margin-right-xs"></i>作废</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
+        <c:if test="${not empty bidList}">
+            <c:forEach items="${bidList}" var="bid">
+                <tr>
+                    <td>${bid.bftName}</td>
+                    <td>${bid.bftSize}</td>
+                    <td>${bid.bidDate}</td>
+                    <td>${bid.bidMoney}</td>
+                    <c:when test="${not empty bid.latelyBid}">
+                        <td>${bid.latelyBid}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>--</td>
+                    </c:otherwise>
+                    <c:when test="${bid.status == 0}">
+                        <td>已生效</td>
+                    </c:when>
+                    <c:when test="${bid.status == 10}">
+                        <td>已叫价待付款</td>
+                    </c:when>
+                    <c:when test="${bid.status == 11}">
+                        <td>已锁定</td>
+                    </c:when>
+                    <c:when test="${bid.status == 20}">
+                        <td>交易成功</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>已过期</td>
+                    </c:otherwise>
+                    <td>
+                        <div class="am-dropdown" data-am-dropdown>
+                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"><span class="am-margin-left-xs am-icon-gear am-icon-caret-down "></span></a>
+                            <ul class="am-dropdown-content">
+                                <li><a class="am-btn am-btn-xs am-text-left" href="#"><i class="am-icon-eye am-margin-right-xs"></i>重新叫价</a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left" href="#"><i class="am-icon-eye am-margin-right-xs"></i>作废</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
         </tbody>
     </table>
 

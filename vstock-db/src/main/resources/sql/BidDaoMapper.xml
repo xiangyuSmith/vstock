@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IBidDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.Bid">
+        <id property="id" column="id"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="payment_id" property="paymentId" jdbcType="INTEGER"/>
+        <result column="bft_name" property="bftName" jdbcType="VARCHAR"/>
+        <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
+        <result column="bid_money" property="bidMoney" jdbcType="DECIMAL"/>
+        <result column="bid_freight" property="bidFreight" jdbcType="DECIMAL"/>
+        <result column="bid_bond" property="bidBond" jdbcType="DECIMAL"/>
+        <result column="lately_bid" property="latelyBid" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
+        <result column="bid_date" property="bidDate" jdbcType="TIMESTAMP"/>
+        <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <!--<association property="basicinformation" column="basicinformation"-->
+                     <!--javaType="com.vstock.db.entity.Basicinformation">-->
+            <!--<id column="bid" property="id"/>-->
+            <!--<result column="baname" property="name"/>-->
+            <!--<result column="baartNo" property="artNo"/>-->
+        <!--</association>-->
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND b.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and b.user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and b.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="paymentId != null and paymentId != ''">
+                and b.payment_id = #{paymentId,jdbcType=INTEGER}
+            </if>
+            <if test="bftName != null and bftName != ''">
+                and b.bft_name = #{bftName,jdbcType=VARCHAR}
+            </if>
+            <if test="bftSize != null and bftSize != ''">
+                and b.bft_size = #{bftSize,jdbcType=VARCHAR}
+            </if>
+            <if test="bidMoney != null and bidMoney != ''">
+                and b.bid_money = #{bidMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="bidFreight != null and bidFreight != ''">
+                and b.bid_freight = #{bidFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="bidBond != null and bidBond != ''">
+                and b.bid_bond = #{bidBond,jdbcType=DECIMAL}
+            </if>
+            <if test="latelyBid != null and latelyBid != ''">
+                and b.lately_bid = #{latelyBid,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null and status != ''">
+                and b.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null and type != ''">
+                and b.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="bidDate != null and bidDate != ''">
+                and b.bid_date = #{bidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and b.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sign != null and sign != ''">
+                and b.sign = #{sign,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND b.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and b.user_id = #{obj.userId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and b.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.paymentId != null and obj.paymentId != ''">
+                and b.payment_id = #{obj.paymentId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bftName != null and obj.bftName != ''">
+                and b.bft_name = #{obj.bftName,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.bftSize != null and obj.bftSize != ''">
+                and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.bidMoney != null and obj.bidMoney != ''">
+                and b.bid_money = #{obj.bidMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.bidFreight != null and obj.bidFreight != ''">
+                and b.bid_freight = #{obj.bidFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.bidBond != null and obj.bidBond != ''">
+                and b.bid_bond = #{obj.bidBond,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.latelyBid != null and obj.latelyBid != ''">
+                and b.lately_bid = #{obj.latelyBid,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and b.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                and b.type = #{obj.type,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.bidDate != null and obj.bidDate != ''">
+                and b.bid_date = #{obj.bidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and b.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and b.sign = #{obj.sign,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND b.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and b.user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and b.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="paymentId != null and paymentId != ''">
+                and b.payment_id = #{paymentId,jdbcType=INTEGER}
+            </if>
+            <if test="bftName != null and bftName != ''">
+                and b.bft_name LIKE CONCAT('%',#{bftName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="bftSize != null and bftSize != ''">
+                and b.bft_size LIKE CONCAT('%',#{bftSize,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="bidMoney != null and bidMoney != ''">
+                and b.bid_money = #{bidMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="bidFreight != null and bidFreight != ''">
+                and b.bid_freight = #{bidFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="bidBond != null and bidBond != ''">
+                and b.bid_bond = #{bidBond,jdbcType=DECIMAL}
+            </if>
+            <if test="latelyBid != null and latelyBid != ''">
+                and b.lately_bid = #{latelyBid,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null and status != ''">
+                and b.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and b.type LIKE CONCAT('%',#{type,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="bidDate != null and bidDate != ''">
+                and b.bid_date = #{bidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and b.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sign != null and sign != ''">
+                and b.sign LIKE CONCAT('%',#{sign,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND b.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and b.user_id = #{obj.userId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and b.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.paymentId != null and obj.paymentId != ''">
+                and b.payment_id = #{obj.paymentId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bftName != null and obj.bftName != ''">
+                and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.bftSize != null and obj.bftSize != ''">
+                and b.bft_size LIKE CONCAT('%',#{obj.bftSize,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.bidMoney != null and obj.bidMoney != ''">
+                and b.bid_money = #{obj.bidMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.bidFreight != null and obj.bidFreight != ''">
+                and b.bid_freight = #{obj.bidFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.bidBond != null and obj.bidBond != ''">
+                and b.bid_bond = #{obj.bidBond,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.latelyBid != null and obj.latelyBid != ''">
+                and b.lately_bid = #{obj.latelyBid,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and b.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                and b.type LIKE CONCAT('%',#{obj.type,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.bidDate != null and obj.bidDate != ''">
+                and b.bid_date = #{obj.bidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and b.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and b.sign LIKE CONCAT('%',#{obj.sign,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        b.id as id,
+        b.user_id as userId,
+        b.basicinformation_id as basicinformationId,
+        b.payment_id as paymentId,
+        b.bft_name as bftName,
+        b.bft_size as bftSize,
+        b.bid_money as bidMoney,
+        b.bid_freight as bidFreight,
+        b.bid_bond as bidBond,
+        b.lately_bid as latelyBid,
+        b.status as status,
+        b.type as `type`,
+        b.sign as sign,
+        b.bid_date as bidDate,
+        b.invalid_date as invalidDate
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.Bid" resultType="com.vstock.db.entity.Bid">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.ResultDataFactory" resultType="Integer">
+        SELECT COUNT(*) FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `bid`
+        (`id`,`user_id`,`basicinformation_id`,`payment_id`,`bft_name`,`bft_size`,`bid_money`,`bid_freight`,`bid_bond`,`lately_bid`,`status`,`type`,`bid_date`,`invalid_date`)
+        VALUES(null,#{userId},#{basicinformationId},#{paymentId},#{bftName},#{bftSize},#{bidMoney},#{bidFreight},#{bidBond},#{latelyBid},#{status},#{type},#{sign},#{bidDate},#{invalidDate})
+    </insert>
+
+    <update id="update">
+        UPDATE `bid` SET
+        <if test="status != null and status != ''">
+            status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="invalidDate != null and invalidDate != ''">
+            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+        </if>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
