@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IPricePeakDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.PricePeak">
+        <id property="id" column="id"/>
+        <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="peak_size" property="peakSize" jdbcType="VARCHAR"/>
+        <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="highest_bidder_id" property="highestBidderId" jdbcType="VARCHAR"/>
+        <result column="minimum_selling_id" property="minimumSellingId" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <!--<association property="basicinformation" column="basicinformation"-->
+                     <!--javaType="com.vstock.db.entity.Basicinformation">-->
+            <!--<id column="bid" property="id"/>-->
+            <!--<result column="baname" property="name"/>-->
+            <!--<result column="baartNo" property="artNo"/>-->
+        <!--</association>-->
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND p.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and p.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="peakSize != null and peakSize != ''">
+                and p.peak_size = #{peakSize,jdbcType=VARCHAR}
+            </if>
+            <if test="highestBid != null and highestBid != ''">
+                and p.highest_bid = #{highestBid,jdbcType=DECIMAL}
+            </if>
+            <if test="minimumSellingPrice != null and minimumSellingPrice != ''">
+                and p.minimum_selling_price = #{minimumSellingPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null and status != ''">
+                and p.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="highestBidderId != null and highestBidderId != ''">
+                and p.highest_bidder_id = #{highestBidderId,jdbcType=VARCHAR}
+            </if>
+            <if test="minimumSellingId != null and minimumSellingId != ''">
+                and p.minimum_selling_id = #{minimumSellingId,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and p.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and p.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND p.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and p.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.peakSize != null and obj.peakSize != ''">
+                and p.peak_size = #{obj.peakSize,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.highestBid != null and obj.highestBid != ''">
+                and p.highest_bid = #{obj.highestBid,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.minimumSellingPrice != null and obj.minimumSellingPrice != ''">
+                and p.minimum_selling_price = #{obj.minimumSellingPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and p.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.highestBidderId != null and obj.highestBidderId != ''">
+                and p.highest_bidder_id = #{obj.highestBidderId,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.minimumSellingId != null and obj.minimumSellingId != ''">
+                and p.minimum_selling_id = #{obj.minimumSellingId,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and p.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and p.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND p.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and p.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="peakSize != null and peakSize != ''">
+                and p.peak_size LIKE CONCAT('%',#{peakSize,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="highestBid != null and highestBid != ''">
+                and p.highest_bid = #{highestBid,jdbcType=DECIMAL}
+            </if>
+            <if test="minimumSellingPrice != null and minimumSellingPrice != ''">
+                and p.minimum_selling_price = #{minimumSellingPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null and status != ''">
+                and p.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="highestBidderId != null and highestBidderId != ''">
+                and p.highest_bidder_id LIKE CONCAT('%',#{highestBidderId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="minimumSellingId != null and minimumSellingId != ''">
+                and p.minimum_selling_id LIKE CONCAT('%',#{minimumSellingId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and p.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and p.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND p.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and p.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.peakSize != null and obj.peakSize != ''">
+                and p.peak_size LIKE CONCAT('%',#{obj.peakSize,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.highestBid != null and obj.highestBid != ''">
+                and p.highest_bid = #{obj.highestBid,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.minimumSellingPrice != null and obj.minimumSellingPrice != ''">
+                and p.minimum_selling_price = #{obj.minimumSellingPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and p.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.highestBidderId != null and obj.highestBidderId != ''">
+                and p.highest_bidder_id LIKE CONCAT('%',#{obj.highestBidderId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.minimumSellingId != null and obj.minimumSellingId != ''">
+                and p.minimum_selling_id LIKE CONCAT('%',#{obj.minimumSellingId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and p.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and p.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        p.id as id,
+        p.basicinformation_id as basicinformationId,
+        p.peak_size as peakSize,
+        p.highest_bid as highestBid,
+        p.minimum_selling_price as minimumSellingPrice,
+        p.status as status,
+        p.highest_bidder_id as highestBidderId,
+        p.minimum_selling_id as minimumSellingId,
+        p.create_date as createDate,
+        p.invalid_date as invalidDate
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.PricePeak" resultType="com.vstock.db.entity.PricePeak">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM price_peak p
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY p.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
+        SELECT COUNT(*) FROM price_peak p
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `price_peak`
+        (`id`,`basicinformation_id`,`peak_size`,`highest_bid`,`minimum_selling_price`,`status`,`highest_bidder_id`,`minimum_selling_id`,`create_date`,`invalid_date`)
+        VALUES(null,#{basicinformationId},#{peakSize},#{highestBid},#{minimumSellingPrice},#{status},#{highestBidderId},#{minimumSellingId},#{createDate},#{invalidDate})
+    </insert>
+
+    <update id="update">
+        UPDATE `price_peak` SET
+        <if test="status != null and status != ''">
+            status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="invalidDate != null and invalidDate != ''">
+            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+        </if>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

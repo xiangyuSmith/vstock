@@ -18,10 +18,10 @@
         <c:if test="${not empty bidList}">
             <c:forEach items="${bidList}" var="bid">
                 <tr>
-                    <td class="am-text-sm">${bid.bftName}</td>
-                    <td class="am-text-sm">${bid.bftSize}</td>
-                    <td class="am-text-sm">${bid.bidDate}</td>
-                    <td class="am-text-sm"><fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
+                    <td>${bid.bftName}</td>
+                    <td>${bid.bftSize}</td>
+                    <td>${bid.bidDate}</td>
+                    <td><fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
                     <c:choose>
                         <c:when test="${not empty bid.latelyBid}">
                             <td class="am-text-sm"><fmt:formatNumber value="${bid.latelyBid}" type="currency" pattern="#,#00.0#"/></td>
@@ -32,19 +32,19 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${bid.status == 0}">
-                            <td class="am-text-sm">已生效</td>
+                            <td>已生效</td>
                         </c:when>
                         <c:when test="${bid.status == 10}">
-                            <td class="am-text-sm">待付款</td>
+                            <td>待付款</td>
                         </c:when>
                         <c:when test="${bid.status == 11}">
-                            <td class="am-text-sm">开始交易</td>
+                            <td>开始交易</td>
                         </c:when>
                         <c:when test="${bid.status == 20}">
-                            <td class="am-text-sm">交易成功</td>
+                            <td>交易成功</td>
                         </c:when>
                         <c:otherwise>
-                            <td class="am-text-sm">已过期</td>
+                            <td>已过期</td>
                         </c:otherwise>
                     </c:choose>
                     <td>
@@ -73,13 +73,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Jorrdan 2 Retro Doembecher Peacock</td>
-            <td>10</td>
-            <td>2016/4/20</td>
-            <td>8000</td>
-        </tr>
+        <c:if test="${not empty tradeList}">
+            <c:forEach items="${tradeList}" var="trade">
+                <tr>
+                    <td>${trade.bftName}</td>
+                    <td>${trade.bftSize}</td>
+                    <td>${trade.transactionDate}</td>
+                    <td><fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
+                </tr>
+            </c:forEach>
+        </c:if>
         </tbody>
     </table>
 </form>
-<%@include file="../layout/bottom.jsp" %>
+<script src="${ctx}/assets/js/amazeui.min.js"></script>

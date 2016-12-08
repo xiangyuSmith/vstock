@@ -23,7 +23,7 @@ public class BidService {
      * @return
      */
     public List<Bid> findAll(Bid record, Page page){
-        return bidDao.findAll(record,page.getStartPos(),page.getPageSize()/2);
+        return bidDao.findAll(record,page.getStartPos(),page.getPageSize());
     }
 
     /**
@@ -40,7 +40,18 @@ public class BidService {
      */
     public int insert(Bid record){return bidDao.insert(record);}
 
+    /**
+     * 修改
+     * @param record
+     * @return
+     */
     public int update(Bid record){
         return bidDao.update(record.getStatus(),record.getInvalidDate(),record.getId());
+    }
+
+    //出售记录个人中心查询
+    public List<Bid> findBid(Bid record, Page page){
+        page.setPageSize(5);
+        return this.findAll(record,page);
     }
 }

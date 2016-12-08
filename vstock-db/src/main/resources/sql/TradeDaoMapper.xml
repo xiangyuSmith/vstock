@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.ITradeDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.Trade">
+        <id property="id" column="id"/>
+        <result column="seller_id" property="sellerId" jdbcType="INTEGER"/>
+        <result column="buyers_id" property="buyersId" jdbcType="INTEGER"/>
+        <result column="bid_id" property="bidId" jdbcType="INTEGER"/>
+        <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="transaction_money" property="transactionMoney" jdbcType="DECIMAL"/>
+        <result column="trade_freight" property="tradeFreight" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="transaction_date" property="transactionDate" jdbcType="TIMESTAMP"/>
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
+        <result column="bft_name" property="bftName" jdbcType="VARCHAR"/>
+        <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND t.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and t.seller_id = #{sellerId,jdbcType=INTEGER}
+            </if>
+            <if test="buyersId != null and buyersId != ''">
+                and t.buyers_id = #{buyersId,jdbcType=INTEGER}
+            </if>
+            <if test="bidId != null and bidId != ''">
+                and t.bid_id = #{bidId,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and t.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="transactionMoney != null and transactionMoney != ''">
+                and t.transaction_money = #{transactionMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="tradeFreight != null and tradeFreight != ''">
+                and t.trade_freight = #{tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null and status != ''">
+                and t.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionDate != null and transactionDate != ''">
+                and t.transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and t.end_date = #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sign != null and sign != ''">
+                and t.sign = #{sign,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND t.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.sellerId != null and obj.sellerId != ''">
+                and t.seller_id = #{obj.sellerId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.buyersId != null and obj.buyersId != ''">
+                and t.buyers_id = #{obj.buyersId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bidId != null and obj.bidId != ''">
+                and t.bid_id = #{obj.bidId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and t.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.transactionMoney != null and obj.transactionMoney != ''">
+                and t.transaction_money = #{obj.transactionMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
+                and t.trade_freight = #{obj.tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and t.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.transactionDate != null and obj.transactionDate != ''">
+                and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.endDate != null and obj.endDate != ''">
+                and t.end_date = #{obj.endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and t.sign = #{obj.sign,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND t.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="sellerId != null and sellerId != ''">
+                and t.seller_id = #{sellerId,jdbcType=INTEGER}
+            </if>
+            <if test="buyersId != null and buyersId != ''">
+                and t.buyers_id = #{buyersId,jdbcType=INTEGER}
+            </if>
+            <if test="bidId != null and bidId != ''">
+                and t.bid_id = #{bidId,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and t.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="transactionMoney != null and transactionMoney != ''">
+                and t.transaction_money = #{transactionMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="tradeFreight != null and tradeFreight != ''">
+                and t.trade_freight = #{tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null and status != ''">
+                and t.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="transactionDate != null and transactionDate != ''">
+                and t.transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and t.end_date = #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sign != null and sign != ''">
+                and t.sign LIKE CONCAT('%',#{sign,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND t.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.sellerId != null and obj.sellerId != ''">
+                and t.seller_id = #{obj.sellerId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.buyersId != null and obj.buyersId != ''">
+                and t.buyers_id = #{obj.buyersId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bidId != null and obj.bidId != ''">
+                and t.bid_id = #{obj.bidId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and t.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.transactionMoney != null and obj.transactionMoney != ''">
+                and t.transaction_money = #{obj.transactionMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
+                and t.trade_freight = #{obj.tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and t.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.transactionDate != null and obj.transactionDate != ''">
+                and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.endDate != null and obj.endDate != ''">
+                and t.end_date = #{obj.endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and t.sign LIKE CONCAT('%',#{obj.sign,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        t.id AS id,
+        t.seller_id as sellerId,
+        t.buyers_id as buyersId,
+        t.bid_id as bidId,
+        t.basicinformation_id as basicinformationId,
+        t.transaction_money as transactionMoney,
+        t.trade_freight  as tradeFreight,
+        t.status as status,
+        t.transaction_date as transactionDate,
+        t.end_date as endDate,
+        t.sign as sign
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
+        SELECT b.bft_name,b.bft_size,
+        <include refid="Base_Column_List"/>
+        FROM trade t, bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
+        SELECT COUNT(*) FROM trade t
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `trade`
+        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`status`,`transaction_date`,`end_date`,`sign`)
+        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{status},#{transactionDate},#{endDate},#{sign})
+    </insert>
+
+    <update id="update">
+        UPDATE `trade` SET
+        <if test="status != null and status != ''">
+            status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            end_date = #{endDate,jdbcType=TIMESTAMP}
+        </if>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
