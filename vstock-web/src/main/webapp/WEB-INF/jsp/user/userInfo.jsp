@@ -11,39 +11,49 @@
                     <label class="am-form-label am-fr">姓名：</label>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">
-                    <span>刘颖婕</span>
+                    <c:if test="${not empty user}">
+                        <span>${user.nick}</span>
+                    </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-padding-left-0">
-                <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">
-                    <label class="am-form-label am-fr">尺码：</label>
-                </div>
-                <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">
-                    <span>10</span>
-                </div>
-            </div>
+            <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-padding-left-0">--%>
+                <%--<div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">--%>
+                    <%--<label class="am-form-label am-fr">尺码：</label>--%>
+                <%--</div>--%>
+                <%--<c:if test="${not empty user}">--%>
+                <%--<div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">--%>
+                    <%--<span>10</span>--%>
+                <%--</div>--%>
+                <%--</c:if>--%>
+            <%--</div>--%>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">
                     <label class="am-form-label am-fr">手机号码：</label>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">
-                    <span>15685478548</span>
+                    <c:if test="${not empty user}">
+                        <span>${user.mobile}</span>
+                    </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-padding-left-0">
-                <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">
-                    <label class="am-form-label am-fr">邮箱：</label>
-                </div>
-                <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">
-                    <span>258745878@qq.com</span>
-                </div>
-            </div>
+            <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-padding-left-0">--%>
+                <%--<div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">--%>
+                    <%--<label class="am-form-label am-fr">邮箱：</label>--%>
+                <%--</div>--%>
+                <%--<c:if test="${not empty user}">--%>
+                    <%--<div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">--%>
+                        <%--<span>${user.mobile}</span>--%>
+                    <%--</div>--%>
+                <%--</c:if>--%>
+            <%--</div>--%>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">
                     <label class="am-form-label am-fr">用户名：</label>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end">
-                    <span>GUI</span>
+                    <c:if test="${not empty user}">
+                        <span>${user.uname}</span>
+                    </c:if>
                 </div>
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">

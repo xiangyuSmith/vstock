@@ -43,7 +43,7 @@ public class InterruptTestController {
         } else {
             for (int k = 0; k < subCount; k++) {
                 stopIndext = (k == subCount - 1) ? stopIndext + listSize % machineCount : stopIndext + machineCount;
-                List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, startIndext + stopIndext));
+                List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, stopIndext));
                 startIndext = stopIndext;
                 if (machineNum - 1 == k) {
                     //处理当前集合

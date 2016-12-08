@@ -19,12 +19,8 @@
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
         <result column="bid_date" property="bidDate" jdbcType="TIMESTAMP"/>
         <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
-        <!--<association property="basicinformation" column="basicinformation"-->
-                     <!--javaType="com.vstock.db.entity.Basicinformation">-->
-            <!--<id column="bid" property="id"/>-->
-            <!--<result column="baname" property="name"/>-->
-            <!--<result column="baartNo" property="artNo"/>-->
-        <!--</association>-->
+        <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -266,6 +262,14 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findAndPricePeak" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
+        SELECT p.highest_bid, p.minimum_selling_price,
+        <include refid="Base_Column_List"/>
+        FROM bid b LEFT JOIN price_peak p ON b.basicinformation_id = p.basicinformation_id and b.bft_size = p.peak_size
         <include refid="SearchAllByPage_Where_Clause"/>
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>

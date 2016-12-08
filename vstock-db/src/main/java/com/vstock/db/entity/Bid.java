@@ -27,12 +27,14 @@ public class Bid implements Serializable {
     private String sign;
     private Date bidDate;
     private Date invalidDate;
+    private BigDecimal highestBid;
+    private BigDecimal minimumSellingPrice;
 
     public Bid() {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, Date bidDate, Date invalidDate) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, Date bidDate, Date invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -49,6 +51,8 @@ public class Bid implements Serializable {
         this.sign = sign;
         this.bidDate = bidDate;
         this.invalidDate = invalidDate;
+        this.highestBid = highestBid;
+        this.minimumSellingPrice = minimumSellingPrice;
     }
 
     public Integer getId() {
@@ -177,5 +181,21 @@ public class Bid implements Serializable {
 
     public void setInvalidDate(Date invalidDate) {
         this.invalidDate = invalidDate;
+    }
+
+    public BigDecimal getHighestBid() {
+        return highestBid;
+    }
+
+    public void setHighestBid(BigDecimal highestBid) {
+        this.highestBid = highestBid;
+    }
+
+    public BigDecimal getMinimumSellingPrice() {
+        return minimumSellingPrice;
+    }
+
+    public void setMinimumSellingPrice(BigDecimal minimumSellingPrice) {
+        this.minimumSellingPrice = minimumSellingPrice;
     }
 }

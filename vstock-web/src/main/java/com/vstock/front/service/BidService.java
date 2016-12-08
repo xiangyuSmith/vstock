@@ -52,6 +52,6 @@ public class BidService {
     //出售记录个人中心查询
     public List<Bid> findBid(Bid record, Page page){
         page.setPageSize(5);
-        return this.findAll(record,page);
+        return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());
     }
 }

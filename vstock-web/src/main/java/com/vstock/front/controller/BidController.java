@@ -2,10 +2,12 @@ package com.vstock.front.controller;
 
 import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.Trade;
+import com.vstock.db.entity.User;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.BidService;
 import com.vstock.front.service.TradeService;
+import com.vstock.front.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class BidController extends BaseController{
 
     @Autowired
     TradeService tradeService;
+
+    @Autowired
+    UserService userService;
 
     private static Logger logger = Logger.getLogger(BidController.class);
 
@@ -60,5 +65,13 @@ public class BidController extends BaseController{
         model.addAttribute("bidList",bidList);
         model.addAttribute("tradeList",tradeList);
         return "/user/purchaseRecords";
+    }
+
+    @RequestMapping("userInfo")
+    public String testUserInfo(ModelMap model){
+        User user = new User();
+        user = userService.findById("1");
+        model.addAttribute("user",user);
+        return "/user/userInfo";
     }
 }

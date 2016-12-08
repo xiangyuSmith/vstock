@@ -23,8 +23,8 @@
                     <td>${bid.bftSize}</td>
                     <td>${bid.bidDate}</td>
                     <td><fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
-                    <td>605</td>
-                    <td>120</td>
+                    <td><fmt:formatNumber value="${bid.highestBid}" type="currency" pattern="#,#00.0#"/></td>
+                    <td><fmt:formatNumber value="${bid.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
                     <c:choose>
                         <c:when test="${bid.status == 0}">
                             <td>已生效</td>
@@ -80,22 +80,22 @@
                         <c:when test="${trade.status == 0}">
                             <td>已下单待支付</td>
                         </c:when>
-                        <c:when test="${bid.status == 1}">
+                        <c:when test="${trade.status == 1}">
                             <td>已支付待发货</td>
                         </c:when>
-                        <c:when test="${bid.status == 10}">
+                        <c:when test="${trade.status == 10}">
                             <td>已发货待检验</td>
                         </c:when>
-                        <c:when test="${bid.status == 20}">
+                        <c:when test="${trade.status == 20}">
                             <td>检验通过</td>
                         </c:when>
-                        <c:when test="${bid.status == 21}">
+                        <c:when test="${trade.status == 21}">
                             <td>检验未通过</td>
                         </c:when>
-                        <c:when test="${bid.status == 30}">
+                        <c:when test="${trade.status == 30}">
                             <td>已发货待签收</td>
                         </c:when>
-                        <c:when test="${bid.status == 40}">
+                        <c:when test="${trade.status == 40}">
                             <td>交易完成</td>
                         </c:when>
                         <c:otherwise>
