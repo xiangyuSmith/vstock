@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
     <li>
-        <a href="#">
+        <a href="/detail">
             <div class="clickZone" aria-describedby="product141637">
                 <div class="img">
                     <span class="helper"></span>

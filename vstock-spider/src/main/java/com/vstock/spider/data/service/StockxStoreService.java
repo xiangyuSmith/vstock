@@ -42,7 +42,12 @@ public class StockxStoreService {
         if (list.size() > 0) {
             //调用爬虫方法
             for (StockxStore stockxStore : list) {
-                int num = Integer.parseInt(stockxStore.getPageNo());
+                int num = 0;
+                try {
+                    num = Integer.parseInt(stockxStore.getPageNo());
+                }catch (Exception e){
+                    System.out.print(e.getMessage());
+                }
                 String toUrl = stockxStore.getUrl();
                 for (int i = 1; i <= num; i++) {
                     String newUrl = toUrl + "&pageNo=" + i;

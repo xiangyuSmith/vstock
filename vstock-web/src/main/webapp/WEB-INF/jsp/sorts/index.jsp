@@ -2,7 +2,7 @@
 <html>
 <head>
     <%@include file="../layout/head.jsp" %>
-    <title>首页</title>
+    <title>分类页</title>
     <style>
         .am-container-content{ max-width: 1160px; margin: auto; }
         .left-list li { margin:2!important; }

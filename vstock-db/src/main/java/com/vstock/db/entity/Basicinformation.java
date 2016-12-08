@@ -11,6 +11,13 @@ public class Basicinformation implements Serializable {
 
     private static final long serialVersionUID = 165641247456211L;
 
+    public final static int B_TYPE_ZERO = 0; // 0默认分类
+    public final static int B_TYPE_ONE = 1; // 更多流行
+    public final static int B_TYPE_TWO = 2; // 最低卖价
+    public final static int B_TYPE_THREE = 3; // 最高售价
+    public final static int B_TYPE_FOUR = 4; // 最大涨幅
+    public final static int B_TYPE_FIVE = 5; // 即将发布
+
     @Id
     private String id;
     private int bid;

@@ -356,70 +356,69 @@ public class SpiderPageProcessor {
                                                         logger.info("添加字典数据成功，dateTime:" + DateUtils.getCurrentTimeAs14String());
                                                     }
                                                 }
-                                                }
-                                            }
-                                        }
-
-                                        //查询字典商品标签名     &     验证该店铺下字典表数据是否全部已审核
-                                        List<Dictionaries> dicObjList = new ArrayList<Dictionaries>();
-                                        if (commodityDataInfo == null) {
-                                            dicObjList = commodityDataService.finddictionaries(record.getId());
-                                        } else {
-                                            dicObjList = commodityDataService.finddictionaries(commodityDataInfo.getId());
-                                        }
-                                        for (Dictionaries dic : dicObjList) {
-                                            if (!"".equals(dic.getIdentification()) && dic.getIdentification() != null) {
-                                                //状态是否为已审
-                                                if (!"2".equals(dic.getStatus()) && !"3".equals(dic.getStatus())) {
-                                                    //该商品已审核,则添加最终数据
-                                                    ResultData resultData = new ResultData();
-                                                    dic.getIdentification();
-                                                    //组装最终商品数据
-                                                    if (commodityDataInfo == null) {
-                                                        resultData.setCommodityDataId(record.getId());
-                                                    } else {
-                                                        resultData.setCommodityDataId(commodityDataInfo.getId());
-                                                    }
-                                                    Iterator keys = jsonObject.keys();
-                                                    logger.info("添加最终商品数据");
-//                                                    while (keys.hasNext()) {
-//                                                        String keyStr = keys.next().toString();
-//                                                        //判断是否和字典匹配
-//                                                        if (dic.getColorly().equals(keyStr)) {
-//                                                            //从鞋库取数据
-//                                                            Basicinformation b = new Basicinformation();
-//                                                            b.setName(dic.getIdentification());
-//                                                            List<Basicinformation> baciList = basicinformationService.findAll(b);
-//                                                            //基于鞋库保存数据
-//                                                            if (baciList.size() > 0) {
-//                                                                resultData.setBasiciformationId(baciList.get(0).getId());
-//                                                                resultData.setStoreId(stockxStore.getId());
-//                                                                resultData.setStoreName(stockxStore.getName());
-//                                                                resultData.setProductName(dic.getIdentification());
-//                                                                resultData.setGirard(dic.getGirard());
-//                                                                resultData.setSizePrice(jsonObject.get(keyStr).toString());
-//                                                                resultData.setBrand(brand);
-//                                                                resultData.setTransactionRecord(sales);
-//                                                                resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
-//                                                                //保存最终结果
-//                                                                int dataReultBool = commodityDataService.saveResultDatas(resultData);
-//                                                                if (dataReultBool == 1) {
-//                                                                    logger.info("save final result data success ! ! ! ");
-//                                                                } else {
-//                                                                    logger.error("save final result data Error ! ! ! ");
-//                                                                }
-//                                                            }
-//                                                        }
-//                                                    }
-//                                                }
                                             }
                                         }
                                     }
 
+                                    //查询字典商品标签名     &     验证该店铺下字典表数据是否全部已审核
+                                    List<Dictionaries> dicObjList = new ArrayList<Dictionaries>();
+                                    if (commodityDataInfo == null) {
+                                        dicObjList = commodityDataService.finddictionaries(record.getId());
+                                    } else {
+                                        dicObjList = commodityDataService.finddictionaries(commodityDataInfo.getId());
+                                    }
+                                    for (Dictionaries dic : dicObjList) {
+                                        if (!"".equals(dic.getIdentification()) && dic.getIdentification() != null) {
+                                            //状态是否为已审
+                                            if (!"2".equals(dic.getStatus()) && !"3".equals(dic.getStatus())) {
+                                                //该商品已审核,则添加最终数据
+                                                ResultData resultData = new ResultData();
+                                                dic.getIdentification();
+                                                //组装最终商品数据
+                                                if (commodityDataInfo == null) {
+                                                    resultData.setCommodityDataId(record.getId());
+                                                } else {
+                                                    resultData.setCommodityDataId(commodityDataInfo.getId());
+                                                }
+                                                Iterator keys = jsonObject.keys();
+                                                logger.info("---------------添加最终商品数据---------------");
+                                                while (keys.hasNext()) {
+                                                    String keyStr = keys.next().toString();
+                                                    //判断是否和字典匹配
+                                                    if (dic.getColorly().equals(keyStr)) {
+                                                        //从鞋库取数据
+                                                        Basicinformation b = new Basicinformation();
+                                                        b.setName(dic.getIdentification());
+                                                        List<Basicinformation> baciList = basicinformationService.findAll(b);
+                                                        //基于鞋库保存数据
+                                                        if (baciList.size() > 0) {
+                                                            resultData.setBasiciformationId(baciList.get(0).getId());
+                                                            resultData.setStoreId(stockxStore.getId());
+                                                            resultData.setStoreName(stockxStore.getName());
+                                                            resultData.setProductName(dic.getIdentification());
+                                                            resultData.setGirard(dic.getGirard());
+                                                            resultData.setSizePrice(jsonObject.get(keyStr).toString());
+                                                            resultData.setBrand(brand);
+                                                            resultData.setTransactionRecord(sales);
+                                                            resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
+                                                            //保存最终结果
+                                                            int dataReultBool = commodityDataService.saveResultDatas(resultData);
+                                                            if (dataReultBool == 1) {
+                                                                logger.info("save final result data success ! ! ! ");
+                                                            } else {
+                                                                logger.error("save final result data Error ! ! ! ");
+                                                            }
+                                                        }
+                                                    }
+                                                }
 
 
+
+                                            }
+                                        }
+                                    }
                                 } catch (Exception e) {
-                                    logger.error(e.getMessage());
+                                    logger.warn(e.getMessage());
                                     driver.quit();
                                     System.gc();
                                 }

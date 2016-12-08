@@ -6,7 +6,7 @@
 <header class="m-hd am-margin-bottom-0">
     <section data-am-sticky class="am-show-md-up">
         <div class="am-container" style="line-height: 30px;">
-            <a href="#" class="v-logo am-fr"></a>
+            <a href="/index" class="v-logo am-fr"></a>
             <nav>
                 <ul class="m-nav am-nav am-nav-pills am-fr">
                     <li class="am-hide-sm am-hide-md">

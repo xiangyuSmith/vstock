@@ -1,6 +1,7 @@
 package com.vstock.db.dao;
 
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.ResultData;
 import com.vstock.db.entity.ResultDataFactory;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +19,7 @@ public interface IResultDataFactory {
 
     int findCount(@Param("obj")ResultDataFactory record, @Param("startTime") String startTime, @Param("endTime") String endTime);
 
-    List<Basicinformation> findrdfAndBasiAll(@Param("obj")ResultDataFactory record, @Param("startTime") String startTime, @Param("endTime") String endTime, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+    List<Basicinformation> findrdfAndBasiAll(@Param("obj")ResultData record, @Param("startTime") String startTime, @Param("endTime") String endTime, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
-    List<Integer> findrdfAndBasiCount(@Param("obj")ResultDataFactory record, @Param("startTime") String startTime, @Param("endTime") String endTime);
+    List<Integer> findrdfAndBasiCount(@Param("obj")ResultData record, @Param("startTime") String startTime, @Param("endTime") String endTime);
 }

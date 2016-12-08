@@ -19,13 +19,13 @@
     </style>
 </head>
 <body>
-<%@include file="../layout/top.jsp" %>
+<%@include file="../layout/top-index.jsp" %>
 <div class="get-index">
     <div class="am-g">
         <div class="am-u-lg-12">
             <div class="get-title-search">
                 <form class="am-topbar-left am-form-inline" role="search">
-                    <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
+                    <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;">
                         <input type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
                     </div>
@@ -43,20 +43,20 @@
 </div>
 <article class=" am-show-lg-only">
     <div class="am-container-sell" style="height: 135px;">
-        <div class="am-u-md-6">
+        <div class="am-u-md-6 am-padding-right-sm">
             <div class="am-u-md-12" style="background-color: #EDFEF1;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #3fcd65;">买家</span></div>
-                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 6px;">
+                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
                     <p>138****6859</p>
                     <p>Adidas Yee idaBlack (2016)</p>
                     <p>出价：2500元</p>
                 </div>
             </div>
         </div>
-        <div class="am-u-md-6">
+        <div class="am-u-md-6 am-padding-0">
             <div class="am-u-md-12" style="background-color: #FEEFEF;padding: 3px;">
-                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #3fcd65;">卖家</span></div>
-                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 6px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #E26472;">卖家</span></div>
+                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
                     <p>138****6859</p>
                     <p>Adidas Yee idaBlack (2016)</p>
                     <p>出价：2500元</p>
@@ -70,7 +70,7 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
                 <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
-                <span style="font-size: 18px;color: #060606;">了解更多 ></span>
+                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <li>
@@ -133,7 +133,7 @@
         </div><div class="am-g am-imglist">
         <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
             <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
-            <span style="font-size: 18px;color: #060606;">了解更多 ></span>
+            <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
         </div>
         <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
             <li>
@@ -196,7 +196,7 @@
     </div><div class="am-g am-imglist">
         <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
             <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
-            <span style="font-size: 18px;color: #060606;">了解更多 ></span>
+            <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
         </div>
         <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
             <li>

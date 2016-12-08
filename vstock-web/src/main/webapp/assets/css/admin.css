@@ -1,8 +1,9 @@
 /** LAYOUT **/
 * {
     font-family: "微软雅黑";
-    font-size:14px;
+    font-size:16px;
 }
+@media (max-width: 1400px){ *{ font-size:14px; } }
 /** HEAD **/
 .v-logo{
     display: block;
@@ -72,7 +73,13 @@
     background: url("/assets/i/banner.png") top center no-repeat;
     color: #fff;
     text-align: center;
-    height: 480px;
+    height: 680px;
+}
+@media (max-width: 1400px){
+    .get-index{
+        background: url("/assets/i/banner.png") center no-repeat;
+        height: 480px;
+    }
 }
 .get-sorts{
     background: url("/assets/i/banner-sorts.png") top center no-repeat;

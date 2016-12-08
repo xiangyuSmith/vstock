@@ -34,22 +34,22 @@ public class DataCoreController {
     /**
      * 球鞋数据分析查询
      *
-     * @param resultDataFactory
+     * @param resultData
      * @param request
      * @param model
      * @return
      */
     @RequestMapping("index")
-    public String index(ResultDataFactory resultDataFactory, HttpServletRequest request, ModelMap model) {
+    public String index(ResultData resultData, HttpServletRequest request, ModelMap model) {
         List<String> list = new ArrayList<String>();
         String pageNow = request.getParameter("pageNow");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String bids = request.getParameter("bids");
         if ("".equals(bids) || bids == null) {
-            resultDataFactory.setBid(0);
+            resultData.setBid(0);
         } else {
-            resultDataFactory.setBid(Integer.parseInt(bids));
+            resultData.setBid(Integer.parseInt(bids));
         }
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
@@ -67,13 +67,13 @@ public class DataCoreController {
         startTime = startTime + " 00:00:00";
         endTime = endTime + " 23:59:59";
         String linkAddress = request.getRequestURI() + "?1=1";
-        linkAddress = commodityDataService.linkAddress(linkAddress, list, resultDataFactory);
-        List<Integer> totalCount = commodityDataService.findResultDataFactoryCount(resultDataFactory, startTime, endTime);
+        linkAddress = commodityDataService.linkAddress(linkAddress, list, resultData);
+        List<Integer> totalCount = commodityDataService.findResultDataFactoryCount(resultData, startTime, endTime);
         Page page = new Page(totalCount.size(), pageNow);
-        List<Basicinformation> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultDataFactory, startTime, endTime, page);
+        List<Basicinformation> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultData, startTime, endTime, page);
         model.addAttribute("commodityDataList", resultDataFactoryList);
         model.addAttribute("page", page);
-        model.addAttribute("resultData", resultDataFactory);
+        model.addAttribute("resultData", resultData);
         model.addAttribute("linkAddress", linkAddress);
         return "admin/storeAnalysis/commodityShow";
     }

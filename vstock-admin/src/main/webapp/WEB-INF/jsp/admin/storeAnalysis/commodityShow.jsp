@@ -122,11 +122,12 @@
 
         <!--点击详细触发事件-->
         $(".adetails").click(function () {
-            var $this = $(this);
-            var comid = $this.attr("data-comid");
-            var commoName = $this.attr("data-commoName");
-            if (comid != "" && commoName != ""){
+            var comid = $(this).attr("data-comid");
+            var commoName = $(this).attr("data-commoName");
+            if (comid != ""){
                 $("#commid").val(comid);
+            }
+            if(commoName != ""){
                 $("#commodityName").val(commoName);
             }
             $("#details").submit();

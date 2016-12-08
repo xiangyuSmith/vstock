@@ -40,7 +40,7 @@ public class CommodityDataService {
      * @param record
      * @return
      */
-    public List<Basicinformation> findResultDataFactoryAll(ResultDataFactory record, String startTime, String endTime, Page page) {
+    public List<Basicinformation> findResultDataFactoryAll(ResultData record, String startTime, String endTime, Page page) {
         return resultDataFactoryDao.findrdfAndBasiAll(record, startTime, endTime, page.getStartPos(), page.getPageSize());
     }
 
@@ -52,7 +52,7 @@ public class CommodityDataService {
      * @param endTime
      * @return
      */
-    public List<Integer> findResultDataFactoryCount(ResultDataFactory record, String startTime, String endTime) {
+    public List<Integer> findResultDataFactoryCount(ResultData record, String startTime, String endTime) {
         return resultDataFactoryDao.findrdfAndBasiCount(record, startTime, endTime);
     }
 
@@ -64,7 +64,7 @@ public class CommodityDataService {
      * @param record
      * @return
      */
-    public String linkAddress(String linkAddress, List<String> list, ResultDataFactory record) {
+    public String linkAddress(String linkAddress, List<String> list, ResultData record) {
         if (list.size() > 0) {
             for (String strLink : list) {
                 String[] strs = strLink.split("=");
