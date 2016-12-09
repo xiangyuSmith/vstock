@@ -8,6 +8,9 @@
 .layout-font-size-22{ font-size: 22px; }
 .layout-font-size-24{ font-size: 24px; }
 .layout-font-size-26{ font-size: 26px; }
+.layout-font-size-28{ font-size: 28px; }
+.layout-font-size-30{ font-size: 30px; }
+.layout-font-size-32{ font-size: 32px; }
 @media (max-width: 1400px){
     *{ font-size:14px; }
     .layout-font-size-18{ font-size: 16px; }
@@ -15,6 +18,9 @@
     .layout-font-size-22{ font-size: 20px; }
     .layout-font-size-24{ font-size: 22px; }
     .layout-font-size-26{ font-size: 24px; }
+    .layout-font-size-28{ font-size: 26px; }
+    .layout-font-size-30{ font-size: 28px; }
+    .layout-font-size-32{ font-size: 30px; }
 }
 @media (max-width: 768px){
     .layout-font-size-18{ font-size: 14px; }
@@ -22,6 +28,9 @@
     .layout-font-size-22{ font-size: 18px; }
     .layout-font-size-24{ font-size: 20px; }
     .layout-font-size-26{ font-size: 22px; }
+    .layout-font-size-28{ font-size: 24px; }
+    .layout-font-size-30{ font-size: 26px; }
+    .layout-font-size-32{ font-size: 28px; }
 }
 /** HEAD **/
 .v-logo{
