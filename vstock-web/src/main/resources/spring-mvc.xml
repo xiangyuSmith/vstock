@@ -8,6 +8,8 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <bean id="initDataListener" class="com.vstock.front.support.interceptor.InitDataListener" ></bean>
+
     <mvc:resources mapping="/assets/**" location="/assets/"/>
     <mvc:interceptors>
         <mvc:interceptor>

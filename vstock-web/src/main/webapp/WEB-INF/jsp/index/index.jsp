@@ -41,7 +41,7 @@
         </div>
     </div>
 </div>
-<article class=" am-show-lg-only">
+<article class="am-show-lg-only">
     <div class="am-container-sell" style="height: 135px;">
         <div class="am-u-md-6 am-padding-right-sm">
             <div class="am-u-md-12" style="background-color: #EDFEF1;padding: 3px;">
@@ -65,6 +65,22 @@
         </div>
     </div>
 </article>
+<article class="am-show-lg-only am-text-center">
+    <div style="max-width: 1000px;margin:auto;margin-top: 3.2rem;" class="am-margin-top-xl am-text-center" >
+        <ul class="am-nav am-nav-pills am-nav-justify">
+            <li>
+                <div id="containerA" style="max-width: 276px; height: 156px; margin: 0 auto"></div>
+            </li>
+            <li>
+                <div id="containerB" style="max-width: 276px; height: 156px; margin: 0 auto"></div>
+            </li>
+            <li>
+                <div id="containerC" style="max-width: 276px; height: 156px; margin: 0 auto"></div>
+            </li>
+        </ul>
+    </div>
+
+</article>
 <article>
     <div class="am-container-content">
         <div class="am-g am-imglist">
@@ -73,191 +89,130 @@
                 <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-                <li>
-                    <div class="am-gallery-item am_list_block">
-                        <a href="#" class="am_img_bg">
-                            <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg" style="display: inline;">
-                        </a>
-                        <div class="am_listimg_info">
-                            <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Yeezy Boost 350 Low Pirate Black (2016)</b></span></div>
-                            <div>
-                                <div style="font-size: 16px;">最近售出</div>
-                                <div style="font-size: 24px;">68双</div>
+                <c:forEach items="${bList}" var="b">
+                    <c:if test="${b.type==1}">
+                        <li>
+                            <div class="am-gallery-item am_list_block">
+                                <a href="#" class="am_img_bg">
+                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                                </a>
+                                <div class="am_listimg_info">
+                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div>
+                                        <div style="font-size: 16px;">最近售出</div>
+                                        <div style="font-size: 22px;">68双</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="am-gallery-item am_list_block">
-                        <a href="#" class="am_img_bg">
-                            <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas Crazylight Boost Triple White James Harden.jpg" style="display: inline;">
-                        </a>
-                        <div class="am_listimg_info">
-                            <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Crazylight Boost Triple White James Harden</b></span></div>
-                            <div>
-                                <div style="font-size: 16px;">最近售出</div>
-                                <div style="font-size: 24px;">15双</div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="am-gallery-item am_list_block">
-                        <a href="#" class="am_img_bg">
-                            <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas NMD Nice Kicks.jpg" style="display: inline;">
-                        </a>
-                        <div class="am_listimg_info">
-                            <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas NMD Nice Kicks</b></span></div>
-                            <div>
-                                <div style="font-size: 16px;">最近售出</div>
-                                <div style="font-size: 24px;">5双</div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="am-gallery-item am_list_block">
-                        <a href="#" class="am_img_bg">
-                            <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas Yeezy Boost 350 Low Turtledove.jpg" style="display: inline;">
-                        </a>
-                        <div class="am_listimg_info">
-                            <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Yeezy Boost 350 Low Turtledove</b></span></div>
-                            <div>
-                                <div style="font-size: 16px;">最近售出</div>
-                                <div style="font-size: 24px;">39双</div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                        </li>
+                    </c:if>
+                </c:forEach>
             </ul>
-        </div><div class="am-g am-imglist">
-        <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-            <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
-            <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
         </div>
-        <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Yeezy Boost 350 Low Pirate Black (2016)</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">68双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas Crazylight Boost Triple White James Harden.jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Crazylight Boost Triple White James Harden</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">15双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas NMD Nice Kicks.jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas NMD Nice Kicks</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">5双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas Yeezy Boost 350 Low Turtledove.jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Yeezy Boost 350 Low Turtledove</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">39双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div><div class="am-g am-imglist">
-        <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-            <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
-            <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+        <div class="am-g am-imglist">
+            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
+                <span style="font-size: 30px;font-weight: bold;color: #060606;">最低卖价</span><br/>
+                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            </div>
+            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
+                <c:forEach items="${bList}" var="b">
+                    <c:if test="${b.type==2}">
+                        <li>
+                            <div class="am-gallery-item am_list_block">
+                                <a href="#" class="am_img_bg">
+                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                                </a>
+                                <div class="am_listimg_info">
+                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div>
+                                        <div style="font-size: 16px;">最近售出</div>
+                                        <div style="font-size: 22px;">68双</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </c:if>
+                </c:forEach>
+            </ul>
         </div>
-        <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Yeezy Boost 350 Low Pirate Black (2016)</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">68双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas Crazylight Boost Triple White James Harden.jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Crazylight Boost Triple White James Harden</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">15双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas NMD Nice Kicks.jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas NMD Nice Kicks</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">5双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="am-gallery-item am_list_block">
-                    <a href="#" class="am_img_bg">
-                        <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="/assets/shoesImg/small/Adidas Yeezy Boost 350 Low Turtledove.jpg" style="display: inline;">
-                    </a>
-                    <div class="am_listimg_info">
-                        <div class="am-gallery-title"><span style="font-size: 22px;"><b>Adidas Yeezy Boost 350 Low Turtledove</b></span></div>
-                        <div>
-                            <div style="font-size: 16px;">最近售出</div>
-                            <div style="font-size: 24px;">39双</div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-
+        <div class="am-g am-imglist">
+            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
+                <span style="font-size: 30px;font-weight: bold;color: #060606;">最高叫价</span><br/>
+                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            </div>
+            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
+                <c:forEach items="${bList}" var="b">
+                    <c:if test="${b.type==3}">
+                        <li>
+                            <div class="am-gallery-item am_list_block">
+                                <a href="#" class="am_img_bg">
+                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                                </a>
+                                <div class="am_listimg_info">
+                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div>
+                                        <div style="font-size: 16px;">最近售出</div>
+                                        <div style="font-size: 22px;">68双</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </c:if>
+                </c:forEach>
+            </ul>
+        </div>
+        <div class="am-g am-imglist">
+            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
+                <span style="font-size: 30px;font-weight: bold;color: #060606;">最大涨幅</span><br/>
+                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            </div>
+            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
+                <c:forEach items="${bList}" var="b">
+                    <c:if test="${b.type==4}">
+                        <li>
+                            <div class="am-gallery-item am_list_block">
+                                <a href="#" class="am_img_bg">
+                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                                </a>
+                                <div class="am_listimg_info">
+                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div>
+                                        <div style="font-size: 16px;">最低卖价</div>
+                                        <div style="font-size: 22px;">￥800（12%）</div>
+                                        <div class="am-margin-top-sm" style="font-size: 14px;">20分钟前</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </c:if>
+                </c:forEach>
+            </ul>
+        </div>
+        <div class="am-g am-imglist">
+            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
+                <span style="font-size: 30px;font-weight: bold;color: #060606;">即将发布</span><br/>
+                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            </div>
+            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
+                <c:forEach items="${bList}" var="b">
+                    <c:if test="${b.type==5}">
+                        <li>
+                            <div class="am-gallery-item am_list_block">
+                                <a href="#" class="am_img_bg">
+                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                                </a>
+                                <div class="am_listimg_info">
+                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div>
+                                        <div style="font-size: 22px;">官方售价:￥800</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </c:if>
+                </c:forEach>
+            </ul>
+        </div>
 
         <div class="am_news_load am_news_load_index"><span><i class="am-icon-spinner am-icon-spin" style="display: none;"></i>了解更多</span></div>
         <br>
@@ -288,6 +243,8 @@
         };
         var banner_num = new CountUp("banner_num", 56000, 56214, 0, 5, options);
         banner_num.start();
+
+
     });
 </script>
 </body>

@@ -45,10 +45,30 @@
       WHERE b.name LIKE CONCAT('%',#{productName,jdbcType=VARCHAR},'%')
     </select>
 
+    <select id="findCount" parameterType="com.vstock.db.entity.Basicinformation" resultType="Long">
+        SELECT COUNT(*) FROM `basicinformation`
+    </select>
+
     <select id="findLimitCount" parameterType="com.vstock.db.entity.Basicinformation" resultType="Long">
         SELECT COUNT(*) FROM `basicinformation`
         <include refid="SelectAll_Where_Clause"/>
         <include refid="Select_Where_Time"/>
+    </select>
+
+
+    <!-- 按类型查询 -->
+    <select id="findByType" resultType="com.vstock.db.entity.Basicinformation">
+        SELECT * FROM `basicinformation` b
+        WHERE 1=1
+        <choose>
+            <when test="type == -1">
+                AND b.type != 0
+            </when>
+            <otherwise>
+                AND b.type = #{type}
+            </otherwise>
+        </choose>
+
     </select>
 
     <sql id="SelectAll_Where_Clause">

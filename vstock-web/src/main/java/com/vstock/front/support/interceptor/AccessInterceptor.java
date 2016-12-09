@@ -2,6 +2,7 @@ package com.vstock.front.support.interceptor;
 
 import com.vstock.db.entity.User;
 import com.vstock.front.service.UserService;
+import com.vstock.front.service.VstockConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     UserService userService;
 
+    @Autowired
+    VstockConfigService vstockConfigService;
+
     @Value("${admin.rooturl}")
     String adminrooturl;
 
@@ -37,10 +41,10 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     @PostConstruct
     public void initData() {
         unloginUrls.add("/login");
-        unloginUrls.add("/login/prelogin");
-        unloginUrls.add("/login/login");
         unloginUrls.add("/login/logout");
-        unlimitUrls.add("/base/index");
+        unlimitUrls.add("/index");
+        unlimitUrls.add("/sorts");
+        unlimitUrls.add("/detail");
     }
 
     @Override
@@ -73,8 +77,10 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     }
 
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        Map<String, String> configMaps = vstockConfigService.getConfigMap();
         if (modelAndView != null) {
             modelAndView.addObject("vUser", user);
+            modelAndView.addObject("configMap", configMaps);
         }
     }
 

@@ -41,25 +41,38 @@ public class InterruptTestController {
         if (subCount == 1) {
             threadStockx(finalList, numberThread);
         } else {
-            for (int k = 0; k < subCount; k++) {
-                stopIndext = (k == subCount - 1) ? stopIndext + listSize % machineCount : stopIndext + machineCount;
-                List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, stopIndext));
-                startIndext = stopIndext;
-                if (machineNum - 1 == k) {
-                    //处理当前集合
-                    threadStockx(tempList, numberThread);
-                } else {
-                    if (k == subCount - 1) {
-                        //判断是否有余
-                        if (listSize % machineCount != 0) {
-                            if (machineNum == 1) {
-                                //处理当前集合
-                                threadStockx(tempList, numberThread);
+            if(listSize % machineCount == 0){
+                for (int k = 0; k < subCount; k++) {
+                    stopIndext = stopIndext + machineCount;
+                    List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, stopIndext));
+                    startIndext = stopIndext;
+                    if (machineNum - 1 == k) {
+                        //处理当前集合
+                        threadStockx(tempList, numberThread);
+                    }
+                }
+            }else{
+                for (int k = 0; k < subCount; k++) {
+                    stopIndext = (k == subCount - 1) ? stopIndext + listSize % machineCount : stopIndext + machineCount;
+                    List<StockxStore> tempList = new ArrayList<StockxStore>(finalList.subList(startIndext, stopIndext));
+                    startIndext = stopIndext;
+                    if (machineNum - 1 == k) {
+                        //处理当前集合
+                        threadStockx(tempList, numberThread);
+                    } else {
+                        if (k == subCount - 1) {
+                            //判断是否有余
+                            if (listSize % machineCount != 0) {
+                                if (machineNum == 1) {
+                                    //处理当前集合
+                                    threadStockx(tempList, numberThread);
+                                }
                             }
                         }
                     }
                 }
             }
+
         }
         return "base/index";
     }

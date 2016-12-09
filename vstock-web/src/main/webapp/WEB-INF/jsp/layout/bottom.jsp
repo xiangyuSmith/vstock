@@ -10,6 +10,9 @@
 <script src="${ctx}/assets/js/countUp.min.js"></script>
 <script src="${ctx}/assets/js/amazeui.lazyload.min.js"></script>
 <script src="${ctx}/assets/js/echo.min.js"></script>
+<script src="${ctx}/assets/js/highcharts/highcharts.js"></script>
+<script src="${ctx}/assets/js/highcharts/exporting.js"></script>
+<script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
 <script>
     Echo.init({
         offset: 0,

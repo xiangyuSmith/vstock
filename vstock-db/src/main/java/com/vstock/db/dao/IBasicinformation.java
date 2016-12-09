@@ -36,6 +36,10 @@ public interface IBasicinformation {
 
     List<Basicinformation> findAll(@Param(value = "basicinformation")Basicinformation basicinformation);
 
+    List<Basicinformation> findByType(@Param(value = "type") int type);
+
+    Long findCount();
+
     List<Basicinformation> findNames();
 
     List<Basicinformation> findGirard(@Param(value = "productName")String productName);
