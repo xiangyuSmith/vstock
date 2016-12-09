@@ -33,4 +33,11 @@ public class BasicinformationService {
         return basicinformationDao.findCount();
     }
 
+    /**
+     * 鞋库品牌汇总
+     * @return
+     */
+    public List<String> getBrands(){
+        return basicinformationDao.getBrands();
+    }
 }

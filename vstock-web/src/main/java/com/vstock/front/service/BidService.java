@@ -54,4 +54,15 @@ public class BidService {
         page.setPageSize(5);
         return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());
     }
+
+    /**
+     *
+     * @param brand 品牌
+     * @param price 价格
+     * @param year 年份
+     * @return
+     */
+    public List<Bid> findBidForSorts(){
+        return bidDao.findBidForSorts();
+    }
 }

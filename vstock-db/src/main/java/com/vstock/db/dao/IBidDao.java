@@ -25,4 +25,9 @@ public interface IBidDao {
 
     //关联峰值表分页查询
     List<Bid> findAndPricePeak(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
+    /**
+     * 分类页查询
+     */
+    List<Bid> findBidForSorts();
 }

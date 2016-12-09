@@ -181,7 +181,7 @@
 
 
 /** 统一样式 **/
-a, a:hover, .m-partner li img, .m-partner li img:hover, .m-contact-infobox, .m-contact-infobox:hover, .m-footer .ico i, .m-footer .ico i:hover, .m-service-page .ico ul li span, .m-service-page .ico ul li span:hover, .m-hd .am-sticky, .m-service-list li:hover {
+a, a:hover,.popover .m-partner li img, .m-partner li img:hover, .m-contact-infobox, .m-contact-infobox:hover, .m-footer .ico i, .m-footer .ico i:hover, .m-service-page .ico ul li span, .m-service-page .ico ul li span:hover, .m-hd .am-sticky, .m-service-list li:hover {
     -webkit-filter: none;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
