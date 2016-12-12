@@ -3,22 +3,10 @@
 <head>
     <%@include file="../../layout/head.jsp" %>
     <style type="text/css">
-        input::-webkit-input-placeholder{
+        .pre-sale input::-webkit-input-placeholder{
             font-size: 14px;
         }
-        /*.left_circle {*/
-            /*width:36px;*/
-            /*height:70px;*/
-            /*border-radius:50px 0 0 50px;*/
-            /*background:red;*/
-        /*}*/
-        /*.right_circle {*/
-            /*width:36px;*/
-            /*height:70px;*/
-            /*border-radius:0 50px 50px 0;*/
-            /*background:red;*/
-        /*}*/
-        .circle {
+        .pre-sale .circle {
             width: 100%;
             height: 100%;
             background: #FFFFFF;
@@ -27,7 +15,7 @@
             border-radius: 50%;
             border:1px solid #ACA8A3;
         }
-        .right_half{
+        .pre-sale .right_half{
             border: 1px solid #030303;
             border-left: 1px solid #ffffff;
             border-top-right-radius: 50%;
@@ -35,7 +23,7 @@
             width: 50%;
             margin-left: -37px;
         }
-        .left_half{
+        .pre-sale .left_half{
             border: 1px solid #030303;
             border-right: 1px solid #ffffff;
             border-top-left-radius: 50%;
@@ -43,7 +31,7 @@
             width: 50%;
             margin-right: -10px;
         }
-        .half_span{
+        .pre-sale .half_span{
             display: block;
             line-height: 80px;
             margin-left: -12px;
@@ -60,7 +48,7 @@
 </button>
 
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
-    <div class="am-modal-dialog">
+    <div class="am-modal-dialog pre-sale">
         <div class="am-modal-hd" style="background-color: #00CD61;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-fl am-text-lg">出售清单</span>
@@ -76,13 +64,13 @@
                             <span><b class="am-text-xl"  style="color: #333333;">ADIDAS YEEZY BOOST 350 LOW OXFORD TAN</b></span>
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
-                            <img src="../../../../image/Adidas%20Ultra%20Boost%20Uncaged%20Hypebeast.jpg">
+                            <img src="${ctx}/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg" />
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
                             <span class="am-text-xl" style="color: #646464;">最后成交价</span>
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
-                            <span class="am-text-lg" style="color: #646464;">6030</span><span class="am-margin-left-xs am-text-lg" style="color: #00D678;"><i class="am-icon-sort-down"></i>-320(17%)</span>
+                            <span class="am-text-lg" style="color: #646464;">￥6030</span><span class="am-margin-left-xs am-text-lg" style="color: #00D678;">-320(17%)</span>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
@@ -92,7 +80,7 @@
                                     <span class="am-text-default">最近最高叫价</span>
                                 </div>
                                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                    <span class="am-text-default am-fl" style="color: #030303">8000</span>
+                                    <span class="am-text-default am-fl" style="color: #030303">￥8000</span>
                                 </div>
                             </div>
                             <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-top-xs">
@@ -101,22 +89,14 @@
                                 </div>
                             </div>
                         </div>
-                        <%--<div class="am-u-sm-2 am-u-md-2 am-u-lg-2">--%>
-                            <%--<div class="am-u-sm-6 am-u-md-6 am-u-lg-6 left_half"></div>--%>
-                            <%--<div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 right_half" style="border-right: 1px solid #030303;">--%>
-                                <%--<span class="am-text-truncate am-text-sm half_span am-fl">OR</span>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="border-left: 1px solid #030303">
                             <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 right_half" style="border-right: 1px solid #030303;">--%>
-                                    <%--<span class="am-text-truncate am-text-sm half_span am-fl">OR</span>--%>
-                                <%--</div>--%>
                                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                                     <span class="am-text-default">最近最低叫价</span>
                                 </div>
                                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                    <span class="am-text-default am-fl" style="color: #030303">8000</span>
+                                    <span class="am-text-default am-fl" style="color: #030303">￥8000</span>
                                 </div>
                             </div>
                             <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-top-xs">

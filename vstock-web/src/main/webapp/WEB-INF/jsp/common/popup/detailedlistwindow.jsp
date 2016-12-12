@@ -34,7 +34,7 @@
                             <span><b class="am-text-xl"  style="color: #333333;">JORDAN 12 RETRO FLU GAME[2016]</b></span>
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-xl">
-                            <img src="../../../../image/Adidas%20Ultra%20Boost%20Uncaged%20Hypebeast.jpg">
+                            <img src="${ctx}/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg" style="width: 100%;">
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
                             <span class="am-text-xl" style="color: #646464;">请选择一个尺码</span>
