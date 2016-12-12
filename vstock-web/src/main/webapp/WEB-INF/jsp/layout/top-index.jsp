@@ -19,7 +19,7 @@
                     <li>
                         <c:choose>
                             <c:when test="${not empty vUser}">
-                                <a href="#"><span>欢迎你：</span>${vUser.mobile}</a>
+                                <a href="${cxt}/user/index"><span>欢迎你：</span>${vUser.mobile}</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="#" rel="nofollow">注册/登录</a>

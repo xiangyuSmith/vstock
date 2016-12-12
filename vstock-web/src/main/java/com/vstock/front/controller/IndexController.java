@@ -76,4 +76,9 @@ public class IndexController extends BaseController{
     @RequestMapping("testsalelistwindow")
     public String testsalelistwindow(){return "/common/popup/salelistwindow";}
 
+    @RequestMapping("modaltest")
+    public String modaltest(){return "/common/popup/modaltest";}
+
+    @RequestMapping("offerlist")
+    public String offerlist(){return "/user/offerlist";}
 }

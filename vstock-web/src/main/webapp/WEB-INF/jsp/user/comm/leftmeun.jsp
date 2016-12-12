@@ -5,16 +5,18 @@
     <%@include file="../../layout/head.jsp" %>
     <style type="text/css">
         @media (min-width: 1400px) {
-            .meun-width{width: 12%}
-            .span-img{width: 8%}
-            .userInfo-div{width: 17%;}
-            .meun-font-size{font-size: 20px;}
+            .meun-width{width: 225px;}
+            .span-img{width: 10%;}
+            .userInfo-div{width: 22%;}
+            .meun-font-size{font-size: 18px;}
             .highcharts-with-higth{width: 200px; height: 300px;}
+            /*.highcharts-sum{width: 400px; height: 300px;}*/
+            /*.useassets-boder-width{width: 933px;}*/
             /*tspan{font-size: 22px;}*/
         }
         @media (max-width: 1400px) {
             .meun-width{width: 16%}
-            .meun-font-size{font-size: 16px;}
+            .meun-font-size{font-size: 14px;}
             .span-img{width: 11%}
             .highcharts-with-higth{width: 150px; height: 200px;}
             /*tspan{font-size: 20px;}*/
@@ -33,10 +35,10 @@
         <div class="am-u-sm-2 am-u-md-2 am-u-lg-2 am-padding-left-0 am-padding-right-0 meun-width" id="div1" style="background-color: #F6F5F4;overflow:hidden;">
             <ul class="am-nav">
                 <li class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7">小庞</li>
-                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24" data-url="../bid/sale" data-type="1" >出售记录</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../bid/purchase" data-type="2">购买记录</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-sm" src="../../../../assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../bid/userAssets" data-type="3">我的资产</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 36px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../bid/userInfo" data-type="4">设置</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24" data-url="../user/sale" data-type="1" >出售记录</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/purchase" data-type="2">购买记录</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-xs" src="../../../../assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 36px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
         </div>
         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end am-margin-top-xl am-margin-bottom-xl" id="tradeforex_tilie"></div>
@@ -70,10 +72,16 @@
                 }
                 th.removeClass("am-link-muted");
             }else {
-                ajaxContent("../bid/sale", "" ,"tradeforex_tilie",1);
+                ajaxContent("../user/sale", "" ,"tradeforex_tilie",1);
             }
         }
         load("");
+
+        $("body").on("click",".offer-btn",function(){
+            var url = $(this).attr("data-url");
+            loadingshow();
+            ajaxContent(url, "", "tradeforex_tilie",1);
+        });
     });
 </script>
 </html>

@@ -4,7 +4,7 @@
     <table class="am-table am-table-striped am-table-hover am-margin-bottom-xl">
         <caption>
             <p class="am-fl layout-font-size-30" style="color: #ea5958">最近叫价</p>
-            <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="#" class="layout-font-size-18">更多记录</a></span>
+            <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="javascript:void(0)" data-url="../user/offerlist?type=0&pageNow=1" class="offer-btn layout-font-size-18">更多记录</a></span>
         </caption>
         <thead>
             <tr>
@@ -58,11 +58,23 @@
                             <td class="am-text-sm">已过期</td>
                         </c:otherwise>
                     </c:choose>
-                    <td class="span-img">
-                        <a href="#"><span style="display: block;width: 16px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: 6% 43%;"></span></a>
-                        <a href="#"><img class="am-fr" style="margin-top: -32%;" src="../../../assets/shoesImg/delete.png"/></a>
-                        <%--<span style="display: block;width: 36px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -82px -23px;"></span>--%>
+                    <td>
+                        <div class="am-dropdown" data-am-dropdown>
+                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                            <ul class="am-dropdown-content">
+                                <li><a class="am-btn am-btn-xs am-text-left" href="#"><div style="float: left; display: block;width: 20px;height: 18px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left" href="#"><i class="am-icon-files-o am-margin-right-xs"></i>审核</a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left am-link-muted" href="#"><i class="am-icon-toggle-left am-margin-right-xs"></i>退款</a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left am-link-muted" href="#"><i class="am-icon-toggle-left am-margin-right-xs"></i>模拟支付成功通知</a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left am-link-muted" href="#"><i class="am-icon-toggle-left am-margin-right-xs"></i>模拟支付失败通知</a></li>
+                            </ul>
+                        </div>
                     </td>
+                    <%--<td class="span-img">--%>
+                        <%--<a href="#"><span style="display: block;width: 16px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: 6% 43%;"></span></a>--%>
+                        <%--<a href="#"><img class="am-fr" style="margin-top: -26%;" src="../../../assets/shoesImg/delete.png"/></a>--%>
+                        <%--&lt;%&ndash;<span style="display: block;width: 36px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -82px -23px;"></span>&ndash;%&gt;--%>
+                    <%--</td>--%>
                 </tr>
             </c:forEach>
         </c:if>
@@ -70,62 +82,64 @@
     </table>
 
     <table class="am-table am-table-striped am-table-hover">
-        <caption>
-            <p class="am-fl layout-font-size-30">出售历史</p>
-            <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="#" class="layout-font-size-18">更多记录</a></span>
-        </caption>
-        <thead>
-        <tr>
-            <th style="width: 30%;">球鞋名称</th>
-            <th>尺码</th>
-            <th>购买日期</th>
-            <th>金额</th>
-            <th>状态</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:if test="${not empty tradeList}">
-            <c:forEach items="${tradeList}" var="trade">
-                <tr>
-                    <td class="am-text-sm">${trade.bftName}</td>
-                    <td class="am-text-sm">${trade.bftSize}</td>
-                    <td class="am-text-sm">${trade.transactionDate}</td>
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
-                    <c:choose>
-                        <c:when test="${trade.status == 0}">
-                            <td class="am-text-sm">已下单待支付</td>
-                        </c:when>
-                        <c:when test="${trade.status == 1}">
-                            <td>
-                                <select class="am-text-sm">
-                                    <option>已支付待发货</option>
-                                    <option>已发货待检验</option>
-                                </select>
-                            </td>
-                        </c:when>
-                        <c:when test="${trade.status == 10}">
-                            <td class="am-text-sm">已发货待检验</td>
-                        </c:when>
-                        <c:when test="${trade.status == 20}">
-                            <td class="am-text-sm">检验通过</td>
-                        </c:when>
-                        <c:when test="${trade.status == 21}">
-                            <td class="am-text-sm">检验未通过</td>
-                        </c:when>
-                        <c:when test="${trade.status == 30}">
-                            <td class="am-text-sm">已发货待签收</td>
-                        </c:when>
-                        <c:when test="${trade.status == 40}">
-                            <td class="am-text-sm">交易完成</td>
-                        </c:when>
-                        <c:otherwise>
-                            <td class="am-text-sm">交易关闭</td>
-                        </c:otherwise>
-                    </c:choose>
-                    </tr>
-            </c:forEach>
-        </c:if>
-        </tbody>
-    </table>
+    <caption>
+        <p class="am-fl layout-font-size-30">出售历史</p>
+        <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="javascript:void(0)" data-url="../user/buysell?type=0&pageNow=1" class="offer-btn layout-font-size-18">更多记录</a></span>
+    </caption>
+    <thead>
+    <tr>
+        <th style="width: 30%;">球鞋名称</th>
+        <th>尺码</th>
+        <th>出售日期</th>
+        <th>金额</th>
+        <th>状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:if test="${not empty tradeList}">
+        <c:forEach items="${tradeList}" var="trade">
+                <td class="am-text-sm">${trade.bftName}</td>
+                <td class="am-text-sm">${trade.bftSize}</td>
+                <td class="am-text-sm">${trade.transactionDate}</td>
+                <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
+                <c:choose>
+                    <c:when test="${trade.status == 0}">
+                        <td class="am-text-sm">已下单待支付</td>
+                    </c:when>
+                    <c:when test="${trade.status == 1}">
+                        <td class="am-text-sm">已支付待发货</td>
+                    </c:when>
+                    <c:when test="${trade.status == 10}">
+                        <td class="am-text-sm">已发货待检验</td>
+                    </c:when>
+                    <c:when test="${trade.status == 20}">
+                        <td class="am-text-sm">检验通过</td>
+                    </c:when>
+                    <c:when test="${trade.status == 21}">
+                        <td class="am-text-sm">检验未通过</td>
+                    </c:when>
+                    <c:when test="${trade.status == 30}">
+                        <td class="am-text-sm">已发货待签收</td>
+                    </c:when>
+                    <c:when test="${trade.status == 40}">
+                        <td class="am-text-sm">交易完成</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td class="am-text-sm">交易关闭</td>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${trade.status == 1}">
+                        <td><a href="#" class="am-btn am-btn-danger">去发货</a></td>
+                    </c:when>
+                    <c:otherwise>
+                        <td></td>
+                    </c:otherwise>
+                </c:choose>
+            </tr>
+        </c:forEach>
+    </c:if>
+    </tbody>
+</table>
 </form>
 <script src="${ctx}/assets/js/amazeui.min.js"></script>
