@@ -55,6 +55,12 @@
         <include refid="Select_Where_Time"/>
     </select>
 
+    <!-- 获取品牌 -->
+    <select id="getBrands" resultType="java.lang.String">
+        SELECT b.brand from `basicinformation` b
+        GROUP BY b.brand
+        ORDER BY b.brand ASC
+    </select>
 
     <!-- 按类型查询 -->
     <select id="findByType" resultType="com.vstock.db.entity.Basicinformation">

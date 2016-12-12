@@ -66,18 +66,31 @@
     </div>
 </article>
 <article class="am-show-lg-only am-text-center">
-    <div style="max-width: 1000px;margin:auto;margin-top: 3.2rem;" class="am-margin-top-xl am-text-center" >
-        <ul class="am-nav am-nav-pills am-nav-justify">
-            <li>
-                <div id="containerA" style="max-width: 276px; height: 156px; margin: 0 auto"></div>
-            </li>
-            <li>
-                <div id="containerB" style="max-width: 276px; height: 156px; margin: 0 auto"></div>
-            </li>
-            <li>
-                <div id="containerC" style="max-width: 276px; height: 156px; margin: 0 auto"></div>
-            </li>
-        </ul>
+    <div style="max-width: 1000px;margin:auto;margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center" >
+        <div class="am-u-md-4 am-padding-0">
+            <div class="am-text-left" style="max-width: 256px; margin:0 auto">
+                <span class="layout-font-size-26 am-padding-left-sm">JORDAN</span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
+                <div id="containerA" style="height: 136px;"></div>
+                <span class="layout-font-size-30 am-padding-left-sm" style="color: #060606;font-weight: bold;">366，673</span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm">-￥1.113(0.6%)</span>
+            </div>
+        </div>
+        <div class="am-u-md-4 am-padding-0">
+            <div class="am-text-left" style="max-width: 256px; margin:0 auto">
+                <span class="layout-font-size-26 am-padding-left-sm">NIKE</span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
+                <div id="containerB" style="height: 136px;"></div>
+                <span class="layout-font-size-30 am-padding-left-sm" style="color: #060606;font-weight: bold;">171，573</span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm">+￥1.113(0.6%)</span>
+            </div>
+        </div>
+        <div class="am-u-md-4 am-padding-0">
+            <div class="am-text-left" style="max-width: 256px; margin:0 auto">
+                <span class="layout-font-size-26 am-padding-left-sm">YEZZY</span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
+                <div id="containerC" style="height: 136px;"></div>
+                <span class="layout-font-size-30 am-padding-left-sm" style="color: #060606;font-weight: bold;">366，673</span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm">-￥1.113(0.6%)</span>
+            </div>
+        </div>
     </div>
 
 </article>

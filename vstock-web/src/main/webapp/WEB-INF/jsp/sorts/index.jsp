@@ -19,6 +19,7 @@
         .box-sorts-list a{ color: #2d2d2d; }
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
         .box-sorts-list ul li{ padding: 20px; }
+        .active{ color: #FF5A5F; }
     </style>
 </head>
 <body>
@@ -28,21 +29,12 @@
     <div class="am-g am-container-content">
         <div class="am-u-md-2 am-u-xs-12 am-hide-sm">
             <div style="margin-top: 56px;">
-                <div class="title">分类</div>
+                <div id="sss" class="title">分类
+                </div>
                 <ul class="am-nav left-list">
-                    <li><a href="#">ADIDAS</a></li>
-                    <li><a href="#">AIR JORDAN</a></li>
-                    <li><a href="#">FOAMPOSITE</a></li>
-                    <li><a href="#">KD</a></li>
-                    <li><a href="#">KOBE</a></li>
-                    <li><a href="#">LEBRON</a></li>
-                    <li><a href="#">AIR FORCE</a></li>
-                    <li><a href="#">AIR MAX</a></li>
-                    <li><a href="#">NIKE BASKETBALL</a></li>
-                    <li><a href="#">NIKE SB</a></li>
-                    <li><a href="#">NIKE OTHER</a></li>
-                    <li><a href="#">OTHER BRANDS</a></li>
-                    <li><a href="#">ALL SNEAKERS</a></li>
+                    <c:forEach items="${brandList}" var="brand" >
+                        <li><a href="#">${brand}</a></li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="sizeBlock filter">
@@ -51,7 +43,7 @@
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">3.5</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">4</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">4.5</div></a></div>
-                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">5.5</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">5</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">5.5</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">6</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">6.5</div></a></div>
@@ -64,6 +56,17 @@
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">10</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">10.5</div></a></div>
                     <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">11</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">11.5</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">12</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">12.5</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">13</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">13.5</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">14</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">14.5</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">15</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">16</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6"><a href="#"><div class="size">17</div></a></div>
+                    <div class="am-u-md-3 am-u-sm-4 am-u-xs-6 am-u-end"><a href="#"><div class="size">18</div></a></div>
                 </div>
             </div>
             <div class="priceBlock filter">
@@ -72,8 +75,9 @@
                 <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price1"><label for="price1">500元 - 1000元</label></a></div>
                 <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price2"><label for="price2">1000元 - 2000元</label></a></div>
                 <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price3"><label for="price3">2000元 - 3000元</label></a></div>
-                <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price4"><label for="price4">3000元 - 5000元</label></a></div>
-                <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price5"><label for="price5">5000元以上</label></a></div>
+                <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price4"><label for="price4">3000元 - 4000元</label></a></div>
+                <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price5"><label for="price5">4000元 - 5000元</label></a></div>
+                <div class="form-group"><a class="checkbox priceCheck" href="#"><input type="checkbox" id="price6"><label for="price6">5000元以上</label></a></div>
             </div>
             <div class="yearBlock filter">
                 <div class="title">年份</div>
@@ -88,14 +92,40 @@
                     <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year7"><label for="year7">2007</label></a></div></div>
                     <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year8"><label for="year8">2008</label></a></div></div>
                     <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year9"><label for="year9">2009</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year10"><label for="year10">2010</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year11"><label for="year11">2011</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year12"><label for="year12">2012</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year13"><label for="year13">2013</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year14"><label for="year14">2014</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year15"><label for="year15">2015</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0 am-u-end"><div class="form-group"><a class="checkbox yearCheck" href="#"><input type="checkbox" id="year16"><label for="year16">2016</label></a></div></div>
                 </div>
             </div>
         </div>
         <div class="am-u-md-10">
+            <div class="am-tips"></div>
             <div id="box-sorts-list" class="box-sorts-list"></div>
         </div>
     </div>
 </article>
+
+<div class="container" style="padding: 100px 50px 10px;" >
+    <button type="button" class="btn btn-primary" title="Popover title"
+            data-container="body" data-toggle="popover" data-placement="top"
+            data-content="顶部的 Popover 中的一些内容">
+        顶部的 Popover
+    </button>
+    <button type="button" class="btn btn-success" title="Popover title"
+            data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="底部的 Popover 中的一些内容">
+        底部的 Popover
+    </button>
+    <button type="button" class="btn btn-warning" title="Popover title"
+            data-container="body" data-toggle="popover" data-placement="right"
+            data-content="右侧的 Popover 中的一些内容">
+        右侧的 Popover
+    </button>
+</div>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <script>

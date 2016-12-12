@@ -21,6 +21,14 @@
         <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
         <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
         <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <association property="basicinformation" column="basicinformation"
+                     javaType="com.vstock.db.entity.Basicinformation">
+            <id column="bid" property="id"/>
+            <result column="bname" property="name"/>
+            <result column="bartNo" property="artNo"/>
+            <result column="btype" property="type"/>
+            <result column="bsmallImgUrl" property="smallImgUrl"/>
+        </association>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -272,6 +280,12 @@
         FROM bid b LEFT JOIN price_peak p ON b.basicinformation_id = p.basicinformation_id and b.bft_size = p.peak_size
         <include refid="SearchAllByPage_Where_Clause"/>
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findBidForSorts" resultMap="BaseResultMap">
+      SELECT * FROM (SELECT bi.id,bi.basicinformation_id,bi.bft_name,bi.bft_size,bi.bid_bond,bi.bid_date,bi.bid_money,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo FROM bid bi
+        LEFT JOIN basicinformation bf ON bi.basicinformation_id = bf.id
+        ORDER BY bi.bid_date DESC) as bid GROUP BY basicinformation_id
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">

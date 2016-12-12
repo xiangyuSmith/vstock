@@ -29,12 +29,13 @@ public class Bid implements Serializable {
     private Date invalidDate;
     private BigDecimal highestBid;
     private BigDecimal minimumSellingPrice;
+    private Basicinformation basicinformation;
 
     public Bid() {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, Date bidDate, Date invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, Date bidDate, Date invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -53,6 +54,15 @@ public class Bid implements Serializable {
         this.invalidDate = invalidDate;
         this.highestBid = highestBid;
         this.minimumSellingPrice = minimumSellingPrice;
+        this.basicinformation = basicinformation;
+    }
+
+    public Basicinformation getBasicinformation() {
+        return basicinformation;
+    }
+
+    public void setBasicinformation(Basicinformation basicinformation) {
+        this.basicinformation = basicinformation;
     }
 
     public Integer getId() {
