@@ -3,6 +3,7 @@
     font-family: "微软雅黑";
     font-size:16px;
 }
+.layout-font-size-16{ font-size: 16px; }
 .layout-font-size-18{ font-size: 18px; }
 .layout-font-size-20{ font-size: 20px; }
 .layout-font-size-22{ font-size: 22px; }
@@ -13,8 +14,9 @@
 .layout-font-size-32{ font-size: 32px; }
 .layout-font-size-34{ font-size: 34px; }
 .layout-font-size-36{ font-size: 36px; }
-@media (max-width: 1400px){
+@media (max-width: 1450px){
     *{ font-size:14px; }
+    .layout-font-size-16{ font-size: 14px; }
     .layout-font-size-18{ font-size: 16px; }
     .layout-font-size-20{ font-size: 18px; }
     .layout-font-size-22{ font-size: 20px; }
@@ -27,6 +29,7 @@
     .layout-font-size-36{ font-size: 34px; }
 }
 @media (max-width: 768px){
+    .layout-font-size-16{ font-size: 12px; }
     .layout-font-size-18{ font-size: 14px; }
     .layout-font-size-20{ font-size: 16px; }
     .layout-font-size-22{ font-size: 18px; }
