@@ -74,4 +74,9 @@ public class BidController extends BaseController{
         model.addAttribute("user",user);
         return "/user/userInfo";
     }
+
+    @RequestMapping("userAssets")
+    public String testUserAssets(){
+        return "/user/userAssets";
+    }
 }
