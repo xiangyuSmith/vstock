@@ -18,6 +18,7 @@ public class Trade implements Serializable {
     private Integer basicinformationId;
     private BigDecimal transactionMoney;
     private BigDecimal tradeFreight;
+    private String courierNumber;
     private String status;
     private Date transactionDate;
     private Date endDate;
@@ -26,7 +27,7 @@ public class Trade implements Serializable {
     private String bftName;
     private String bftSize;
 
-    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String status, Date transactionDate, Date endDate, String sign, Bid bid) {
+    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, String status, Date transactionDate, Date endDate, String sign, Bid bid) {
         this.id = id;
         this.sellerId = sellerId;
         this.buyersId = buyersId;
@@ -34,6 +35,7 @@ public class Trade implements Serializable {
         this.basicinformationId = basicinformationId;
         this.transactionMoney = transactionMoney;
         this.tradeFreight = tradeFreight;
+        this.courierNumber = courierNumber;
         this.status = status;
         this.transactionDate = transactionDate;
         this.endDate = endDate;
@@ -107,6 +109,14 @@ public class Trade implements Serializable {
 
     public void setTradeFreight(BigDecimal tradeFreight) {
         this.tradeFreight = tradeFreight;
+    }
+
+    public String getCourierNumber() {
+        return courierNumber;
+    }
+
+    public void setCourierNumber(String courierNumber) {
+        this.courierNumber = courierNumber;
     }
 
     public String getStatus() {

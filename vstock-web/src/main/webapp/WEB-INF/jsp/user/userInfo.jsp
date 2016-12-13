@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="userInfo" action="${cxt}/user/testUserInfo" method="post">
+<form id="userInfo" action="${cxt}/user/userInfo" method="post">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-xl">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-sm" style="border-bottom: 1px solid #CACACA;">
             <div style="float: left; display: block;width: 66px;height: 45px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -380px -20px;"></div>
@@ -75,7 +75,7 @@
         <caption style="border-bottom: 1px solid #CACACA;">
             <div style="float: left; display: block;width: 66px;height: 60px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -665px -18px;"></div>
             <b class="layout-font-size-30 am-fl am-margin-left-sm">收货信息</b>
-            <a href="#" class="am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm">添加新地址</a>
+            <a href="${cxt}/user/addresschoice" class="am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm">添加新地址</a>
         </caption>
         <tbody>
         <tr>

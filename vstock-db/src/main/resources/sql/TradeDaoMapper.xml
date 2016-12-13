@@ -10,6 +10,7 @@
         <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
         <result column="transaction_money" property="transactionMoney" jdbcType="DECIMAL"/>
         <result column="trade_freight" property="tradeFreight" jdbcType="DECIMAL"/>
+        <result column="courier_number" property="courierNumber" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="transaction_date" property="transactionDate" jdbcType="TIMESTAMP"/>
         <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
@@ -41,6 +42,9 @@
             </if>
             <if test="tradeFreight != null and tradeFreight != ''">
                 and t.trade_freight = #{tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and t.courier_number = #{courierNumber,jdbcType=VARCHAR}
             </if>
             <if test="status != null and status != ''">
                 and t.status = #{status,jdbcType=VARCHAR}
@@ -81,6 +85,9 @@
             <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
                 and t.trade_freight = #{obj.tradeFreight,jdbcType=DECIMAL}
             </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and t.courier_number = #{obj.courierNumber,jdbcType=VARCHAR}
+            </if>
             <if test="obj.status != null and obj.status != ''">
                 and t.status = #{obj.status,jdbcType=VARCHAR}
             </if>
@@ -119,6 +126,9 @@
             </if>
             <if test="tradeFreight != null and tradeFreight != ''">
                 and t.trade_freight = #{tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and t.courier_number LIKE CONCAT('%',#{courierNumber,jdbcType=VARCHAR},'%')
             </if>
             <if test="status != null and status != ''">
                 and t.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
@@ -159,6 +169,9 @@
             <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
                 and t.trade_freight = #{obj.tradeFreight,jdbcType=DECIMAL}
             </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and t.courier_number LIKE CONCAT('%',#{obj.courierNumber,jdbcType=VARCHAR},'%')
+            </if>
             <if test="obj.status != null and obj.status != ''">
                 and t.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
             </if>
@@ -182,6 +195,7 @@
         t.basicinformation_id as basicinformationId,
         t.transaction_money as transactionMoney,
         t.trade_freight  as tradeFreight,
+        t.courier_number as courierNumber,
         t.status as status,
         t.transaction_date as transactionDate,
         t.end_date as endDate,
@@ -211,8 +225,8 @@
 
     <insert id="insert">
         INSERT INTO `trade`
-        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`status`,`transaction_date`,`end_date`,`sign`)
-        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{status},#{transactionDate},#{endDate},#{sign})
+        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`courier_number`,`status`,`transaction_date`,`end_date`,`sign`)
+        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{courierNumber},#{status},#{transactionDate},#{endDate},#{sign})
     </insert>
 
     <update id="update">

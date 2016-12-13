@@ -82,6 +82,58 @@
             loadingshow();
             ajaxContent(url, "", "tradeforex_tilie",1);
         });
+
+        $("body").on("click",".sale-up",function(){
+            var $this = $(this);
+            $this.parent().next().children().attr("disabled", false);
+            $this.parent().next().next().children().attr("disabled", false);
+            $this.parent().next().next().next().children().attr("disabled", true);
+            $this.attr("disabled", true);
+            var $thoes = $this.parent().parent().parent().parent().prev().prev();
+            var moeny = $thoes.text();
+            var a = "<input type='text' value='"+moeny.substring(1,moeny.legend)+"' style='width: 120px;'/>"
+            $thoes.html("");
+            $thoes.append(a);
+            var $th = $this.parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+            $th.attr("disabled", true);
+            $this.parent().parent().parent().children().first().attr("disabled", false);
+        });
+
+        $("body").on("click",".sale-sub",function(){
+            var $this = $(this);
+            $this.parent().prev().children().attr("disabled", false);
+            $this.parent().next().children().attr("disabled", true);
+            $this.parent().next().next().children().attr("disabled", false);
+            $this.attr("disabled", true);
+            var $thoes = $this.parent().parent().parent().parent().prev().prev();
+            var moeny = $thoes.val();
+//            var a = "<input type='text' value='"+moeny.substring(1,moeny.legend)+"' style='width: 120px;'/>"
+            $thoes.html("");
+//            $thoes.append(a);
+            var $th = $this.parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+            $th.attr("disabled", false);
+        });
+
+        $("body").on("click",".sale-quit",function(){
+            var $this = $(this);
+            $this.parent().prev().prev().children().attr("disabled", false);
+            $this.parent().prev().children().attr("disabled", true);
+            $this.parent().next().children().attr("disabled", false);
+            $this.attr("disabled", true);
+            var $thoes = $this.parent().parent().parent().parent().prev().prev();
+            var moeny = $thoes.children().val();
+//            var a = "<input type='text' value='"+moeny.substring(1,moeny.legend)+"' style='width: 120px;'/>"
+            $thoes.html("");
+            $thoes.text("￥"+moeny);
+            var $th = $this.parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+            $th.attr("disabled", false);
+        });
+
+        $("body").on("click",".deliver-goods",function(){
+            var $this = $(this);
+            $this.parent().parent().parent().removeClass("am-active");
+            $this.parent().parent().parent().children().first().attr("disabled", true);
+        });
     });
 </script>
 </html>

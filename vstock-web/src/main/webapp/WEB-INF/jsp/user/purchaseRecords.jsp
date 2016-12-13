@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="purchaseRecords" action="${cxt}/user/testPurchase" method="post">
+<form id="purchaseRecords" action="${cxt}/user/purchase" method="post">
     <table class="am-table am-table-striped am-table-hover am-margin-bottom-xl">
         <caption>
             <p class="am-fl layout-font-size-30" style="color: #ea5958">最近出价</p>
@@ -44,10 +44,21 @@
                             <td class="am-text-sm">已过期</td>
                         </c:otherwise>
                     </c:choose>
-                    <td class="span-img">
-                        <a href="#"><span style="display: block;width: 16px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: 6% 43%;"></span></a>
-                        <a href="#"><img class="am-fr" style="margin-top: -26%;" src="../../../assets/shoesImg/delete.png"/></a>
+                    <td>
+                        <div class="am-dropdown" data-am-dropdown>
+                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                            <ul class="am-dropdown-content">
+                                <li><a class="am-btn am-btn-xs am-text-left sale-up" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left sale-sub" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" href="javascript:void(0)"><img class="am-margin-right-xs" src="../../../assets/shoesImg/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
+                            </ul>
+                        </div>
                     </td>
+                    <%--<td class="span-img">--%>
+                        <%--<a href="#"><span style="display: block;width: 16px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: 6% 43%;"></span></a>--%>
+                        <%--<a href="#"><img class="am-fr" style="margin-top: -26%;" src="../../../assets/shoesImg/delete.png"/></a>--%>
+                    <%--</td>--%>
                 </tr>
             </c:forEach>
         </c:if>
@@ -102,14 +113,29 @@
                             <td class="am-text-sm">交易关闭</td>
                         </c:otherwise>
                     </c:choose>
-                    <c:choose>
-                        <c:when test="${trade.status == 0}">
-                            <td><a href="#" class="am-btn am-btn-danger">去支付</a></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td></td>
-                        </c:otherwise>
-                    </c:choose>
+                    <%--<c:choose>--%>
+                        <%--<c:when test="${trade.status == 0}">--%>
+                            <%--<td><a href="#" class="am-btn am-btn-danger">去支付</a></td>--%>
+                        <%--</c:when>--%>
+                        <%--<c:otherwise>--%>
+                            <%--<td></td>--%>
+                        <%--</c:otherwise>--%>
+                    <%--</c:choose>--%>
+                    <td>
+                        <div class="am-dropdown" data-am-dropdown>
+                            <c:choose>
+                                <c:when test="${trade.status == 1}">
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                </c:otherwise>
+                            </c:choose>
+                            <ul class="am-dropdown-content">
+                                <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </c:forEach>
         </c:if>

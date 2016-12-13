@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="userAssets" action="${cxt}/user/testUserAssets" method="post">
+<form id="userAssets" action="${cxt}/user/userAssets" method="post">
 <div class="am-g">
     <%--<div id="main"style="height:500px;border:1px solid #ccc;padding:10px;"></div>--%>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-right-0 am-padding-left-0">

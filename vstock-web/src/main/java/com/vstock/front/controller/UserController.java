@@ -37,7 +37,7 @@ public class UserController extends BaseController {
 
     //个人中心出售记录
     @RequestMapping("sale")
-    public String testSale(ModelMap model){
+    public String sale(ModelMap model){
         Bid bid = new Bid();
         Trade trade = new Trade();
         int totalCount = bidService.findCount(bid);
@@ -49,6 +49,7 @@ public class UserController extends BaseController {
         return "/user/saleRecord";
     }
 
+    //出价和叫价详情历史
     @RequestMapping("offerlist")
     public String offerlist(ModelMap model){
         Bid bid = new Bid();
@@ -63,6 +64,7 @@ public class UserController extends BaseController {
         return "/user/offerlist";
     }
 
+    //购买和出售详情历史
     @RequestMapping("buysell")
     public String buysell(ModelMap model){
         Trade trade = new Trade();
@@ -79,7 +81,7 @@ public class UserController extends BaseController {
 
     //个人中心购买记录
     @RequestMapping("purchase")
-    public String testPurchase(ModelMap model){
+    public String purchase(ModelMap model){
         Bid bid = new Bid();
         Trade trade = new Trade();
         int totalCount = bidService.findCount(bid);
@@ -91,16 +93,23 @@ public class UserController extends BaseController {
         return "/user/purchaseRecords";
     }
 
+    //个人资料
     @RequestMapping("userInfo")
-    public String testUserInfo(ModelMap model){
+    public String userInfo(ModelMap model){
         User user = new User();
         user = userService.findById("1");
         model.addAttribute("user",user);
         return "/user/userInfo";
     }
 
+    //我的资产
     @RequestMapping("userAssets")
-    public String testUserAssets(){
+    public String userAssets(){
         return "/user/userAssets";
+    }
+
+    @RequestMapping("addresschoice")
+    public String addresschoice(){
+        return "/user/comm/addresschoice";
     }
 }
