@@ -65,13 +65,13 @@
     z-index: 2;
     height: 80px;
     padding: 15px 0 0 0;
-    box-shadow: 0 0 9px 0 #cecece;
 }
 .m-hd .am-sticky {
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
+    /*opacity: 0.95;*/
+    background: #fff;
     padding: 15px 0;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=95);
-    opacity: 0.95;
 }
 .m-hd .am-container {
     position: relative;
@@ -112,10 +112,10 @@
     text-align: center;
     height: 680px;
 }
-@media (max-width: 1400px){
+@media (max-width: 1450px){
     .get-index{
         background: url("/assets/i/banner.png") center no-repeat;
-        height: 480px;
+        height: 580px;
     }
 }
 .get-sorts{

@@ -28,6 +28,7 @@
             <result column="bartNo" property="artNo"/>
             <result column="btype" property="type"/>
             <result column="bsmallImgUrl" property="smallImgUrl"/>
+            <result column="bcsaledate" property="csaledate"/>
         </association>
     </resultMap>
 
@@ -283,9 +284,26 @@
     </select>
 
     <select id="findBidForSorts" resultMap="BaseResultMap">
-      SELECT * FROM (SELECT bi.id,bi.basicinformation_id,bi.bft_name,bi.bft_size,bi.bid_bond,bi.bid_date,bi.bid_money,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo FROM bid bi
+        SELECT * FROM (SELECT bi.id,bi.basicinformation_id,bi.bft_name,bi.bft_size,bi.bid_bond,bi.bid_date,bi.bid_money,bf.id as bid,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo,bf.csaledate as bcsaledate FROM bid bi
         LEFT JOIN basicinformation bf ON bi.basicinformation_id = bf.id
-        ORDER BY bi.bid_date DESC) as bid GROUP BY basicinformation_id
+        ORDER BY bi.bid_date DESC) as bid
+        WHERE 1=1
+        <if test="bftSize != null and bftSize != ''">
+            and bid.bft_size = #{bftSize}
+        </if>
+        <if test="brand != null and brand != ''">
+            and bid.brand = #{brand}
+        </if>
+        <if test="year != null and year != ''">
+            and bid.bcsaledate LIKE CONCAT('%',#{year},'%')
+        </if>
+        <if test="priceStart != null and priceStart != ''">
+            and bid.bid_money  &gt;= #{priceStart}
+        </if>
+        <if test="priceEnd != null and priceEnd != ''">
+            and bid.bid_money  &lt;= #{priceEnd}
+        </if>
+        GROUP BY basicinformation_id
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
@@ -309,4 +327,5 @@
         </if>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
 </mapper>

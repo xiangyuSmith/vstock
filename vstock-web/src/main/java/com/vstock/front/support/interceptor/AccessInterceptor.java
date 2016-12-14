@@ -40,11 +40,11 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 
     @PostConstruct
     public void initData() {
+        unloginUrls.add("/index");
+        unloginUrls.add("/sorts");
+        unloginUrls.add("/detail");
         unloginUrls.add("/login");
         unloginUrls.add("/login/logout");
-        unlimitUrls.add("/index");
-        unlimitUrls.add("/sorts");
-        unlimitUrls.add("/detail");
     }
 
     @Override

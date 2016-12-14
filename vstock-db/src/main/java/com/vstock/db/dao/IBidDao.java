@@ -29,5 +29,5 @@ public interface IBidDao {
     /**
      * 分类页查询
      */
-    List<Bid> findBidForSorts();
+    List<Bid> findBidForSorts(@Param("bftSize") String bftSize,@Param("year") String year,@Param("brand") String brand,@Param("priceStart") String priceStart,@Param("priceEnd") String priceEnd);
 }

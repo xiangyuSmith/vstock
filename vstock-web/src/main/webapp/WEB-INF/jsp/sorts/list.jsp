@@ -2,7 +2,7 @@
 <%@include file="../layout/inc.jsp" %>
 <div id="tips-model" style="width: 350px;height: 453px;display: none;">
     <div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">
-        <img style="width: 100%;" src="${ctx}/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg">
+        <img id="show-img" style="width: 100%;" src="${ctx}/assets/shoesImg/small/Adidas%20Yeezy%20Boost%20350%20Low%20Pirate%20Black%20(2016).jpg">
         <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;">Adidas 白色运动鞋</span></div>
     </div>
     <div class="am-u-md-12 am-text-center am-margin-top-xs">
@@ -24,7 +24,7 @@
 <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
     <c:forEach items="${bidList}" var="bid">
         <li>
-            <a class="popover-tips" href="javascript:;">
+            <a class="popover-tips" href="javascript:;" data-id="${bid.basicinformation.id}">
                 <div class="clickZone" aria-describedby="product141637">
                     <div class="img">
                         <span class="helper"></span>
@@ -58,6 +58,13 @@
                     { show: 300, hide: 100 }
                 }
         );
+
+        $(".popover-tips").mouseover(function(){
+            alert();
+//            sendRequest("/sorts/bidTips","",function(){
+//
+//            });
+        });
     });
     Echo.init({
         offset: 0,

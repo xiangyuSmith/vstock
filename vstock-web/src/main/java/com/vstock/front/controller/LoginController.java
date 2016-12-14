@@ -42,4 +42,9 @@ public class LoginController extends BaseController {
         }
         return resultModel;
     }
+
+    @RequestMapping("logout")
+    public String logout() {
+        return null;
+    }
 }

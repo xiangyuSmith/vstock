@@ -29,9 +29,8 @@
     <div class="am-g am-container-content">
         <div class="am-u-md-2 am-u-xs-12 am-hide-sm">
             <div style="margin-top: 56px;">
-                <div id="sss" class="title">分类
-                </div>
-                <ul class="am-nav left-list">
+                <div class="title">分类</div>
+                <ul id="brandClass" class="am-nav left-list">
                     <c:forEach items="${brandList}" var="brand" >
                         <li><a href="javasript:;" class="brand-btn">${brand}</a></li>
                     </c:forEach>
@@ -82,7 +81,7 @@
             <div class="yearBlock filter">
                 <div class="title">年份</div>
                 <div class="row">
-                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="javascript:;"><input type="checkbox" id="year0" class="year" data-val="<2000"><label for="year0">&lt; 2001</label></a></div></div>
+                    <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="javascript:;"><input type="checkbox" id="year0" class="year" data-val="2000"><label for="year0">&lt; 2001</label></a></div></div>
                     <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="javascript:;"><input type="checkbox" id="year1" class="year" data-val="2001"><label for="year1">2001</label></a></div></div>
                     <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="javascript:;"><input type="checkbox" id="year2" class="year" data-val="2002"><label for="year2">2002</label></a></div></div>
                     <div class="am-u-sm-12 am-u-md-6 am-padding-0"><div class="form-group"><a class="checkbox yearCheck" href="javascript:;"><input type="checkbox" id="year3" class="year" data-val="2003"><label for="year3">2003</label></a></div></div>
@@ -112,57 +111,88 @@
 <%@include file="../layout/bottom.jsp" %>
 <script>
     $(function(){
-        var sizes = new Array();
-        var prices = new Array();
-        var years = new Array();
+        var size = "";
+        var price = "";
+        var year = "";
+        var brand = "";
 
-        function load(){
-            ajaxContent("/sorts/list",null,"box-sorts-list",0);
-        }
-        load();
-
-        $('.brand-btn').click(function(){
-            $(this).parents().find("a").removeClass("active");
-            $(this).addClass("active");
+        $(".brand-btn").click(function(){
+            var $this = $(this);
+            $this.parents().find("a").removeClass("active");
+            $this.addClass("active");
+            if($.trim($this.text()) != brand){
+                brand = $.trim($this.text());
+            }else{
+                $this.removeClass("active");
+                brand = "";
+            }
+            sendMessage();
         })
 
         $(".size").click(function(){
             var $this = $(this);
             if($this.hasClass("active")){
                 $this.removeClass('active');
-                sizes = $.grep(sizes, function(value) {
-                    return value != $.trim($this.text());
-                });
+                size = "";
             }else{
+                $(".size").removeClass('active');
                 $this.addClass("active");
-                sizes.splice(-1,0,$.trim($this.text()));
+                size = $.trim($this.text());
             }
+            sendMessage();
         });
 
-        $(".price").change(function(){
+        $(".price").click(function(){
            var $this = $(this);
            if($this.is(':checked')){
-               prices.splice(-1,0,$this.attr("data-val"));
+               price = $this.attr("data-val");
+               $(".price").not($this).attr("checked",false);
            }else{
-               prices = $.grep(prices, function(value) {
-                   return value != $.trim($this.attr("data-val"));
-               });
+               $(".price").attr("checked",false);
+               price = "";
            }
+           sendMessage();
         });
 
-        $(".year").change(function(){
+        $(".year").click(function(){
             var $this = $(this);
             if($this.is(':checked')){
-                years.splice(-1,0,$this.attr("data-val"));
+                year = $this.attr("data-val");
+                $(".year").not($this).attr("checked",false);
             }else{
-                years = $.grep(prices, function(value) {
-                    return value != $.trim($this.attr("data-val"));
-                });
+                $(".year").attr("checked",false);
+                year = "";
             }
-            alert(years);
+            sendMessage();
         });
 
+        function load(data){
+            ajaxContent("/sorts/list",data,"box-sorts-list",0);
+        }
 
+        load();
+
+        function sendMessage(){
+            load({
+                "size":size,
+                "price":price,
+                "year":year,
+                "brand":brand
+            });
+        }
+//        $(".size").click(function(){
+//            var $this = $(this);
+//            if($this.hasClass("active")){
+//                $this.removeClass('active');
+//                sizes = $.grep(sizes, function(value) {
+//                    return value != $.trim($this.text());
+//                });
+//            }else{
+//                $this.addClass("active");
+//                sizes.splice(-1,0,$.trim($this.text()));
+//            }
+//            sendMessage();
+//        });
     });
 </script>
 </body>

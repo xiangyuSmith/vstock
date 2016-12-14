@@ -20,7 +20,7 @@
 </head>
 <body>
 <%@include file="../layout/top-index.jsp" %>
-<div class="get-index">
+<div class="get-index" style="margin-top: -80px;">
     <div class="am-g">
         <div class="am-u-lg-12">
             <div class="get-title-search">

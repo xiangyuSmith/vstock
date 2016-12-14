@@ -56,13 +56,14 @@ public class BidService {
     }
 
     /**
-     *
-     * @param brand 品牌
-     * @param price 价格
+     * @param bftSize 尺码
      * @param year 年份
+     * @param brand 品牌
+     * @param priceStart 价格区间:start
+     * @param priceEnd 价格区间:end
      * @return
      */
-    public List<Bid> findBidForSorts(){
-        return bidDao.findBidForSorts();
+    public List<Bid> findBidForSorts(String bftSize,String year,String brand,String priceStart,String priceEnd){
+        return bidDao.findBidForSorts(bftSize,year,brand,priceStart,priceEnd);
     }
 }
