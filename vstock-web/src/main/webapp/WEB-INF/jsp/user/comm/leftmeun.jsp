@@ -4,27 +4,10 @@
 <head>
     <%@include file="../../layout/head.jsp" %>
     <style type="text/css">
-        @media (min-width: 1400px) {
-            .meun-width{width: 225px;}
-            .span-img{width: 10%;}
-            .userInfo-div{width: 22%;}
-            .meun-font-size{font-size: 18px;}
-            .highcharts-with-higth{width: 200px; height: 300px;}
-            /*.highcharts-sum{width: 400px; height: 300px;}*/
-            /*.useassets-boder-width{width: 933px;}*/
-            /*tspan{font-size: 22px;}*/
-        }
-        @media (max-width: 1400px) {
-            .meun-width{width: 16%}
-            .meun-font-size{font-size: 14px;}
-            .span-img{width: 11%}
-            .highcharts-with-higth{width: 150px; height: 200px;}
-            /*tspan{font-size: 20px;}*/
-        }
-        @media (max-width: 996px) {
-            .span-img{width: 6%}
-        }
-        .am-table>tbody>tr>td{     vertical-align: inherit;}
+        @media (min-width: 1400px) {.meun-width{width: 225px;}.span-img{width: 10%;}.userInfo-div{width: 22%;}.meun-font-size{font-size: 18px;}.highcharts-with-higth{width: 200px; height: 300px;}}
+        @media (max-width: 1400px) {.meun-width{width: 16%}.meun-font-size{font-size: 14px;}.span-img{width: 11%}.highcharts-with-higth{width: 150px; height: 200px;}}
+        @media (max-width: 996px) {.span-img{width: 6%}}
+        .am-table>tbody>tr>td{vertical-align: inherit;}
     </style>
 </head>
 <body>
@@ -77,13 +60,13 @@
         }
         load("");
 
-        $("body").on("click",".offer-btn",function(){
+        $("div").on("click",".offer-btn",function(){
             var url = $(this).attr("data-url");
             loadingshow();
             ajaxContent(url, "", "tradeforex_tilie",1);
         });
 
-        $("body").on("click",".sale-up",function(){
+        $("div").on("click",".sale-up",function(){
             var $this = $(this);
             $this.parent().next().children().attr("disabled", false);
             $this.parent().next().next().children().attr("disabled", false);
@@ -99,7 +82,7 @@
             $this.parent().parent().parent().children().first().attr("disabled", false);
         });
 
-        $("body").on("click",".sale-sub",function(){
+        $("div").on("click",".sale-sub",function(){
             var $this = $(this);
             $this.parent().prev().children().attr("disabled", false);
             $this.parent().next().children().attr("disabled", true);
@@ -114,7 +97,7 @@
             $th.attr("disabled", false);
         });
 
-        $("body").on("click",".sale-quit",function(){
+        $("div").on("click",".sale-quit",function(){
             var $this = $(this);
             $this.parent().prev().prev().children().attr("disabled", false);
             $this.parent().prev().children().attr("disabled", true);
@@ -129,7 +112,7 @@
             $th.attr("disabled", false);
         });
 
-        $("body").on("click",".deliver-goods",function(){
+        $("div").on("click",".deliver-goods",function(){
             var $this = $(this);
             $this.parent().parent().parent().removeClass("am-active");
             $this.parent().parent().parent().children().first().attr("disabled", true);

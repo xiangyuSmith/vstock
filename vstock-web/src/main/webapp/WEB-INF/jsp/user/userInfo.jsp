@@ -62,7 +62,36 @@
                     <span class="am-margin-left-xs userInfo-div">登录密码：</span>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-left-0 am-padding-left-0 am-u-end">
-                    <a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 300">修改密码</a>
+                    <a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 350}">
+                        修改密码
+                    </a>
+
+                <%--<a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 300}">设置登录密码</a>--%>
+                    <div class="am-modal am-modal-no-btn" tabindex="-1" id="login-pas">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd layout-font-size-30" style="font-weight: bolder;">
+                                修改登录密码
+                                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
+                            </div>
+                            <div class="am-modal-bd am-g">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
+                                        <span>需要填写您手机号码138***8890收到的验证码</span>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                        <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" type="text" placeholder="验证码" required/>
+                                        <span class="am-input-group-label"><a href="#">发送验证码</a></span>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                        <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" type="text" placeholder="请输入新密码" required/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
+                                        <input class="am-form-field" style="min-height: 50px;" type="text" placeholder="请再次输入新密码" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm">--%>
@@ -107,28 +136,3 @@
         </tbody>
     </table>
 </form>
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="login-pas">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd layout-font-size-30" style="font-weight: bolder;">
-            修改登陆密码
-            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
-        </div>
-        <div class="am-modal-bd am-g">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
-                    <span>需要填写您手机号码138***8890收到的验证码</span>
-                </div>
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
-                    <input class="am-form-field" type="text" placeholder="验证码" required/>
-                    <span class="am-input-group-label"><a href="#">发送验证码</a></span>
-                </div>
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
-                    <input class="am-form-field" type="text" placeholder="请输入新密码" required/>
-                </div>
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
-                    <input class="am-form-field" type="text" placeholder="请再次输入新密码" required/>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
