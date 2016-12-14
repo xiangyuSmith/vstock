@@ -1,20 +1,26 @@
 package com.vstock.front.controller;
 
 import com.vstock.db.entity.Bid;
+import com.vstock.db.entity.CityAddress;
 import com.vstock.db.entity.Trade;
 import com.vstock.db.entity.User;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.BidService;
+import com.vstock.front.service.CityAddressService;
 import com.vstock.front.service.TradeService;
 import com.vstock.front.service.UserService;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -27,6 +33,9 @@ public class UserController extends BaseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CityAddressService cityAddressService;
 
     private static Logger logger = Logger.getLogger(BidController.class);
 
@@ -111,5 +120,12 @@ public class UserController extends BaseController {
     @RequestMapping("addresschoice")
     public String addresschoice(){
         return "/user/comm/addresschoice";
+    }
+
+    @RequestMapping("address")
+    @ResponseBody
+    public JSONObject address(){
+        JSONObject jsonObject = cityAddressService.adderssAll();
+        return jsonObject;
     }
 }

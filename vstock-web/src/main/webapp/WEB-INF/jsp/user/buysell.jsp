@@ -58,17 +58,29 @@
                             <td class="am-text-sm">交易关闭</td>
                         </c:otherwise>
                     </c:choose>
-                    <c:choose>
-                        <c:when test="${trade.status == 1}">
-                            <td><a href="#" class="am-btn am-btn-danger">去发货</a></td>
-                        </c:when>
-                        <c:when test="${trade.status == 0}">
-                            <td><a href="#" class="am-btn am-btn-danger">去支付</a></td>
-                        </c:when>
-                        <c:otherwise>
-                            <td></td>
-                        </c:otherwise>
-                    </c:choose>
+                    <td>
+                        <div class="am-dropdown" data-am-dropdown>
+                            <c:choose>
+                                <c:when test="${trade.status == 1}">
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                </c:when>
+                                <c:when test="${trade.status == 0}">
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                </c:otherwise>
+                            </c:choose>
+                            <ul class="am-dropdown-content">
+                                <c:if test="${type == 0}">
+                                    <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
+                                </c:if>
+                                <c:if test="${type == 1}">
+                                    <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </c:forEach>
         </c:if>
@@ -94,3 +106,4 @@
     </c:choose>
 </div>
 </form>
+<script src="${ctx}/assets/js/amazeui.min.js"></script>
