@@ -19,6 +19,8 @@ public class User {
 
     private String nick;
 
+    private String size;
+
     private String salt;
 
     private String last_login_ip;
@@ -69,6 +71,14 @@ public class User {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public String getSalt() {
@@ -122,11 +132,14 @@ public class User {
     public User() {
     }
 
-    public User(String uname, String password, String mobile, String nick, String last_login_ip, String last_login_time, int status, String create_time, String update_time) {
+    public User(String id, String uname, String password, String mobile, String nick, String size, String salt, String last_login_ip, String last_login_time, int status, String create_time, String update_time) {
+        this.id = id;
         this.uname = uname;
         this.password = password;
         this.mobile = mobile;
         this.nick = nick;
+        this.size = size;
+        this.salt = salt;
         this.last_login_ip = last_login_ip;
         this.last_login_time = last_login_time;
         this.status = status;

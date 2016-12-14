@@ -19,3 +19,6 @@
         throttle: 0
     });
 </script>
+
+<!-- PRE_WINDOW -->
+<%@include file="../common/popup/loginwindow.jsp" %>

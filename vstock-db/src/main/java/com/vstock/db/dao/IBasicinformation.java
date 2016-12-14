@@ -45,4 +45,5 @@ public interface IBasicinformation {
     List<Basicinformation> findGirard(@Param(value = "productName")String productName);
 
     List<String> getBrands();
+
 }

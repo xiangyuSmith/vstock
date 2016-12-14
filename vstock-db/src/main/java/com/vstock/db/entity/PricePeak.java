@@ -16,7 +16,7 @@ public class PricePeak implements Serializable {
     private String peakSize;
     private BigDecimal highestBid;
     private BigDecimal minimumSellingPrice;
-    private String status;
+    private int status;
     private String highestBidderId;
     private String minimumSellingId;
     private Date createDate;
@@ -24,19 +24,6 @@ public class PricePeak implements Serializable {
 
     public PricePeak() {
         super();
-    }
-
-    public PricePeak(Integer id, Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, String status, String highestBidderId, String minimumSellingId, Date createDate, Date invalidDate) {
-        this.id = id;
-        this.basicinformationId = basicinformationId;
-        this.peakSize = peakSize;
-        this.highestBid = highestBid;
-        this.minimumSellingPrice = minimumSellingPrice;
-        this.status = status;
-        this.highestBidderId = highestBidderId;
-        this.minimumSellingId = minimumSellingId;
-        this.createDate = createDate;
-        this.invalidDate = invalidDate;
     }
 
     public Integer getId() {
@@ -79,11 +66,11 @@ public class PricePeak implements Serializable {
         this.minimumSellingPrice = minimumSellingPrice;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -116,6 +103,19 @@ public class PricePeak implements Serializable {
     }
 
     public void setInvalidDate(Date invalidDate) {
+        this.invalidDate = invalidDate;
+    }
+
+    public PricePeak(Integer id, Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, int status, String highestBidderId, String minimumSellingId, Date createDate, Date invalidDate) {
+        this.id = id;
+        this.basicinformationId = basicinformationId;
+        this.peakSize = peakSize;
+        this.highestBid = highestBid;
+        this.minimumSellingPrice = minimumSellingPrice;
+        this.status = status;
+        this.highestBidderId = highestBidderId;
+        this.minimumSellingId = minimumSellingId;
+        this.createDate = createDate;
         this.invalidDate = invalidDate;
     }
 }

@@ -1,5 +1,6 @@
 package com.vstock.ext.base;
 
+import com.vstock.ext.util.Page;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ public class BaseController {
 
     protected static final String ERROR_MSG_KEY = "errorMsg";
 
+    protected Page lagePage = new Page();
+
     Logger logger = Logger.getLogger(getClass());
 
     /**
@@ -40,6 +43,11 @@ public class BaseController {
     public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
+    }
+
+    public void setLastPage(int startPos,int pageSize) {
+        this.lagePage.setStartPos(startPos);
+        this.lagePage.setPageSize(pageSize);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.vstock.front.support.interceptor;
 
 import com.vstock.db.entity.User;
+import com.vstock.ext.base.ResultModel;
 import com.vstock.front.service.UserService;
 import com.vstock.front.service.VstockConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,16 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     List<String> unlimitUrls = new ArrayList<>();
     String uid;
     User user;
+    ResultModel resultModel = new ResultModel();
 
     @PostConstruct
     public void initData() {
-        unloginUrls.add("/index");
-        unloginUrls.add("/sorts");
-        unloginUrls.add("/detail");
-        unloginUrls.add("/login");
-        unloginUrls.add("/login/logout");
+//        unloginUrls.add("/index");
+//        unloginUrls.add("/sorts");
+//        unloginUrls.add("/detail");
+//        unloginUrls.add("/login");
+//        unloginUrls.add("/login/logout");
+        unloginUrls.add("/user");
     }
 
     @Override
@@ -58,20 +61,19 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         // 退出的话直接处理掉
         if (uri.equals("/login/logout")) {
             WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, null);
-            response.sendRedirect(basePath + "/login");
-            return false;
+            resultModel.setRelogin(false);
+            user = null;
         }
-        // 白名单判断
-        if (checkNotNeedLogin(uri)) {
-            return true;
-        } else {
-            Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
-            if (suid == null) {
-                response.sendRedirect(basePath + "/login");
-                return false;
-            }
+        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid != null) {
             uid = String.valueOf(suid);
             user = userService.findById(uid);
+        }else{
+            resultModel.setRelogin(false);
+            if(checkNotNeedLogin(uri)){
+                response.sendRedirect(basePath + "/index");
+                return false;
+            }
         }
         return true;
     }
@@ -79,11 +81,13 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Map<String, String> configMaps = vstockConfigService.getConfigMap();
         if (modelAndView != null) {
+            modelAndView.addObject("resultModel",resultModel);
             modelAndView.addObject("vUser", user);
             modelAndView.addObject("configMap", configMaps);
         }
     }
 
+    //白名单判断
     boolean checkNotNeedLogin(String uri) {
         for (String s : unloginUrls) {
             if (uri.startsWith(s)) {

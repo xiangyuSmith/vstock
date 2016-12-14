@@ -1,7 +1,9 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.IBasicinformation;
+import com.vstock.db.dao.IBasicinformationRoseDao;
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.BasicinformationRose;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class BasicinformationService {
 
     @Autowired
     IBasicinformation basicinformationDao;
+    @Autowired
+    IBasicinformationRoseDao basicinformationRoseDao;
 
     /**
      * 根据分类查询鞋库的基本数据
@@ -39,5 +43,9 @@ public class BasicinformationService {
      */
     public List<String> getBrands(){
         return basicinformationDao.getBrands();
+    }
+
+    public BasicinformationRose findRose(BasicinformationRose basicinformationRose){
+        return basicinformationRoseDao.findRose(basicinformationRose);
     }
 }

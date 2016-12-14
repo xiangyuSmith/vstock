@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IBasicinformationRoseDao">
+
+    <select id="findRose" parameterType="com.vstock.db.entity.BasicinformationRose" resultType="com.vstock.db.entity.BasicinformationRose">
+      select * from basicinformation_rose br
+      where 1=1
+      <if test="obj.basicinformation_id != null and obj.basicinformation_id != ''">
+          AND br.basicinformation_id = #{obj.basicinformation_id}
+      </if>
+      ORDER BY br.create_date DESC
+    </select>
+
+</mapper>

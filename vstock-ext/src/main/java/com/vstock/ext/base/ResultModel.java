@@ -7,6 +7,7 @@ public class ResultModel {
     private int retCode;
     private String retMsg;
     private boolean relogin;
+    private Object data;
 
     public int getRetCode() {
         return retCode;
@@ -30,5 +31,13 @@ public class ResultModel {
 
     public void setRelogin(boolean relogin) {
         this.relogin = relogin;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }

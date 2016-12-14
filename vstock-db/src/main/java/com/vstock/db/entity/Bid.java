@@ -6,9 +6,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-/**
- * Created by administor on 2016/12/6.
- */
 public class Bid implements Serializable {
     @Id
     private Integer id;
@@ -22,8 +19,8 @@ public class Bid implements Serializable {
     private BigDecimal bidBond;
     private BigDecimal latelyBid;
     private String termValidity;
-    private String status;
-    private String type;
+    private int status;
+    private int type;
     private String sign;
     private Date bidDate;
     private Date invalidDate;
@@ -35,7 +32,7 @@ public class Bid implements Serializable {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, Date bidDate, Date invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, Date bidDate, Date invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -153,19 +150,19 @@ public class Bid implements Serializable {
         this.termValidity = termValidity;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

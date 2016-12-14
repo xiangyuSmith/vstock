@@ -4,8 +4,8 @@
 
     <insert id="insertUser" parameterType="com.vstock.db.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user`
-        (`id`,`mobile`,`password`,`salt`,`create_time`)
-        VALUES(null,#{mobile},#{password},#{salt},now())
+        (`id`,`mobile`,`password`,`salt`,`nick`,`size`,`create_time`)
+        VALUES(null,#{mobile},#{password},#{salt},#{nick},#{size},now())
     </insert>
 
     <select id="findUser"  resultType="com.vstock.db.entity.User">
@@ -18,6 +18,9 @@
             1=1
             <if test="id != null and id != ''">
                 AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile,jdbcType=VARCHAR}
             </if>
         </where>
     </sql>

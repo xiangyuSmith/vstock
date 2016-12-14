@@ -21,4 +21,10 @@ public class UserService {
         return userDao.findUser(u);
     }
 
+    public User findUser(String mobile){
+        User u = new User();
+        u.setMobile(mobile);
+        return userDao.findUser(u);
+    }
+
 }

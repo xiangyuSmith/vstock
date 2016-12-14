@@ -29,6 +29,8 @@ public class RegisterController extends BaseController{
         ResultModel resultModel = new ResultModel();
         String mobile = request.getParameter("mobile");
         String pwd = request.getParameter("password");
+        String nick = request.getParameter("nick");
+        String size = request.getParameter("size");
         String nowTime = request.getParameter("timestamp");
         if(StringUtils.isEmpty(pwd)){
             resultModel.setRetMsg("注册密码不能为空");
@@ -39,8 +41,12 @@ public class RegisterController extends BaseController{
         user.setMobile(mobile);
         user.setPassword(MD5Util.getMD5String(salt + pwd + User.REG_MD5_CODE));
         user.setSalt(salt);
-        userService.insertUser(user);
+        user.setNick(nick);
+        user.setSize(size);
+        int result = userService.insertUser(user);
+        if(result == 1){
+            resultModel.setRetCode(ResultModel.RET_OK);
+        }
         return resultModel;
     }
-
 }

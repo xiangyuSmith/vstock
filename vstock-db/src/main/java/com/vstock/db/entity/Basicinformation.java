@@ -4,9 +4,6 @@ import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 
-/**
- * Created by administor on 2016/7/12.
- */
 public class Basicinformation implements Serializable {
 
     private static final long serialVersionUID = 165641247456211L;

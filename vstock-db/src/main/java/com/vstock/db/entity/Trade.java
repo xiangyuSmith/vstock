@@ -19,29 +19,13 @@ public class Trade implements Serializable {
     private BigDecimal transactionMoney;
     private BigDecimal tradeFreight;
     private String courierNumber;
-    private String status;
+    private int status;
     private Date transactionDate;
     private Date endDate;
     private String sign;
     private Bid bid;
     private String bftName;
     private String bftSize;
-
-    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, String status, Date transactionDate, Date endDate, String sign, Bid bid) {
-        this.id = id;
-        this.sellerId = sellerId;
-        this.buyersId = buyersId;
-        this.bidId = bidId;
-        this.basicinformationId = basicinformationId;
-        this.transactionMoney = transactionMoney;
-        this.tradeFreight = tradeFreight;
-        this.courierNumber = courierNumber;
-        this.status = status;
-        this.transactionDate = transactionDate;
-        this.endDate = endDate;
-        this.sign = sign;
-        this.bid = bid;
-    }
 
     public Bid getBid() {
         return bid;
@@ -119,11 +103,11 @@ public class Trade implements Serializable {
         this.courierNumber = courierNumber;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -164,6 +148,24 @@ public class Trade implements Serializable {
     }
 
     public void setBftSize(String bftSize) {
+        this.bftSize = bftSize;
+    }
+
+    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, int status, Date transactionDate, Date endDate, String sign, Bid bid, String bftName, String bftSize) {
+        this.id = id;
+        this.sellerId = sellerId;
+        this.buyersId = buyersId;
+        this.bidId = bidId;
+        this.basicinformationId = basicinformationId;
+        this.transactionMoney = transactionMoney;
+        this.tradeFreight = tradeFreight;
+        this.courierNumber = courierNumber;
+        this.status = status;
+        this.transactionDate = transactionDate;
+        this.endDate = endDate;
+        this.sign = sign;
+        this.bid = bid;
+        this.bftName = bftName;
         this.bftSize = bftSize;
     }
 }

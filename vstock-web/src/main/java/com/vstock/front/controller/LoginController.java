@@ -4,7 +4,9 @@ import com.vstock.db.entity.User;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.MD5Util;
+import com.vstock.front.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +20,8 @@ import org.springframework.web.util.WebUtils;
 @RequestMapping("/login")
 public class LoginController extends BaseController {
 
-    @RequestMapping
-    public String index() {
-        return "/base/login";
-    }
+    @Autowired
+    UserService userService;
 
     @RequestMapping("prLogin")
     @ResponseBody
@@ -33,10 +33,13 @@ public class LoginController extends BaseController {
             resultModel.setRetMsg("登录邮箱或者密码不能为空");
             return resultModel;
         }
-        // TODO 暂时固定死
-        String salt = "dc3d1b16088e5d253a41f8d80bf06d067607059c";
-        if ("15000000000".equals(mobile) && "eda8ace868382195f9c239eea33eb4f4".equals(MD5Util.getMD5String(salt + password + User.REG_MD5_CODE))) {
-            WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, 1);
+        User user = userService.findUser(mobile);
+        if(user == null){
+            resultModel.setRetMsg("用户不存在");
+            return resultModel;
+        }
+        if (user.getMobile().equals(mobile) && user.getPassword().equals(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE))) {
+            WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
             resultModel.setRetCode(ResultModel.RET_OK);
             return resultModel;
         }
@@ -44,7 +47,10 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("logout")
-    public String logout() {
-        return null;
+    @ResponseBody
+    public ResultModel logout() {
+        ResultModel resultModel = new ResultModel();
+        resultModel.setRelogin(false);
+        return resultModel;
     }
 }

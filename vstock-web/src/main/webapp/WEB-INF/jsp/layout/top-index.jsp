@@ -38,12 +38,11 @@
                                 <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎你：</span>${vUser.mobile} &nbsp;<i class="am-icon-caret-down"></i></a>
                                 <ul class="am-dropdown-content">
                                     <li><a href="${ctx}/user/index" rel="nofollow">个人中心</a></li>
-                                    <li><a href="/login/logout" rel="nofollow">注销</a></li>
+                                    <li><a href="javascript:;" class="login-out" rel="nofollow">注销</a></li>
                                 </ul>
-                                <%--<a href="#"><span>欢迎你：</span>${vUser.mobile}</a>--%>
                             </c:when>
                             <c:otherwise>
-                                <a href="#" rel="nofollow">注册/登录</a>
+                                <a href="javascript:;" rel="nofollow" data-am-modal="{target: '#my-popup', width: 350}">注册/登录</a>
                             </c:otherwise>
                         </c:choose>
                     </li>
@@ -77,7 +76,20 @@
             <li class="am-active"><a href="#">即将发布</a></li>
             <li><a href="#">作品集</a></li>
             <li><a href="#">常见问题</a></li>
-            <li><a href="#">注册/登录</a></li>
+            <li class="am-dropdown" data-am-dropdown>
+                <c:choose>
+                    <c:when test="${not empty vUser}">
+                        <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎你：</span>${vUser.mobile} &nbsp;<i class="am-icon-caret-down"></i></a>
+                        <ul class="am-dropdown-content">
+                            <li><a href="${ctx}/user/index" rel="nofollow">个人中心</a></li>
+                            <li><a href="javascript:;" class="login-out" rel="nofollow">注销</a></li>
+                        </ul>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="javascript:;" rel="nofollow" data-am-modal="{target: '#my-popup', width: 350}">注册/登录</a>
+                    </c:otherwise>
+                </c:choose>
+            </li>
         </ul>
     </div>
 </header>

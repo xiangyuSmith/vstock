@@ -24,6 +24,9 @@ public class Page implements Serializable {
     @SuppressWarnings("unused")
     private boolean hasLast;// 是否有最后一页
 
+    public Page() {
+    }
+
     /**
      * 034.
      * 通过构造函数 传入  总记录数  和  当前页

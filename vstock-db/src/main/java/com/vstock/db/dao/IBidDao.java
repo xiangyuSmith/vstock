@@ -21,7 +21,7 @@ public interface IBidDao {
     int insert(Bid record);
 
     //修改数据
-    int update(@Param("status")String status, @Param("invalidDate")Date invalidDate, @Param("id")Integer id);
+    int update(@Param("status")int status, @Param("invalidDate")Date invalidDate, @Param("id")Integer id);
 
     //关联峰值表分页查询
     List<Bid> findAndPricePeak(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
