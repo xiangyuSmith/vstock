@@ -41,31 +41,47 @@ public class CityAddressService {
      */
     public int insert(CityAddress record){return cityAddressDao.insert(record);}
 
+    /**
+     * 循环获取各级地址封装到jsonObject
+     * @return
+     */
     public JSONObject adderssAll(){
         JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
         List<Map<List<String>,JSONArray>> objList = new ArrayList<Map<List<String>,JSONArray>>();
+        List<Map<List<String>,JSONArray>> temporary = new ArrayList<Map<List<String>,JSONArray>>();
         Map<List<String>,JSONArray> provincial = this.adderss(0,0);
-        objList.add(provincial);
-        int b = 3;
+        temporary.add(provincial);
+        int b = 4;
         for (int a = 0; a < b; a++) {
+            objList = new ArrayList<Map<List<String>,JSONArray>>();
+            objList = temporary;
+            temporary = new ArrayList<Map<List<String>,JSONArray>>();
             for (Map<List<String>,JSONArray> obj : objList) {
-                objList = new ArrayList<Map<List<String>,JSONArray>>();
                 for (List<String> taskList : obj.keySet()) {
                     String parentId = "";
                     for (int i = 0; i < taskList.size(); i++) {
                         String[] str = taskList.get(i).split("/");
-                        Map<List<String>, JSONArray> municipal = this.adderss(Integer.parseInt(str[0]),1);
-                        objList.add(municipal);
+                        if (a != 3) {
+                            Map<List<String>, JSONArray> municipal = this.adderss(Integer.parseInt(str[0]), 1);
+                            temporary.add(municipal);
+                        }
                         parentId = str[1];
                     }
-                    jsonObject.accumulate(parentId, obj.get(taskList));
+                    if (!"".equals(parentId) && parentId!=null){
+                        jsonObject.put(parentId, obj.get(taskList));
+                    }
                 }
             }
         }
         return jsonObject;
     }
 
+    /**
+     * 根据父类ID获取各级地址记录
+     * @param parentId
+     * @param type
+     * @return
+     */
     public Map<List<String>,JSONArray> adderss(Integer parentId, Integer type){
         Map<List<String>,JSONArray> param = new HashMap<List<String>,JSONArray>();
         CityAddress record = new CityAddress();
@@ -75,11 +91,11 @@ public class CityAddressService {
         List<CityAddress> cityAddressList = this.findAll(record);
         for (int i = 0; i < cityAddressList.size(); i++){
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("i",cityAddressList.get(i).getCode());
-            jsonObject.accumulate("n",cityAddressList.get(i).getName());
+            jsonObject.put("i",cityAddressList.get(i).getCode());
+            jsonObject.put("n",cityAddressList.get(i).getName());
             if (type == 0) {
                 String s = this.firstFight(cityAddressList.get(i).getName());
-                jsonObject.accumulate("s", s);
+                jsonObject.put("s", s);
             }
             codeList.add(cityAddressList.get(i).getCode()+"/"+cityAddressList.get(i).getParentId());
             jsonArray.put(jsonObject);
@@ -88,10 +104,15 @@ public class CityAddressService {
         return param;
     }
 
+    /**
+     * 省级地址排序
+     * @param name
+     * @return
+     */
     public String firstFight(String name){
-        String[] adder = new String[]{"安/a","北/b","重/c","福/f","广/g","贵/g","甘/g",
+        String[] adder = new String[]{"安/a","澳/a","北/b","重/c","福/f","广/g","贵/g","甘/g",
                 "河/h","海/h","黑/h","湖/h","吉/j","江/j","辽/l","内/n","宁/n","青/q",
-                "山/s","上/s","四/s","陕/s","天/t","西/x","x新/x","云/y","浙/z"};
+                "山/s","上/s","四/s","陕/s","天/t","台/t","西/x","新/x","香/x","云/y","浙/z"};
         for (String str : adder){
             String[] adderss = str.split("/");
             if (name.contains(adderss[0])){

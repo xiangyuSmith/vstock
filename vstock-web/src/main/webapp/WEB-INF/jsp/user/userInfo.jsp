@@ -104,7 +104,40 @@
         <caption style="border-bottom: 1px solid #CACACA;">
             <div style="float: left; display: block;width: 66px;height: 60px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -665px -18px;"></div>
             <b class="layout-font-size-30 am-fl am-margin-left-sm">收货信息</b>
-            <a href="${cxt}/user/addresschoice" class="am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm">添加新地址</a>
+            <a href="javascript:void(0);" class="am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 400, height: 350}">添加新地址</a>
+
+            <div class="am-modal am-modal-no-btn" tabindex="-1" id="adders-id">
+                <div class="am-modal-dialog">
+                    <div class="am-modal-hd layout-font-size-30" style="font-weight: bolder;">
+                        新增收货地址
+                        <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
+                    </div>
+                    <div class="am-modal-bd am-g">
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" id="aa">
+                                <span class="am-input-group-label"><a href="#">所在地区:</a></span>
+                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <span class="am-input-group-label"><a href="#">详细地址:</a></span>
+                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <span class="am-input-group-label"><a href="#">收货人姓名:</a></span>
+                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <span class="am-input-group-label"><a href="#">手机号码:</a></span>
+                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            </div>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <span class="am-input-group-label"><a href="#">电话号码:</a></span>
+                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </caption>
         <tbody>
         <tr>
