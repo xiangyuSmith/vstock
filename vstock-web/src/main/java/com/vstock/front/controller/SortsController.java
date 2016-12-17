@@ -41,6 +41,7 @@ public class SortsController extends BaseController{
     public String index(ModelMap modelMap){
         List<String> brandList = basicinformationService.getBrands();
         modelMap.addAttribute("brandList",brandList);
+        modelMap.addAttribute("sizes",Basicinformation.sizes);
         return "/sorts/index";
     }
 
@@ -58,53 +59,30 @@ public class SortsController extends BaseController{
         }
         List<Bid> bidList = bidService.findBidForSorts(size,year,brand,priceStart,priceEnd);
         modelMap.addAttribute("bidList",bidList);
+        modelMap.addAttribute("size",size);
+        modelMap.addAttribute("price",price);
+        modelMap.addAttribute("year",year);
+        modelMap.addAttribute("brand",brand);
         return "/sorts/list";
     }
 
     @RequestMapping("bidTips")
     @ResponseBody
-    public ResultModel bidTips(@RequestParam int bid){
-        Trade trade = new Trade();
-        BasicinformationRose basicinformationRose = new BasicinformationRose();
-        PricePeak pricePeak = new PricePeak();
+    public ResultModel bidTips(@RequestParam int bid,@RequestParam String size){
         ResultModel resultModel = new ResultModel();
         Map<String,Object> resultMap = new HashedMap();
         setLastPage(0,1);
-        double difference = 0;
-        double percentag = 0;
-        int roseType = 0;
         //获取最后成交价
-        trade.setBasicinformationId(bid);
-        List<Trade> tradelist = tradeService.findAll(trade,lagePage);
-        if(tradelist.size() != 0){
-            trade = tradelist.get(0);
-        }
+        Trade trade = tradeService.getLastTrade(bid,size,lagePage);
         //获取成交价格涨幅
-        if(trade.getTransactionMoney() != null){
-            //获取当前市场均价
-            basicinformationRose.setBasicinformation_id(bid);
-            basicinformationRose = basicinformationService.findRose(basicinformationRose);
-            if(basicinformationRose != null){
-                //市场价
-                BigDecimal market = basicinformationRose.getCurrent_market_value();
-                roseType = basicinformationRose.getType();
-                //成交价
-                BigDecimal transactionMoney = trade.getTransactionMoney();
-                difference = BasicinformationRose.getDifference(market,transactionMoney).doubleValue();
-                percentag = BasicinformationRose.getPercentag(market,transactionMoney).doubleValue();
-            }
-        }
+        Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);
         //获取最低售价，最高出价
-        pricePeak.setBasicinformationId(bid);
-        List<PricePeak> pricePeaks = pricePeakService.findAll(pricePeak,lagePage);
-        if(pricePeaks.size() != 0){
-            pricePeak = pricePeaks.get(0);
-        }
+        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bid,size,lagePage);
         resultMap.put("trade",trade);
-        resultMap.put("difference",difference);
-        resultMap.put("percentag",percentag);
         resultMap.put("pricePeak",pricePeak);
-        resultMap.put("roseType",roseType);
+        resultMap.put("difference",resParams.get("difference"));
+        resultMap.put("percentag",resParams.get("percentag"));
+        resultMap.put("roseType",resParams.get("roseType"));
         resultModel.setData(resultMap);
         resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;

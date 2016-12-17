@@ -8,6 +8,9 @@
       <if test="obj.basicinformation_id != null and obj.basicinformation_id != ''">
           AND br.basicinformation_id = #{obj.basicinformation_id}
       </if>
+        <if test="obj.basicinformation_size != null and obj.basicinformation_size != ''">
+            AND br.basicinformation_size = #{obj.basicinformation_size}
+        </if>
       ORDER BY br.create_date DESC
     </select>
 

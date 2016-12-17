@@ -10,7 +10,7 @@
         .filter{  margin-top: 40px; }
         .sizeBlock{ max-width: 100%; }
         .title{ font-family: "微软雅黑", sans-serif; text-transform: uppercase;font-size: 22px; color: #2d2d2d;  margin-bottom: 7px; letter-spacing: 1px; }
-        .sizeBlock .row .size{ font-weight: 600; font-family: BebasNeue; font-size: 14px; padding-top: 2px;  height: 32px;  width: 32px; text-align: center; line-height: 30px; background-color: #fcf9e9;  margin-bottom: 10px; color: #2d2d2d; }
+        .sizeBlock .row .size{ font-weight: 600; font-family: BebasNeue; font-size: 14px; padding-top: 2px;  height: 32px;  width: 36px; text-align: center; line-height: 30px; background-color: #fcf9e9;  margin-bottom: 10px; color: #2d2d2d; }
         .sizeBlock .row { margin-left: -15px; margin-right: -15px; overflow: hidden; }
         .form-group{  margin-bottom: 0 !important; }
         .filter .priceCheck{ font-family: "proxima-nova", sans-serif;  margin-bottom: 0 !important;  position: relative; display: block; margin-bottom: 10px; }
@@ -39,33 +39,9 @@
             <div class="sizeBlock filter">
                 <div class="title">尺码</div>
                 <div class="row">
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">3.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">4</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">4.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">5.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">6</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">6.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">7</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">7.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">8</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">8.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">9</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">9.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">10</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">10.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">11</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">11.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">12</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">12.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">13</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">13.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">14</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">14.5</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">15</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">16</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6"><a href="javascript:;"><div class="size">17</div></a></div>
-                    <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6 am-u-end"><a href="javascript:;"><div class="size">18</div></a></div>
+                    <c:forEach items="${sizes}" var="size">
+                        <div class="am-u-lg-3 am-u-md-4 am-u-sm-4 am-u-xs-6 am-padding-left-sm"><a href="javascript:;"><div class="size">${size}</div></a></div>
+                    </c:forEach>
                 </div>
             </div>
             <div class="priceBlock filter">

@@ -4,11 +4,15 @@ import com.vstock.db.dao.IBasicinformation;
 import com.vstock.db.dao.IBasicinformationRoseDao;
 import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.BasicinformationRose;
+import com.vstock.db.entity.Trade;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BasicinformationService {
@@ -29,6 +33,10 @@ public class BasicinformationService {
         return basicinformationDao.findByType(type);
     }
 
+    public Basicinformation findObj(Basicinformation basicinformation){
+        return basicinformationDao.find(basicinformation);
+    }
+
     /**
      * 获取鞋库总数
      * @return
@@ -47,5 +55,35 @@ public class BasicinformationService {
 
     public BasicinformationRose findRose(BasicinformationRose basicinformationRose){
         return basicinformationRoseDao.findRose(basicinformationRose);
+    }
+
+    public Map<String,Object> getPricesTrend(int bid,String size, Trade trade){
+        BasicinformationRose basicinformationRose = new BasicinformationRose();
+        Map<String,Object> resParams = new HashedMap();
+        if(trade == null){
+            resParams.put("roseType",0);
+            resParams.put("difference",0);
+            resParams.put("percentag",0);
+            return resParams;
+        }
+        if(trade.getTransactionMoney() != null){
+            //获取当前市场均价
+            basicinformationRose.setBasicinformation_id(bid);
+            basicinformationRose.setBasicinformation_size(size);
+            basicinformationRose = findRose(basicinformationRose);
+            if(basicinformationRose != null){
+                //市场价
+                BigDecimal market = basicinformationRose.getCurrent_market_value();
+                int roseType = basicinformationRose.getType();
+                //成交价
+                BigDecimal transactionMoney = trade.getTransactionMoney();
+                double difference = BasicinformationRose.getDifference(market,transactionMoney).doubleValue();
+                double percentag = BasicinformationRose.getPercentag(market,transactionMoney).doubleValue();
+                resParams.put("roseType",roseType);
+                resParams.put("difference",difference);
+                resParams.put("percentag",percentag);
+            }
+        }
+        return resParams;
     }
 }

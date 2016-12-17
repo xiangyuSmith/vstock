@@ -26,7 +26,7 @@
         .str-title-font{
             font-size: 36px;color: #2d2d2d;letter-spacing: -2px;
         }
-        @media (max-width: 1400px){
+        @media (max-width: 1440px){
             .str-title-font{
                 font-size: 30px;
             }
@@ -53,7 +53,16 @@
                 </div>
                 <div class="am-fr am-u-lg-6 am-padding-0 am-show-lg-only str-sudio ">
                     <span class="str str-title">最后成交价</span><br/>
-                    <span class="str str-price">￥800</span><br/>
+                    <span class="str str-price">￥
+                        <c:choose>
+                            <c:when test="${not empty trade}">
+                                <fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/>
+                            </c:when>
+                            <c:otherwise>
+                                -
+                            </c:otherwise>
+                        </c:choose>
+                    </span><br/>
                     <span class="str str-size">尺码：12</span>
                 </div>
             </div>

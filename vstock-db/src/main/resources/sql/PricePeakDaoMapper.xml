@@ -182,7 +182,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM price_peak p
-        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SelectAllByPage_Where_Clause"/>
         ORDER BY p.create_date DESC limit #{startPos},#{pageSize}
     </select>
 

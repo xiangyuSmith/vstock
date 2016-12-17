@@ -35,6 +35,11 @@
         <include refid="SelectAll_Where_Clause"/>
     </select>
 
+    <select id="find" resultType="com.vstock.db.entity.Basicinformation">
+        SELECT * FROM `basicinformation`
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
     <select id="findNames" resultType="com.vstock.db.entity.Basicinformation">
       SELECT b.name FROM `basicinformation` b
       GROUP By b.name
@@ -87,7 +92,7 @@
                 and brand LIKE CONCAT('%',#{basicinformation.brand,jdbcType=VARCHAR},'%')
             </if>
             <if test="basicinformation.name != null and basicinformation.name != ''">
-                and name LIKE CONCAT('%',#{basicinformation.name,jdbcType=VARCHAR},'%')
+                and `name` LIKE CONCAT('%',#{basicinformation.name,jdbcType=VARCHAR},'%')
             </if>
             <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
                 and artNo LIKE CONCAT('%',#{basicinformation.artNo,jdbcType=VARCHAR},'%')

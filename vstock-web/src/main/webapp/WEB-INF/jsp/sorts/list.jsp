@@ -1,22 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
+<input id="sorts-size" type="hidden" value="${size}" />
+<input id="sorts-price" type="hidden" value="${price}" />
+<input id="sorts-year" type="hidden" value="${year}" />
+<input id="sorts-brand" type="hidden" value="${brand}" />
 <div id="tips-model" style="width: 350px;height: 453px;display: none;">
     <div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">
         <img id="show-img" style="width: 100%;" src="">
-        <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;">Adidas 白色运动鞋</span></div>
+        <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;" id="product-name"></span></div>
     </div>
     <div class="am-u-md-12 am-text-center am-margin-top-xs">
         <span class="layout-font-size-24">最后成交价</span><br/>
         <span class="layout-font-size-24" style="color: #000;">￥<span id="trade-final-money" class="layout-font-size-24" style="color: #000;"></span></span><br/>
         <span id="price-color" style="color: #3bd278">
-            <span class="layout-font-size-20 roseType" >- or +</span>
+            <span class="layout-font-size-20 roseType" ></span>
             <span id="difference" class="layout-font-size-20">320</span>
             <span class="layout-font-size-20">（
-            <span class="layout-font-size-20 roseType">- or +</span>
+            <span class="layout-font-size-20 roseType"></span>
             <span id="percentag" class="layout-font-size-20">17</span>
+            <span class="layout-font-size-20"> %）</span>
         </span>
-
-        %）</span>
     </div>
     <div class="am-u-md-12 am-margin-top-sm am-margin-bottom-lg">
         <div class="am-u-md-6 am-text-center" style="border-right:1px solid #ccc;">
@@ -34,7 +37,7 @@
 <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
     <c:forEach items="${bidList}" var="bid">
         <li>
-            <a class="popover-tips" href="javascript:;" data-id="${bid.basicinformation.id}" data-img-url="${configMap._site_url}${bid.basicinformation.smallImgUrl}">
+            <a class="popover-tips" href="/detail/${bid.basicinformation.name}" data-name="${bid.basicinformation.name}" data-id="${bid.basicinformation.id}" data-img-url="${configMap._site_url}${bid.basicinformation.smallImgUrl}">
                 <div class="clickZone" aria-describedby="product141637">
                     <div class="img">
                         <span class="helper"></span>
@@ -60,18 +63,17 @@
         $(".popover-tips").each(function(){
             var $this = $(this);
             sendRequest("/sorts/bidTips",{
-                "bid":$this.attr("data-id")
+                "bid":$this.attr("data-id"),
+                "size":$("#sorts-size").val()
             },function(res){
-                var transactionMoney = res.data.trade.transactionMoney;
-
-                var s = transactionMoney==undefined ? "-" : res.data.trade.transactionMoney;
+                var transactionMoney = (res.data.trade== undefined?undefined:res.data.trade.transactionMoney)==undefined ? "-" : res.data.trade.transactionMoney;
                 $("#show-img").attr("src",$this.attr("data-img-url"));
-                $("#trade-final-money").text(s);
+                $("#product-name").text($this.attr("data-name"));
+                $("#trade-final-money").text(transactionMoney);
                 $("#minimum_selling_price").text(res.data.pricePeak.minimumSellingPrice);
                 $("#highest_bid").text(res.data.pricePeak.highestBid==0?"-":res.data.pricePeak.highestBid);
                 $("#difference").text(res.data.difference==0?"-":res.data.difference);
                 $("#percentag").text(res.data.percentag==0?"-":res.data.percentag);
-
                 if(res.data.roseType == 0){
                     $(".roseType").text("-");
                     $("#price-color").css("color","#3bd278");

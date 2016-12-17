@@ -34,6 +34,20 @@ public class TradeService {
     public int findCount(Trade record){return tradeDao.findCount(record);}
 
     /**
+     * 获取最后成交价
+     * @return
+     */
+    public Trade getLastTrade(int bid,String size, Page page){
+        Trade trade = new Trade();
+        trade.setBasicinformationId(bid);
+        trade.setBftSize(size);
+        List<Trade> tradelist = findAll(trade,page);
+        if(tradelist.size() != 0){
+            return tradelist.get(0);
+        }
+        return null;
+    }
+    /**
      * 新增
      * @param record
      * @return

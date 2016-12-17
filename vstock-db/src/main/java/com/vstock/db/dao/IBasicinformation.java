@@ -26,6 +26,8 @@ public interface IBasicinformation {
                         @Param(value = "startCreatetime") String startCreatetime,
                         @Param(value = "endCreatetime") String endCreatetime);
 
+    Basicinformation find(@Param("basicinformation")Basicinformation basicinformation);
+
     int insert(Basicinformation basicinformation);
 
     int update(@Param(value = "basicinformation")Basicinformation basicinformation,@Param(value = "id") String id);
@@ -39,8 +41,6 @@ public interface IBasicinformation {
     List<Basicinformation> findByType(@Param(value = "type") int type);
 
     Long findCount();
-
-    List<Basicinformation> findNames();
 
     List<Basicinformation> findGirard(@Param(value = "productName")String productName);
 

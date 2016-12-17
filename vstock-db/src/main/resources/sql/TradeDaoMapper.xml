@@ -17,6 +17,15 @@
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
         <result column="bft_name" property="bftName" jdbcType="VARCHAR"/>
         <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
+        <association property="bid" column="bid"
+                     javaType="com.vstock.db.entity.Bid">
+            <id column="b_id" property="id"/>
+            <result column="bname" property="name"/>
+            <result column="bartNo" property="artNo"/>
+            <result column="btype" property="type"/>
+            <result column="bsmallImgUrl" property="smallImgUrl"/>
+            <result column="bcsaledate" property="csaledate"/>
+        </association>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -175,6 +184,9 @@
             <if test="obj.status != null and obj.status != ''">
                 and t.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
             </if>
+            <if test="obj.bftSize != null and obj.bftSize != ''">
+                and t.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
+            </if>
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
                 and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
             </if>
@@ -195,6 +207,7 @@
         t.basicinformation_id as basicinformationId,
         t.transaction_money as transactionMoney,
         t.trade_freight  as tradeFreight,
+        t.bft_size as bftSize,
         t.courier_number as courierNumber,
         t.status as status,
         t.transaction_date as transactionDate,

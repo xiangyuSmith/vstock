@@ -33,6 +33,17 @@ public class PricePeakService {
      */
     public int findCount(PricePeak record){return pricePeakDao.findCount(record);}
 
+    public PricePeak getHighestAndlowest(int bid,String size, Page page){
+        PricePeak pricePeak = new PricePeak();
+        pricePeak.setBasicinformationId(bid);
+        pricePeak.setPeakSize(size);
+        List<PricePeak> pricePeaks = findAll(pricePeak,page);
+        if(pricePeaks.size() != 0){
+            return pricePeaks.get(0);
+        }
+        return null;
+    }
+
     /**
      * 新增
      * @param record
