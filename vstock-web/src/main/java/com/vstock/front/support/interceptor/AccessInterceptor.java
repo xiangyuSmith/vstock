@@ -66,6 +66,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         }
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
         if (suid != null) {
+            resultModel.setRelogin(true);
             uid = String.valueOf(suid);
             user = userService.findById(uid);
         }else{

@@ -26,7 +26,7 @@ public interface IBasicinformation {
                         @Param(value = "startCreatetime") String startCreatetime,
                         @Param(value = "endCreatetime") String endCreatetime);
 
-    Basicinformation find(@Param("basicinformation")Basicinformation basicinformation);
+    List<Basicinformation> find(@Param("basicinformation")Basicinformation basicinformation);
 
     int insert(Basicinformation basicinformation);
 

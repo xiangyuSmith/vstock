@@ -37,7 +37,7 @@
                                 </ul>
                             </c:when>
                             <c:otherwise>
-                                <a href="javascript:;" rel="nofollow" data-am-modal="{target: '#my-popup', width: 350}">注册/登录</a>
+                                <a href="javascript:;" rel="nofollow" data-am-modal="{target: '#my-popup-login', width: 350}">注册/登录</a>
                             </c:otherwise>
                         </c:choose>
                     </li>

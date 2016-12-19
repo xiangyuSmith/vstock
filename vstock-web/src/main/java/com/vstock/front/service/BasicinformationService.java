@@ -34,7 +34,7 @@ public class BasicinformationService {
     }
 
     public Basicinformation findObj(Basicinformation basicinformation){
-        return basicinformationDao.find(basicinformation);
+        return basicinformationDao.find(basicinformation).get(0);
     }
 
     /**

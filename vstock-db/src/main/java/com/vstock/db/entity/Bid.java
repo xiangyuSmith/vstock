@@ -1,12 +1,29 @@
 package com.vstock.db.entity;
 
+import com.vstock.db.dto.LabelDto;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Bid implements Serializable {
+
+
+    public final static String BID_MD5_MARK = "|";
+    public final static String BID_MD5_MARK_NOTIFY = "~|~";
+
+    public final static int STATUS_INIT = 0; // 已生效
+    public final static int STATUS_OVERDUE = 1; // 已过期
+    public final static int STATUS_PENDING = 10; // 待付款
+    public final static int STATUS_LOCKING = 11; // 已锁定
+    public final static int STATUS_SUCCESS = 20; // 交易成功
+
+    public final static String TIME_ONE = "1";
+    public final static String TIME_THREE = "3";
+    public final static String TIME_FIVE = "5";
+    public final static String TIME_SERVEN = "7";
+
     @Id
     private Integer id;
     private Integer userId;
@@ -22,8 +39,8 @@ public class Bid implements Serializable {
     private int status;
     private int type;
     private String sign;
-    private Date bidDate;
-    private Date invalidDate;
+    private String bidDate;
+    private String invalidDate;
     private BigDecimal highestBid;
     private BigDecimal minimumSellingPrice;
     private Basicinformation basicinformation;
@@ -32,7 +49,7 @@ public class Bid implements Serializable {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, Date bidDate, Date invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -166,27 +183,19 @@ public class Bid implements Serializable {
         this.type = type;
     }
 
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public Date getBidDate() {
+    public String getBidDate() {
         return bidDate;
     }
 
-    public void setBidDate(Date bidDate) {
+    public void setBidDate(String bidDate) {
         this.bidDate = bidDate;
     }
 
-    public Date getInvalidDate() {
+    public String getInvalidDate() {
         return invalidDate;
     }
 
-    public void setInvalidDate(Date invalidDate) {
+    public void setInvalidDate(String invalidDate) {
         this.invalidDate = invalidDate;
     }
 
@@ -204,5 +213,30 @@ public class Bid implements Serializable {
 
     public void setMinimumSellingPrice(BigDecimal minimumSellingPrice) {
         this.minimumSellingPrice = minimumSellingPrice;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public LabelDto getStatusLbl(int status) {
+        switch (status) {
+            case STATUS_INIT:
+                return new LabelDto("已生效", "warning");
+            case STATUS_OVERDUE:
+                return new LabelDto("已过期", "default");
+            case STATUS_PENDING:
+                return new LabelDto("代付款", "default");
+            case STATUS_LOCKING:
+                return new LabelDto("已锁定", "warning");
+            case STATUS_SUCCESS:
+                return new LabelDto("交易成功", "secondary");
+            default:
+                return new LabelDto("待付款", "secondary");
+        }
     }
 }

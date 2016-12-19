@@ -2,10 +2,12 @@ package com.vstock.front.service;
 
 import com.vstock.db.dao.IBidDao;
 import com.vstock.db.entity.Bid;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +15,12 @@ import java.util.List;
  */
 @Service
 public class BidService {
+
+    public final static String TIME_ONE = "1";
+    public final static String TIME_THREE = "3";
+    public final static String TIME_FIVE = "5";
+    public final static String TIME_SERVEN = "7";
+
     @Autowired
     IBidDao bidDao;
 
@@ -65,5 +73,26 @@ public class BidService {
      */
     public List<Bid> findBidForSorts(String bftSize,String year,String brand,String priceStart,String priceEnd){
         return bidDao.findBidForSorts(bftSize,year,brand,priceStart,priceEnd);
+    }
+
+
+    /**
+     * 计算时间
+     * @param overdueTime
+     * @return
+     */
+    public String getOverDueTime(String overdueTime){
+        switch (overdueTime) {
+            case TIME_ONE:
+                return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
+            case TIME_THREE:
+                return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
+            case TIME_FIVE:
+                return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
+            case TIME_SERVEN:
+                return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
+            default:
+                return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
+        }
     }
 }

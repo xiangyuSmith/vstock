@@ -106,7 +106,7 @@
                     <c:if test="${b.type==1}">
                         <li>
                             <div class="am-gallery-item am_list_block">
-                                <a href="#" class="am_img_bg">
+                                <a href="/detail?proName=${b.name}" class="am_img_bg">
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">
@@ -132,7 +132,7 @@
                     <c:if test="${b.type==2}">
                         <li>
                             <div class="am-gallery-item am_list_block">
-                                <a href="#" class="am_img_bg">
+                                <a href="/detail?proName=${b.name}" class="am_img_bg">
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">
@@ -158,7 +158,7 @@
                     <c:if test="${b.type==3}">
                         <li>
                             <div class="am-gallery-item am_list_block">
-                                <a href="#" class="am_img_bg">
+                                <a href="/detail?proName=${b.name}" class="am_img_bg">
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">
@@ -184,7 +184,7 @@
                     <c:if test="${b.type==4}">
                         <li>
                             <div class="am-gallery-item am_list_block">
-                                <a href="#" class="am_img_bg">
+                                <a href="/detail?proName=${b.name}" class="am_img_bg">
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">
@@ -211,7 +211,7 @@
                     <c:if test="${b.type==5}">
                         <li>
                             <div class="am-gallery-item am_list_block">
-                                <a href="#" class="am_img_bg">
+                                <a href="/detail?proName=${b.name}" class="am_img_bg">
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">

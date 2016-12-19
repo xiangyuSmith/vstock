@@ -71,10 +71,6 @@ function ajaxContent(url, data, content,type){
     });
 }
 
-function alertshow(msg, callback) {
-    //TODO 消息提示框
-}
-
 function confirmshow(title, msg, callback, initfunc) {
     //TODO 弹出层
 }
@@ -90,6 +86,10 @@ function loadingshow(msg) {
 
 function loadingclose() {
     $('#vstock-loading').modal('close');
+}
+
+function loadingAllclose() {
+    $('#my-popup-saleList').modal('close');
 }
 
 //提示弹框

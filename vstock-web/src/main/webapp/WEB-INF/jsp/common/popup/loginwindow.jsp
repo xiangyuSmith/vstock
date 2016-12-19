@@ -7,7 +7,7 @@
     .check-size option{  text-align: center;  }
 </style>
 <!--------------------  Type_Login  -------------------->
-<div class="am-modal am-modal-no-btn" id="my-popup">
+<div class="am-modal am-modal-no-btn" id="my-popup-login">
     <div class="am-modal-dialog pre-login">
         <div data-am-widget="tabs" class="am-tabs am-tabs-d2 am-margin-0">
             <ul class="am-tabs-nav am-cf">

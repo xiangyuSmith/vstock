@@ -14,11 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
-@RequestMapping("/detail/{proName}")
+@RequestMapping("/detail")
 public class DetailController extends BaseController{
 
     @Autowired
@@ -31,19 +32,23 @@ public class DetailController extends BaseController{
     TradeService tradeService;
 
     @RequestMapping
-    public String index(@PathVariable String proName,ModelMap modelMap){
-//        Basicinformation basicinformation = new Basicinformation();
-//        basicinformation.setName(proName);
-//        basicinformation = basicinformationService.findObj(basicinformation);
-//        setLastPage(0,1);
-//        int bid = Integer.parseInt(basicinformation.getId());
-//        Trade trade = tradeService.getLastTrade(bid,lagePage);
-//        Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,trade);
-//        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bid,lagePage);
-//        modelMap.addAttribute("resParams",resParams);
-//        modelMap.addAttribute("pricePeak",pricePeak);
-//        modelMap.addAttribute("trade",trade);
-//        modelMap.addAttribute("basicinformation",basicinformation);
+    public String index(@RequestParam String proName, ModelMap modelMap){
+        String size = request.getParameter("size");
+        Basicinformation basicinformation = new Basicinformation();
+        basicinformation.setName(proName);
+        basicinformation = basicinformationService.findObj(basicinformation);
+        setLastPage(0,1);
+        int bid = Integer.parseInt(basicinformation.getId());
+        Trade trade = tradeService.getLastTrade(bid,size,lagePage);
+        Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);
+        //TODO 传递尺码时根据尺码查询最高最低价，不传尺码时查询最高最低价并获取对应尺码
+        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bid,size,lagePage);
+        modelMap.addAttribute("resParams",resParams);
+        modelMap.addAttribute("pricePeak",pricePeak);
+        modelMap.addAttribute("trade",trade);
+        modelMap.addAttribute("basicinformation",basicinformation);
+        modelMap.addAttribute("sizes",Basicinformation.sizes);
+        modelMap.addAttribute("size",size);
         return "/detail/index";
     }
 }

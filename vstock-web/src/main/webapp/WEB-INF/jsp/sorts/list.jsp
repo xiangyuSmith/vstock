@@ -37,7 +37,7 @@
 <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
     <c:forEach items="${bidList}" var="bid">
         <li>
-            <a class="popover-tips" href="/detail/${bid.basicinformation.name}" data-name="${bid.basicinformation.name}" data-id="${bid.basicinformation.id}" data-img-url="${configMap._site_url}${bid.basicinformation.smallImgUrl}">
+            <a class="popover-tips" href="/detail?proName=${bid.basicinformation.name}&size=${size}" data-name="${bid.basicinformation.name}" data-id="${bid.basicinformation.id}" data-img-url="${configMap._site_url}${bid.basicinformation.smallImgUrl}">
                 <div class="clickZone" aria-describedby="product141637">
                     <div class="img">
                         <span class="helper"></span>

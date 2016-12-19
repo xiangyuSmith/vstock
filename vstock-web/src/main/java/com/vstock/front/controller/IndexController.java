@@ -60,11 +60,6 @@ public class IndexController extends BaseController{
         return "/user/userAssets";
     }
 
-    @RequestMapping("testloginwindow")
-    public String testloginwindow(){
-        return "/common/popup/loginwindow";
-    }
-
     @RequestMapping("testbidwindow")
     public String testbidwindow(){
         return "/common/popup/bidwindow";
@@ -72,9 +67,6 @@ public class IndexController extends BaseController{
 
     @RequestMapping("testdetailedlistwindow")
     public String testdetailedlistwindow(){return "/common/popup/detailedlistwindow";}
-
-    @RequestMapping("testsalelistwindow")
-    public String testsalelistwindow(){return "/common/popup/salelistwindow";}
 
     @RequestMapping("modaltest")
     public String modaltest(){return "/common/popup/modaltest";}

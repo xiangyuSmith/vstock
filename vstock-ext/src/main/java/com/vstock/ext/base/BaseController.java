@@ -67,11 +67,9 @@ public class BaseController {
 
     /**
      * 获取请求属性封装为Map类型
-     *
-     * @param request
      * @return
      */
-    protected HashMap<String, Object> getParamMap(HttpServletRequest request) {
+    protected HashMap<String, Object> getParamMap() {
         HashMap<String, Object> conditions = new HashMap<String, Object>();
         Map map = request.getParameterMap();
         for (Object o : map.keySet()) {
@@ -81,24 +79,24 @@ public class BaseController {
         return conditions;
     }
 
-    protected String getParam(HttpServletRequest request, String param, String defaultValue) {
-        Map<String, Object> map = getParamMap(request);
+    protected String getParam(String param, String defaultValue) {
+        Map<String, Object> map = getParamMap();
         String result = (String) map.get(param);
         return result != null && !"".equals(result) ? result : defaultValue;
     }
 
-    protected String getParam(HttpServletRequest request, String param) {
-        Map<String, Object> map = getParamMap(request);
+    protected String getParam(String param) {
+        Map<String, Object> map = getParamMap();
         String result = (String) map.get(param);
         return result != null && !"".equals(result) ? result : "";
     }
 
-    protected Integer getParamToInt(HttpServletRequest request, String param) {
-        Map<String, Object> map = getParamMap(request);
+    protected Integer getParamToInt(String param) {
+        Map<String, Object> map = getParamMap();
         return toInt(String.valueOf(map.get(param)), null);
     }
 
-    public final String getAppbaseUrl(HttpServletRequest request, String url) {
+    public final String getAppbaseUrl(String url) {
         Assert.hasLength(url, "url不能为空");
         Assert.isTrue(url.startsWith("/"), "必须以/打头");
         return request.getContextPath() + url;

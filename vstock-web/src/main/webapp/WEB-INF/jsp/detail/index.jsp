@@ -8,52 +8,58 @@
         .am-bid-border{ border-left:1px solid #595959; }
         .str{ color: #595959; }
         .str-title{ font-size: 22px; }
-        .str-price{ font-size: 26px;color: #2d2d2d; }
+        .str-price{ color: #2d2d2d; }
         .str-size{ font-size: 18px; }
         .product-detail div{ font-size: 18px;color: #595959; }
         .product-market-summary-wrap{ margin-top: 5px;background-color: #f5f5f5; height: 130px;line-height: 130px;margin-top: 15px; }
         .product-market-summary-wrap span { font-size: 35px;color: #595959; }
         .am-table thead tr td{ text-align: center;font-size: 20px;color: #595959; border-bottom: 1px solid #ddd; }
-        .am-table tbody tr td{ font-size: 18px;color: #595959; border:none;line-height: 1.8;}
-        @media (max-width: 992px){
-            .str-sudio span{
-                font-size: 16px;
-                letter-spacing: 1px;
-            }
+        .am-table tbody tr td{ font-size: 18px;color: #595959; border:none;line-height: 1.8; }
+        .str-title-font{ font-size: 36px;color: #2d2d2d;letter-spacing: -2px; }
+        @media ( max-width: 992px ){
+            .str-sudio span{ letter-spacing: 1px; }
             .product-market-summary-wrap{ height: 75px;line-height: 75px; }
             .product-market-summary-wrap span { font-size: 22px; }
         }
-        .str-title-font{
-            font-size: 36px;color: #2d2d2d;letter-spacing: -2px;
-        }
-        @media (max-width: 1440px){
-            .str-title-font{
-                font-size: 30px;
-            }
+        @media ( max-width: 1440px ){
+            .str-title-font{ font-size: 30px; }
         }
     </style>
 </head>
 <body>
 <%@include file="../layout/top.jsp" %>
 <article>
+    <input class="loginType" type="hidden" value="${resultModel.relogin}" />
+    <input class="basicinformationName" type="hidden" value="${basicinformation.name}" />
+    <input class="basicinformationId" type="hidden" value="${basicinformation.id}" />
     <div class="am-container-content" style="margin-top: 4.2rem">
         <div class="am-g am-u-md-12 am-show-lg-only">
-            <span class="str-title-font" style="font-weight: bold;">Air Jordan 1 Retro High OG UNC </span>
-            <span class="str-title-font">北卡蓝</span>
+            <span class="str-title-font" style="font-weight: bold;">${basicinformation.name} </span>
+            <span class="str-title-font">${basicinformation.chineselogo}</span>
         </div>
         <div class="am-g">
             <div class="am-u-lg-4 am-u-md-2 am-u-sm-2 am-margin-top-xl">
                 <div class="am-fl am-u-lg-4 am-padding-0 str-sudio">
                     <span class="str-title">尺码</span>
-                    <select class="am-input-lg am-form-field" style="margin-top: 25px;">
-                        <option>1`</option>
-                        <option>1`</option>
-                        <option>1`</option>
-                    </select>
+                    <div style="margin-top: 28px;">
+                        <select class="am-input-sm am-form-field" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 120,  maxHeight: 200}">
+                            <c:choose>
+                                <c:when test="${not empty size}">
+                                    <option value="${size}">${size}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="">全部尺码</option>
+                                </c:otherwise>
+                            </c:choose>
+                            <c:forEach items="${sizes}" var="s">
+                                <option value="${s}">${s}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
                 <div class="am-fr am-u-lg-6 am-padding-0 am-show-lg-only str-sudio ">
                     <span class="str str-title">最后成交价</span><br/>
-                    <span class="str str-price">￥
+                    <span class="str layout-font-size-24">￥
                         <c:choose>
                             <c:when test="${not empty trade}">
                                 <fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/>
@@ -63,34 +69,99 @@
                             </c:otherwise>
                         </c:choose>
                     </span><br/>
-                    <span class="str str-size">尺码：12</span>
+                    <span class="str str-size">尺码：
+                         <c:choose>
+                             <c:when test="${not empty size}">
+                                 ${size}
+                             </c:when>
+                             <c:otherwise>
+                                 ${trade.bftSize}
+                             </c:otherwise>
+                         </c:choose>
+                    </span>
                 </div>
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-5 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio">
                     <span class="str str-title">最高出价</span><br/>
-                    <span class="str str-price">￥800</span><br/>
-                    <span class="str str-size">尺码：12</span>
+                    <span class="str layout-font-size-24">￥
+                        <c:choose>
+                            <c:when test="${not empty pricePeak.highestBid}">
+                                <fmt:formatNumber value="${pricePeak.highestBid}" type="currency" pattern="#,#00.0#"/>
+                            </c:when>
+                            <c:otherwise>
+                                -
+                            </c:otherwise>
+                        </c:choose>
+                    </span><br/>
+                    <span class="str str-size">尺码：
+                        <c:choose>
+                            <c:when test="${not empty size}">
+                                ${size}
+                            </c:when>
+                            <c:otherwise>
+                                ${pricePeak.peakSize}
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
                 </div>
-                <button class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #3BD379;color: #fff;">出售</button>
+                <button id="sell" class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #3BD379;color: #fff;">出售</button>
+                <input id="sell-click" type="hidden" data-am-modal="{target: '#my-popup-saleList',width: 900}" />
+                <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-5 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio">
                     <span class="str str-title">最低叫价</span><br/>
-                    <span class="str str-price">￥800</span><br/>
-                    <span class="str str-size">尺码：12</span>
+                    <span class="str layout-font-size-24">￥
+                        <c:choose>
+                            <c:when test="${not empty pricePeak.minimumSellingPrice}">
+                                <fmt:formatNumber value="${pricePeak.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                            </c:when>
+                            <c:otherwise>
+                                -
+                            </c:otherwise>
+                        </c:choose>
+                    </span><br/>
+                    <span class="str str-size">尺码：
+                         <c:choose>
+                             <c:when test="${not empty size}">
+                                 ${size}
+                             </c:when>
+                             <c:otherwise>
+                                 ${pricePeak.peakSize}
+                             </c:otherwise>
+                         </c:choose>
+                    </span>
                 </div>
-                <button class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #FE5B5F;color: #fff;">购买</button>
+                <button id="buy" class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #FE5B5F;color: #fff;">购买</button>
             </div>
         </div>
         <div class="am-g am-text-center am-padding-lg">
-            <img src="/assets/shoesImg/Adidas%20NMD%20Nice%20Kicks.jpg" style="width:80%;" />
+            <img src="${configMap._site_url}${basicinformation.imgUrl}" style="width:80%;" />
         </div>
-        <div class="am-g am-text-center am-hide-sm product-detail" style="margin-top: -70px;margin-bottom: 30px;">
-            <div class="am-u-lg-3 am-u-md-12">编码: 717302-600</div>
-            <div class="am-u-lg-3 am-u-md-12">颜色: 全白 纯白 </div>
-            <div class="am-u-lg-3 am-u-md-12">发售日期: 2016/04/29</div>
-            <div class="am-u-lg-3 am-u-md-12">原始售价：￥1080</div>
+        <div class="am-g am-text-center am-hide-sm product-detail" style="margin-top: -20px;margin-bottom: 30px;">
+            <div class="am-u-lg-3 am-u-md-12">编码: ${basicinformation.artNo}</div>
+            <div class="am-u-lg-3 am-u-md-12">颜色: ${basicinformation.colores}</div>
+            <div class="am-u-lg-3 am-u-md-12">发售日期:
+                <c:choose>
+                    <c:when test="${not empty basicinformation.csaledate}">
+                        ${basicinformation.csaledate}
+                    </c:when>
+                    <c:otherwise>
+                        -
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="am-u-lg-3 am-u-md-12">原始售价：￥
+                <c:choose>
+                    <c:when test="${not empty basicinformation.cofferprice}">
+                        ${basicinformation.cofferprice}
+                    </c:when>
+                    <c:otherwise>
+                        -
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
     </div>
 </article>
@@ -104,7 +175,7 @@
         <div class="am-u-lg-12 am-margin-bottom-lg">
             <div class="am-text-center">
                 <p style="color:#fe5c5c;font-size: 22px;margin-top: 38px; font-size: 30px;">
-                    Air Jordan 1 Retro High OG UNC 北卡蓝
+                    ${basicinformation.name} ${basicinformation.chineselogo}
                 </p>
                 <p style="color: #595959;font-size: 18px;">
                     最后销售记录
@@ -121,12 +192,6 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>7.5</td>
-                    <td>￥1530</td>
-                    <td>2016/4/20</td>
-                    <td>1:06pm</td>
-                </tr>
                 <tr>
                     <td>7.5</td>
                     <td>￥1530</td>
@@ -166,7 +231,57 @@
 <%@include file="../layout/bottom.jsp" %>
 <script>
     $(function(){
+        var loginType = $(".loginType").val();
+        var bname = $(".basicinformationName").val();
+        var bId = $(".basicinformationId").val();
+        $("#sell").click(function(){
+            if(loginType == "false"){
+                $("#login-click").click();
+            }else{
+                $("#repertoire-title").css("background-color","#00CD61");
+                $("#repertoire-title div span").text("出售清单");
+                $("#now-buyer-bid").css("display","inline-block");
+                $("#now-buyer-sell").css("display","inline-block");
+                $("#now-seller-bid").css("display","none");
+                $("#now-seller-sell").css("display","none");
+                $("#sell-click").click();
+            }
+        });
 
+        $("#buy").click(function(){
+            if(loginType == "false"){
+                $("#login-click").click();
+            }else{
+                $("#repertoire-title").css("background-color","#FF5A60");
+                $("#repertoire-title div span").text("购买清单");
+                $("#now-seller-bid").css("display","inline-block");
+                $("#now-seller-sell").css("display","inline-block");
+                $("#now-buyer-bid").css("display","none");
+                $("#now-buyer-sell").css("display","none");
+                $("#sell-click").click();
+            }
+        });
+
+        $("#now-buyer-bid").click(function(){
+            loadingAllclose();
+        });
+
+        $("#btn_step_final").click(function(){
+            if ($("#buyer_sell_amount").val() == "" || $("#buyer_sell_amount").val() == null || $("#buyer_sell_amount").val() < 0) {
+                alertshow("出售金额不能为空，且必须大于0");
+                return;
+            }
+            sendRequest("/bid",{
+                "bname": bname,
+                "bId": bId,
+                'size': $("#buyer_sell_size").val(),
+                'amount': $("#buyer_sell_amount").val(),
+                'overdueTime': $("#buyer_sell_time").val(),
+                'type': 1
+            },function(res){
+
+            });
+        });
     });
 </script>
 </body>

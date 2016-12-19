@@ -27,8 +27,8 @@ public class LoginController extends BaseController {
     LoginService loginService;
 
     @RequestMapping("index")
-    public String login(HttpServletRequest request, ModelMap model, RedirectAttributes attr) {
-        String status = getParam(request, "status", "1");
+    public String login( ModelMap model, RedirectAttributes attr) {
+        String status = getParam("status", "1");
         model.addAttribute("status", status);
         return "admin/adminLogin/admin_login";
     }
