@@ -3,7 +3,7 @@ package com.vstock.db.dao;
 import com.vstock.db.entity.Trade;
 import org.apache.ibatis.annotations.Param;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,14 +13,20 @@ public interface ITradeDao {
     //分页查询所有
     List<Trade> findAll(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    //带时间区间分页查询
+    List<Trade> findAllDate(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize,
+                            @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
+
     //查询所有总数
     int findCount(@Param("obj")Trade record);
+
+    int findCountDate(@Param("obj")Trade record, @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
 
     //添加数据
     int insert(Trade record);
 
     //修改数据
-    int update(@Param("status")int status, @Param("endDate")Date endDate, @Param("id")Integer id);
+    int update(@Param("status")int status, @Param("endDate")String endDate, @Param("id")Integer id);
 
     //关联叫价表分组查询
     List<Trade> findAndBid(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);

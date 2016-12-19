@@ -4,19 +4,21 @@
 
     <resultMap id="BaseResultMap" type="com.vstock.db.entity.Trade">
         <id property="id" column="id"/>
-        <result column="seller_id" property="sellerId" jdbcType="INTEGER"/>
-        <result column="buyers_id" property="buyersId" jdbcType="INTEGER"/>
-        <result column="bid_id" property="bidId" jdbcType="INTEGER"/>
-        <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
-        <result column="transaction_money" property="transactionMoney" jdbcType="DECIMAL"/>
-        <result column="trade_freight" property="tradeFreight" jdbcType="DECIMAL"/>
-        <result column="courier_number" property="courierNumber" jdbcType="VARCHAR"/>
+        <result column="sellerId" property="sellerId" jdbcType="INTEGER"/>
+        <result column="buyersId" property="buyersId" jdbcType="INTEGER"/>
+        <result column="bidId" property="bidId" jdbcType="INTEGER"/>
+        <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="transactionMoney" property="transactionMoney" jdbcType="DECIMAL"/>
+        <result column="tradeFreight" property="tradeFreight" jdbcType="DECIMAL"/>
+        <result column="courierNumber" property="courierNumber" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
-        <result column="transaction_date" property="transactionDate" jdbcType="TIMESTAMP"/>
-        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="transactionDate" property="transactionDate" jdbcType="TIMESTAMP"/>
+        <result column="endDate" property="endDate" jdbcType="TIMESTAMP"/>
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
         <result column="bft_name" property="bftName" jdbcType="VARCHAR"/>
         <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
+        <result column="sellerName" property="sellerName" jdbcType="VARCHAR"/>
+        <result column="buyersName" property="buyersName" jdbcType="VARCHAR"/>
         <association property="bid" column="bid"
                      javaType="com.vstock.db.entity.Bid">
             <id column="b_id" property="id"/>
@@ -55,7 +57,7 @@
             <if test="courierNumber != null and courierNumber != ''">
                 and t.courier_number = #{courierNumber,jdbcType=VARCHAR}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null and status != -1">
                 and t.status = #{status,jdbcType=VARCHAR}
             </if>
             <if test="transactionDate != null and transactionDate != ''">
@@ -97,7 +99,7 @@
             <if test="obj.courierNumber != null and obj.courierNumber != ''">
                 and t.courier_number = #{obj.courierNumber,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != null and obj.status != ''">
+            <if test="obj.status != null and obj.status != -1">
                 and t.status = #{obj.status,jdbcType=VARCHAR}
             </if>
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
@@ -139,8 +141,8 @@
             <if test="courierNumber != null and courierNumber != ''">
                 and t.courier_number LIKE CONCAT('%',#{courierNumber,jdbcType=VARCHAR},'%')
             </if>
-            <if test="status != null and status != ''">
-                and t.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
+            <if test="status != null and status != -1">
+                and t.status = #{status,jdbcType=VARCHAR}
             </if>
             <if test="transactionDate != null and transactionDate != ''">
                 and t.transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
@@ -181,11 +183,11 @@
             <if test="obj.courierNumber != null and obj.courierNumber != ''">
                 and t.courier_number LIKE CONCAT('%',#{obj.courierNumber,jdbcType=VARCHAR},'%')
             </if>
-            <if test="obj.status != null and obj.status != ''">
-                and t.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
+            <if test="obj.status != null and obj.status != -1">
+                and t.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.bftSize != null and obj.bftSize != ''">
-                and t.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
+            <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
+                and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
                 and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
@@ -207,7 +209,6 @@
         t.basicinformation_id as basicinformationId,
         t.transaction_money as transactionMoney,
         t.trade_freight  as tradeFreight,
-        t.bft_size as bftSize,
         t.courier_number as courierNumber,
         t.status as status,
         t.transaction_date as transactionDate,
@@ -219,8 +220,35 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM trade t
-        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SelectAllByPage_Where_Clause"/>
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findAllDate" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
+        SELECT u.uname AS sellerName, a.uname AS buyersName, b.bft_name,b.bft_size,
+        <include refid="Base_Column_List"/>
+        FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
+        LEFT JOIN `user` a ON t.buyers_id = a.id
+        LEFT JOIN bid b ON t.bid_id = b.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="startDateTime != null and startDateTime != ''">
+            and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDateTime != null and endDateTime != ''">
+            and t.transaction_date &lt; #{endDateTime,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCountDate" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
+        SELECT COUNT(*) FROM trade t LEFT JOIN bid b ON t.bid_id = b.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="startDateTime != null and startDateTime != ''">
+            and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDateTime != null and endDateTime != ''">
+            and t.transaction_date &lt; #{endDateTime,jdbcType=TIMESTAMP}
+        </if>
     </select>
 
     <select id="findAndBid" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
@@ -233,7 +261,7 @@
 
     <select id="findCount" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
         SELECT COUNT(*) FROM trade t
-        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SelectAllByPage_Where_Clause"/>
     </select>
 
     <insert id="insert">
