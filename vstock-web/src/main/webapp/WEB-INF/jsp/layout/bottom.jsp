@@ -19,10 +19,11 @@
         throttle: 0
     });
 </script>
-<%@include file="../common/popup/bidwindow.jsp" %>
+<%@include file="../common/popup/sellbidwindow.jsp" %>
+<%@include file="../common/popup/buyerbidwindow.jsp" %>
 <%@include file="../common/popup/loginwindow.jsp" %>
 <%@include file="../common/popup/salelistwindow.jsp" %>
-
+<%@include file="../common/popup/purchaselistwindow.jsp" %>
 
 <div class="am-modal am-modal-alert" tabindex="-1" id="forex-alert">
     <div class="am-modal-dialog">

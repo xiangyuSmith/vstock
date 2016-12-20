@@ -186,6 +186,21 @@
         ORDER BY p.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findByType" parameterType="com.vstock.db.entity.PricePeak" resultType="com.vstock.db.entity.PricePeak">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM price_peak p
+        <include refid="SelectAllByPage_Where_Clause"/>
+        <if test="sort == 1">
+            ORDER BY p.highest_bid DESC
+        </if>
+        <if test="sort == 2">
+            AND p.minimum_selling_price is not null
+            ORDER BY p.minimum_selling_price ASC
+        </if>
+        limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findCount" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
         SELECT COUNT(*) FROM price_peak p
         <include refid="SearchAllByPage_Where_Clause"/>

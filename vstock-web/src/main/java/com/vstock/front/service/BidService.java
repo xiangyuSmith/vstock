@@ -75,6 +75,20 @@ public class BidService {
         return bidDao.findBidForSorts(bftSize,year,brand,priceStart,priceEnd);
     }
 
+    /**
+     * 最高/最低 叫价/出价 记录
+     * @param bid  鞋库编号
+     * @param type 0；卖家    1：买家
+     * @param sort 排序方式 1：ASC  2：DESC
+     * @return
+     */
+    public Bid getHightAndMinPrice(int bid,int type,int sort, Page page){
+        Bid bids = new Bid();
+        bids.setBasicinformationId(bid);
+        bids.setType(type);
+        Bid b = bidDao.findByType(bids,sort,page.getStartPos(),page.getPageSize());
+        return b;
+    }
 
     /**
      * 计算时间

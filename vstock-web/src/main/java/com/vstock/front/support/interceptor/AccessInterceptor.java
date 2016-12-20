@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by sunson on 2016/1/14.
- */
 @Service
 public class AccessInterceptor extends HandlerInterceptorAdapter {
 
@@ -37,6 +34,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     List<String> unloginUrls = new ArrayList<>();
     List<String> unlimitUrls = new ArrayList<>();
     String uid;
+
     User user;
     ResultModel resultModel = new ResultModel();
 
@@ -48,6 +46,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 //        unloginUrls.add("/login");
 //        unloginUrls.add("/login/logout");
         unloginUrls.add("/user");
+        unloginUrls.add("/bid");
     }
 
     @Override
@@ -105,5 +104,13 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             }
         }
         return false;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

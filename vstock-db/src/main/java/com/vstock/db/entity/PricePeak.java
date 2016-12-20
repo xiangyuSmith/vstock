@@ -19,8 +19,8 @@ public class PricePeak implements Serializable {
     private int status;
     private String highestBidderId;
     private String minimumSellingId;
-    private Date createDate;
-    private Date invalidDate;
+    private String createDate;
+    private String invalidDate;
 
     public PricePeak() {
         super();
@@ -90,24 +90,23 @@ public class PricePeak implements Serializable {
         this.minimumSellingId = minimumSellingId;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public Date getInvalidDate() {
+    public String getInvalidDate() {
         return invalidDate;
     }
 
-    public void setInvalidDate(Date invalidDate) {
+    public void setInvalidDate(String invalidDate) {
         this.invalidDate = invalidDate;
     }
 
-    public PricePeak(Integer id, Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, int status, String highestBidderId, String minimumSellingId, Date createDate, Date invalidDate) {
-        this.id = id;
+    public PricePeak(Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, int status, String highestBidderId, String minimumSellingId, String createDate) {
         this.basicinformationId = basicinformationId;
         this.peakSize = peakSize;
         this.highestBid = highestBid;
@@ -116,6 +115,5 @@ public class PricePeak implements Serializable {
         this.highestBidderId = highestBidderId;
         this.minimumSellingId = minimumSellingId;
         this.createDate = createDate;
-        this.invalidDate = invalidDate;
     }
 }

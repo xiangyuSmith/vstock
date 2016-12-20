@@ -275,6 +275,20 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findByType" parameterType="com.vstock.db.entity.Bid" resultType="com.vstock.db.entity.Bid">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="sort == 1">
+            ORDER BY b.bid_money ASC
+        </if>
+        <if test="sort == 2">
+            ORDER BY b.bid_money DESC
+        </if>
+        limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findAndPricePeak" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
         SELECT p.highest_bid, p.minimum_selling_price,
         <include refid="Base_Column_List"/>
@@ -313,7 +327,7 @@
 
     <insert id="insert">
         INSERT INTO `bid`
-        (`id`,`user_id`,`basicinformation_id`,`payment_id`,`bft_name`,`bft_size`,`bid_money`,`bid_freight`,`bid_bond`,`lately_bid`,`term_validity`,`status`,`type`,`bid_date`,`invalid_date`)
+        (`id`,`user_id`,`basicinformation_id`,`payment_id`,`bft_name`,`bft_size`,`bid_money`,`bid_freight`,`bid_bond`,`lately_bid`,`term_validity`,`status`,`type`,`sign`,`bid_date`,`invalid_date`)
         VALUES(null,#{userId},#{basicinformationId},#{paymentId},#{bftName},#{bftSize},#{bidMoney},#{bidFreight},#{bidBond},#{latelyBid},#{termValidity},#{status},#{type},#{sign},#{bidDate},#{invalidDate})
     </insert>
 

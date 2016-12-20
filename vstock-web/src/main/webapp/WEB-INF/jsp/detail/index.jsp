@@ -40,8 +40,8 @@
         <div class="am-g">
             <div class="am-u-lg-4 am-u-md-2 am-u-sm-2 am-margin-top-xl">
                 <div class="am-fl am-u-lg-4 am-padding-0 str-sudio">
-                    <span class="str-title">尺码</span>
-                    <div style="margin-top: 28px;">
+                    <span class="layout-font-size-22">尺码</span>
+                    <div style="margin-top: 18px;">
                         <select class="am-input-sm am-form-field" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 120,  maxHeight: 200}">
                             <c:choose>
                                 <c:when test="${not empty size}">
@@ -58,8 +58,8 @@
                     </div>
                 </div>
                 <div class="am-fr am-u-lg-6 am-padding-0 am-show-lg-only str-sudio ">
-                    <span class="str str-title">最后成交价</span><br/>
-                    <span class="str layout-font-size-24">￥
+                    <span class="str layout-font-size-22">最后成交价</span><br/>
+                    <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty trade}">
                                 <fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/>
@@ -82,12 +82,12 @@
                 </div>
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-5 am-bid-border am-margin-top-xl">
-                <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio">
-                    <span class="str str-title">最高出价</span><br/>
-                    <span class="str layout-font-size-24">￥
+                <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio am-padding-right-0">
+                    <span class="str layout-font-size-22">买家最高出价</span><br/>
+                    <span class="str layout-font-size-20">￥
                         <c:choose>
-                            <c:when test="${not empty pricePeak.highestBid}">
-                                <fmt:formatNumber value="${pricePeak.highestBid}" type="currency" pattern="#,#00.0#"/>
+                            <c:when test="${not empty pricePeak1.highestBid}">
+                                <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,#00.0#"/>
                             </c:when>
                             <c:otherwise>
                                 -
@@ -100,7 +100,7 @@
                                 ${size}
                             </c:when>
                             <c:otherwise>
-                                ${pricePeak.peakSize}
+                                ${pricePeak1.peakSize}
                             </c:otherwise>
                         </c:choose>
                     </span>
@@ -110,12 +110,12 @@
                 <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-5 am-bid-border am-margin-top-xl">
-                <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio">
-                    <span class="str str-title">最低叫价</span><br/>
-                    <span class="str layout-font-size-24">￥
+                <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio am-padding-right-0">
+                    <span class="str layout-font-size-22">卖家最低叫价</span><br/>
+                    <span class="str layout-font-size-20">￥
                         <c:choose>
-                            <c:when test="${not empty pricePeak.minimumSellingPrice}">
-                                <fmt:formatNumber value="${pricePeak.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                            <c:when test="${not empty pricePeak2.minimumSellingPrice}">
+                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
                             </c:when>
                             <c:otherwise>
                                 -
@@ -128,12 +128,13 @@
                                  ${size}
                              </c:when>
                              <c:otherwise>
-                                 ${pricePeak.peakSize}
+                                 ${pricePeak2.peakSize}
                              </c:otherwise>
                          </c:choose>
                     </span>
                 </div>
                 <button id="buy" class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #FE5B5F;color: #fff;">购买</button>
+                <input id="buy-click" type="hidden" data-am-modal="{target: '#my-popup-purchaselistwindow',width: 900}" />
             </div>
         </div>
         <div class="am-g am-text-center am-padding-lg">
@@ -238,12 +239,6 @@
             if(loginType == "false"){
                 $("#login-click").click();
             }else{
-                $("#repertoire-title").css("background-color","#00CD61");
-                $("#repertoire-title div span").text("出售清单");
-                $("#now-buyer-bid").css("display","inline-block");
-                $("#now-buyer-sell").css("display","inline-block");
-                $("#now-seller-bid").css("display","none");
-                $("#now-seller-sell").css("display","none");
                 $("#sell-click").click();
             }
         });
@@ -252,36 +247,54 @@
             if(loginType == "false"){
                 $("#login-click").click();
             }else{
-                $("#repertoire-title").css("background-color","#FF5A60");
-                $("#repertoire-title div span").text("购买清单");
-                $("#now-seller-bid").css("display","inline-block");
-                $("#now-seller-sell").css("display","inline-block");
-                $("#now-buyer-bid").css("display","none");
-                $("#now-buyer-sell").css("display","none");
-                $("#sell-click").click();
+                $("#buy-click").click();
             }
         });
 
-        $("#now-buyer-bid").click(function(){
-            loadingAllclose();
+        $("#now-sell-bid").click(function(){
+            loadingSaleListclose();
         });
 
-        $("#btn_step_final").click(function(){
+        $("#now-buyer-bid").click(function(){
+            loadingPurchaseListclose();
+        });
+
+        $("#seller_btn_step_final").click(function(){
+            if ($("#seller_bid_amount").val() == "" || $("#seller_bid_amount").val() == null || $("#seller_bid_amount").val() < 0) {
+                alertshow("出售金额不能为空，且必须大于0");
+                return;
+            }
+            box_bid($("#seller_bid_amount").val(),$("#seller_buy_size").val(),$("#seller_buy_time").val(),0);
+        });
+
+        $("#buyer_btn_step_final").click(function(){
             if ($("#buyer_sell_amount").val() == "" || $("#buyer_sell_amount").val() == null || $("#buyer_sell_amount").val() < 0) {
                 alertshow("出售金额不能为空，且必须大于0");
                 return;
             }
+            box_bid($("#buyer_sell_amount").val(),$("#buyer_sell_size").val(),$("#buyer_sell_time").val(),1);
+        });
+
+        function box_bid(amount,size,overdueTime,type){
             sendRequest("/bid",{
                 "bname": bname,
                 "bId": bId,
-                'size': $("#buyer_sell_size").val(),
-                'amount': $("#buyer_sell_amount").val(),
-                'overdueTime': $("#buyer_sell_time").val(),
-                'type': 1
+                'size': amount,
+                'amount': size,
+                'overdueTime': overdueTime,
+                'type': type
             },function(res){
-
+                if(res.retCode == 1){
+                    if(type == 0){
+                        alertshow("叫价成功");
+                    }else{
+                        alertshow("出价成功");
+                    }
+                    loadingBidclose();
+                    location.reload();
+                }
             });
-        });
+        }
     });
 </script>
 </body>

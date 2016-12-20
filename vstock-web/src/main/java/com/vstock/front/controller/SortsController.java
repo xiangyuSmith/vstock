@@ -77,9 +77,11 @@ public class SortsController extends BaseController{
         //获取成交价格涨幅
         Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);
         //获取最低售价，最高出价
-        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bid,size,lagePage);
+        PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bid,size,1,lagePage);
+        PricePeak pricePeak2 = pricePeakService.getHighestAndlowest(bid,size,2,lagePage);
         resultMap.put("trade",trade);
-        resultMap.put("pricePeak",pricePeak);
+        resultMap.put("pricePeak1",pricePeak1);
+        resultMap.put("pricePeak2",pricePeak2);
         resultMap.put("difference",resParams.get("difference"));
         resultMap.put("percentag",resParams.get("percentag"));
         resultMap.put("roseType",resParams.get("roseType"));

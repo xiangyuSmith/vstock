@@ -70,8 +70,8 @@
                 $("#show-img").attr("src",$this.attr("data-img-url"));
                 $("#product-name").text($this.attr("data-name"));
                 $("#trade-final-money").text(transactionMoney);
-                $("#minimum_selling_price").text(res.data.pricePeak.minimumSellingPrice);
-                $("#highest_bid").text(res.data.pricePeak.highestBid==0?"-":res.data.pricePeak.highestBid);
+                $("#minimum_selling_price").text(res.data.pricePeak2.minimumSellingPrice);
+                $("#highest_bid").text(res.data.pricePeak1.highestBid==0?"-":res.data.pricePeak1.highestBid);
                 $("#difference").text(res.data.difference==0?"-":res.data.difference);
                 $("#percentag").text(res.data.percentag==0?"-":res.data.percentag);
                 if(res.data.roseType == 0){

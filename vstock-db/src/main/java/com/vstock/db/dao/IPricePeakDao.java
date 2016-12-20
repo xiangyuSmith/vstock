@@ -13,6 +13,9 @@ public interface IPricePeakDao {
     //分页查询所有
     List<PricePeak> findAll(@Param("obj")PricePeak record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    //按类型查询
+    List<PricePeak> findByType(@Param("obj")PricePeak record,@Param(value = "sort") Integer sort, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
     //查询所有总数
     int findCount(@Param("obj")PricePeak record);
 
@@ -20,5 +23,5 @@ public interface IPricePeakDao {
     int insert(PricePeak record);
 
     //修改数据
-    int update(@Param("status")int status, @Param("endDate")Date endDate, @Param("id")Integer id);
+    int update(@Param("status")int status, @Param("endDate")String endDate, @Param("id")Integer id);
 }

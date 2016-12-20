@@ -88,8 +88,14 @@ function loadingclose() {
     $('#vstock-loading').modal('close');
 }
 
-function loadingAllclose() {
+function loadingSaleListclose() {
     $('#my-popup-saleList').modal('close');
+}
+function loadingPurchaseListclose() {
+    $('#my-popup-purchaselistwindow').modal('close');
+}
+function loadingBidclose() {
+    $('#my-popup-bid').modal('close');
 }
 
 //提示弹框
