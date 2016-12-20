@@ -15,12 +15,13 @@ import com.vstock.front.support.interceptor.AccessInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by administor on 2016/12/6.
@@ -74,5 +75,18 @@ public class BidController extends BaseController{
             resultModel.setRetCode(resultModel.RET_OK);
         }
         return resultModel;
+    }
+
+    @RequestMapping("updateBid")
+    @ResponseBody
+    public Map<String,Object> updateBid(){
+        Map<String,Object> param = new HashMap<String,Object>();
+        String id = request.getParameter("id");
+        String status = request.getParameter("status");
+        String endDate = request.getParameter("endDate");
+        String bidMoney = request.getParameter("bidMoney");
+        int sgin = bidService.updateBid(id,status,endDate,bidMoney);
+        param.put("sgin",sgin);
+        return param;
     }
 }

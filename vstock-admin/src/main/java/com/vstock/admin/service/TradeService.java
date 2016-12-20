@@ -46,6 +46,8 @@ public class TradeService {
         return tradeDao.findAllDate(record,page.getStartPos(),page.getPageSize(),startDate,endDate);
     }
 
+    public List<Trade> findAndBid(Trade record, Page page){return tradeDao.findAndBid(record,page.getStartPos(),page.getPageSize());}
+
     /**
      * 查询所有总数
      * @param record
@@ -162,6 +164,12 @@ public class TradeService {
             trade.setBasicinformationId(Integer.parseInt(basicinformation.getId()));
         }
         return trade;
+    }
+
+    public Trade findTrade(Trade record){
+        Page page = new Page(10,"1");
+        List<Trade> tradeList = this.findAndBid(record, page);
+        return  tradeList.get(0);
     }
 
 }

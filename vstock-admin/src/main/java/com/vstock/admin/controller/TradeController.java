@@ -55,4 +55,15 @@ public class TradeController {
         return "admin/trade/index";
     }
 
+    @RequestMapping("tradeList")
+    public String tradeList(Trade record, HttpServletRequest request, ModelMap model) {
+        Trade trade = new Trade();
+        String id = request.getParameter("fid");
+        trade.setId(Integer.parseInt(id));
+        trade = tradeService.findTrade(trade);
+        model.put("record",record);
+        model.put("trade",trade);
+        return "admin/trade/tradeList";
+    }
+
 }

@@ -17,7 +17,9 @@
         <div class="am-u-sm-2 am-u-md-2 am-u-lg-2"><p></p></div>
         <div class="am-u-sm-2 am-u-md-2 am-u-lg-2 am-padding-left-0 am-padding-right-0 meun-width" id="div1" style="background-color: #F6F5F4;overflow:hidden;">
             <ul class="am-nav">
-                <li class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7">小庞</li>
+                <c:if test="${not empty vUser}">
+                    <li class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7">${vUser.uname}</li>
+                </c:if>
                 <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24" data-url="../user/sale" data-type="1" >出售记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/purchase" data-type="2">购买记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-xs" src="../../../../assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
@@ -35,6 +37,8 @@
         document.getElementById("div1").style.height = document.getElementById("tradeforex_tilie").offsetHeight+"px";
     }
     jQuery(function($){
+
+        var upMoeny;
 
         $(".home-tab").click(function () {
             load($(this));
@@ -74,27 +78,50 @@
             $this.attr("disabled", true);
             var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
             var moeny = $thoes.text();
-            var a = "<input type='text' value='"+moeny.substring(1,moeny.legend)+"' style='width: 120px;'/>"
+            upMoeny = parseFloat(moeny.substring(1,moeny.legend).replace(/[^\d\.-]/g, ""));
+            var a = "<input type='text' value='"+upMoeny+"' style='width: 120px;'/>"
             $thoes.html("");
             $thoes.append(a);
-            var $th = $this.parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+            var $th = $this.parent().parent().parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
             $th.attr("disabled", true);
             $this.parent().parent().parent().children().first().attr("disabled", false);
         });
 
         $("body").on("click",".sale-sub",function(){
             var $this = $(this);
-            $this.parent().prev().children().attr("disabled", false);
-            $this.parent().next().children().attr("disabled", true);
-            $this.parent().next().next().children().attr("disabled", false);
-            $this.attr("disabled", true);
+            var dataType = $this.attr("data_type");
             var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
-            var moeny = $thoes.val();
-//            var a = "<input type='text' value='"+moeny.substring(1,moeny.legend)+"' style='width: 120px;'/>"
-            $thoes.html("");
-//            $thoes.append(a);
-            var $th = $this.parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
-            $th.attr("disabled", false);
+            var moeny = $thoes.children().val();
+            var id = $this.attr("data_id");
+            if (dataType == 0){
+                if (upMoeny < moeny) {
+                    alertshow("最新出价不能高于原始出价");
+                    return;
+                }
+            }else {
+                if (upMoeny > moeny) {
+                    alertshow("最新出价不能低于原始出价");
+                    return;
+                }
+            }
+            sendRequest("/bid/updateBid",{
+                id : id,
+                bidMoney : moeny
+            },function(res) {
+                if (res.sgin == 1) {
+                    $this.parent().prev().children().attr("disabled", false);
+                    $this.parent().next().children().attr("disabled", true);
+                    $this.parent().next().next().children().attr("disabled", false);
+                    $this.attr("disabled", true);
+                    moeny = parseInt(moeny).formatMoney(1,"￥");
+                    $thoes.html("");
+                    $thoes.text(moeny);
+                    var $th = $this.parent().parent().parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+                    $th.attr("disabled", false);
+                }else {
+                    alertshow("保存失败，请重新输入！");
+                }
+            });
         });
 
         $("body").on("click",".sale-quit",function(){
@@ -104,11 +131,10 @@
             $this.parent().next().children().attr("disabled", false);
             $this.attr("disabled", true);
             var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
-            var moeny = $thoes.children().val();
-//            var a = "<input type='text' value='"+moeny.substring(1,moeny.legend)+"' style='width: 120px;'/>"
+            upMoeny = upMoeny.formatMoney(1,"￥");
             $thoes.html("");
-            $thoes.text("￥"+moeny);
-            var $th = $this.parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+            $thoes.text(upMoeny);
+            var $th = $this.parent().parent().parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
             $th.attr("disabled", false);
         });
 

@@ -140,32 +140,25 @@
             </div>
         </caption>
         <tbody>
-        <tr>
-            <td>小庞</td>
-            <td style="width: 20%">上海/上海市/浦东新区/张江高科科技园区</td>
-            <td style="width: 15%">达尔文路88号半岛科技园1号楼</td>
-            <td>200000</td>
-            <td>15618713257</td>
-            <td>
-                <a href="#">编辑</a>|<a href="#">删除</a>
-            </td>
-            <td>
-                <a href="#" class="am-btn am-text-danger am-radius am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;">默认地址</a>
-            </td>
-        </tr>
-        <tr>
-            <td>小庞</td>
-            <td style="width: 20%">上海/上海市/浦东新区/张江高科科技园区</td>
-            <td style="width: 15%">达尔文路88号半岛科技园1号楼</td>
-            <td>200000</td>
-            <td>15618713257</td>
-            <td>
-                <a href="#">编辑</a>|<a href="#">删除</a>
-            </td>
-            <td>
-                <a href="javascript:void(0);" class="am-btn am-text-danger am-radius am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;">默认地址</a>
-            </td>
-        </tr>
+            <c:if test="${not empty userAddressesList}">
+                <c:forEach items="${userAddressesList}" var="userAddresses">
+                    <tr>
+                        <td>${userAddresses.uname}</td>
+                        <td style="width: 20%">${userAddresses.localArea}</td>
+                        <td style="width: 15%">${userAddresses.detailedAddress}</td>
+                        <td>${userAddresses.zipCode}</td>
+                        <td>${userAddresses.phoneNumber}</td>
+                        <td>
+                            <a href="#">编辑</a>|<a href="#">删除</a>
+                        </td>
+                        <td>
+                            <c:if test="${userAddresses.type == 0}">
+                                <a href="#" class="am-btn am-text-danger am-radius am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;">设为默认地址</a>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
         </tbody>
     </table>
 </form>

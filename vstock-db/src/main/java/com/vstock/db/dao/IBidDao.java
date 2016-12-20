@@ -3,6 +3,7 @@ package com.vstock.db.dao;
 import com.vstock.db.entity.Bid;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface IBidDao {
     int insert(Bid record);
 
     //修改数据
-    int update(@Param("status")int status, @Param("invalidDate")String invalidDate, @Param("id")Integer id);
+    int update(@Param("status")int status, @Param("bidMoney")BigDecimal bidMoney, @Param("invalidDate")String invalidDate, @Param("id")Integer id);
 
     //关联峰值表分页查询
     List<Bid> findAndPricePeak(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);

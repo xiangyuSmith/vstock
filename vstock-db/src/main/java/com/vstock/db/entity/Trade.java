@@ -30,6 +30,7 @@ public class Trade implements Serializable {
     private String bftSize;
     private String sellerName;
     private String buyersName;
+    private String companyName;
 
     public Bid getBid() {
         return bid;
@@ -171,7 +172,15 @@ public class Trade implements Serializable {
         this.buyersName = buyersName;
     }
 
-    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, Integer status, String transactionDate, String endDate, String sign, Bid bid, String bftName, String bftSize, String sellerName, String buyersName) {
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, Integer status, String transactionDate, String endDate, String sign, Bid bid, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
         this.id = id;
         this.sellerId = sellerId;
         this.buyersId = buyersId;
@@ -189,5 +198,6 @@ public class Trade implements Serializable {
         this.bftSize = bftSize;
         this.sellerName = sellerName;
         this.buyersName = buyersName;
+        this.companyName = companyName;
     }
 }

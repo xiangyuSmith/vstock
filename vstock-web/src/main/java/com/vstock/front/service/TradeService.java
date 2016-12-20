@@ -27,6 +27,14 @@ public class TradeService {
     }
 
     /**
+     * 链表查询所有记录
+     * @param record
+     * @param page
+     * @return
+     */
+    public List<Trade> findAndBid(Trade record, Page page){return tradeDao.findAndBid(record,page.getStartPos(),page.getPageSize());}
+
+    /**
      * 查询所有总数
      * @param record
      * @return
@@ -66,7 +74,7 @@ public class TradeService {
     //个人中心出售查询
     public List<Trade> findTrade(Trade record, Page page){
         page.setPageSize(5);
-        return tradeDao.findAndBid(record,page.getStartPos(),page.getPageSize());
+        return this.findAndBid(record, page);
     }
 
 }

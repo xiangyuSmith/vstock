@@ -7,6 +7,7 @@ import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +55,17 @@ public class BidService {
      * @return
      */
     public int update(Bid record){
-        return bidDao.update(record.getStatus(),record.getInvalidDate(),record.getId());
+        return bidDao.update(record.getStatus(),record.getBidMoney(),record.getInvalidDate(),record.getId());
+    }
+
+    /**
+     * 带峰值查询
+     * @param record
+     * @param page
+     * @return
+     */
+    public List<Bid> findAndPricePeak(Bid record, Page page){
+        return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());
     }
 
     //出售记录个人中心查询
@@ -109,4 +120,23 @@ public class BidService {
                 return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
         }
     }
+
+    public int updateBid(String id, String status, String endDate, String bidMoney){
+        Bid record = new Bid();
+        if (id != null && !"".equals(id)) {
+            record.setId(Integer.parseInt(id));
+        }
+        if (status != null && !"".equals(status)) {
+            record.setStatus(Integer.parseInt(status));
+        }
+        if (endDate != null && !"".equals(endDate)) {
+            record.setInvalidDate(endDate);
+        }
+        if (bidMoney != null && !"".equals(bidMoney)) {
+            BigDecimal bigDecimal = new BigDecimal(bidMoney);
+            record.setBidMoney(bigDecimal);
+        }
+        return this.update(record);
+    }
+
 }

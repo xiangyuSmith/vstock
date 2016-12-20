@@ -4,23 +4,23 @@
 
     <resultMap id="BaseResultMap" type="com.vstock.db.entity.Bid">
         <id property="id" column="id"/>
-        <result column="user_id" property="userId" jdbcType="INTEGER"/>
-        <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
-        <result column="payment_id" property="paymentId" jdbcType="INTEGER"/>
-        <result column="bft_name" property="bftName" jdbcType="VARCHAR"/>
-        <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
-        <result column="bid_money" property="bidMoney" jdbcType="DECIMAL"/>
-        <result column="bid_freight" property="bidFreight" jdbcType="DECIMAL"/>
-        <result column="bid_bond" property="bidBond" jdbcType="DECIMAL"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="paymentId" property="paymentId" jdbcType="INTEGER"/>
+        <result column="bftName" property="bftName" jdbcType="VARCHAR"/>
+        <result column="bftSize" property="bftSize" jdbcType="VARCHAR"/>
+        <result column="bidMoney" property="bidMoney" jdbcType="DECIMAL"/>
+        <result column="bidFreight" property="bidFreight" jdbcType="DECIMAL"/>
+        <result column="bidBond" property="bidBond" jdbcType="DECIMAL"/>
         <result column="lately_bid" property="latelyBid" jdbcType="DECIMAL"/>
-        <result column="term_validity" property="termValidity" jdbcType="VARCHAR"/>
+        <result column="termValidity" property="termValidity" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
-        <result column="bid_date" property="bidDate" jdbcType="TIMESTAMP"/>
-        <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
-        <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
-        <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="bidDate" property="bidDate" jdbcType="TIMESTAMP"/>
+        <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="highestBid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="minimumSellingPrice" property="minimumSellingPrice" jdbcType="DECIMAL"/>
         <association property="basicinformation" column="basicinformation"
                      javaType="com.vstock.db.entity.Basicinformation">
             <id column="bid" property="id"/>
@@ -68,10 +68,13 @@
             <if test="termValidity != null and termValidity != ''">
                 and b.term_validity = #{termValidity,jdbcType=VARCHAR}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null and status != 3">
                 and b.status = #{status,jdbcType=VARCHAR}
             </if>
-            <if test="type != null and type != ''">
+            <if test="status != 3">
+                and b.status NOT IN (#{status,jdbcType=VARCHAR})
+            </if>
+            <if test="type != null">
                 and b.type = #{type,jdbcType=VARCHAR}
             </if>
             <if test="bidDate != null and bidDate != ''">
@@ -122,10 +125,13 @@
             <if test="obj.termValidity != null and obj.termValidity != ''">
                 and b.term_validity = #{obj.termValidity,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != null and obj.status != ''">
+            <if test="obj.status != null and obj.status != 3">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.type != null and obj.type != ''">
+            <if test="obj.status != 3">
+                and b.status NOT IN (#{obj.status,jdbcType=VARCHAR})
+            </if>
+            <if test="obj.type != null">
                 and b.type = #{obj.type,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidDate != null and obj.bidDate != ''">
@@ -176,11 +182,14 @@
             <if test="termValidity != null and termValidity != ''">
                 and b.term_validity = #{termValidity,jdbcType=DECIMAL}
             </if>
-            <if test="status != null and status != ''">
-                and b.status LIKE CONCAT('%',#{status,jdbcType=VARCHAR},'%')
+            <if test="status != null and status != 3">
+                and b.status = #{status,jdbcType=VARCHAR}
             </if>
-            <if test="type != null and type != ''">
-                and b.type LIKE CONCAT('%',#{type,jdbcType=VARCHAR},'%')
+            <if test="status != 3">
+                and b.status NOT IN (#{status,jdbcType=VARCHAR})
+            </if>
+            <if test="type != null">
+                and b.type = #{type,jdbcType=VARCHAR}
             </if>
             <if test="bidDate != null and bidDate != ''">
                 and b.bid_date = #{bidDate,jdbcType=TIMESTAMP}
@@ -230,11 +239,14 @@
             <if test="obj.termValidity != null and obj.termValidity != ''">
                 and b.term_validity = #{obj.termValidity,jdbcType=DECIMAL}
             </if>
-            <if test="obj.status != null and obj.status != ''">
-                and b.status LIKE CONCAT('%',#{obj.status,jdbcType=VARCHAR},'%')
+            <if test="obj.status != null and obj.status != 3">
+                and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.type != null and obj.type != ''">
-                and b.type LIKE CONCAT('%',#{obj.type,jdbcType=VARCHAR},'%')
+            <if test="obj.status != 3">
+                and b.status NOT IN (#{obj.status,jdbcType=VARCHAR})
+            </if>
+            <if test="obj.type != null">
+                and b.type = #{obj.type,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidDate != null and obj.bidDate != ''">
                 and b.bid_date = #{obj.bidDate,jdbcType=TIMESTAMP}
@@ -335,6 +347,9 @@
         UPDATE `bid` SET
         <if test="status != null and status != ''">
             status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="bidMoney != null and bidMoney != ''">
+            bid_money = #{bidMoney,jdbcType=DECIMAL}
         </if>
         <if test="invalidDate != null and invalidDate != ''">
             invalid_date = #{invalidDate,jdbcType=TIMESTAMP}

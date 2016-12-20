@@ -3,7 +3,7 @@
 <div class="admin-content">
     <div class="admin-content-body">
         <div class="am-cf am-padding">
-            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">订单信息</strong> / <small>订单信息审核</small></div>
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">订单信息</strong> / <small>订单查询</small></div>
 
         </div>
         <hr>
@@ -13,21 +13,21 @@
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">买家：</span>
-                            <input type="text" name="buyersName" class="am-input-lg" placeholder="购买人" value="${trade.buyersName}"/>
+                            <input type="text" name="buyersName" id="buyersId" class="am-input-lg" placeholder="购买人" value="${trade.buyersName}"/>
                         </div>
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">卖家：</span>
-                            <input type="text" name="sellerName" class="am-input-lg" placeholder="出售人" value="${trade.sellerName}"/>
+                            <input type="text" name="sellerName" id="sellerId" class="am-input-lg" placeholder="出售人" value="${trade.sellerName}"/>
                         </div>
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">球鞋名称：</span>
-                            <input type="text" name="bftName" class="am-input-lg" placeholder="球鞋名称" value="${trade.bftName}"/>
+                            <input type="text" name="bftName" id="bftId" class="am-input-lg" placeholder="球鞋名称" value="${trade.bftName}"/>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">尺码：</span>
-                            <select class="am-input-lg" name="bftSize">
+                            <select class="am-input-lg" name="bftSize" id="bftSize">
                                 <option value="0">--请选择--</option>
                                 <c:if test="${not empty sizeList}">
                                     <c:forEach items="${sizeList}" var="sizes">
@@ -45,7 +45,7 @@
                         </div>
                         <div class="am-u-lg-4 am-u-end">
                             <span class="am-text-lg am-text-middle">状态：</span>
-                            <select class="am-input-lg" name="status">
+                            <select class="am-input-lg" name="status" id="status">
                                 <option value="-1">--请选择--</option>
                                 <c:if test="${not empty statusList}">
                                     <c:forEach items="${statusList}" var="status">
@@ -133,6 +133,7 @@
                                 </c:choose>
                                 <td>${trade.transactionDate}</td>
                                 <td>${trade.endDate}</td>
+                                <td><a href="javascript:void(0);" class="sbt-on" data_id="${trade.id}">详情</a></td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -153,6 +154,28 @@
 //        var div1 = "#dt";
 //        var div2 = "#dtd";
 //        getDatePic(div1,div2);
+
+        $('.sbt-on').click(function () {
+            var fid = $(this).attr("data_id");
+            var buyersName = $('#buyersId').val();
+            var sellerName = $('#sellerId').val();
+            var bftName = $('#bftId').val();
+            var bftSize = $('#bftSize').val();
+            var status = $('#status').val();
+            var startTime = $('#dt').val();
+            var endTime = $('#dtd').val();
+            $.post("/trade/tradeList",{
+                'fid': fid,
+                'buyersName' : buyersName,
+                'sellerName' : sellerName,
+                'bftName' : bftName,
+                'bftSize' : bftSize,
+                'status' : status,
+                'startTime' : startTime,
+                'endTime' : endTime
+            },function(res){
+            });
+        });
 
     });
 </script>

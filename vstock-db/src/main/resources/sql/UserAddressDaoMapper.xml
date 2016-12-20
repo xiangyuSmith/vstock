@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IUserAddressDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.UserAddress">
+        <id property="id" column="id"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="localArea" property="localArea" jdbcType="VARCHAR"/>
+        <result column="detailedAddress" property="detailedAddress" jdbcType="VARCHAR"/>
+        <result column="zipCode" property="zipCode" jdbcType="VARCHAR"/>
+        <result column="consigneeName" property="consigneeName" jdbcType="VARCHAR"/>
+        <result column="phoneNumber" property="phoneNumber" jdbcType="VARCHAR"/>
+        <result column="landlineNumber" property="landlineNumber" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ua.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ua.user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="localArea != null and localArea != ''">
+                and ua.local_area = #{localArea,jdbcType=VARCHAR}
+            </if>
+            <if test="detailedAddress != null and detailedAddress != ''">
+                and ua.detailed_address = #{detailedAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="zipCode != null and zipCode != ''">
+                and ua.zip_code = #{zipCode,jdbcType=VARCHAR}
+            </if>
+            <if test="consigneeName != null and consigneeName != ''">
+                and ua.consignee_name = #{consigneeName,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and ua.phone_number = #{phoneNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="landlineNumber != null and landlineNumber != ''">
+                and ua.landline_number = #{landlineNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and ua.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null and type != ''">
+                and ua.type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and ua.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and ua.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ua.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and ua.user_id = #{obj.userId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.localArea != null and obj.localArea != ''">
+                and ua.local_area = #{obj.localArea,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.detailedAddress != null and obj.detailedAddress != ''">
+                and ua.detailed_address = #{obj.detailedAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.zipCode != null and obj.zipCode != ''">
+                and ua.zip_code = #{obj.zipCode,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.consigneeName != null and obj.consigneeName != ''">
+                and ua.consignee_name = #{obj.consigneeName,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.phoneNumber != null and obj.phoneNumber != ''">
+                and ua.phone_number = #{obj.phoneNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.landlineNumber != null and obj.landlineNumber != ''">
+                and ua.landline_number = #{obj.landlineNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                and ua.type = #{obj.type,jdbcType=INTEGER}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and ua.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and ua.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ua.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ua.user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="localArea != null and localArea != ''">
+                and ua.local_area LIKE CONCAT('%',#{localArea,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="detailedAddress != null and detailedAddress != ''">
+                and ua.detailed_address LIKE CONCAT('%',#{detailedAddress,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="zipCode != null and zipCode != ''">
+                and ua.zip_code LIKE CONCAT('%',#{zipCode,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="consigneeName != null and consigneeName != ''">
+                and ua.consignee_name LIKE CONCAT('%',#{consigneeName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and ua.phone_number LIKE CONCAT('%',#{phoneNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="landlineNumber != null and landlineNumber != ''">
+                and ua.landline_number LIKE CONCAT('%',#{landlineNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="status != null and status != ''">
+                and ua.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null and type != ''">
+                and ua.type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and ua.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and ua.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ua.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and ua.user_id = #{obj.userId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.localArea != null and obj.localArea != ''">
+                and ua.local_area LIKE CONCAT('%',#{obj.localArea,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.detailedAddress != null and obj.detailedAddress != ''">
+                and ua.detailed_address LIKE CONCAT('%',#{obj.detailedAddress,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.zipCode != null and obj.zipCode != ''">
+                and ua.zip_code LIKE CONCAT('%',#{obj.zipCode,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.consigneeName != null and obj.consigneeName != ''">
+                and ua.consignee_name LIKE CONCAT('%',#{obj.consigneeName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.phoneNumber != null and obj.phoneNumber != ''">
+                and ua.phone_number LIKE CONCAT('%',#{obj.phoneNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.landlineNumber != null and obj.landlineNumber != ''">
+                and ua.landline_number LIKE CONCAT('%',#{obj.landlineNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                and ua.type = #{obj.type,jdbcType=INTEGER}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and ua.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and ua.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        ua.id as id,
+        ua.user_id as userId,
+        ua.local_area as localArea,
+        ua.detailed_address as detailedAddress,
+        ua.zip_code as zipCode,
+        ua.consignee_name as consigneeName,
+        ua.phone_number as phoneNumber,
+        ua.landline_number as landlineNumber,
+        ua.status as status,
+        ua.type as type,
+        ua.create_date as createDate,
+        ua.invalid_date as invalidDate
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.UserAddress" resultType="com.vstock.db.entity.UserAddress">
+        SELECT u.uname,
+        <include refid="Base_Column_List"/>
+        FROM user_address ua LEFT JOIN `user` u ON ua.user_id = u.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
+        SELECT COUNT(*) FROM user_address ua
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `user_address`
+        (`id`,`user_id`,`local_area`,`detailed_address`,`zip_code`,`consignee_name`,`phone_number`,`landline_number`,`status`,`create_date`,`invalid_date`)
+        VALUES(null,#{userId},#{localArea},#{detailedAddress},#{zipCode},#{consigneeName},#{phoneNumber},#{landlineNumber},#{status},#{createDate},#{invalidDate})
+    </insert>
+
+    <update id="update">
+        UPDATE `user_address` SET
+        <if test="status != null and status != ''">
+            status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="invalidDate != null and invalidDate != ''">
+            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+        </if>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

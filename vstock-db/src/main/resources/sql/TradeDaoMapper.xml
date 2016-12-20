@@ -19,6 +19,7 @@
         <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
         <result column="sellerName" property="sellerName" jdbcType="VARCHAR"/>
         <result column="buyersName" property="buyersName" jdbcType="VARCHAR"/>
+        <result column="company_name" property="company_name" jdbcType="VARCHAR"/>
         <association property="bid" column="bid"
                      javaType="com.vstock.db.entity.Bid">
             <id column="b_id" property="id"/>
@@ -252,9 +253,10 @@
     </select>
 
     <select id="findAndBid" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
-        SELECT b.bft_name,b.bft_size,
+        SELECT b.bft_name,b.bft_size,li.company_name,
         <include refid="Base_Column_List"/>
         FROM trade t LEFT JOIN bid b ON t.bid_id = b.id
+        LEFT JOIN logistics_information li ON t.id = li.trade_id
         <include refid="SearchAllByPage_Where_Clause"/>
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
     </select>
