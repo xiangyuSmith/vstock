@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IPaymentDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.Payment">
+        <id property="id" column="id"/>
+        <result column="payment_user_id" property="payment_user_id" jdbcType="INTEGER"/>
+        <result column="order_record_id" property="order_record_id" jdbcType="INTEGER"/>
+        <result column="payment_number" property="payment_number" jdbcType="VARCHAR"/>
+        <result column="payment_status" property="payment_status" jdbcType="INTEGER"/>
+        <result column="payment_mode" property="payment_mode" jdbcType="INTEGER"/>
+        <result column="payment_type" property="payment_type" jdbcType="INTEGER"/>
+        <result column="payment_date" property="payment_date" jdbcType="TIMESTAMP"/>
+        <result column="payment_over_date" property="payment_over_date" jdbcType="TIMESTAMP"/>
+        <result column="payment_money" property="payment_money" jdbcType="DECIMAL"/>
+        <result column="payment_explain" property="payment_explain" jdbcType="VARCHAR"/>
+        <result column="sgin" property="sgin" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND p.id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND p.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND p.id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND p.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        p.id as id,
+        p.payment_user_id as payment_user_id,
+        p.order_record_id as order_record_id,
+        p.payment_number as payment_number,
+        p.payment_status as payment_status,
+        p.payment_mode as payment_mode,
+        p.payment_type as payment_type,
+        p.payment_date as payment_date,
+        p.payment_over_date as payment_over_date,
+        p.payment_money as payment_money,
+        p.payment_explain as payment_explain,
+        p.sgin as sgin,
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.Payment" resultType="com.vstock.db.entity.Payment">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM payment p
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY p.payment_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.Payment" resultType="Integer">
+        SELECT COUNT(*) FROM payment p
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `payment`
+        (`id`,`payment_user_id`,`order_record_id`,`payment_number`,`payment_status`,`payment_mode`,`payment_type`,`payment_date`,`payment_over_date`,`payment_money`,`payment_explain`,`sign`)
+        VALUES(null,#{payment_user_id},#{order_record_id},#{payment_number},#{payment_status},#{payment_mode},#{payment_type},#{payment_date},#{payment_over_date},#{payment_money},#{payment_explain},#{sign})
+    </insert>
+
+    <update id="update">
+        UPDATE `payment` SET
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

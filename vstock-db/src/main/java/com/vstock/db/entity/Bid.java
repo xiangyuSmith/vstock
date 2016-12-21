@@ -13,11 +13,12 @@ public class Bid implements Serializable {
     public final static String BID_MD5_MARK = "|";
     public final static String BID_MD5_MARK_NOTIFY = "~|~";
 
-    public final static int STATUS_INIT = 0; // 已生效
-    public final static int STATUS_OVERDUE = 1; // 已过期
-    public final static int STATUS_PENDING = 10; // 待付款
-    public final static int STATUS_LOCKING = 11; // 已锁定
-    public final static int STATUS_SUCCESS = 20; // 交易成功
+
+    public final static int STATUS_PENDING = 0; // 待付款
+    public final static int STATUS_INIT = 10; // 已生效
+    public final static int STATUS_OVERDUE = 11; // 已过期
+    public final static int STATUS_LOCKING = 20; // 已锁定
+    public final static int STATUS_SUCCESS = 30; // 交易成功
 
     public final static String TIME_ONE = "1";
     public final static String TIME_THREE = "3";
@@ -50,6 +51,28 @@ public class Bid implements Serializable {
     }
 
     public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
+        this.id = id;
+        this.userId = userId;
+        this.basicinformationId = basicinformationId;
+        this.paymentId = paymentId;
+        this.bftName = bftName;
+        this.bftSize = bftSize;
+        this.bidMoney = bidMoney;
+        this.bidFreight = bidFreight;
+        this.bidBond = bidBond;
+        this.latelyBid = latelyBid;
+        this.termValidity = termValidity;
+        this.status = status;
+        this.type = type;
+        this.sign = sign;
+        this.bidDate = bidDate;
+        this.invalidDate = invalidDate;
+        this.highestBid = highestBid;
+        this.minimumSellingPrice = minimumSellingPrice;
+        this.basicinformation = basicinformation;
+    }
+
+    public Bid( Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;

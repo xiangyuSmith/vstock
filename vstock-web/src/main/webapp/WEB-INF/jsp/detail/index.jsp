@@ -232,9 +232,13 @@
 <%@include file="../layout/bottom.jsp" %>
 <script>
     $(function(){
+
         var loginType = $(".loginType").val();
+
         var bname = $(".basicinformationName").val();
+
         var bId = $(".basicinformationId").val();
+
         $("#sell").click(function(){
             if(loginType == "false"){
                 $("#login-click").click();
@@ -259,6 +263,28 @@
             loadingPurchaseListclose();
         });
 
+        /**  ----- 清单 ----- **/
+        $("#now-buyer-sell").click(function(){
+            loadingSaleListclose();
+        });
+        $("#seller_submit_trade_").click(function(){
+            var amount = $("#seller_detailed_amount").val();
+            var size = $("#seller_detailed_size").val();
+            var type = 0;
+            sendRequest("/trade",{
+                "bname": bname,
+                "bId": bId,
+                'amount': amount,
+                'size' : size,
+                'type': type
+            },function(res){
+
+            });
+        });
+
+
+        /**  ----- 叫价/出价 ----- **/
+
         $("#seller_btn_step_final").click(function(){
             if ($("#seller_bid_amount").val() == "" || $("#seller_bid_amount").val() == null || $("#seller_bid_amount").val() < 0) {
                 alertshow("出售金额不能为空，且必须大于0");
@@ -279,8 +305,8 @@
             sendRequest("/bid",{
                 "bname": bname,
                 "bId": bId,
-                'size': amount,
-                'amount': size,
+                'size': size,
+                'amount': amount,
                 'overdueTime': overdueTime,
                 'type': type
             },function(res){

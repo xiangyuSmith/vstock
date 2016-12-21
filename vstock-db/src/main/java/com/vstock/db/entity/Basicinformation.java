@@ -18,6 +18,23 @@ public class Basicinformation implements Serializable {
     public final static String[] sizes = {"35","35.5","36","36.5","37","37.5","38","38.5","39","39.5","40","40.5","41","41.5","42","42.5"
     ,"43","43.5","44","44.5","45","45.5","46","46.5","47","47.5","48","48.5"};
 
+    /**
+     * sizes 是否包含 str
+     * @param str
+     * @return
+     */
+    public static String isContainsSizes(String str){
+        if(str == null){
+            return "";
+        }
+        for(int i = 0;i<sizes.length;i++){
+            if(sizes[i].contains(str)){
+                return str;
+            }
+        }
+        return "40";
+    }
+
     @Id
     private String id;
     private int bid;

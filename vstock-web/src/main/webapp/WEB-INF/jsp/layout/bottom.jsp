@@ -24,6 +24,7 @@
 <%@include file="../common/popup/loginwindow.jsp" %>
 <%@include file="../common/popup/salelistwindow.jsp" %>
 <%@include file="../common/popup/purchaselistwindow.jsp" %>
+<%@include file="../common/popup/selldetailedlist.jsp" %>
 
 <div class="am-modal am-modal-alert" tabindex="-1" id="forex-alert">
     <div class="am-modal-dialog">

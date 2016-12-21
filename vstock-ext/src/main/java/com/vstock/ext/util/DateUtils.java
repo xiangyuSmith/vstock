@@ -31,6 +31,16 @@ public class DateUtils {
     }
 
     /**
+     * 在当前时间追加 15 分钟
+     * @return
+     */
+    public static String getNowdateAddmm(){
+        Date date = new Date();
+        date.setTime(date.getTime() + 15*60*1000);
+        return dateToString(date);
+    }
+
+    /**
      * addDaysToDate:(增加几天到当前的Date). <br/>
      *
      * @param numDays

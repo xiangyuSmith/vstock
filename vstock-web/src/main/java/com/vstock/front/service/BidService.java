@@ -4,6 +4,8 @@ import com.vstock.db.dao.IBidDao;
 import com.vstock.db.entity.Bid;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.security.md.ToolMD5;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class BidService {
+
+    final static Logger logger = Logger.getLogger(BidService.class);
 
     public final static String TIME_ONE = "1";
     public final static String TIME_THREE = "3";
@@ -49,6 +53,34 @@ public class BidService {
      */
     public int insert(Bid record){return bidDao.insert(record);}
 
+    public int createBid(String bName, int uid, int bId, String size, double amount,String overdueTime,
+                         int type,BigDecimal bidBond,int status,String bidDate,String bidMd5Key){
+        if(amount <= 0){
+            logger.warn("叫价金额为0或小于0");
+            return 0;
+        }
+        String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
+                .append("bId=").append(bId)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("bName=").append(bName)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("size=").append(size)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("amount=").append(amount)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("Md5Sign=").append(bidMd5Key)
+                .toString());
+        Bid bid = new Bid();
+        bid.setBftName(bName);
+        bid.setUserId(uid);
+        bid.setBasicinformationId(bId);
+        bid.setBftSize(size);
+        bid.setBidMoney(new BigDecimal(amount));
+        bid.setInvalidDate(overdueTime);
+        bid.setSign(sign);
+        bid.setType(type);
+        bid.setBidBond(bidBond);
+        bid.setStatus(status);
+        bid.setBidDate(bidDate);
+        return insert(bid);
+    }
+
     /**
      * 修改
      * @param record
@@ -56,16 +88,6 @@ public class BidService {
      */
     public int update(Bid record){
         return bidDao.update(record.getStatus(),record.getBidMoney(),record.getInvalidDate(),record.getId());
-    }
-
-    /**
-     * 带峰值查询
-     * @param record
-     * @param page
-     * @return
-     */
-    public List<Bid> findAndPricePeak(Bid record, Page page){
-        return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());
     }
 
     //出售记录个人中心查询
@@ -120,23 +142,4 @@ public class BidService {
                 return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
         }
     }
-
-    public int updateBid(String id, String status, String endDate, String bidMoney){
-        Bid record = new Bid();
-        if (id != null && !"".equals(id)) {
-            record.setId(Integer.parseInt(id));
-        }
-        if (status != null && !"".equals(status)) {
-            record.setStatus(Integer.parseInt(status));
-        }
-        if (endDate != null && !"".equals(endDate)) {
-            record.setInvalidDate(endDate);
-        }
-        if (bidMoney != null && !"".equals(bidMoney)) {
-            BigDecimal bigDecimal = new BigDecimal(bidMoney);
-            record.setBidMoney(bigDecimal);
-        }
-        return this.update(record);
-    }
-
 }

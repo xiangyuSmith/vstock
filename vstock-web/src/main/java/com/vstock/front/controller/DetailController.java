@@ -34,7 +34,7 @@ public class DetailController extends BaseController{
 
     @RequestMapping
     public String index(@RequestParam String proName, ModelMap modelMap){
-        String size = request.getParameter("size");
+        String size = Basicinformation.isContainsSizes(request.getParameter("size"));
         Basicinformation basicinformation = new Basicinformation();
         basicinformation.setName(proName);
         basicinformation = basicinformationService.findObj(basicinformation);

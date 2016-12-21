@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<style type="text/css">
-    .pre-bid input::-webkit-input-placeholder{ font-size: 14px; }
-    .pre-bid .select-pom{width: 90%;height: 37px;border: 1px solid #cdcdcd;background-color: #eee;box-shadow: 0px 2px #999;}
+<style>
+    #my-popup-sell-detailed .am-selected-btn{ width: 100%; }
+    #my-popup-sell-detailed .am-selected{ width: 100%; }
 </style>
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-sell-bid">
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-sell-detailed">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #00CD61;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
-                <span class="am-fl am-text-lg">最新叫价</span>
+                <span class="am-fl am-text-lg">出售清单</span>
             </div>
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
         </div>
@@ -77,31 +77,18 @@
                         <p class="layout-font-size-18 am-margin-bottom-sm">出售金额：</p>
                         <div class="am-form-group am-form-icon">
                             <i class="am-icon-cny layout-font-size-18 am-margin-top-xs" style="margin-top: -7px;color: #585858;"></i>
-                            <input id="seller_bid_amount" type="text" class="am-form-field" />
+                            <input id="seller_detailed_amount" type="text" class="am-form-field" value="${pricePeak1.highestBid}" readonly/>
                         </div>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-lg">
-                        <div class="am-u-md-6 am-padding-0">
+                        <div class="am-u-md-12 am-padding-0">
                             <p class="layout-font-size-18 am-margin-bottom-sm">尺码</p>
-                            <div>
-                                <select id="seller_buy_size" class="select-pom" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 80,  maxHeight: 200}">
-                                    <option value=""></option>
-                                    <c:forEach items="${sizes}" var="s">
-                                        <option value="${s}">${s}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-u-md-6 am-padding-0">
-                            <p class="layout-font-size-18 am-margin-bottom-sm" style="padding-left: 8px;">有效期</p>
-                            <div style="padding-left: 8px;">
-                                <select id="seller_buy_time" class="am-input-sm am-form-field select-pom" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 80,  maxHeight: 200}">
-                                    <option value="1">1天</option>
-                                    <option value="3">3天</option>
-                                    <option value="5">5天</option>
-                                    <option value="7">7天</option>
-                                </select>
-                            </div>
+                            <input id="seller_detailed_size" type="text" class="am-form-field" value="${pricePeak1.peakSize}" readonly/>
+                            <%--<div>--%>
+                                <%--<select id="seller_detailed_size" placeholder="请选择" data-am-selected="{btnSize: 'xl',maxWidth:100,  maxHeight: 200}" disable>--%>
+                                    <%--<option value="${pricePeak1.peakSize}">${pricePeak1.peakSize}</option>--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
                         </div>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
@@ -122,7 +109,7 @@
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16">保证金：</span><span class="am-u-md-6 am-padding-0 layout-font-size-20 am-text-right">￥10.00</span><br/>
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16" style="height: 38px;line-height: 38px;">支付金额：</span><span class="am-u-md-6 am-padding-0 layout-font-size-22 am-text-right" style="color: #E75C58;font-weight: bold;">10.00元</span><br/>
                     <div class="am-text-center am-margin-top-xl">
-                        <a href="javascript:;" id="seller_btn_step_final" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
+                        <a href="javascript:;" id="seller_submit_trade_" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
                     </div>
                 </div>
             </div>

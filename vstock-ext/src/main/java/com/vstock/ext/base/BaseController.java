@@ -12,9 +12,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-/**
- * Created by xiangyu on 2016/11/8.
- */
 public class BaseController {
 
     protected HttpServletRequest request;
