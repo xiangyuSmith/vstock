@@ -54,6 +54,14 @@ public class BidService {
      */
     public List<Bid> findAndPricePeak(Bid record, Page page){return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());}
 
+    public Bid findByBid(Bid record, Page page){
+        List<Bid> bidList = findAll(record,page);
+        if(bidList.size() > 0){
+            return bidList.get(0);
+        }
+        return null;
+    }
+
     /**
      * 新增
      * @param record

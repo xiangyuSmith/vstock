@@ -278,7 +278,11 @@
                 'size' : size,
                 'type': type
             },function(res){
+                if(res.retCode == 1){
 
+                }else{
+                    alertshow(res.retMsg);
+                }
             });
         });
 

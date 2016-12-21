@@ -1,8 +1,10 @@
 package com.vstock.db.dao;
 
+import com.vstock.db.entity.UserAssets;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 
 /**
  * Created by administor on 2016/12/6.
