@@ -73,7 +73,6 @@ public class TradeService {
 
     //个人中心出售查询
     public List<Trade> findTrade(Trade record, Page page){
-        page.setPageSize(5);
         return this.findAndBid(record, page);
     }
 

@@ -60,6 +60,7 @@ public class UserController extends BaseController {
         trade.setSellerId(bid.getUserId());
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,"1");
+        page.setPageSize(5);
         List<Bid> bidList = bidService.findBid(bid,page);
         List<Trade> tradeList = tradeService.findTrade(trade,page);
         model.addAttribute("bidList",bidList);
@@ -123,6 +124,7 @@ public class UserController extends BaseController {
         trade.setBuyersId(bid.getUserId());
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,"1");
+        page.setPageSize(5);
         List<Bid> bidList = bidService.findBid(bid,page);
         List<Trade> tradeList = tradeService.findTrade(trade,page);
         model.addAttribute("bidList",bidList);
