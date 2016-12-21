@@ -153,7 +153,7 @@
                     <td>
                         <div class="am-dropdown" data-am-dropdown>
                             <c:choose>
-                                <c:when test="${trade.status == 0}">
+                                <c:when test="${trade.status == 1}">
                                     <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                                 </c:when>
                                 <c:otherwise>
