@@ -47,6 +47,14 @@ public class BidService {
     public int findCount(Bid record){return bidDao.findCount(record);}
 
     /**
+     * 关联峰值表查询
+     * @param record
+     * @param page
+     * @return
+     */
+    public List<Bid> findAndPricePeak(Bid record, Page page){return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());}
+
+    /**
      * 新增
      * @param record
      * @return

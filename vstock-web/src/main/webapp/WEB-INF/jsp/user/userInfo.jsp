@@ -62,7 +62,7 @@
                     <span class="am-margin-left-xs userInfo-div">登录密码：</span>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-left-0 am-padding-left-0 am-u-end">
-                    <a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 350}">
+                    <a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 380}">
                         修改密码
                     </a>
 
@@ -85,8 +85,11 @@
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
                                         <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" type="text" placeholder="请输入新密码" required/>
                                     </div>
-                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom-sm">
                                         <input class="am-form-field" style="min-height: 50px;" type="text" placeholder="请再次输入新密码" required/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
+                                        <a href="javascript:void(0);" class="am-btn am-btn-danger am-center"></a>
                                     </div>
                                 </div>
                             </div>

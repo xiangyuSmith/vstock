@@ -138,6 +138,22 @@
             $th.attr("disabled", false);
         });
 
+        $("body").on("click",".sale-del",function(){
+            var $this = $(this);
+            var id = $this.attr("del_data_id");
+            sendRequest("/bid/updateBid",{
+                id : id,
+                status : '3'
+            },function(res) {
+                if (res.sgin == 1){
+                    alertshow("删除成功！");
+                    $('.offer-btn').click();
+                }else {
+                    alertshow("删除失败！");
+                }
+            });
+        });
+
         $("body").on("click",".deliver-goods",function(){
             var $this = $(this);
             $this.parent().parent().parent().removeClass("am-active");

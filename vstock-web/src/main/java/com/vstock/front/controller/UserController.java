@@ -1,9 +1,6 @@
 package com.vstock.front.controller;
 
-import com.vstock.db.entity.Bid;
-import com.vstock.db.entity.Trade;
-import com.vstock.db.entity.User;
-import com.vstock.db.entity.UserAddress;
+import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
@@ -37,6 +34,9 @@ public class UserController extends BaseController {
 
     @Autowired
     UserAddressService userAddressService;
+
+    @Autowired
+    UserAssetsService userAssetsService;
 
     @Autowired
     CityAddressService cityAddressService;
@@ -145,7 +145,13 @@ public class UserController extends BaseController {
 
     //我的资产
     @RequestMapping("userAssets")
-    public String userAssets(){
+    public String userAssets(ModelMap model){
+        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        UserAssets record = new UserAssets();
+        record.setUserId(Integer.parseInt(String.valueOf(suid)));
+        List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
+        List<UserAssets> basUserList = userAssetsService.findBasicinformationRoseAll(record);
+        model.put("userAssetsList",userAssetsList);
         return "/user/userAssets";
     }
 

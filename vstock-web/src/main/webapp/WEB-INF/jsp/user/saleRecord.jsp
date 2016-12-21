@@ -79,16 +79,11 @@
                                     <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">重新支付</span></a></li>
                                 </c:if>
                                 <c:if test="${bid.status == 1}">
-                                    <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" href="javascript:void(0)"><img class="am-margin-right-xs" src="../../../assets/shoesImg/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
+                                    <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" del_data_id="${bid.id}" href="javascript:void(0)"><img class="am-margin-right-xs" src="../../../assets/shoesImg/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
                                 </c:if>
                             </ul>
                         </div>
                     </td>
-                    <%--<td class="span-img">--%>
-                        <%--<a href="#"><span style="display: block;width: 16px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: 6% 43%;"></span></a>--%>
-                        <%--<a href="#"><img class="am-fr" style="margin-top: -26%;" src="../../../assets/shoesImg/delete.png"/></a>--%>
-                        <%--&lt;%&ndash;<span style="display: block;width: 36px;height: 30px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -82px -23px;"></span>&ndash;%&gt;--%>
-                    <%--</td>--%>
                 </tr>
             </c:forEach>
         </c:if>

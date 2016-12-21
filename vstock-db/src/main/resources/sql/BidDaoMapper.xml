@@ -71,7 +71,7 @@
             <if test="status != null and status != 3">
                 and b.status = #{status,jdbcType=VARCHAR}
             </if>
-            <if test="status != 3">
+            <if test="status == 3">
                 and b.status NOT IN (#{status,jdbcType=VARCHAR})
             </if>
             <if test="type != null">
@@ -128,7 +128,7 @@
             <if test="obj.status != null and obj.status != 3">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != 3">
+            <if test="obj.status == 3">
                 and b.status NOT IN (#{obj.status,jdbcType=VARCHAR})
             </if>
             <if test="obj.type != null">
@@ -185,7 +185,7 @@
             <if test="status != null and status != 3">
                 and b.status = #{status,jdbcType=VARCHAR}
             </if>
-            <if test="status != 3">
+            <if test="status == 3">
                 and b.status NOT IN (#{status,jdbcType=VARCHAR})
             </if>
             <if test="type != null">
@@ -242,7 +242,7 @@
             <if test="obj.status != null and obj.status != 3">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != 3">
+            <if test="obj.status == 3">
                 and b.status NOT IN (#{obj.status,jdbcType=VARCHAR})
             </if>
             <if test="obj.type != null">

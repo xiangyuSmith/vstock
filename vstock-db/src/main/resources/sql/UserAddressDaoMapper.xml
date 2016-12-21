@@ -45,10 +45,10 @@
             <if test="landlineNumber != null and landlineNumber != ''">
                 and ua.landline_number = #{landlineNumber,jdbcType=VARCHAR}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and ua.status = #{status,jdbcType=VARCHAR}
             </if>
-            <if test="type != null and type != ''">
+            <if test="type != null">
                 and ua.type = #{type,jdbcType=INTEGER}
             </if>
             <if test="createDate != null and createDate != ''">
@@ -87,10 +87,10 @@
             <if test="obj.landlineNumber != null and obj.landlineNumber != ''">
                 and ua.landline_number = #{obj.landlineNumber,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != null and obj.status != ''">
+            <if test="obj.status != null">
                 and ua.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.type != null and obj.type != ''">
+            <if test="obj.type != null">
                 and ua.type = #{obj.type,jdbcType=INTEGER}
             </if>
             <if test="obj.createDate != null and obj.createDate != ''">
@@ -129,10 +129,10 @@
             <if test="landlineNumber != null and landlineNumber != ''">
                 and ua.landline_number LIKE CONCAT('%',#{landlineNumber,jdbcType=VARCHAR},'%')
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and ua.status = #{status,jdbcType=VARCHAR}
             </if>
-            <if test="type != null and type != ''">
+            <if test="type != null">
                 and ua.type = #{type,jdbcType=INTEGER}
             </if>
             <if test="createDate != null and createDate != ''">
@@ -171,10 +171,10 @@
             <if test="obj.landlineNumber != null and obj.landlineNumber != ''">
                 and ua.landline_number LIKE CONCAT('%',#{obj.landlineNumber,jdbcType=VARCHAR},'%')
             </if>
-            <if test="obj.status != null and obj.status != ''">
+            <if test="obj.status != null">
                 and ua.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.type != null and obj.type != ''">
+            <if test="obj.type != null">
                 and ua.type = #{obj.type,jdbcType=INTEGER}
             </if>
             <if test="obj.createDate != null and obj.createDate != ''">
@@ -209,7 +209,7 @@
         ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="findCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
+    <select id="findCount" parameterType="com.vstock.db.entity.UserAddress" resultType="Integer">
         SELECT COUNT(*) FROM user_address ua
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>

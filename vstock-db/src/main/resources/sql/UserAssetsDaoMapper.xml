@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IUserAssetsDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.UserAssets">
+        <id property="id" column="id"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="userAssetsSize" property="userAssetsSize" jdbcType="VARCHAR"/>
+        <result column="purchaseDate" property="purchaseDate" jdbcType="TIMESTAMP"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="sgin" property="sgin" jdbcType="VARCHAR"/>
+        <association property="basicinformationRose" column="basicinformationRose"
+                     javaType="com.vstock.db.entity.BasicinformationRose">
+            <id column="bid" property="id"/>
+            <result column="current_market_value" property="currentMarketValue"/>
+            <result column="change_range" property="changeRange"/>
+            <result column="percentage_change" property="percentageChange"/>
+            <result column="type" property="type"/>
+        </association>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ua.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ua.user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and ua.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="userAssetsSize != null and userAssetsSize != ''">
+                and ua.user_assets_size = #{userAssetsSize,jdbcType=VARCHAR}
+            </if>
+            <if test="purchaseDate != null and purchaseDate != ''">
+                and ua.purchase_date = #{purchaseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="money != null and money != ''">
+                and ua.money = #{money,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null">
+                and ua.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate!= null and createDate != ''">
+                and ua.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and ua.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sgin != null and sgin != ''">
+                and ua.sgin = #{sgin,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ua.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and ua.user_id = #{obj.userId,jdbcType=INTEGER}
+            </if>
+
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and ua.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userAssetsSize != null and obj.userAssetsSize != ''">
+                and ua.user_assets_size = #{obj.userAssetsSize,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.purchaseDate != null and obj.purchaseDate != ''">
+                and ua.purchase_date = #{obj.purchaseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.money != null and obj.money != ''">
+                and ua.money = #{obj.money,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate!= null and obj.createDate != ''">
+                and ua.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and ua.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sgin != null and obj.sgin != ''">
+                and ua.sgin = #{obj.sgin,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ua.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ua.user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                and ua.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="userAssetsSize != null and userAssetsSize != ''">
+                and ua.user_assets_size LIKE CONCAT('%',#{userAssetsSize,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="purchaseDate != null and purchaseDate != ''">
+                and ua.purchase_date = #{purchaseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="money != null and money != ''">
+                and ua.money = #{money,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null">
+                and ua.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate!= null and createDate != ''">
+                and ua.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and ua.invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="sgin != null and sgin != ''">
+                and ua.sgin = #{sgin,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ua.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and ua.user_id = #{obj.userId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and ua.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userAssetsSize != null and obj.userAssetsSize != ''">
+                and ua.user_assets_size LIKE CONCAT('%',#{obj.userAssetsSize,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.purchaseDate != null and obj.purchaseDate != ''">
+                and ua.purchase_date = #{obj.purchaseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.money != null and obj.money != ''">
+                and ua.money = #{obj.money,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate!= null and obj.createDate != ''">
+                and ua.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and ua.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sgin != null and obj.sgin != ''">
+                and ua.sgin = #{obj.sgin,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        ua.id as id,
+        ua.user_id as userId,
+        ua.basicinformation_id as basicinformationId,
+        ua.user_assets_size as userAssetsSize,
+        ua.purchase_date as purchaseDate,
+        ua.money as money,
+        ua.status as status,
+        ua.create_date as createDate,
+        ua.invalid_date as invalidDate,
+        ua.sgin as sgin
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.UserAssets" resultType="com.vstock.db.entity.UserAssets">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_assets ua
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findBasicinformationRoseAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
+        SELECT br.current_market_value, br.change_range, br.percentage_change, br.type,
+        <include refid="Base_Column_List"/>
+        FROM user_assets ua LEFT JOIN basicinformation_rose br ON
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.UserAssets" resultType="Integer">
+        SELECT COUNT(*) FROM user_assets ua
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `user_assets`
+        (`id`,`user_id`,`basicinformation_id`,`user_assets_size`,`purchase_date`,`money`,`status`,`create_date`,`invalid_date`,`sgin`)
+        VALUES(null,#{userId},#{basicinformationId},#{userAssetsSize},#{purchaseDate},#{money},#{status},#{createDate},#{invalidDate},#{sgin})
+    </insert>
+
+    <update id="update">
+        UPDATE `user_assets` SET
+        <if test="status != null and status != ''">
+            status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="invalidDate != null and invalidDate != ''">
+            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+        </if>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
