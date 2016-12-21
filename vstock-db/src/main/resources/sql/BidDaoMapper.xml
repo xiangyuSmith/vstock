@@ -19,8 +19,8 @@
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
         <result column="bidDate" property="bidDate" jdbcType="TIMESTAMP"/>
         <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
-        <result column="highestBid" property="highestBid" jdbcType="DECIMAL"/>
-        <result column="minimumSellingPrice" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
         <association property="basicinformation" column="basicinformation"
                      javaType="com.vstock.db.entity.Basicinformation">
             <id column="bid" property="id"/>

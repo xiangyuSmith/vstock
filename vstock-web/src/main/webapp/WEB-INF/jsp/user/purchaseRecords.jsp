@@ -25,8 +25,22 @@
                     <td class="am-text-sm">${bid.bftSize}</td>
                     <td class="am-text-sm">${bid.bidDate}</td>
                     <td class="am-text-sm">￥<fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${bid.highestBid}" type="currency" pattern="#,#00.0#"/></td>
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${bid.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
+                    <c:choose>
+                        <c:when test="${not empty bid.highestBid}">
+                            <td class="am-text-sm">￥<fmt:formatNumber value="${bid.highestBid}" type="currency" pattern="#,#00.0#"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>--</td>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${not empty bid.highestBid}">
+                            <td class="am-text-sm">￥<fmt:formatNumber value="${bid.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>--</td>
+                        </c:otherwise>
+                    </c:choose>
                     <c:choose>
                         <c:when test="${bid.status == 0}">
                             <td class="am-text-sm">已生效</td>
