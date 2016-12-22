@@ -149,7 +149,7 @@
                                 <div class="am-fl am-margin-left-sm" style="width: 35%;">
                                     <a href="#">
                                         <span style="display: block;width: 50px;height: 45px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -65px -22px;"></span>
-                                        <span class="am-margin-left am-link-muted">删除</span>
+                                        <span class="am-margin-left am-link-muted userAssets-del" del_data_id="${userAssets.id}">删除</span>
                                     </a>
                                 </div>
                             </td>

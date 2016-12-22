@@ -18,6 +18,8 @@ import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/bid")
@@ -66,5 +68,18 @@ public class BidController extends BaseController{
             resultModel.setRetCode(resultModel.RET_OK);
         }
         return resultModel;
+    }
+
+    @RequestMapping("updateBid")
+    @ResponseBody
+    public Map<String,Object> updateBid(){
+        Map<String,Object> param = new HashMap<String,Object>();
+        String id = request.getParameter("id");
+        String status = request.getParameter("status");
+        String endDate = request.getParameter("endDate");
+        String bidMoney = request.getParameter("bidMoney");
+        int sgin = bidService.updateBid(id,status,endDate,bidMoney);
+        param.put("sgin",sgin);
+        return param;
     }
 }

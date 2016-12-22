@@ -157,4 +157,23 @@ public class BidService {
                 return DateUtils.dateToString(DateUtils.addDaysToDate(new Date(),1));
         }
     }
+
+    //修改状态
+    public int updateBid(String id, String status, String endDate, String bidMoney){
+        Bid record = new Bid();
+        if (id != null && !"".equals(id)) {
+            record.setId(Integer.parseInt(id));
+         }
+        if (status != null && !"".equals(status)) {
+            record.setStatus(Integer.parseInt(status));
+        }
+        if (endDate != null && !"".equals(endDate)) {
+            record.setInvalidDate(endDate);
+        }
+        if (bidMoney != null && !"".equals(bidMoney)) {
+             BigDecimal bigDecimal = new BigDecimal(bidMoney);
+             record.setBidMoney(bigDecimal);
+        }
+        return this.update(record);
+    }
 }
