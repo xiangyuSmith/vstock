@@ -210,6 +210,32 @@
                 }
             });
         });
+
+        $("body").on("click",".trade-pament",function(){
+            var $this = $(this);
+            var bidId = $this.attr("data-id");
+            var type = $this.attr("trade-type");
+            var amount = $this.parent().parent().parent().parent().prev().prev().prev().text();
+            amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
+            sendRequest("/trade/createTradePay",{
+                tradeId : bidId,
+                type : type,
+                amount : amount
+            },function(res) {
+                if (res.retCode == 1){
+                    alertshow("支付成功！");
+                    $this.parent().parent().parent().removeClass("am-active");
+                    $this.parent().parent().parent().children().first().attr("disabled", true);
+                    if (type == 2){
+                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                    }else {
+                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                    }
+                }else {
+                    alertshow("支付失败，请重新支付！");
+                }
+            });
+        });
     });
 </script>
 </html>

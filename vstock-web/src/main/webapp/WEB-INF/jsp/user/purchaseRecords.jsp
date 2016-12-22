@@ -121,40 +121,6 @@
                             <td class="am-text-sm">${status.bftName}</td>
                         </c:if>
                     </c:forEach>
-                    <%--<c:choose>--%>
-                        <%--<c:when test="${trade.status == 1}">--%>
-                            <%--<td class="am-text-sm">已下单待支付</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:when test="${trade.status == 2}">--%>
-                            <%--<td class="am-text-sm">已支付待发货</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:when test="${trade.status == 10}">--%>
-                            <%--<td class="am-text-sm">已发货待检验</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:when test="${trade.status == 20}">--%>
-                            <%--<td class="am-text-sm">检验通过</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:when test="${trade.status == 21}">--%>
-                            <%--<td class="am-text-sm">检验未通过</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:when test="${trade.status == 30}">--%>
-                            <%--<td class="am-text-sm">已发货待签收</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:when test="${trade.status == 40}">--%>
-                            <%--<td class="am-text-sm">交易完成</td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:otherwise>--%>
-                            <%--<td class="am-text-sm">交易关闭</td>--%>
-                        <%--</c:otherwise>--%>
-                    <%--</c:choose>--%>
-                    <%--<c:choose>--%>
-                        <%--<c:when test="${trade.status == 0}">--%>
-                            <%--<td><a href="#" class="am-btn am-btn-danger">去支付</a></td>--%>
-                        <%--</c:when>--%>
-                        <%--<c:otherwise>--%>
-                            <%--<td></td>--%>
-                        <%--</c:otherwise>--%>
-                    <%--</c:choose>--%>
                     <td>
                         <div class="am-dropdown" data-am-dropdown>
                             <c:choose>
@@ -166,7 +132,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <ul class="am-dropdown-content">
-                                <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
                             </ul>
                         </div>
                     </td>
