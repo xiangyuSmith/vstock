@@ -1,8 +1,11 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.ITradeDao;
+import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.security.md.ToolMD5;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ import java.util.List;
  */
 @Service
 public class TradeService {
+
+    final static Logger logger = Logger.getLogger(TradeService.class);
+
     @Autowired
     ITradeDao tradeDao;
 
@@ -45,10 +51,11 @@ public class TradeService {
      * 获取最后成交价
      * @return
      */
-    public Trade getLastTrade(int bid,String size, Page page){
+    public Trade getLastTrade(int bid,String size,int status, Page page){
         Trade trade = new Trade();
         trade.setBasicinformationId(bid);
         trade.setBftSize(size);
+        trade.setStatus(status);
         List<Trade> tradelist = findAll(trade,page);
         if(tradelist.size() != 0){
             return tradelist.get(0);
@@ -68,7 +75,7 @@ public class TradeService {
      * @return
      */
     public int update(Trade record){
-        return tradeDao.update(record.getStatus(),record.getEndDate(),record.getId());
+        return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
     }
 
     //个人中心出售查询
@@ -76,4 +83,26 @@ public class TradeService {
         return this.findAndBid(record, page);
     }
 
+    /**
+     * 直接出售第一步：下单
+     * @param trade
+     * @param tradeMd5Key
+     * @return
+     */
+    public int createTradeOne(Trade trade,String tradeMd5Key){
+        String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
+                .append("trade_no=").append(trade.getTrandeNo())
+                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bid_id=").append(trade)
+                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("transaction_money=").append(trade.getTransactionMoney())
+                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bft_size=").append(trade.getBftSize())
+                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("Md5Sign=").append(tradeMd5Key)
+                .toString());
+        trade.setSign(sign);
+        int result = insert(trade);
+        if(result == 0){
+            logger.warn("服务器繁忙，请稍后再试");
+            return 0;
+        }
+        return 1;
+    }
 }

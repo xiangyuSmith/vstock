@@ -38,11 +38,11 @@
             <span class="str-title-font">${basicinformation.chineselogo}</span>
         </div>
         <div class="am-g">
-            <div class="am-u-lg-4 am-u-md-2 am-u-sm-2 am-margin-top-xl">
+            <div class="am-u-lg-4 am-u-md-2 am-u-sm-12 am-margin-top-xl">
                 <div class="am-fl am-u-lg-4 am-padding-0 str-sudio">
                     <span class="layout-font-size-22">尺码</span>
-                    <div style="margin-top: 18px;">
-                        <select class="am-input-sm am-form-field" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 120,  maxHeight: 200}">
+                    <div style="margin-top: 15px;">
+                        <select id="choose_size" class="am-input-sm am-form-field" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 120,  maxHeight: 200}">
                             <c:choose>
                                 <c:when test="${not empty size}">
                                     <option value="${size}">${size}</option>
@@ -81,8 +81,8 @@
                     </span>
                 </div>
             </div>
-            <div class="am-u-lg-4 am-u-md-5 am-u-sm-5 am-bid-border am-margin-top-xl">
-                <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio am-padding-right-0">
+            <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
+                <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
                     <span class="str layout-font-size-22">买家最高出价</span><br/>
                     <span class="str layout-font-size-20">￥
                         <c:choose>
@@ -105,12 +105,14 @@
                         </c:choose>
                     </span>
                 </div>
-                <button id="sell" class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #3BD379;color: #fff;">出售</button>
+                <div class="am-fr am-u-md-3 am-u-sm-6 str-sudio am-padding-right-0">
+                    <button id="sell" class="am-btn am-btn-lg am-fr am-margin-top-lg am-margin-right-lg" style="background-color: #3BD379;color: #fff;">出售</button>
+                </div>
                 <input id="sell-click" type="hidden" data-am-modal="{target: '#my-popup-saleList',width: 900}" />
                 <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
             </div>
-            <div class="am-u-lg-4 am-u-md-5 am-u-sm-5 am-bid-border am-margin-top-xl">
-                <div class="am-fl am-u-lg-6 am-u-md-6 am-u-sm-12 str-sudio am-padding-right-0">
+            <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
+                <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
                     <span class="str layout-font-size-22">卖家最低叫价</span><br/>
                     <span class="str layout-font-size-20">￥
                         <c:choose>
@@ -133,7 +135,9 @@
                          </c:choose>
                     </span>
                 </div>
-                <button id="buy" class="am-btn am-btn-lg am-fr am-margin-top-lg am-hide-sm am-margin-right-lg" style="background-color: #FE5B5F;color: #fff;">购买</button>
+                <div class="am-fr am-u-md-3 am-u-sm-6 str-sudio am-padding-right-0">
+                    <button id="buy" class="am-btn am-btn-lg am-fr am-margin-top-lg am-margin-right-lg" style="background-color: #FE5B5F;color: #fff;">购买</button>
+                </div>
                 <input id="buy-click" type="hidden" data-am-modal="{target: '#my-popup-purchaselistwindow',width: 900}" />
             </div>
         </div>
@@ -230,14 +234,32 @@
 
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
+<%@include file="../common/popup/sellbidwindow.jsp" %>
+<%@include file="../common/popup/buyerbidwindow.jsp" %>
+<%@include file="../common/popup/salelistwindow.jsp" %>
+<%@include file="../common/popup/purchaselistwindow.jsp" %>
+<%@include file="../common/popup/selldetailedlist.jsp" %>
+<%@include file="../common/popup/buydetailedlist.jsp" %>
+
 <script>
     $(function(){
+        var k = 0;
 
         var loginType = $(".loginType").val();
 
         var bname = $(".basicinformationName").val();
 
         var bId = $(".basicinformationId").val();
+
+        //选择尺码
+        $("#choose_size").change(function(){
+            //TODO 异步读取数据
+//            if(k == 1){
+//                location.href = "/detail?proName="+bname+"&size="+$.trim($(this).val());
+//            }else{
+//                k = 1;
+//            }
+        });
 
         $("#sell").click(function(){
             if(loginType == "false"){
@@ -267,10 +289,13 @@
         $("#now-buyer-sell").click(function(){
             loadingSaleListclose();
         });
+        $("#now-seller-buy").click(function(){
+            loadingPurchaseclose();
+        });
         $("#seller_submit_trade_").click(function(){
             var amount = $("#seller_detailed_amount").val();
             var size = $("#seller_detailed_size").val();
-            var type = 0;
+            var type = 1;
             sendRequest("/trade",{
                 "bname": bname,
                 "bId": bId,
@@ -279,13 +304,32 @@
                 'type': type
             },function(res){
                 if(res.retCode == 1){
-
+                    alertshow("请前往个人中心支付保证金");
                 }else{
                     alertshow(res.retMsg);
                 }
             });
         });
-
+        $("#buyer_submit_trade_").click(function(){
+            var amount = $("#buyer_detailed_amount").val();
+            var yunFee = $.trim($("#yunFee").text());
+            var size = $("#buyer_detailed_size").val();
+            var type = 0;
+            sendRequest("/trade",{
+                "bname": bname,
+                "bId": bId,
+                'amount': amount,
+                'yunFee' : yunFee,
+                'size' : size,
+                'type': type
+            },function(res){
+                if(res.retCode == 1){
+                    alertshow("请前往个人中心支付鞋款");
+                }else{
+                    alertshow(res.retMsg);
+                }
+            });
+        });
 
         /**  ----- 叫价/出价 ----- **/
 

@@ -33,9 +33,9 @@
                         <div class="am-panel-group am-margin-bottom-0" id="accordion">
                             <div class="am-panel-default">
                                 <div class="">
-                                    <span class="am-panel-title" style="color: #646464;" data-am-collapse="{parent: '#accordion', target: '#do-not-say-3'}">——————其他支付方式——————</span>
+                                    <span class="am-panel-title" style="color: #646464;" data-am-collapse="{parent: '#accordion', target: '#do-not-say-1'}">——其他支付方式——</span>
                                 </div>
-                                <div id="do-not-say-3" class="am-panel-collapse am-collapse">
+                                <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
                                     <div class="am-panel-bd am-padding-top-sm am-padding-bottom-0">
                                         <p class="am-margin-sm"><img src="/assets/i/alipay.png" style="width: 26px;"></p>
                                     </div>

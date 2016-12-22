@@ -1,10 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
+<style>
+    .popover{
+        min-width:350px!important;
+    }
+</style>
 <input id="sorts-size" type="hidden" value="${size}" />
 <input id="sorts-price" type="hidden" value="${price}" />
 <input id="sorts-year" type="hidden" value="${year}" />
 <input id="sorts-brand" type="hidden" value="${brand}" />
-<div id="tips-model" style="width: 350px;height: 453px;display: none;">
+<div id="tips-model" style="width: 380px;height: 453px;display: none;">
     <div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">
         <img id="show-img" style="width: 100%;" src="">
         <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;" id="product-name"></span></div>

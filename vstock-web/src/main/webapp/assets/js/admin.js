@@ -91,6 +91,9 @@ function loadingclose() {
 function loadingSaleListclose() {
     $('#my-popup-saleList').modal('close');
 }
+function loadingPurchaseclose() {
+    $('#my-popup-purchaselistwindow').modal('close');
+}
 function loadingPurchaseListclose() {
     $('#my-popup-purchaselistwindow').modal('close');
 }

@@ -106,7 +106,7 @@
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-top-xs">
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <a href="javascript:;" id="now-seller-sell" class="am-btn am-btn-danger">购买</a>
+                                <a href="javascript:;" id="now-seller-buy" class="am-btn am-btn-danger" data-am-modal="{target: '#my-popup-buy-detailed', width: 900, height: 520}">购买</a>
                             </div>
                         </div>
                     </div>

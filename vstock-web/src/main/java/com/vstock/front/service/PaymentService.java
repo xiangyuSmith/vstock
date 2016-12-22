@@ -35,9 +35,10 @@ public class PaymentService {
                 .append(Payment.PAY_MD5_MARK_NOTIFY).append("payment_money=").append(record.getPayment_money())
                 .append(Payment.PAY_MD5_MARK_NOTIFY).append("Md5Sign=").append(md5Key)
                 .toString());
+        record.setPayment_status(record.PAY_STATUS_SUCCESS);
         if(record.getPayment_money().compareTo(BigDecimal.ZERO)==-1){
             logger.warn("支付金额小于0");
-            return 0;
+            record.setPayment_status(record.PAY_STATUS_FILE);
         }
         record.setSign(sign);
         return insert(record);

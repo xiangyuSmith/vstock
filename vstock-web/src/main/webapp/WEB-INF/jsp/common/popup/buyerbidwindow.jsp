@@ -108,8 +108,8 @@
             </div>
         </div>
         <div class="am-u-md-12" style="background-color: #fff;margin-top: 1px;">
-            <div class="am-u-md-9"></div>
-            <div class="am-u-md-3 am-text-left">
+            <div class="am-u-md-8"></div>
+            <div class="am-u-md-4 am-text-left">
                 <div class="am-padding-sm">
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16">保证金：</span><span class="am-u-md-6 am-padding-0 layout-font-size-20 am-text-right">￥10.00</span><br/>
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16" style="height: 38px;line-height: 38px;">支付金额：</span><span class="am-u-md-6 am-padding-0 layout-font-size-22 am-text-right" style="color: #E75C58;font-weight: bold;">10.00元</span><br/>

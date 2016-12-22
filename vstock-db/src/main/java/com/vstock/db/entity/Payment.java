@@ -10,6 +10,10 @@ public class Payment {
 
     public final static String PAY_MD5_MARK_NOTIFY = "~`|~`";
 
+    public final static int PAY_STATUS_NOTIFIY = 0; // 待付款
+    public final static int PAY_STATUS_SUCCESS = 10; // 支付成功
+    public final static int PAY_STATUS_FILE = 11; // 支付失败
+
     private int id;
     private long payment_user_id;
     private long order_record_id;

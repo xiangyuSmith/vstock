@@ -73,7 +73,7 @@ public class SortsController extends BaseController{
         Map<String,Object> resultMap = new HashedMap();
         setLastPage(0,1);
         //获取最后成交价
-        Trade trade = tradeService.getLastTrade(bid,size,lagePage);
+        Trade trade = tradeService.getLastTrade(bid,size,Trade.TRADE_SUCESS,lagePage);
         //获取成交价格涨幅
         Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);
         //获取最低售价，最高出价

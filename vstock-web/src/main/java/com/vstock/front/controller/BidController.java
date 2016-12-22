@@ -60,8 +60,9 @@ public class BidController extends BaseController{
             resultModel.setRetMsg("支付失败，请重新发起支付");
             return resultModel;
         }
+        //TODO 叫价状态暂时默认为已生效
         int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
-                ,type,new BigDecimal(10),0,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
+                ,type,new BigDecimal(10),Bid.STATUS_INIT,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
         PricePeak pricePeak = pricePeakService.getHighestAndlowest(bId,size, DateUtils.dateToString(new Date()),lagePage);
         int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),bId,size,uid,type);
         if(resultBid == 1 && resultPeak == 1){
