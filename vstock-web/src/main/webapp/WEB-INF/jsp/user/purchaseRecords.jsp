@@ -117,10 +117,10 @@
                     <td class="am-text-sm">${trade.transactionDate}</td>
                     <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
                     <c:choose>
-                        <c:when test="${trade.status == 0}">
+                        <c:when test="${trade.status == 1}">
                             <td class="am-text-sm">已下单待支付</td>
                         </c:when>
-                        <c:when test="${trade.status == 1}">
+                        <c:when test="${trade.status == 2}">
                             <td class="am-text-sm">已支付待发货</td>
                         </c:when>
                         <c:when test="${trade.status == 10}">

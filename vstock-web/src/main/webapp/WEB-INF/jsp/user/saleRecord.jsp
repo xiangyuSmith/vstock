@@ -113,10 +113,13 @@
                 <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
                 <c:choose>
                     <c:when test="${trade.status == 0}">
-                        <td class="am-text-sm">已下单待支付</td>
+                        <td class="am-text-sm">待支付保证金</td>
                     </c:when>
                     <c:when test="${trade.status == 1}">
-                        <td class="am-text-sm">已支付待发货</td>
+                        <td class="am-text-sm">待支付鞋款</td>
+                    </c:when>
+                    <c:when test="${trade.status == 2}">
+                        <td class="am-text-sm">待发货</td>
                     </c:when>
                     <c:when test="${trade.status == 10}">
                         <td class="am-text-sm">已发货待检验</td>
@@ -156,7 +159,14 @@
                         </c:otherwise>
                     </c:choose>
                     <ul class="am-dropdown-content">
-                        <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
+                        <c:choose>
+                            <c:when test="${trade.status == 0}">
+                                <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                            </c:when>
+                            <c:when test="${trade.status == 2}">
+                                <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
+                            </c:when>
+                        </c:choose>
                     </ul>
                 </div>
             </td>
