@@ -306,7 +306,7 @@
         <include refid="Base_Column_List"/>
         FROM bid b LEFT JOIN price_peak p ON b.basicinformation_id = p.basicinformation_id and b.bft_size = p.peak_size
         <include refid="SearchAllByPage_Where_Clause"/>
-        ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
+        ORDER BY b.id DESC limit #{startPos},#{pageSize}
     </select>
 
     <select id="findBidForSorts" resultMap="BaseResultMap">

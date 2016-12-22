@@ -4,8 +4,8 @@
 <head>
     <%@include file="../../layout/head.jsp" %>
     <style type="text/css">
-        @media (min-width: 1400px) {.meun-width{width: 225px;}.span-img{width: 10%;}.userInfo-div{width: 22%;}.meun-font-size{font-size: 18px;}.highcharts-with-higth{width: 200px; height: 300px;}}
-        @media (max-width: 1400px) {.meun-width{width: 16%}.meun-font-size{font-size: 14px;}.span-img{width: 11%}.highcharts-with-higth{width: 150px; height: 200px;}}
+        @media (min-width: 1400px) {.meun-width{width: 225px; min-height: 350px;}.span-img{width: 10%;}.userInfo-div{width: 22%;}.meun-font-size{font-size: 18px;}.highcharts-with-higth{width: 200px; height: 300px;}}
+        @media (max-width: 1400px) {.meun-width{width: 16%; min-height: 350px;}.meun-font-size{font-size: 14px;}.span-img{width: 11%}.highcharts-with-higth{width: 150px; height: 200px;}}
         @media (max-width: 996px) {.span-img{width: 6%}}
         .am-table>tbody>tr>td{vertical-align: inherit;}
     </style>
@@ -20,8 +20,8 @@
                 <c:if test="${not empty vUser}">
                     <li class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7">${vUser.nick}</li>
                 </c:if>
-                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24" data-url="../user/sale" data-type="1" >出售记录</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/purchase" data-type="2">购买记录</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/sale?type=1" data-type="2">购买记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-xs" src="../../../../assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 36px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
@@ -59,7 +59,7 @@
                 }
                 th.removeClass("am-link-muted");
             }else {
-                ajaxContent("../user/sale", "" ,"tradeforex_tilie",1);
+                ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
             }
         }
         load("");

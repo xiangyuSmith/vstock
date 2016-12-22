@@ -52,20 +52,32 @@ public class UserController extends BaseController {
     @RequestMapping("sale")
     public String sale(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        String type = request.getParameter("type");
         Bid bid = new Bid();
-        bid.setUserId(Integer.parseInt(String.valueOf(suid)));
-        bid.setType(0);
-        bid.setStatus(3);
         Trade trade = new Trade();
+        bid.setUserId(Integer.parseInt(String.valueOf(suid)));
         trade.setSellerId(bid.getUserId());
+        bid.setStatus(3);
+        if (Integer.parseInt(type) == 0) {
+            bid.setType(0);
+        }else {
+            bid.setType(1);
+            trade.setStatus(0);
+        }
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,"1");
         page.setPageSize(5);
         List<Bid> bidList = bidService.findBid(bid,page);
         List<Trade> tradeList = tradeService.findTrade(trade,page);
+        List<Trade> statusList = tradeService.status();
         model.addAttribute("bidList",bidList);
         model.addAttribute("tradeList",tradeList);
-        return "/user/saleRecord";
+        model.addAttribute("statusList",statusList);
+        if (Integer.parseInt(type) == 0) {
+            return "/user/saleRecord";
+        }else {
+            return "/user/purchaseRecords";
+        }
     }
 
     //出价和叫价详情历史
@@ -113,24 +125,27 @@ public class UserController extends BaseController {
     }
 
     //个人中心购买记录
-    @RequestMapping("purchase")
-    public String purchase(ModelMap model){
-        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
-        Bid bid = new Bid();
-        bid.setUserId(Integer.parseInt(String.valueOf(suid)));
-        bid.setType(1);
-        bid.setStatus(3);
-        Trade trade = new Trade();
-        trade.setBuyersId(bid.getUserId());
-        int totalCount = bidService.findCount(bid);
-        Page page = new Page(totalCount,"1");
-        page.setPageSize(5);
-        List<Bid> bidList = bidService.findBid(bid,page);
-        List<Trade> tradeList = tradeService.findTrade(trade,page);
-        model.addAttribute("bidList",bidList);
-        model.addAttribute("tradeList",tradeList);
-        return "/user/purchaseRecords";
-    }
+//    @RequestMapping("purchase")
+//    public String purchase(ModelMap model){
+//        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+//        Bid bid = new Bid();
+//        Trade trade = new Trade();
+//        bid.setUserId(Integer.parseInt(String.valueOf(suid)));
+//        trade.setBuyersId(bid.getUserId());
+//        bid.setType(1);
+//        bid.setStatus(3);
+//        trade.setStatus(0);
+//        int totalCount = bidService.findCount(bid);
+//        Page page = new Page(totalCount,"1");
+//        page.setPageSize(5);
+//        List<Bid> bidList = bidService.findBid(bid,page);
+//        List<Trade> tradeList = tradeService.findTrade(trade,page);
+//        List<Trade> statusList = tradeService.status();
+//        model.addAttribute("bidList",bidList);
+//        model.addAttribute("tradeList",tradeList);
+//        model.addAttribute("statusList",statusList);
+//        return "/user/purchaseRecords";
+//    }
 
     //个人资料
     @RequestMapping("userInfo")

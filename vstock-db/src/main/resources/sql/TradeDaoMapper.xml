@@ -25,6 +25,7 @@
             <id column="b_id" property="id"/>
             <result column="bname" property="name"/>
             <result column="bartNo" property="artNo"/>
+            <result column="bidBond" property="bidBond"/>
             <result column="btype" property="type"/>
             <result column="bsmallImgUrl" property="smallImgUrl"/>
             <result column="bcsaledate" property="csaledate"/>
@@ -184,8 +185,11 @@
             <if test="obj.courierNumber != null and obj.courierNumber != ''">
                 and t.courier_number LIKE CONCAT('%',#{obj.courierNumber,jdbcType=VARCHAR},'%')
             </if>
-            <if test="obj.status != null and obj.status != -1">
+            <if test="obj.status != null and obj.status != 0 and obj.status != -1">
                 and t.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status == 0">
+                and t.status NOT IN (0)
             </if>
             <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
                 and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
@@ -227,7 +231,7 @@
     </select>
 
     <select id="findAllDate" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
-        SELECT u.uname AS sellerName, a.uname AS buyersName, b.bft_name,b.bft_size,
+        SELECT u.uname AS sellerName, a.uname AS buyersName, b.bft_name,b.bft_size, b.bid_bond as bidBond,
         <include refid="Base_Column_List"/>
         FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
         LEFT JOIN `user` a ON t.buyers_id = a.id
@@ -254,7 +258,7 @@
     </select>
 
     <select id="findAndBid" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
-        SELECT b.bft_name,b.bft_size,li.company_name,
+        SELECT b.bft_name,b.bft_size,li.company_name, b.bid_bond as bidBond,
         <include refid="Base_Column_List"/>
         FROM trade t LEFT JOIN bid b ON t.bid_id = b.id
         LEFT JOIN logistics_information li ON t.id = li.trade_id

@@ -1,7 +1,6 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.ITradeDao;
-import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.security.md.ToolMD5;
@@ -9,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -104,5 +104,18 @@ public class TradeService {
             return 0;
         }
         return 1;
+    }
+
+    //获取订单状态
+    public List<Trade> status(){
+        List<Trade> tradeList = new ArrayList<Trade>();
+        for (String str : Trade.statuses){
+            Trade trade = new Trade();
+            String[] status = str.split(":");
+            trade.setId(Integer.parseInt(status[0]));
+            trade.setBftName(status[1]);
+            tradeList.add(trade);
+        }
+        return tradeList;
     }
 }

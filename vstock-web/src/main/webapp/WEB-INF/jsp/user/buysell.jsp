@@ -17,10 +17,13 @@
             <c:if test="${type == 0}">
                 <th>出售日期</th>
             </c:if>
-            <c:if test="${type == 0}">
+            <c:if test="${type == 1}">
                 <th>购买日期</th>
             </c:if>
             <th>金额</th>
+            <c:if test="${type == 0}">
+                <th>保证金</th>
+            </c:if>
             <th>状态</th>
         </tr>
         </thead>
@@ -32,32 +35,21 @@
                     <td class="am-text-sm">${trade.bftSize}</td>
                     <td class="am-text-sm">${trade.transactionDate}</td>
                     <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
-                    <c:choose>
-                        <c:when test="${trade.status == 0}">
-                            <td class="am-text-sm">已下单待支付</td>
-                        </c:when>
-                        <c:when test="${trade.status == 1}">
-                            <td class="am-text-sm">已支付待发货</td>
-                        </c:when>
-                        <c:when test="${trade.status == 10}">
-                            <td class="am-text-sm">已发货待检验</td>
-                        </c:when>
-                        <c:when test="${trade.status == 20}">
-                            <td class="am-text-sm">检验通过</td>
-                        </c:when>
-                        <c:when test="${trade.status == 21}">
-                            <td class="am-text-sm">检验未通过</td>
-                        </c:when>
-                        <c:when test="${trade.status == 30}">
-                            <td class="am-text-sm">已发货待签收</td>
-                        </c:when>
-                        <c:when test="${trade.status == 40}">
-                            <td class="am-text-sm">交易完成</td>
-                        </c:when>
-                        <c:otherwise>
-                            <td class="am-text-sm">交易关闭</td>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:if test="${type == 0}">
+                        <c:choose>
+                            <c:when test="${not empty trade.bid.bidBond}">
+                                <td class="am-text-sm">￥<fmt:formatNumber value="${trade.bid.bidBond}" type="currency" pattern="#,#00.0#"/></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td class="am-text-sm">--</td>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                    <c:forEach items="${statusList}" var="status">
+                        <c:if test="${status.id == trade.status}">
+                            <td class="am-text-sm">${status.bftName}</td>
+                        </c:if>
+                    </c:forEach>
                     <td>
                         <div class="am-dropdown" data-am-dropdown>
                             <c:choose>

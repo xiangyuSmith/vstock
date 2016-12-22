@@ -77,7 +77,7 @@ public class TradeService {
      * @return
      */
     public int update(Trade record){
-        return tradeDao.update(record.getStatus(),record.getEndDate(),record.getId());
+        return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
     }
 
     //个人中心出售查询
