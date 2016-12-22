@@ -41,9 +41,33 @@ public class BidController extends BaseController{
         String size = Basicinformation.isContainsSizes(getParam("size"));
         int type = getParamToInt("type");
         int bId = getParamToInt("bId");
-        double amount = Double.valueOf(getParam("amount", "0L"));
+        double amount = Double.valueOf(getParam("amount", "0"));
         String overdueTime = getParam("overdueTime");
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        //TODO 叫价状态暂时默认为已生效
+        int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
+                ,type,new BigDecimal(10),Bid.STATUS_PENDING,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
+        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bId,size, DateUtils.dateToString(new Date()),lagePage);
+        int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),bId,size,uid,type);
+        if(resultBid != 0 && resultPeak == 1){
+            resultModel.setRetCode(resultModel.RET_OK);
+        }
+        resultModel.setData(resultBid);
+        return resultModel;
+    }
+
+    @RequestMapping("createPay")
+    @ResponseBody
+    public ResultModel createPay(){
+        ResultModel resultModel = new ResultModel();
+        setLastPage(0,1);
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        int type = getParamToInt("type");
+        int basicinformationId = getParamToInt("bId");
+        int bid = getParamToInt("bid");
+        String size = getParam("size");
+        double amount = Double.valueOf(getParam("amount", "0"));
+        //TODO 校验 sign
         //TODO 支付保证金，若成功，则叫价 （ 固定状态和数据，接第三方后更改 ）
         Payment payment = new Payment();
         payment.setPayment_user_id(Long.parseLong(uid));
@@ -60,14 +84,13 @@ public class BidController extends BaseController{
             resultModel.setRetMsg("支付失败，请重新发起支付");
             return resultModel;
         }
-        //TODO 叫价状态暂时默认为已生效
-        int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
-                ,type,new BigDecimal(10),Bid.STATUS_INIT,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
-        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bId,size, DateUtils.dateToString(new Date()),lagePage);
-        int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),bId,size,uid,type);
-        if(resultBid == 1 && resultPeak == 1){
-            resultModel.setRetCode(resultModel.RET_OK);
-        }
+        int paymentId = payment.getId();
+        Bid bidObj = new Bid();
+        bidObj.setId(bid);
+        bidObj.setPaymentId(paymentId);
+        bidObj.setStatus(bidObj.STATUS_INIT);
+        bidService.update(bidObj);
+        resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
     }
 

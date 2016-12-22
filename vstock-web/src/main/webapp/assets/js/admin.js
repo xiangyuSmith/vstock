@@ -105,7 +105,14 @@ function loadingBidclose() {
 function alertshow(msg, callback) {
     $("#alert-content").html(msg);
     $('#forex-alert').modal({
-        onConfirm : function() { if (callback) callback(); $('#forex-alert').off('confirm.modal.amui'); },
+        onConfirm : function() { if (callback) callback(); $('#forex-alert').off('confirm.modal.amui'); }
+    });
+}
+function alertConfirm(title , msg , callback) {
+    $("#alert-confirm-title").html(title);
+    $("#alert-confirm-content").html(msg);
+    $('#my-confirm').modal({
+        onConfirm : function() { if (callback) callback(); $('#my-confirm').off('confirm.modal.amui'); },
     });
 }
 

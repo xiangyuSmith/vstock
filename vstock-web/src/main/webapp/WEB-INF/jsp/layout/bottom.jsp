@@ -22,9 +22,19 @@
 
 <%@include file="../common/popup/loginwindow.jsp" %>
 
-<div class="am-modal am-modal-alert" tabindex="-1" id="forex-alert">
+<div class="am-modal am-modal-alert" tabindex="-1" id="forex-alert" style="z-index: 2110">
     <div class="am-modal-dialog">
         <div class="am-modal-bd" id="alert-content"></div>
         <div class="am-modal-footer"><span class="am-modal-btn" data-am-modal-confirm>确定</span></div>
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm" style="z-index: 2111">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="alert-confirm-title"></div>
+        <div class="am-modal-bd" id="alert-confirm-content"></div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" id="createPay" data-am-modal-confirm>确定</span>
+        </div>
     </div>
 </div>

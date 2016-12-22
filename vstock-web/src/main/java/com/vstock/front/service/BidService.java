@@ -77,7 +77,6 @@ public class BidService {
         }
         String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
                 .append("bId=").append(bId)
-                .append(Bid.BID_MD5_MARK_NOTIFY).append("bName=").append(bName)
                 .append(Bid.BID_MD5_MARK_NOTIFY).append("size=").append(size)
                 .append(Bid.BID_MD5_MARK_NOTIFY).append("amount=").append(amount)
                 .append(Bid.BID_MD5_MARK_NOTIFY).append("Md5Sign=").append(bidMd5Key)
@@ -94,7 +93,9 @@ public class BidService {
         bid.setBidBond(bidBond);
         bid.setStatus(status);
         bid.setBidDate(bidDate);
-        return insert(bid);
+        insert(bid);
+        int biid = bid.getId();
+        return biid;
     }
 
     /**

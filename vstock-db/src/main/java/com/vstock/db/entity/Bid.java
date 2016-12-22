@@ -72,8 +72,14 @@ public class Bid implements Serializable {
         this.basicinformation = basicinformation;
     }
 
+    public Bid( Integer basicinformationId,String bftSize,BigDecimal bidMoney, Integer userId){
+        this.userId = userId;
+        this.basicinformationId = basicinformationId;
+        this.bftSize = bftSize;
+        this.bidMoney = bidMoney;
+    }
+
     public Bid( Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
-        this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
         this.paymentId = paymentId;

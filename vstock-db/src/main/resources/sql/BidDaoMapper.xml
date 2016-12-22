@@ -306,7 +306,7 @@
         <include refid="Base_Column_List"/>
         FROM bid b LEFT JOIN price_peak p ON b.basicinformation_id = p.basicinformation_id and b.bft_size = p.peak_size
         <include refid="SearchAllByPage_Where_Clause"/>
-        ORDER BY b.id DESC limit #{startPos},#{pageSize}
+        ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
     <select id="findBidForSorts" resultMap="BaseResultMap">
@@ -337,7 +337,7 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `bid`
         (`id`,`user_id`,`basicinformation_id`,`payment_id`,`bft_name`,`bft_size`,`bid_money`,`bid_freight`,`bid_bond`,`lately_bid`,`term_validity`,`status`,`type`,`sign`,`bid_date`,`invalid_date`)
         VALUES(null,#{userId},#{basicinformationId},#{paymentId},#{bftName},#{bftSize},#{bidMoney},#{bidFreight},#{bidBond},#{latelyBid},#{termValidity},#{status},#{type},#{sign},#{bidDate},#{invalidDate})
@@ -347,6 +347,9 @@
         UPDATE `bid` SET
         <if test="status != null and status != ''">
             status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="paymentId != null and paymentId != ''">
+            payment_id = #{paymentId,jdbcType=VARCHAR}
         </if>
         <if test="bidMoney != null and bidMoney != ''">
             bid_money = #{bidMoney,jdbcType=DECIMAL}

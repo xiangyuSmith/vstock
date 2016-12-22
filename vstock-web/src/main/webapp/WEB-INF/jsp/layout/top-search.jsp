@@ -9,7 +9,7 @@
             <a href="/index" class="v-logo am-fr"></a>
             <nav>
                 <ul class="m-nav am-nav am-nav-pills am-fr">
-                    <li class="am-hide-sm am-hide-md" style="margin-top: 5px;">
+                    <li class="am-hide-sm am-hide-md" style="margin-top: 3px;">
                         <form class="am-topbar-left am-form-inline" role="search">
                             <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
                                 <input type="text" class="am-form-field" placeholder="搜索颜色、款式......">
