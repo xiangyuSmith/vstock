@@ -89,7 +89,7 @@
                                         <input class="am-form-field" style="min-height: 50px;" type="text" placeholder="请再次输入新密码" required/>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
-                                        <a href="javascript:void(0);" class="am-btn am-btn-danger am-center"></a>
+                                        <a href="javascript:void(0);" class="am-btn am-btn-danger am-center">确定</a>
                                     </div>
                                 </div>
                             </div>
@@ -117,25 +117,25 @@
                     </div>
                     <div class="am-modal-bd am-g">
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" id="aa">
-                                <span class="am-input-group-label"><a href="#">所在地区:</a></span>
-                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group" id="aa">
+                                <span class="am-input-group-label am-text-lg">所在地区:</span>
+                                <input class="am-form-field" style="min-height: 30px;" placeholder="请选择省市区县" required/>
                             </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span class="am-input-group-label"><a href="#">详细地址:</a></span>
-                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                <span class="am-input-group-label am-text-lg">详细地址:</span>
+                                <input class="am-form-field" style="min-height: 60px;" placeholder="建议您如实详细填写收货地址" required/>
                             </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span class="am-input-group-label"><a href="#">收货人姓名:</a></span>
-                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                <span class="am-input-group-label am-text-lg">收货人姓名:</span>
+                                <input class="am-form-field" style="min-height: 30px;" required/>
                             </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span class="am-input-group-label"><a href="#">手机号码:</a></span>
-                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                <span class="am-input-group-label am-text-lg">手机号码:</span>
+                                <input class="am-form-field" style="min-height: 30px;" required/>
                             </div>
-                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <span class="am-input-group-label"><a href="#">电话号码:</a></span>
-                                <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" required/>
+                            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                <span class="am-input-group-label am-text-lg">电话号码:</span>
+                                <input class="am-form-field" style="min-height: 30px;" required/>
                             </div>
                         </div>
                     </div>

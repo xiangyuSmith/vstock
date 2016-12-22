@@ -172,8 +172,27 @@
 
         $("body").on("click",".deliver-goods",function(){
             var $this = $(this);
-            $this.parent().parent().parent().removeClass("am-active");
-            $this.parent().parent().parent().children().first().attr("disabled", true);
+            var amount = $this.parent().parent().parent().parent().prev().prev().prev().prev().text();
+            amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
+            var type = $this.attr("data-type");
+            var bId = $this.attr("bft-id");
+            var bid = $this.attr("bid-id");
+            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().text();
+            sendRequest("/bid/createPay",{
+                bid : bid,
+                bId : bId,
+                type : type,
+                amount : amount,
+                size : bftSize
+            },function(res) {
+                if (res == 1){
+                   alertshow("支付成功！");
+                   $this.parent().parent().parent().removeClass("am-active");
+                   $this.parent().parent().parent().children().first().attr("disabled", true);
+                }else {
+                    alertshow("支付失败，请重新支付！");
+                }
+            });
         });
     });
 </script>
