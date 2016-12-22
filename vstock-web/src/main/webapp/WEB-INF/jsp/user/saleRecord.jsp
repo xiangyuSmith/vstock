@@ -43,10 +43,10 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${bid.status == 0}">
-                            <td class="am-text-sm">已生效</td>
+                            <td class="am-text-sm">待付款</td>
                         </c:when>
                         <c:when test="${bid.status == 10}">
-                            <td class="am-text-sm">待付款</td>
+                            <td class="am-text-sm">已生效</td>
                         </c:when>
                         <c:when test="${bid.status == 11}">
                             <td class="am-text-sm">开始交易</td>
@@ -71,12 +71,12 @@
 
                             <ul class="am-dropdown-content">
                                 <c:if test="${bid.status == 0}">
+                                    <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                </c:if>
+                                <c:if test="${bid.status == 10}">
                                     <li><a class="am-btn am-btn-xs am-text-left sale-up" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
                                     <li><a class="am-btn am-btn-xs am-text-left sale-sub" data_type="0" data_id="${bid.id}" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
                                     <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
-                                </c:if>
-                                <c:if test="${bid.status == 10}">
-                                    <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">重新支付</span></a></li>
                                 </c:if>
                                 <c:if test="${bid.status == 1}">
                                     <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" del_data_id="${bid.id}" href="javascript:void(0)"><img class="am-margin-right-xs" src="../../../assets/shoesImg/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
