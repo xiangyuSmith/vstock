@@ -90,8 +90,10 @@
         $("body").on("click",".sale-sub",function(){
             var $this = $(this);
             var dataType = $this.attr("data_type");
+            var btf = $this.attr("btf-id");
             var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
             var moeny = $thoes.children().val();
+            var size = $thoes.prev().prev().text();
             var id = $this.attr("data_id");
             if (dataType == 0){
                 if (upMoeny < moeny) {
@@ -106,7 +108,9 @@
             }
             sendRequest("/bid/updateBid",{
                 id : id,
-                bidMoney : moeny
+                bidMoney : moeny,
+                btfId : btf,
+                size : size
             },function(res) {
                 if (res.sgin == 1) {
                     $this.parent().prev().children().attr("disabled", false);
@@ -117,7 +121,13 @@
                     $thoes.html("");
                     $thoes.text(moeny);
                     var $th = $this.parent().parent().parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
+                    $this.parent().parent().parent().removeClass("am-active");
                     $th.attr("disabled", false);
+                    if (dataType == 0){
+                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                    }else {
+                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                    }
                 }else {
                     alertshow("保存失败，请重新输入！");
                 }
@@ -185,10 +195,16 @@
                 amount : amount,
                 size : bftSize
             },function(res) {
-                if (res == 1){
+                alert(res.retCode);
+                if (res.retCode == 1){
                    alertshow("支付成功！");
                    $this.parent().parent().parent().removeClass("am-active");
                    $this.parent().parent().parent().children().first().attr("disabled", true);
+                    if (dataType == 0){
+                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                    }else {
+                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                    }
                 }else {
                     alertshow("支付失败，请重新支付！");
                 }

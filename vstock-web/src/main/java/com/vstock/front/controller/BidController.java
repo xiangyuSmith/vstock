@@ -99,10 +99,12 @@ public class BidController extends BaseController{
     public Map<String,Object> updateBid(){
         Map<String,Object> param = new HashMap<String,Object>();
         String id = request.getParameter("id");
+        String btfId = request.getParameter("btfId");
         String status = request.getParameter("status");
         String endDate = request.getParameter("endDate");
         String bidMoney = request.getParameter("bidMoney");
-        int sgin = bidService.updateBid(id,status,endDate,bidMoney);
+        String size = request.getParameter("size");
+        int sgin = bidService.updateBid(id,btfId,status,size,endDate,bidMoney);
         param.put("sgin",sgin);
         return param;
     }

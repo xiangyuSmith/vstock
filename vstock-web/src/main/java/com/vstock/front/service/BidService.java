@@ -5,6 +5,7 @@ import com.vstock.db.entity.Bid;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.security.md.ToolMD5;
+import com.vstock.front.service.interfaces.IVstockConfigService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,6 +115,8 @@ public class BidService {
     public boolean isBidSign(int bid,int basicinformationId,String size,double amount,String bidMd5Key){
         Bid b = new Bid();
         b.setId(bid);
+        b.setType(-1);
+        b.setStatus(-1);
         Page page = new Page();
         page.setStartPos(0);
         page.setPageSize(1);
@@ -183,14 +186,15 @@ public class BidService {
     }
 
     //修改状态
-    public int updateBid(String id, String status, String endDate, String bidMoney){
+    public int updateBid(String id, String btfId, String status, String size, String endDate, String bidMoney){
         Bid record = new Bid();
+        record.setInvalidDate(DateUtils.dateToString(new Date()));
+        record.setPaymentId(-1);
+        record.setStatus(-1);
+        record.setType(-1);
         if (id != null && !"".equals(id)) {
             record.setId(Integer.parseInt(id));
          }
-        if (status != null && !"".equals(status)) {
-            record.setStatus(Integer.parseInt(status));
-        }
         if (endDate != null && !"".equals(endDate)) {
             record.setInvalidDate(endDate);
         }
@@ -198,6 +202,14 @@ public class BidService {
              BigDecimal bigDecimal = new BigDecimal(bidMoney);
              record.setBidMoney(bigDecimal);
         }
-        return this.update(record);
+        if (status != null && !"".equals(status)) {
+            record.setStatus(Integer.parseInt(status));
+            if (this.isBidSign(Integer.parseInt(id),Integer.parseInt(btfId),size,Double.parseDouble(bidMoney),VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY))) {
+                return this.update(record);
+            }
+        }else {
+            return this.update(record);
+        }
+        return 0;
     }
 }

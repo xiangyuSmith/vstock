@@ -239,13 +239,13 @@
             <if test="obj.termValidity != null and obj.termValidity != ''">
                 and b.term_validity = #{obj.termValidity,jdbcType=DECIMAL}
             </if>
-            <if test="obj.status != null and obj.status != 3">
+            <if test="obj.status != null and obj.status != 3 and obj.status != -1">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
             <if test="obj.status == 3">
                 and b.status NOT IN (#{obj.status,jdbcType=VARCHAR})
             </if>
-            <if test="obj.type != null">
+            <if test="obj.type != null and obj.type != -1">
                 and b.type = #{obj.type,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidDate != null and obj.bidDate != ''">
@@ -345,13 +345,13 @@
 
     <update id="update">
         UPDATE `bid` SET invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
-        <if test="status != null and status != ''">
+        <if test="status != null and status != -1">
             ,status = #{status,jdbcType=VARCHAR}
         </if>
-        <if test="paymentId != null and paymentId != ''">
+        <if test="paymentId != null and paymentId != -1">
             ,payment_id = #{paymentId,jdbcType=VARCHAR}
         </if>
-        <if test="bidMoney != null and bidMoney != ''">
+        <if test="bidMoney != null and bidMoney != -1">
             ,bid_money = #{bidMoney,jdbcType=DECIMAL}
         </if>
         WHERE id = #{id,jdbcType=INTEGER}
