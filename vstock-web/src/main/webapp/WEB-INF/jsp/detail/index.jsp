@@ -320,7 +320,26 @@
                 'type': type
             },function(res){
                 if(res.retCode == 1){
-                    alertshow("请前往个人中心支付鞋款");
+                    if(type == 0){
+                        alertConfirm("订单已提交","是否去支付鞋款?");
+                    }else{
+                        alertConfirm("订单已提交","是否去支付保证金?");
+                    }
+                    $("#createPay").click(function(){
+                        sendRequest("/trade/createTradePay",{
+                            "bname": bname,
+                            "bId": bId,
+                            'amount': amount,
+                            'size' : size,
+                            'type': type==1?2:3,
+                            'tradeId':res.data
+                        },function(res){
+                            if(res.retCode == 1){
+                                alertshow("支付成功！！");
+                                location.reload();
+                            }
+                        });
+                    });
                 }else{
                     alertshow(res.retMsg);
                 }
@@ -365,7 +384,6 @@
                         },function(res){
                             if(res.retCode == 1){
                                 alertshow("支付成功！！");
-                                loadingBidclose();
                                 location.reload();
                             }
                         })

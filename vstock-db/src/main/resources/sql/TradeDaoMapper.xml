@@ -271,19 +271,16 @@
         <include refid="SelectAllByPage_Where_Clause"/>
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `trade`
         (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`transaction_date`,`update_date`,`sign`)
         VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{transactionDate},#{updateDate},#{sign})
     </insert>
 
     <update id="update">
-        UPDATE `trade` SET
+        UPDATE `trade` SET update_date = #{updateDate,jdbcType=TIMESTAMP}
         <if test="status != null and status != ''">
-            status = #{status,jdbcType=VARCHAR}
-        </if>
-        <if test="updateDate != null and updateDate != ''">
-            end_date = #{updateDate,jdbcType=TIMESTAMP}
+            ,status = #{status,jdbcType=VARCHAR}
         </if>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>

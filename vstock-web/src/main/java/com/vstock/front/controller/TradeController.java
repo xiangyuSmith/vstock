@@ -1,12 +1,14 @@
 package com.vstock.front.controller;
 
 import com.vstock.db.entity.Bid;
+import com.vstock.db.entity.Payment;
 import com.vstock.db.entity.Trade;
 import com.vstock.db.entity.User;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.front.service.BidService;
+import com.vstock.front.service.PaymentService;
 import com.vstock.front.service.TradeService;
 import com.vstock.front.service.VstockConfigService;
 import com.vstock.front.service.interfaces.IVstockConfigService;
@@ -29,6 +31,8 @@ public class TradeController extends BaseController{
     BidService bidService;
     @Autowired
     TradeService tradeService;
+    @Autowired
+    PaymentService paymentService;
 
     @RequestMapping
     @ResponseBody
@@ -45,6 +49,8 @@ public class TradeController extends BaseController{
         bid.setBidMoney(new BigDecimal(amount));
         bid.setBftSize(size);
         bid.setType(type);
+        //TODO 运费待加入
+//        bid.setBidFreight(new BigDecimal(yunFee));
         bid.setStatus(Bid.STATUS_INIT);
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){
@@ -54,16 +60,57 @@ public class TradeController extends BaseController{
         }
         //TODO 加入订单，关联买家叫价
         Date now = new Date();
-        Trade trade = new Trade(new BigDecimal(yunFee),size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), Trade.TRADE_NOTIFIY_PAY_BOND,
+        int status = type == 0 ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
+        Trade trade = new Trade(new BigDecimal(yunFee),size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status,
                 new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bid1.getUserId(), Integer.parseInt(uid), DateFormatUtils.format(now, "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6));
-        int trade_result = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
-        if(trade_result == 0){
+        int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
+        if(tradeId == 0){
             resultModel.setRetCode(0);
             resultModel.setRetMsg("服务器繁忙，请稍后再试");
             return resultModel;
         }
         resultModel.setRetCode(resultModel.RET_OK);
+        resultModel.setData(tradeId);
         return resultModel;
     }
 
+    @ResponseBody
+    @RequestMapping("createTradePay")
+    public ResultModel createTradePay() {
+        ResultModel resultModel = new ResultModel();
+        setLastPage(0,1);
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        int type = getParamToInt("type");
+        int tradeId = getParamToInt("tradeId");
+        double amount = Double.valueOf(getParam("amount", "0"));
+        Payment payment = new Payment();
+        payment.setPayment_user_id(Long.parseLong(uid));
+        payment.setPayment_status(10);
+        //TODO 默认状态暂定为成功
+        payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
+        payment.setPayment_type(type);
+        payment.setPayment_date(DateUtils.dateToString(new Date()));
+        payment.setPayment_over_date(DateUtils.getNowdateAddmm());
+        payment.setPayment_money(new BigDecimal(amount));
+        payment.setPayment_explain("支付说明");
+        int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
+        if(payResult == 0){
+            resultModel.setRetCode(0);
+            resultModel.setRetMsg("支付失败，请重新发起支付");
+            return resultModel;
+        }
+        int tradeStatus = tradeService.checkTradeStatus(tradeId,lagePage);
+        if(tradeStatus == -1){
+            resultModel.setRetCode(0);
+            resultModel.setRetMsg("服务器繁忙，请稍后再试");
+            return resultModel;
+        }
+        Trade trade = new Trade();
+        trade.setId(tradeId);
+        trade.setStatus(tradeStatus);
+        trade.setUpdateDate(DateUtils.dateToString(new Date()));
+        tradeService.update(trade);
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
+    }
 }

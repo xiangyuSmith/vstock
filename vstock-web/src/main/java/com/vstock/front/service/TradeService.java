@@ -62,6 +62,27 @@ public class TradeService {
         }
         return null;
     }
+
+    /**
+     * 校验当前状态并返回更新后的状态
+     * @param tradeId
+     * @param page
+     * @return
+     */
+    public int checkTradeStatus(int tradeId, Page page){
+        Trade trade = new Trade();
+        trade.setId(tradeId);
+        List<Trade> tradelist = findAll(trade,page);
+        if(tradelist.size() != 0){
+            Trade t = tradelist.get(0);
+            if(t.getStatus()>0){
+                return Trade.TRADE_PAY_LOGISTICS;
+            }
+            return Trade.TRADE_NOTIFIY_PAY;
+        }
+        return -1;
+    }
+
     /**
      * 新增
      * @param record
@@ -98,12 +119,12 @@ public class TradeService {
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("Md5Sign=").append(tradeMd5Key)
                 .toString());
         trade.setSign(sign);
-        int result = insert(trade);
-        if(result == 0){
+        insert(trade);
+        if(trade.getId() == 0){
             logger.warn("服务器繁忙，请稍后再试");
             return 0;
         }
-        return 1;
+        return trade.getId();
     }
 
     //获取订单状态
