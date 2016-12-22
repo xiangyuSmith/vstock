@@ -53,7 +53,7 @@
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-left-0 am-padding-left-0 am-u-end">
                     <c:if test="${not empty user}">
-                        <span style="font-weight: bolder;">${user.uname}</span>
+                        <span style="font-weight: bolder;">${user.nick}</span>
                     </c:if>
                 </div>
             </div>

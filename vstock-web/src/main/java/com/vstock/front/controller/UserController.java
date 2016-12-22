@@ -151,8 +151,10 @@ public class UserController extends BaseController {
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
         UserAssets record = new UserAssets();
         record.setUserId(Integer.parseInt(String.valueOf(suid)));
+        record.setStatus(0);
         List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
-        List<UserAssets> basUserList = userAssetsService.findBasicinformationRoseAll(record);
+        BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
+        model.put("basicinformationRose",basicinformationRose);
         model.put("userAssetsList",userAssetsList);
         return "/user/userAssets";
     }
@@ -171,5 +173,20 @@ public class UserController extends BaseController {
         }catch (Exception ex){
             System.out.print(ex.getMessage());
         }
+    }
+
+    @RequestMapping("hchar")
+    @ResponseBody
+    public Map<String,Object> hchar(){
+        Map<String,Object> param = new HashMap<String,Object>();
+        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        UserAssets record = new UserAssets();
+        record.setUserId(Integer.parseInt(String.valueOf(suid)));
+        record.setStatus(0);
+        String hchar = userAssetsService.hChar(record);
+        String[] strChar = hchar.split(":");
+        param.put("hchar",strChar[0]);
+        param.put("moneyChar",strChar[1]);
+        return param;
     }
 }

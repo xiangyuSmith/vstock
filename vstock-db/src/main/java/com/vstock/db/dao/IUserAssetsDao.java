@@ -23,6 +23,9 @@ public interface IUserAssetsDao {
     //修改数据
     int update(@Param("status") int status, @Param("invalidDate") String invalidDate, @Param("id") Integer id);
 
-    List<UserAssets> findBasicinformationRoseAll(@Param("obj") UserAssets record);
+    //获取品牌分组的数据
+    List<UserAssets> findGroupBrand(@Param("obj") UserAssets record, @Param("startDate") String startDate);
+
+    List<UserAssets> findBasicinformationRoseAll(@Param("obj") UserAssets record, @Param("startDate") String startDate);
 
 }

@@ -15,12 +15,23 @@
         <result column="sgin" property="sgin" jdbcType="VARCHAR"/>
         <association property="basicinformationRose" column="basicinformationRose"
                      javaType="com.vstock.db.entity.BasicinformationRose">
-            <id column="bid" property="id"/>
-            <result column="current_market_value" property="currentMarketValue"/>
-            <result column="change_range" property="changeRange"/>
-            <result column="percentage_change" property="percentageChange"/>
+            <id column="id" property="id"/>
+            <result column="current_market_value" property="current_market_value"/>
+            <result column="change_range" property="change_range"/>
+            <result column="percentage_change" property="percentage_change"/>
             <result column="type" property="type"/>
         </association>
+        <association property="basicinformation" column="basicinformation"
+                     javaType="com.vstock.db.entity.Basicinformation">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Map" type="com.vstock.db.entity.UserAssets">
+        <id property="id" column="id"/>
+        <result column="brand" property="userAssetsSize" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -181,19 +192,36 @@
         ua.sgin as sgin
     </sql>
 
-    <select id="findAll" parameterType="com.vstock.db.entity.UserAssets" resultType="com.vstock.db.entity.UserAssets">
-        SELECT
+    <select id="findAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
+        SELECT br.current_market_value, br.change_range, br.percentage_change, br.type, b.name,
         <include refid="Base_Column_List"/>
-        FROM user_assets ua
+        FROM user_assets ua LEFT JOIN basicinformation_rose br ON br.basicinformation_id = ua.basicinformation_id
+        LEFT JOIN basicinformation b ON b.id = ua.basicinformation_id
         <include refid="SearchAllByPage_Where_Clause"/>
         ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="findBasicinformationRoseAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
-        SELECT br.current_market_value, br.change_range, br.percentage_change, br.type,
-        <include refid="Base_Column_List"/>
-        FROM user_assets ua LEFT JOIN basicinformation_rose br ON
+    <select id="findGroupBrand" parameterType="com.vstock.db.entity.UserAssets" resultMap="Map">
+        SELECT b.brand,COUNT(*) as id, SUM(br.current_market_value) as money
+        FROM user_assets ua LEFT JOIN basicinformation b ON ua.basicinformation_id = b.id
+        LEFT JOIN basicinformation_rose br ON br.basicinformation_id = ua.basicinformation_id
         <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="startDate != null and startDate != ''">
+            and br.create_date = #{startDate,jdbcType=TIMESTAMP}
+        </if>
+        GROUP BY b.brand
+    </select>
+
+    <select id="findBasicinformationRoseAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
+        SELECT br.current_market_value, br.change_range, br.percentage_change, br.type, b.name,
+        <include refid="Base_Column_List"/>
+        FROM user_assets ua LEFT JOIN basicinformation_rose br ON br.basicinformation_id = ua.basicinformation_id
+        LEFT JOIN basicinformation b ON b.id = ua.basicinformation_id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="startDate != null and startDate != ''">
+            and br.create_date = #{startDate,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY ua.create_date
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.UserAssets" resultType="Integer">

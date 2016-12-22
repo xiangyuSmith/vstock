@@ -19,6 +19,7 @@ public class UserAssets implements Serializable {
     private String invalidDate;
     private String sgin;
     private BasicinformationRose basicinformationRose;
+    private Basicinformation basicinformation;
 
     public UserAssets() {
         super();
@@ -123,5 +124,13 @@ public class UserAssets implements Serializable {
 
     public void setBasicinformationRose(BasicinformationRose basicinformationRose) {
         this.basicinformationRose = basicinformationRose;
+    }
+
+    public Basicinformation getBasicinformation() {
+        return basicinformation;
+    }
+
+    public void setBasicinformation(Basicinformation basicinformation) {
+        this.basicinformation = basicinformation;
     }
 }
