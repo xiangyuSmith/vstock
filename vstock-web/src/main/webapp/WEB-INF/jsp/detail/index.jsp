@@ -361,24 +361,24 @@
                 if(res.retCode == 1){
                     if(type == 0){
                         alertConfirm("叫价成功","是否去支付?");
-                        $("#createPay").click(function(){
-                            sendRequest("/bid/createPay",{
-                                'amount': amount,
-                                'type': type,
-                                "bId": bId,
-                                'size': size,
-                                'bid' : res.data
-                            },function(res){
-                                if(res.retCode == 1){
-                                    alertshow("支付成功！！");
-                                    loadingBidclose();
-                                    location.reload();
-                                }
-                            })
-                        });
                     }else{
-                        alertshow("出价成功");
+                        alertConfirm("出价成功","是否去支付?");
                     }
+                    $("#createPay").click(function(){
+                        sendRequest("/bid/createPay",{
+                            'amount': amount,
+                            'type': type,
+                            "bId": bId,
+                            'size': size,
+                            'bid' : res.data
+                        },function(res){
+                            if(res.retCode == 1){
+                                alertshow("支付成功！！");
+                                loadingBidclose();
+                                location.reload();
+                            }
+                        })
+                    });
                 }
             });
         }

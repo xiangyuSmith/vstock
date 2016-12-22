@@ -44,7 +44,6 @@ public class BidController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         String overdueTime = getParam("overdueTime");
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
-        //TODO 叫价状态暂时默认为已生效
         int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
                 ,type,new BigDecimal(10),Bid.STATUS_PENDING,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
         PricePeak pricePeak = pricePeakService.getHighestAndlowest(bId,size, DateUtils.dateToString(new Date()),lagePage);
