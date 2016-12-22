@@ -75,12 +75,7 @@ public class BidService {
             logger.warn("叫价金额为0或小于0");
             return 0;
         }
-        String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
-                .append("bId=").append(bId)
-                .append(Bid.BID_MD5_MARK_NOTIFY).append("size=").append(size)
-                .append(Bid.BID_MD5_MARK_NOTIFY).append("amount=").append(amount)
-                .append(Bid.BID_MD5_MARK_NOTIFY).append("Md5Sign=").append(bidMd5Key)
-                .toString());
+        String sign = getBidSign(bId,size,amount,bidMd5Key);
         Bid bid = new Bid();
         bid.setBftName(bName);
         bid.setUserId(uid);
@@ -96,6 +91,34 @@ public class BidService {
         insert(bid);
         int biid = bid.getId();
         return biid;
+    }
+
+    public String getBidSign(int bId,String size,double amount,String bidMd5Key){
+        return ToolMD5.encodeMD5Hex(new StringBuilder()
+                .append("bId=").append(bId)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("size=").append(size)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("amount=").append(amount)
+                .append(Bid.BID_MD5_MARK_NOTIFY).append("Md5Sign=").append(bidMd5Key)
+                .toString());
+    }
+
+    /**
+     * 校验签名
+     * @param bid   叫价id
+     * @param basicinformationId    鞋库id
+     * @param size  鞋码
+     * @param amount    金额
+     * @param bidMd5Key
+     * @return boolean
+     */
+    public boolean isBidSign(int bid,int basicinformationId,String size,double amount,String bidMd5Key){
+        Bid b = new Bid();
+        b.setId(bid);
+        Page page = new Page();
+        page.setStartPos(0);
+        page.setPageSize(1);
+        Bid bidObj = findByBid(b,page);
+        return bidObj.getSign().equals(getBidSign(basicinformationId,size,amount,bidMd5Key));
     }
 
     /**
