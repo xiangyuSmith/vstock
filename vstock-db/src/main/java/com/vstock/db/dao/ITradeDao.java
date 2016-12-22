@@ -26,7 +26,7 @@ public interface ITradeDao {
     int insert(Trade record);
 
     //修改数据
-    int update(@Param("status")int status, @Param("endDate")String endDate, @Param("id")Integer id);
+    int update(@Param("status")int status, @Param("updateDate")String updateDate, @Param("id")Integer id);
 
     //关联叫价表分组查询
     List<Trade> findAndBid(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);

@@ -10,10 +10,26 @@ import java.math.BigDecimal;
  */
 public class Trade implements Serializable {
 
-    public final static String[] statuses = {"0:已下单待支付","1:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭"};
+
+    public final static String TRADE_MD5_MARK = "|";
+
+    public final static String TRADE_MD5_MARK_NOTIFY = "^|^";
+
+    public final static String[] statuses = {"0:待支付保证金","1:已下单待支付","2:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭"};
+
+    public final static int TRADE_NOTIFIY_PAY_BOND = 0; //待支付保证金
+    public final static int TRADE_NOTIFIY_PAY = 1;      //已下单待支付
+    public final static int TRADE_PAY_LOGISTICS = 2;    //已支付待发货
+    public final static int TRADE_NOTIFIY_TEST = 10;    //已发货待检验
+    public final static int TRADE_TEST_SUCESS = 20;     //检验通过
+    public final static int TRADE_TEST_FILE = 21;       //检验失败
+    public final static int TRADE_WAIT_TAKE = 30;       //已发货待签收
+    public final static int TRADE_SUCESS = 40;          //交易成功
+    public final static int TRADE_CLOSE = 41;           //交易失败
 
     @Id
     private Integer id;
+    private String trandeNo;
     private Integer sellerId;
     private Integer buyersId;
     private Integer bidId;
@@ -23,7 +39,7 @@ public class Trade implements Serializable {
     private String courierNumber;
     private Integer status;
     private String transactionDate;
-    private String endDate;
+    private String updateDate;
     private String sign;
     private Bid bid;
     private String bftName;
@@ -124,12 +140,20 @@ public class Trade implements Serializable {
         this.transactionDate = transactionDate;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getUpdateDate() {
+        return updateDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getTrandeNo() {
+        return trandeNo;
+    }
+
+    public void setTrandeNo(String trandeNo) {
+        this.trandeNo = trandeNo;
     }
 
     public String getSign() {
@@ -180,24 +204,38 @@ public class Trade implements Serializable {
         this.companyName = companyName;
     }
 
-    public Trade(Integer id, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, Integer status, String transactionDate, String endDate, String sign, Bid bid, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
-        this.id = id;
-        this.sellerId = sellerId;
-        this.buyersId = buyersId;
-        this.bidId = bidId;
-        this.basicinformationId = basicinformationId;
-        this.transactionMoney = transactionMoney;
-        this.tradeFreight = tradeFreight;
-        this.courierNumber = courierNumber;
-        this.status = status;
-        this.transactionDate = transactionDate;
-        this.endDate = endDate;
-        this.sign = sign;
-        this.bid = bid;
-        this.bftName = bftName;
-        this.bftSize = bftSize;
-        this.sellerName = sellerName;
-        this.buyersName = buyersName;
+    public Trade(String companyName, String buyersName, String sellerName, String bftSize, String bftName, Bid bid, String sign, String updateDate, String transactionDate, Integer status, String courierNumber, BigDecimal tradeFreight, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
         this.companyName = companyName;
+        this.buyersName = buyersName;
+        this.sellerName = sellerName;
+        this.bftSize = bftSize;
+        this.bftName = bftName;
+        this.bid = bid;
+        this.sign = sign;
+        this.updateDate = updateDate;
+        this.transactionDate = transactionDate;
+        this.status = status;
+        this.courierNumber = courierNumber;
+        this.tradeFreight = tradeFreight;
+        this.transactionMoney = transactionMoney;
+        this.basicinformationId = basicinformationId;
+        this.bidId = bidId;
+        this.buyersId = buyersId;
+        this.sellerId = sellerId;
+        this.trandeNo = trandeNo;
+    }
+
+    public Trade( BigDecimal tradeFreight,String bftSize,String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
+        this.tradeFreight = tradeFreight;
+        this.bftSize = bftSize;
+        this.updateDate = updateDate;
+        this.transactionDate = transactionDate;
+        this.status = status;
+        this.transactionMoney = transactionMoney;
+        this.basicinformationId = basicinformationId;
+        this.bidId = bidId;
+        this.buyersId = buyersId;
+        this.sellerId = sellerId;
+        this.trandeNo = trandeNo;
     }
 }

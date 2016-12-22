@@ -40,7 +40,7 @@ public class DetailController extends BaseController{
         basicinformation = basicinformationService.findObj(basicinformation);
         setLastPage(0,1);
         int bid = Integer.parseInt(basicinformation.getId());
-        Trade trade = tradeService.getLastTrade(bid,size,lagePage);
+        Trade trade = tradeService.getLastTrade(bid,size,Trade.TRADE_SUCESS ,lagePage);
         Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);
         //TODO 传递尺码时根据尺码查询最高最低价，不传尺码时查询最高最低价并获取对应尺码
         PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bid,size,1,lagePage);

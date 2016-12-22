@@ -13,7 +13,7 @@
         <result column="courierNumber" property="courierNumber" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="transactionDate" property="transactionDate" jdbcType="TIMESTAMP"/>
-        <result column="endDate" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
         <result column="bft_name" property="bftName" jdbcType="VARCHAR"/>
         <result column="bft_size" property="bftSize" jdbcType="VARCHAR"/>
@@ -64,8 +64,8 @@
             <if test="transactionDate != null and transactionDate != ''">
                 and t.transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="endDate != null and endDate != ''">
-                and t.end_date = #{endDate,jdbcType=TIMESTAMP}
+            <if test="updateDate != null and updateDate != ''">
+                and t.end_date = #{updateDate,jdbcType=TIMESTAMP}
             </if>
             <if test="sign != null and sign != ''">
                 and t.sign = #{sign,jdbcType=VARCHAR}
@@ -106,8 +106,8 @@
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
                 and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="obj.endDate != null and obj.endDate != ''">
-                and t.end_date = #{obj.endDate,jdbcType=TIMESTAMP}
+            <if test="obj.updateDate != null and obj.updateDate != ''">
+                and t.end_date = #{obj.updateDate,jdbcType=TIMESTAMP}
             </if>
             <if test="obj.sign != null and obj.sign != ''">
                 and t.sign = #{obj.sign,jdbcType=VARCHAR}
@@ -148,8 +148,8 @@
             <if test="transactionDate != null and transactionDate != ''">
                 and t.transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="endDate != null and endDate != ''">
-                and t.end_date = #{endDate,jdbcType=TIMESTAMP}
+            <if test="updateDate != null and updateDate != ''">
+                and t.end_date = #{updateDate,jdbcType=TIMESTAMP}
             </if>
             <if test="sign != null and sign != ''">
                 and t.sign LIKE CONCAT('%',#{sign,jdbcType=VARCHAR},'%')
@@ -193,8 +193,8 @@
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
                 and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
             </if>
-            <if test="obj.endDate != null and obj.endDate != ''">
-                and t.end_date = #{obj.endDate,jdbcType=TIMESTAMP}
+            <if test="obj.updateDate != null and obj.updateDate != ''">
+                and t.end_date = #{obj.updateDate,jdbcType=TIMESTAMP}
             </if>
             <if test="obj.sign != null and obj.sign != ''">
                 and t.sign LIKE CONCAT('%',#{obj.sign,jdbcType=VARCHAR},'%')
@@ -210,10 +210,11 @@
         t.basicinformation_id as basicinformationId,
         t.transaction_money as transactionMoney,
         t.trade_freight  as tradeFreight,
+        t.bft_size as bftSize,
         t.courier_number as courierNumber,
         t.status as status,
         t.transaction_date as transactionDate,
-        t.end_date as endDate,
+        t.update_date as updateDate,
         t.sign as sign
     </sql>
 
@@ -268,8 +269,8 @@
 
     <insert id="insert">
         INSERT INTO `trade`
-        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`courier_number`,`status`,`transaction_date`,`end_date`,`sign`)
-        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{courierNumber},#{status},#{transactionDate},#{endDate},#{sign})
+        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`transaction_date`,`update_date`,`sign`)
+        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{transactionDate},#{updateDate},#{sign})
     </insert>
 
     <update id="update">
@@ -277,8 +278,8 @@
         <if test="status != null and status != ''">
             status = #{status,jdbcType=VARCHAR}
         </if>
-        <if test="endDate != null and endDate != ''">
-            end_date = #{endDate,jdbcType=TIMESTAMP}
+        <if test="updateDate != null and updateDate != ''">
+            end_date = #{updateDate,jdbcType=TIMESTAMP}
         </if>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
