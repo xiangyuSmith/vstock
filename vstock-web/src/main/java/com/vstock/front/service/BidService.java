@@ -104,7 +104,7 @@ public class BidService {
      * @return
      */
     public int update(Bid record){
-        return bidDao.update(record.getStatus(),record.getBidMoney(),record.getInvalidDate(),record.getId());
+        return bidDao.update(record.getStatus(),record.getPaymentId(), record.getBidMoney(),record.getInvalidDate(),record.getId());
     }
 
     //出售记录个人中心查询

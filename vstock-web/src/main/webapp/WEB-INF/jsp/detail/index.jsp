@@ -296,25 +296,21 @@
             var amount = $("#seller_detailed_amount").val();
             var size = $("#seller_detailed_size").val();
             var type = 1;
-            sendRequest("/trade",{
-                "bname": bname,
-                "bId": bId,
-                'amount': amount,
-                'size' : size,
-                'type': type
-            },function(res){
-                if(res.retCode == 1){
-                    alertshow("请前往个人中心支付保证金");
-                }else{
-                    alertshow(res.retMsg);
-                }
-            });
+            box_create_trade(amount,size,type,null);
         });
         $("#buyer_submit_trade_").click(function(){
             var amount = $("#buyer_detailed_amount").val();
             var yunFee = $.trim($("#yunFee").text());
             var size = $("#buyer_detailed_size").val();
             var type = 0;
+            box_create_trade(amount,size,type,yunFee)
+        });
+
+        function box_create_trade(amount,size,type,yunFee){
+            if (amount == "" || amount == null || amount < 0) {
+                alertshow("出售金额不能为空，且必须大于0");
+                return;
+            }
             sendRequest("/trade",{
                 "bname": bname,
                 "bId": bId,
@@ -329,27 +325,22 @@
                     alertshow(res.retMsg);
                 }
             });
-        });
+        }
 
         /**  ----- 叫价/出价 ----- **/
-
         $("#seller_btn_step_final").click(function(){
-            if ($("#seller_bid_amount").val() == "" || $("#seller_bid_amount").val() == null || $("#seller_bid_amount").val() < 0) {
-                alertshow("出售金额不能为空，且必须大于0");
-                return;
-            }
             box_bid($("#seller_bid_amount").val(),$("#seller_buy_size").val(),$("#seller_buy_time").val(),0);
         });
 
         $("#buyer_btn_step_final").click(function(){
-            if ($("#buyer_sell_amount").val() == "" || $("#buyer_sell_amount").val() == null || $("#buyer_sell_amount").val() < 0) {
-                alertshow("出售金额不能为空，且必须大于0");
-                return;
-            }
             box_bid($("#buyer_sell_amount").val(),$("#buyer_sell_size").val(),$("#buyer_sell_time").val(),1);
         });
 
         function box_bid(amount,size,overdueTime,type){
+            if (amount == "" || amount == null || amount < 0) {
+                alertshow("出售金额不能为空，且必须大于0");
+                return;
+            }
             sendRequest("/bid",{
                 "bname": bname,
                 "bId": bId,

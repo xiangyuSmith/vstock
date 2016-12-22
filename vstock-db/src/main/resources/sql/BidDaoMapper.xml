@@ -344,18 +344,15 @@
     </insert>
 
     <update id="update">
-        UPDATE `bid` SET
+        UPDATE `bid` SET invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
         <if test="status != null and status != ''">
-            status = #{status,jdbcType=VARCHAR}
+            ,status = #{status,jdbcType=VARCHAR}
         </if>
         <if test="paymentId != null and paymentId != ''">
-            payment_id = #{paymentId,jdbcType=VARCHAR}
+            ,payment_id = #{paymentId,jdbcType=VARCHAR}
         </if>
         <if test="bidMoney != null and bidMoney != ''">
-            bid_money = #{bidMoney,jdbcType=DECIMAL}
-        </if>
-        <if test="invalidDate != null and invalidDate != ''">
-            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
+            ,bid_money = #{bidMoney,jdbcType=DECIMAL}
         </if>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>

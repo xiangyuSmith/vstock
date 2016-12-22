@@ -87,6 +87,7 @@ public class BidController extends BaseController{
         Bid bidObj = new Bid();
         bidObj.setId(bid);
         bidObj.setPaymentId(paymentId);
+        bidObj.setInvalidDate(DateUtils.dateToString(new Date()));
         bidObj.setStatus(bidObj.STATUS_INIT);
         bidService.update(bidObj);
         resultModel.setRetCode(resultModel.RET_OK);
