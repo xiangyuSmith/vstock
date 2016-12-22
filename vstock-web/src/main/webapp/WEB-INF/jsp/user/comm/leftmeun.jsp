@@ -182,6 +182,7 @@
 
         $("body").on("click",".deliver-goods",function(){
             var $this = $(this);
+            var dataType = $this.attr("bid_type");
             var amount = $this.parent().parent().parent().parent().prev().prev().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             var type = $this.attr("data-type");
@@ -195,7 +196,6 @@
                 amount : amount,
                 size : bftSize
             },function(res) {
-                alert(res.retCode);
                 if (res.retCode == 1){
                    alertshow("支付成功！");
                    $this.parent().parent().parent().removeClass("am-active");
