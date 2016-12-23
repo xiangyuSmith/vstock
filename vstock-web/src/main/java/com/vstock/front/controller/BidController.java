@@ -46,9 +46,7 @@ public class BidController extends BaseController{
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
                 ,type,new BigDecimal(10),Bid.STATUS_PENDING,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
-        PricePeak pricePeak = pricePeakService.getHighestAndlowest(bId,size, DateUtils.dateToString(new Date()),lagePage);
-        int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),bId,size,uid,type);
-        if(resultBid != 0 && resultPeak == 1){
+        if(resultBid != 0){
             resultModel.setRetCode(resultModel.RET_OK);
         }
         resultModel.setData(resultBid);
@@ -83,6 +81,8 @@ public class BidController extends BaseController{
             resultModel.setRetMsg("支付失败，请重新发起支付");
             return resultModel;
         }
+        PricePeak pricePeak = pricePeakService.getHighestAndlowest(basicinformationId,size, DateUtils.dateToString(new Date()),lagePage);
+        int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),basicinformationId,size,uid,type);
         int paymentId = payment.getId();
         Bid bidObj = new Bid();
         bidObj.setId(bid);

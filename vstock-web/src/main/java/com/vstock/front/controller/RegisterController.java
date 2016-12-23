@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 @Controller
 @RequestMapping("/register")
@@ -27,6 +28,11 @@ public class RegisterController extends BaseController{
     @ResponseBody
     public ResultModel insertUser(){
         ResultModel resultModel = new ResultModel();
+        String sendSmsCode = getParam("sendSmsCode","");
+        if(!sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
+            resultModel.setRetMsg("验证码错误");
+            return resultModel;
+        }
         String mobile = request.getParameter("mobile");
         String pwd = request.getParameter("password");
         String nick = request.getParameter("nick");

@@ -87,7 +87,6 @@ function loadingshow(msg) {
 function loadingclose() {
     $('#vstock-loading').modal('close');
 }
-
 function loadingSaleListclose() {
     $('#my-popup-saleList').modal('close');
 }

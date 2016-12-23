@@ -5,11 +5,14 @@
     .pre-login .am-form-field:focus{outline:none;box-shadow: none;border-bottom: 1px solid #ccc;}
     .check-size{  font-size: 14px;  }
     .check-size option{  text-align: center;  }
+    .tips-tab-error {
+        color: #CC0000;
+    }
 </style>
 <!--------------------  Type_Login  -------------------->
 <div class="am-modal am-modal-no-btn" id="my-popup-login">
     <div class="am-modal-dialog pre-login">
-        <div data-am-widget="tabs" class="am-tabs am-tabs-d2 am-margin-0">
+        <div data-am-widget="tabs" class="am-tabs am-tabs-d2 am-margin-0"  data-am-tabs="{noSwipe: 1}">
             <ul class="am-tabs-nav am-cf">
                 <li class="am-active" style="background-color: #FFFFFF;"><a href="[data-tab-panel-0]"><p class="layout-font-size-22">登录</p></a></li>
                 <li class="" style="background-color: #FFFFFF;"><a href="[data-tab-panel-1]"><p class="layout-font-size-22">注册</p></a></li>
@@ -46,58 +49,63 @@
                 </div>
                 <!---------- TYPE_REG ---------->
                 <div data-tab-panel-1 class="am-tab-panel am-g">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <div class="am-input-group am-input-group-lg">
-                            <div class="am-u-md-8 am-padding-0 am-margin-0">
-                                <input id="nick_reg" type="text" class="am-form-field" placeholder="昵称" required/>
+                    <form id="saveUserForm">
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-input-group am-input-group-lg">
+                                <div class="am-u-md-8 am-padding-0 am-margin-0">
+                                    <input id="nick_reg" name="nick_reg" type="text" class="am-form-field" placeholder="昵称" required/>
+                                </div>
+                                <div class="am-u-md-4 am-padding-0 am-margin-0">
+                                    <span class="am-input-group-btn">
+                                            <select id="size_reg" class="am-form-field check-size" style="height: 38px;">
+                                              <option value="">选择尺码</option>
+                                              <option value="41">41</option>
+                                              <option value="42">42</option>
+                                              <option value="43">43</option>
+                                            </select>
+                                            <i class="am-selected-icon am-icon-caret-down" style="margin-top: 11px;margin-left: -20px;z-index: 2;position: absolute;"></i>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="am-u-md-4 am-padding-0 am-margin-0">
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-input-group am-input-group-lg">
+                                <input id="mobile_reg" name="mobile_reg" class="am-form-field" type="text" placeholder="手机号码" style="border-right: 1px solid #ccc;" required/>
                                 <span class="am-input-group-btn">
-                                        <select id="size_reg" class="am-form-field check-size" style="height: 38px;">
-                                          <option value="">选择尺码</option>
-                                          <option value="41">41</option>
-                                          <option value="42">42</option>
-                                          <option value="43">43</option>
-                                        </select>
-                                        <i class="am-selected-icon am-icon-caret-down" style="margin-top: 11px;margin-left: -20px;z-index: 2;position: absolute;"></i>
+                                    <a href="javascript:;" id="sendSms" class="am-btn am-btn-default" style="font-size: 14px!important;line-height: 27px;background-color: #fff;border:none;border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;">发送验证码</a>
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <div class="am-input-group am-input-group-lg">
-                            <input id="mobile_reg" class="am-form-field" type="text" placeholder="手机号码" style="border-right: 1px solid #ccc;" required/>
-                            <span class="am-input-group-btn">
-                                <a href="#" class="am-btn am-btn-default" style="font-size: 14px!important;line-height: 27px;background-color: #fff;border:none;border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;">发送验证码</a>
-                            </span>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-input-group am-input-group-lg am-center">
+                                <input id="sendSmsCode" name="sendSmsCode" class="am-form-field" type="text" placeholder="验证码" maxlength="6" required/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <div class="am-input-group am-input-group-lg am-center">
-                            <input class="am-form-field" type="text" placeholder="验证码" required/>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-input-group am-input-group-lg am-center">
+                                <input id="password_reg" class="am-form-field" name="password" type="password" placeholder="密码" required/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <div class="am-input-group am-input-group-lg am-center">
-                            <input id="password_reg" class="am-form-field" type="password" placeholder="密码" required/>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-xs">
+                            <div class="am-input-group am-input-group-lg am-center">
+                                <input id="password_reg_final" class="am-form-field" name="password_reg_final" type="password" placeholder="再次输入密码" required/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-xs">
-                        <div class="am-input-group am-input-group-lg am-center">
-                            <input id="password_reg_final" class="am-form-field" type="password" placeholder="再次输入密码" required/>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-xs am-text-left">
+                            <span id="tips-tab" class="tips-tab-error"><span id="tips-text" class="tips-tab-error"></span></span>
                         </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-margin-top-sm">
-                        <div class="am-u-sm-1 am-u-md-1 am-u-lg-1 am-fl am-margin-left-0 am-padding-left-0">
-                            <input id="agreement" type="checkbox" class="am-padding-top-lg am-fl"/>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm am-margin-top-sm">
+                            <div class="am-u-sm-1 am-u-md-1 am-u-lg-1 am-fl am-margin-left-0 am-padding-left-0">
+                                <input id="agreement" type="checkbox" class="am-padding-top-lg am-fl"/>
+                            </div>
+                            <div class="am-u-sm-11 am-u-md-11 am-u-lg-11 am-padding-left-0 am-margin-left-0">
+                                <span class="am-text-sm am-margin-left-0 am-text-left am-fl"><label for="agreement" style="font-weight: normal;">我已阅读并同意《<a href="#" style="color: #646464;">用户使用协议</a>》</label></span>
+                            </div>
                         </div>
-                        <div class="am-u-sm-11 am-u-md-11 am-u-lg-11 am-padding-left-0 am-margin-left-0">
-                            <span class="am-text-sm am-margin-left-0 am-text-left am-fl"><label for="agreement" style="font-weight: normal;">我已阅读并同意《<a href="#" style="color: #646464;">用户使用协议</a>》</label></span>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <input id="prReg" type="submit" class="am-btn am-btn-danger am-btn-sm am-btn-block" value="注册" />
                         </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <a id="prReg" href="javascript:void(0);" class="am-btn am-btn-danger am-btn-sm am-btn-block">注册</a>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -123,19 +131,109 @@
                 }
             });
         });
-        $("#prReg").click(function(){
-            sendRequest("/register/insertUser",{
-                'mobile':$("#mobile_reg").val(),
-                'password':$.md5($("#password_reg").val()),
-                'size':$("#size_reg").val(),
-                'nick':$("#nick_reg").val()
-            },function(data){
-                if(data.retCode == 1){
-                    alert("注册成功");
-                }else{
-                    alert("注册失败");
+
+
+        function tiphide(){
+            $("#tips-tab").css("display","none");
+            $("#tips-text").text("");
+        }
+
+        function tipshow(tips){
+            $("#tips-tab").css("display","inline-block");
+            $("#tips-text").text(tips);
+        }
+
+        //校验
+        $("#saveUserForm").validate({
+            onsubmit:true,
+            errorPlacement : function(error, element) {
+                if (element.is(":radio"))
+                    error.appendTo(element.parent());
+                else if (element.is(":checkbox"))
+                    error.appendTo(element.parent().parent());
+                else
+                    var tips = error.text();
+                    tipshow(tips);
+            },
+            rules: {
+                nick_reg : {
+                    required: true,
+                    maxlength: 6
+                },
+                mobile_reg:{
+                    required: true
+                },
+                sendSmsCode : {
+                    required: true
+                },
+                password: {
+                    required: true,
+                    rangelength: [6, 16]
+                },
+                password_reg_final : {
+                    required: true,
+                    rangelength: [6, 16],
+                    equalTo: "#password_reg"
                 }
-            });
+            },
+            submitHandler: function(form) {  //通过之后回调
+                var param = $("#saveUserForm").serialize();
+                if($("#size_reg").val() == ""){
+                    tipshow("请选择尺码");
+                    return;
+                }
+                sendRequest("/register/insertUser",{
+                    'mobile':$("#mobile_reg").val(),
+                    'password':$.md5($("#password_reg").val()),
+                    'size':$("#size_reg").val(),
+                    'nick':$("#nick_reg").val(),
+                    'sendSmsCode' : $("#sendSmsCode").val()
+                },function(data){
+                    if(data.retCode == 1){
+                        alert("注册成功...");
+                    }else{
+                        tipshow(data.retMsg);
+                    }
+                });
+            },
+            invalidHandler: function(form, validator) {
+//                alert("a");
+            }
+        })
+
+        $("#sendSms").click(function(){
+            var $this = $(this);
+            var mobile = $("#mobile_reg").val();
+            if(mobile == ""){
+                tipshow("请填写手机号");
+                return;
+            }
+            sendsms($this,mobile);
         });
+
+
+        function sendsms($this,mobile){
+            $this.text("正在发送...");
+            sendRequest("/login/sendSms",{
+                "mobile":mobile
+            },function(res){
+                if(res.retCode==1){
+                    var wait = 10;
+                    $this.attr("disabled",true);
+                    var int = setInterval(function(){
+                        if (wait == 0) {
+                            $this.text("重新发送");
+                            $this.attr("disabled",false);
+                            clearInterval(int);
+                        } else {
+                            $this.text(wait+"s后重新发送");
+                            wait--;
+                        }
+                    },1000);
+                }else{
+                    alert(res.retMsg);
+                }
+            })
+        }
     });
 </script>

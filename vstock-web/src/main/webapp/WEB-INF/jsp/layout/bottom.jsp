@@ -13,6 +13,8 @@
 <script src="${ctx}/assets/js/highcharts/exporting.js"></script>
 <script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
 <script src="${ctx}/assets/js/admin.js"></script>
+<script src="${ctx}/assets/js/jquery.validate/jquery.validate.min.js"></script>
+<script src="${ctx}/assets/js/jquery.validate/messages_zh.js"></script>
 <script>
     Echo.init({
         offset: 0,

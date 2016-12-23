@@ -5,6 +5,9 @@ import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.front.service.UserService;
+import com.vstock.front.service.VstockConfigService;
+import com.vstock.front.service.interfaces.IVstockConfigService;
+import com.vstock.server.ihuyi.Sendsms;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +45,24 @@ public class LoginController extends BaseController {
             WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
             resultModel.setRetCode(ResultModel.RET_OK);
             return resultModel;
+        }
+        return resultModel;
+    }
+
+    @RequestMapping("sendSms")
+    @ResponseBody
+    public ResultModel sendSms() {
+        ResultModel resultModel = new ResultModel();
+        int mobile_code = (int)((Math.random()*9+1)*100000);
+        String mobile = getParam("mobile");
+        String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
+        String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
+        if(Sendsms.sendHuyi(mobile,account,key,mobile_code)){
+            WebUtils.setSessionAttribute(request, User.SESSION_USER_SIGN_CODE, mobile_code);
+            resultModel.setRetCode(resultModel.RET_OK);
+        }else{
+            resultModel.setRetMsg("服务器繁忙，请稍后再试");
+            resultModel.setRetCode(0);
         }
         return resultModel;
     }

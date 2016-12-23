@@ -72,10 +72,11 @@
                 "size":$("#sorts-size").val()
             },function(res){
                 var transactionMoney = (res.data.trade== undefined?undefined:res.data.trade.transactionMoney)==undefined ? "-" : res.data.trade.transactionMoney;
+                var minimumSellingPrice = (res.data.pricePeak2== undefined?undefined:res.data.pricePeak2.minimumSellingPrice)==undefined ? "-" : res.data.pricePeak2.minimumSellingPrice;
                 $("#show-img").attr("src",$this.attr("data-img-url"));
                 $("#product-name").text($this.attr("data-name"));
                 $("#trade-final-money").text(transactionMoney);
-                $("#minimum_selling_price").text(res.data.pricePeak2.minimumSellingPrice);
+                $("#minimum_selling_price").text(minimumSellingPrice);
                 $("#highest_bid").text(res.data.pricePeak1.highestBid==0?"-":res.data.pricePeak1.highestBid);
                 $("#difference").text(res.data.difference==0?"-":res.data.difference);
                 $("#percentag").text(res.data.percentag==0?"-":res.data.percentag);

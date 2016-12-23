@@ -11,7 +11,7 @@
  * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
  */
 $.extend($.validator.messages, {
-	required: "必须填写",
+	required: "表单不能为空",
 	remote: "请修正此栏位",
 	email: "请输入有效的电子邮件",
 	url: "请输入有效的网址",
@@ -24,7 +24,7 @@ $.extend($.validator.messages, {
 	extension: "请输入有效的后缀",
 	maxlength: $.validator.format("最多 {0} 个字"),
 	minlength: $.validator.format("最少 {0} 个字"),
-	rangelength: $.validator.format("请输入长度为 {0} 至 {1} 之間的字串"),
+	rangelength: $.validator.format("请输入长度为 {0} 至 {1} 之间的字串"),
 	range: $.validator.format("请输入 {0} 至 {1} 之间的数值"),
 	max: $.validator.format("请输入不大于 {0} 的数值"),
 	min: $.validator.format("请输入不小于 {0} 的数值")
