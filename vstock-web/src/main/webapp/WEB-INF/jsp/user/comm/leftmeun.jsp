@@ -8,6 +8,7 @@
         @media (max-width: 1400px) {.meun-width{width: 16%; min-height: 350px;}.meun-font-size{font-size: 14px;}.span-img{width: 11%}.highcharts-with-higth{width: 150px; height: 200px;}}
         @media (max-width: 996px) {.span-img{width: 6%}}
         .am-table>tbody>tr>td{vertical-align: inherit;}
+        .cc input:focus {outline:none;}
     </style>
 </head>
 <body>
@@ -233,6 +234,49 @@
                     }
                 }else {
                     alertshow("支付失败，请重新支付！");
+                }
+            });
+        });
+
+        $("body").on("click",".adder-stn",function(){
+            var $this = $(this);
+            var shopName = $('#shop-name').val();
+            if (shopName.length > 20){
+                alertshow("收货人姓名太长，请修改！")
+                return;
+            }
+            var phone = "";
+            var phoneNumber = $('#phone-number').val();
+            var areaCode = $('#area-code').val();
+            var phoneCode = $('#phone-code').val();
+            var extensionCode = $('#extension-code').val();
+            if (areaCode){
+                phone = phone + areaCode + "-";
+            }
+            if (phoneCode){
+                phone = phone + phoneCode;
+            }
+            if (extensionCode){
+                phone = phone + extensionCode;
+            }
+            if (phone == "" && phoneNumber == ""){
+                alertshow("请任意填写一个联系电话！");
+                $("body").on("click","#add-adders",function(){});
+                return;
+            }
+            sendRequest("/user/insertAdder",{
+                localArea : $('#city-name').val(),
+                detailedAddress : $('#adder-name').val(),
+                consigneeName : shopName,
+                phoneNumber : phoneNumber,
+                landlineNumber : phone
+            },function(res) {
+                if (res.retCode == 1){
+                    alertshow("添加成功！");
+                    ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
+                }else {
+                    alertshow("添加失败，请重新添加！");
+                    $('#add-adders').click();
                 }
             });
         });

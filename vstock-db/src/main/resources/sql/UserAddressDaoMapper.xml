@@ -15,7 +15,7 @@
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
-        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+        <result column="nick" property="uname" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -202,11 +202,18 @@
     </sql>
 
     <select id="findAll" parameterType="com.vstock.db.entity.UserAddress" resultType="com.vstock.db.entity.UserAddress">
-        SELECT u.uname,
+        SELECT u.nick,
         <include refid="Base_Column_List"/>
         FROM user_address ua LEFT JOIN `user` u ON ua.user_id = u.id
         <include refid="SearchAllByPage_Where_Clause"/>
         ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findType" parameterType="com.vstock.db.entity.UserAddress" resultType="com.vstock.db.entity.UserAddress">
+        SELECT u.nick,
+        <include refid="Base_Column_List"/>
+        FROM user_address ua LEFT JOIN `user` u ON ua.user_id = u.id
+        <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.UserAddress" resultType="Integer">

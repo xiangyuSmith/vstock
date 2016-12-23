@@ -22,4 +22,6 @@ public interface IUserAddressDao {
     //修改数据
     int update(@Param("status") int status, @Param("invalidDate") String invalidDate, @Param("id") Integer id);
 
+    UserAddress findType(@Param("obj") UserAddress record);
+
 }

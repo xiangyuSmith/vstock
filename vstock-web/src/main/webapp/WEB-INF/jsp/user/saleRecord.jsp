@@ -153,4 +153,4 @@
     </tbody>
 </table>
 </form>
-<script src="${ctx}/assets/js/amazeui.min.js"></script>
+<%--<script src="${ctx}/assets/js/amazeui.min.js"></script>--%>

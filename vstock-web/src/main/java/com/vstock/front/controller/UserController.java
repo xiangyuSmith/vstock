@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +42,8 @@ public class UserController extends BaseController {
 
     private static Logger logger = Logger.getLogger(BidController.class);
 
+    private static JSONObject staAdder = new JSONObject();
+
     @RequestMapping("index")
     public String testIndex(){
         return "/user/comm/leftmeun";
@@ -51,6 +52,7 @@ public class UserController extends BaseController {
     //个人中心出售记录
     @RequestMapping("sale")
     public String sale(ModelMap model){
+        staAdder = cityAddressService.adderssAll();
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
         String type = request.getParameter("type");
         Bid bid = new Bid();
@@ -182,9 +184,9 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/address", method = RequestMethod.POST)
     @ResponseBody
     public void address(HttpServletResponse response){
-        JSONObject jsonObject = cityAddressService.adderssAll();
+//        JSONObject jsonObject = cityAddressService.adderssAll();
         try {
-            response.getWriter().print(jsonObject);
+            response.getWriter().print(staAdder);
         }catch (Exception ex){
             System.out.print(ex.getMessage());
         }
@@ -202,6 +204,21 @@ public class UserController extends BaseController {
         String[] strChar = hchar.split(":");
         param.put("hchar",strChar[0]);
         param.put("moneyChar",strChar[1]);
+        return param;
+    }
+
+    @RequestMapping("insertAdder")
+    @ResponseBody
+    public Map<String,Object> insertAdder(){
+        Map<String,Object> param = new HashMap<String,Object>();
+        String localArea = request.getParameter("localArea");
+        String detailedAddress = request.getParameter("detailedAddress");
+        String consigneeName = request.getParameter("consigneeName");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String landlineNumber = request.getParameter("landlineNumber");
+        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        int retCode = userAddressService.insertAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString());
+        param.put("retCode",retCode);
         return param;
     }
 }

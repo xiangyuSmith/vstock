@@ -115,7 +115,7 @@ public class CityAddressService {
                 "山/s","上/s","四/s","陕/s","天/t","台/t","西/x","新/x","香/x","云/y","浙/z"};
         for (String str : adder){
             String[] adderss = str.split("/");
-            if (name.contains(adderss[0])){
+            if (name.substring(0,1).contains(adderss[0])){
                 return adderss[1];
             }
         }
