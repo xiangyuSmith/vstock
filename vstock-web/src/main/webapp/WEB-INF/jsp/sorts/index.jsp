@@ -89,36 +89,6 @@
         </div>
     </div>
 </article>
-<div id="tips-model" style="width: 380px;height: 453px;display: none;">
-    <div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">
-        <img id="show-img" style="width: 100%;" src="">
-        <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;" id="product-name"></span></div>
-    </div>
-    <div class="am-u-md-12 am-text-center am-margin-top-xs">
-        <span class="layout-font-size-24">最后成交价</span><br/>
-        <span class="layout-font-size-24" style="color: #000;">￥<span id="trade-final-money" class="layout-font-size-24" style="color: #000;"></span></span><br/>
-        <span id="price-color" style="color: #3bd278">
-            <span class="layout-font-size-20 roseType" ></span>
-            <span id="difference" class="layout-font-size-20">320</span>
-            <span class="layout-font-size-20">（ </span>
-            <span class="layout-font-size-20 roseType"></span>
-            <span id="percentag" class="layout-font-size-20">17</span>
-            <span class="layout-font-size-20"> %）</span>
-        </span>
-    </div>
-    <div class="am-u-md-12 am-margin-top-sm am-margin-bottom-lg">
-        <div class="am-u-md-6 am-text-center" style="border-right:1px solid #ccc;">
-            <span class="layout-font-size-24">最低售价</span><br/>
-            <span class="layout-font-size-20" style="color: #434343">￥</span>
-            <span id="minimum_selling_price" class="layout-font-size-20" style="color: #434343"></span>
-        </div>
-        <div class="am-u-md-6 am-text-center">
-            <span class="layout-font-size-24">最高出价</span><br/>
-            <span class="layout-font-size-20" style="color: #434343">￥</span>
-            <span id="highest_bid" class="layout-font-size-20" style="color: #434343"></span>
-        </div>
-    </div>
-</div>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <script>
@@ -180,18 +150,25 @@
             sendMessage();
         });
 
-        function load(data){
-            ajaxContentAppend("/sorts/list",data,"box-sorts-list-ul",0);
+        function load(data,type){
+            if(type == 1){
+                ajaxContentAppend("/sorts/list",data,"box-sorts-list-ul",0);
+            }else{
+                ajaxContent("/sorts/list",data,"box-sorts-list-ul",0);
+            }
         }
 
         load();
 
         $(window).scroll( function() {
             if ($(document).scrollTop() >= (parseFloat($(document).height())-parseFloat($(window).height())-300)) {
-                alert($("#pageStart").val());
                 load({
-                    "pageStart":$("#pageStart").val()
-                });
+                    "pageStart":$("#pageStart").val(),
+                    "size":size,
+                    "price":price,
+                    "year":year,
+                    "brand":brand
+                },1);
             }
         });
 

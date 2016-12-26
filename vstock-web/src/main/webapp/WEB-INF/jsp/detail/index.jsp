@@ -109,6 +109,7 @@
                     <button id="sell" class="am-btn am-btn-lg am-fr am-margin-top-lg am-margin-right-lg" style="background-color: #3BD379;color: #fff;">出售</button>
                 </div>
                 <input id="sell-click" type="hidden" data-am-modal="{target: '#my-popup-saleList',width: 900}" />
+                <input id="identify-click" type="hidden" data-am-modal="{target: '#my-popup-identify',width: 644}" />
                 <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
@@ -240,6 +241,7 @@
 <%@include file="../common/popup/purchaselistwindow.jsp" %>
 <%@include file="../common/popup/selldetailedlist.jsp" %>
 <%@include file="../common/popup/buydetailedlist.jsp" %>
+<%@include file="../common/popup/bindIdentify.jsp" %>
 
 <script>
     $(function(){
@@ -265,6 +267,9 @@
             if(loginType == "false"){
                 $("#login-click").click();
             }else{
+                //校验是否身份证
+                $("#identify-click").click();
+                return;
                 $("#sell-click").click();
             }
         });
