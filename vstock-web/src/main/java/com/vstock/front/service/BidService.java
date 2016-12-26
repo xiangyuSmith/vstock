@@ -139,18 +139,6 @@ public class BidService {
     }
 
     /**
-     * @param bftSize 尺码
-     * @param year 年份
-     * @param brand 品牌
-     * @param priceStart 价格区间:start
-     * @param priceEnd 价格区间:end
-     * @return
-     */
-    public List<Bid> findBidForSorts(String bftSize,String year,String brand,String priceStart,String priceEnd){
-        return bidDao.findBidForSorts(bftSize,year,brand,priceStart,priceEnd);
-    }
-
-    /**
      * 最高/最低 叫价/出价 记录
      * @param bid  鞋库编号
      * @param type 0；卖家    1：买家

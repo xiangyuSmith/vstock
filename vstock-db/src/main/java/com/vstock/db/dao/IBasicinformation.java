@@ -46,4 +46,8 @@ public interface IBasicinformation {
 
     List<String> getBrands();
 
+    /**
+     * 分类页查询
+     */
+    List<Basicinformation> findBasicinForSorts(@Param("bftSize") String bftSize,@Param("year") String year,@Param("brand") String brand,@Param("priceStart") String priceStart,@Param("priceEnd") String priceEnd,@Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 }

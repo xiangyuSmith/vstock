@@ -5,6 +5,7 @@ import com.vstock.db.dao.IBasicinformationRoseDao;
 import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.Trade;
+import com.vstock.ext.util.Page;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,18 @@ public class BasicinformationService {
 
     public Basicinformation findObj(Basicinformation basicinformation){
         return basicinformationDao.find(basicinformation).get(0);
+    }
+
+    /**
+     * @param bftSize 尺码
+     * @param year 年份
+     * @param brand 品牌
+     * @param priceStart 价格区间:start
+     * @param priceEnd 价格区间:end
+     * @return
+     */
+    public List<Basicinformation> findBasicinForSorts(String bftSize,String year,String brand,String priceStart,String priceEnd,Integer pageStart,Integer pageSize){
+        return basicinformationDao.findBasicinForSorts(bftSize,year,brand,priceStart,priceEnd,pageStart,pageSize);
     }
 
     /**

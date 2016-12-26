@@ -33,7 +33,7 @@ public class LoginController extends BaseController {
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
         if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)) {
-            resultModel.setRetMsg("登录邮箱或者密码不能为空");
+            resultModel.setRetMsg("用户名或密码不能为空");
             return resultModel;
         }
         User user = userService.findUser(mobile);
@@ -45,6 +45,8 @@ public class LoginController extends BaseController {
             WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
             resultModel.setRetCode(ResultModel.RET_OK);
             return resultModel;
+        }else{
+            resultModel.setRetMsg("密码输入错误");
         }
         return resultModel;
     }

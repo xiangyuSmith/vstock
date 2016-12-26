@@ -37,7 +37,6 @@ public class Basicinformation implements Serializable {
 
     @Id
     private String id;
-    private int bid;
     private String brand;
     private String name;
     private String artNo;
@@ -56,10 +55,10 @@ public class Basicinformation implements Serializable {
     private String createtime;
     private String state;
     private ResultDataFactory resultDataFactory;
+    private Bid bid;
 
-    public Basicinformation(String id, int bid, String brand, String name, String artNo, int type, String colores, String csaledate, String esaledate, Double cofferprice, Double cofferprices, String bscofferprice, String eofferprice, String chineselogo, String chineselogos, String imgUrl, String smallImgUrl, String createtime, String state, ResultDataFactory resultDataFactory) {
+    public Basicinformation(String id, String brand, String name, String artNo, int type, String colores, String csaledate, String esaledate, Double cofferprice, Double cofferprices, String bscofferprice, String eofferprice, String chineselogo, String chineselogos, String imgUrl, String smallImgUrl, String createtime, String state, ResultDataFactory resultDataFactory, Bid bid) {
         this.id = id;
-        this.bid = bid;
         this.brand = brand;
         this.name = name;
         this.artNo = artNo;
@@ -78,17 +77,18 @@ public class Basicinformation implements Serializable {
         this.createtime = createtime;
         this.state = state;
         this.resultDataFactory = resultDataFactory;
+        this.bid = bid;
     }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-    public int getBid() {
+    public Bid getBid() {
         return bid;
     }
 
-    public void setBid(int bid) {
+    public void setBid(Bid bid) {
         this.bid = bid;
     }
 

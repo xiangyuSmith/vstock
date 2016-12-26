@@ -309,29 +309,6 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="findBidForSorts" resultMap="BaseResultMap">
-        SELECT * FROM (SELECT bi.id,bi.basicinformation_id as basicinformationId,bi.bft_name as bftName,bi.bft_size as bftSize,bi.bid_bond as bidBond,bi.bid_date as bidDate,bi.bid_money as bidMoney,bf.id as bid,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo,bf.csaledate as bcsaledate FROM bid bi
-        LEFT JOIN basicinformation bf ON bi.basicinformation_id = bf.id
-        ORDER BY bidDate DESC) as bid
-        WHERE 1=1
-        <if test="bftSize != null and bftSize != ''">
-            and bid.bftSize = #{bftSize}
-        </if>
-        <if test="brand != null and brand != ''">
-            and bid.brand = #{brand}
-        </if>
-        <if test="year != null and year != ''">
-            and bid.bcsaledate LIKE CONCAT('%',#{year},'%')
-        </if>
-        <if test="priceStart != null and priceStart != ''">
-            and bid.bidMoney  &gt;= #{priceStart}
-        </if>
-        <if test="priceEnd != null and priceEnd != ''">
-            and bid.bidMoney  &lt;= #{priceEnd}
-        </if>
-        GROUP BY bid.basicinformationId
-    </select>
-
     <select id="findCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
         SELECT COUNT(*) FROM bid b
         <include refid="SearchAllByPage_Where_Clause"/>

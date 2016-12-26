@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="inc.jsp" %>
-
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="${ctx}/assets/js/jquery.min.js"></script><!-- PRE_WINDOW -->
 <script src="${ctx}/assets/js/amazeui.min.js"></script>
@@ -15,6 +14,7 @@
 <script src="${ctx}/assets/js/admin.js"></script>
 <script src="${ctx}/assets/js/jquery.validate/jquery.validate.min.js"></script>
 <script src="${ctx}/assets/js/jquery.validate/messages_zh.js"></script>
+<script src="${ctx}/assets/js/jquery.toaster.js"></script>
 <script>
     Echo.init({
         offset: 0,

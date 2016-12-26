@@ -29,8 +29,4 @@ public interface IBidDao {
 
     Bid findByType(@Param("obj")Bid record,@Param(value = "sort") Integer sort, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
-    /**
-     * 分类页查询
-     */
-    List<Bid> findBidForSorts(@Param("bftSize") String bftSize,@Param("year") String year,@Param("brand") String brand,@Param("priceStart") String priceStart,@Param("priceEnd") String priceEnd);
 }

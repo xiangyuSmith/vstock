@@ -71,6 +71,22 @@ function ajaxContent(url, data, content,type){
     });
 }
 
+function ajaxContentAppend(url, data, content,type){
+    $('.loading-img').css('display','block');
+    $.ajax({
+        type : "post",
+        url : encodeURI(encodeURI(url)),
+        data : data,
+        dataType : "html",
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        async: false,
+        cache: false,
+        success:function(returnData){
+            $("#"+content).append(returnData);
+        }
+    });
+}
+
 function confirmshow(title, msg, callback, initfunc) {
     //TODO 弹出层
 }
@@ -106,6 +122,31 @@ function alertshow(msg, callback) {
     $('#forex-alert').modal({
         onConfirm : function() { if (callback) callback(); $('#forex-alert').off('confirm.modal.amui'); }
     });
+}
+//tips窗口
+function alertTips(type,title,msg){
+    if(title == ""){
+        title = "提示";
+    }
+    var msgType = "";
+    switch (type){
+        case 0:
+            msgType = "info";
+            break;
+        case 1:
+            msgType = "success";
+            break;
+        case 2:
+            msgType = "danger";
+            break;
+        case 3:
+            msgType = "warning";
+            break;
+        default:
+            msgType = "info";
+            break;
+    }
+    $.toaster({ priority : msgType, title : title, message : msg});
 }
 function alertConfirm(title , msg , callback) {
     $("#alert-confirm-title").html(title);

@@ -2,6 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vstock.db.dao.IBasicinformation">
 
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.Basicinformation">
+        <id column="bid" property="id"/>
+        <result column="bname" property="name"/>
+        <result column="bartNo" property="artNo"/>
+        <result column="btype" property="type"/>
+        <result column="bsmallImgUrl" property="smallImgUrl"/>
+        <result column="bcsaledate" property="csaledate"/>
+        <association property="bid" column="bid"
+                     javaType="com.vstock.db.entity.Bid">
+            <id property="id" column="id"/>
+            <result column="userId" property="userId" jdbcType="INTEGER"/>
+            <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+            <result column="paymentId" property="paymentId" jdbcType="INTEGER"/>
+            <result column="bftName" property="bftName" jdbcType="VARCHAR"/>
+            <result column="bftSize" property="bftSize" jdbcType="VARCHAR"/>
+            <result column="bidMoney" property="bidMoney" jdbcType="DECIMAL"/>
+            <result column="bidFreight" property="bidFreight" jdbcType="DECIMAL"/>
+            <result column="bidBond" property="bidBond" jdbcType="DECIMAL"/>
+            <result column="lately_bid" property="latelyBid" jdbcType="DECIMAL"/>
+            <result column="termValidity" property="termValidity" jdbcType="VARCHAR"/>
+            <result column="status" property="status" jdbcType="VARCHAR"/>
+            <result column="type" property="type" jdbcType="VARCHAR"/>
+            <result column="sign" property="sign" jdbcType="VARCHAR"/>
+            <result column="bidDate" property="bidDate" jdbcType="TIMESTAMP"/>
+            <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
+            <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
+            <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        </association>
+    </resultMap>
+
     <insert id="insert" parameterType="com.vstock.db.entity.Basicinformation" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `basicinformation`
         (`id`,`brand`,`name`,`artNo`,`colores`,`csaledate`,`esaledate`,`cofferprice`,`eofferprice`,`chineselogo`,`imgUrl`,`smallImgUrl`,`createTime`,`state`)
@@ -21,6 +51,32 @@
         </if>
         WHERE `id` = #{id}
     </update>
+
+    <select id="findBasicinForSorts"  parameterType="map" resultMap="BaseResultMap">
+        SELECT * FROM (SELECT bi.id,bi.basicinformation_id as basicinformationId,bi.bft_name as bftName,bi.bft_size as bftSize,bi.bid_bond as bidBond,bi.bid_date as bidDate,bi.bid_money as bidMoney,bf.id as bid,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo,bf.csaledate as bcsaledate
+        FROM basicinformation bf
+        LEFT JOIN bid bi ON bi.basicinformation_id = bf.id
+        ORDER BY bidDate DESC) as basicinformation
+        WHERE 1=1
+        <if test="bftSize != null and bftSize != ''">
+            and basicinformation.bftSize = #{bftSize}
+        </if>
+        <if test="brand != null and brand != ''">
+            and basicinformation.brand = #{brand}
+        </if>
+        <if test="year != null and year != ''">
+            and basicinformation.bcsaledate LIKE CONCAT('%',#{year},'%')
+        </if>
+        <if test="priceStart != null and priceStart != ''">
+            and basicinformation.bidMoney  &gt;= #{priceStart}
+        </if>
+        <if test="priceEnd != null and priceEnd != ''">
+            and basicinformation.bidMoney  &lt;= #{priceEnd}
+        </if>
+        GROUP BY basicinformation.bid
+        ORDER BY basicinformation.id DESC
+        limit #{startPos},#{pageSize}
+    </select>
 
     <!--分页查询所有-->
     <select id="findLimitAll" resultType="com.vstock.db.entity.Basicinformation">

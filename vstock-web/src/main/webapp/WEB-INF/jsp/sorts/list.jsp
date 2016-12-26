@@ -1,71 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<style>
-    .popover{
-        min-width:350px!important;
-    }
-</style>
 <input id="sorts-size" type="hidden" value="${size}" />
 <input id="sorts-price" type="hidden" value="${price}" />
 <input id="sorts-year" type="hidden" value="${year}" />
 <input id="sorts-brand" type="hidden" value="${brand}" />
-<div id="tips-model" style="width: 380px;height: 453px;display: none;">
-    <div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">
-        <img id="show-img" style="width: 100%;" src="">
-        <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;" id="product-name"></span></div>
-    </div>
-    <div class="am-u-md-12 am-text-center am-margin-top-xs">
-        <span class="layout-font-size-24">最后成交价</span><br/>
-        <span class="layout-font-size-24" style="color: #000;">￥<span id="trade-final-money" class="layout-font-size-24" style="color: #000;"></span></span><br/>
-        <span id="price-color" style="color: #3bd278">
-            <span class="layout-font-size-20 roseType" ></span>
-            <span id="difference" class="layout-font-size-20">320</span>
-            <span class="layout-font-size-20">（
-            <span class="layout-font-size-20 roseType"></span>
-            <span id="percentag" class="layout-font-size-20">17</span>
-            <span class="layout-font-size-20"> %）</span>
-        </span>
-    </div>
-    <div class="am-u-md-12 am-margin-top-sm am-margin-bottom-lg">
-        <div class="am-u-md-6 am-text-center" style="border-right:1px solid #ccc;">
-            <span class="layout-font-size-24">最低售价</span><br/>
-            <span class="layout-font-size-20" style="color: #434343">￥</span>
-            <span id="minimum_selling_price" class="layout-font-size-20" style="color: #434343"></span>
-        </div>
-        <div class="am-u-md-6 am-text-center">
-            <span class="layout-font-size-24">最高出价</span><br/>
-            <span class="layout-font-size-20" style="color: #434343">￥</span>
-            <span id="highest_bid" class="layout-font-size-20" style="color: #434343"></span>
-        </div>
-    </div>
-</div>
-<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
-    <c:forEach items="${bidList}" var="bid">
-        <li>
-            <a class="popover-tips" href="/detail?proName=${bid.basicinformation.name}&size=${size}" data-name="${bid.basicinformation.name}" data-id="${bid.basicinformation.id}" data-img-url="${configMap._site_url}${bid.basicinformation.smallImgUrl}">
-                <div class="clickZone" aria-describedby="product141637">
-                    <div class="img">
-                        <span class="helper"></span>
-                        <img class="show-lazy lazy"style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.basicinformation.smallImgUrl}" style="display: inline;">
-                    </div>
-                    <div class="name" style="padding-left: 5px;">
-                        <div>${bid.basicinformation.name}</div>
-                    </div>
-                    <div class="price">
-                        <div class="price-line">
-                            <div class="price-label" style="padding-left: 5px;">最后出价</div>
-                            <div style="font-size: 24px;">￥<fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></div>
-                        </div>
+<input class="sorts-pageStart" type="hidden" value="${pageStart}" />
+<c:forEach items="${bidList}" var="bid">
+    <li>
+        <a class="popover-tips-${pageStart}" href="/detail?proName=${bid.name}&size=${size}" data-name="${bid.name}" data-id="${bid.id}" data-img-url="${configMap._site_url}${bid.smallImgUrl}">
+            <div class="clickZone" aria-describedby="product141637">
+                <div class="img">
+                    <span class="helper"></span>
+                    <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" style="display: inline;">
+                </div>
+                <div class="name" style="padding-left: 5px;">
+                    <div>${bid.name}</div>
+                </div>
+                <div class="price">
+                    <div class="price-line">
+                        <div class="price-label" style="padding-left: 5px;">最后出价</div>
+                        <div style="font-size: 24px;">￥<fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,#00.0#"/></div>
                     </div>
                 </div>
-            </a>
-        </li>
-    </c:forEach>
-</ul>
+            </div>
+        </a>
+    </li>
+</c:forEach>
 <script src="${ctx}/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        $(".popover-tips").each(function(){
+        var nowPage = $(".sorts-pageStart:last").val();
+        $("#pageStart").val(parseInt(nowPage)+20);
+        $(".popover-tips-"+nowPage).each(function(){
             var $this = $(this);
             sendRequest("/sorts/bidTips",{
                 "bid":$this.attr("data-id"),
@@ -77,7 +43,9 @@
                 $("#product-name").text($this.attr("data-name"));
                 $("#trade-final-money").text(transactionMoney);
                 $("#minimum_selling_price").text(minimumSellingPrice);
-                $("#highest_bid").text(res.data.pricePeak1.highestBid==0?"-":res.data.pricePeak1.highestBid);
+                if(res.data.pricePeak1==undefined){ $("#highest_bid").text("-"); }else{
+                    $("#highest_bid").text(res.data.pricePeak1.highestBid==0?"-":res.data.pricePeak1.highestBid);
+                }
                 $("#difference").text(res.data.difference==0?"-":res.data.difference);
                 $("#percentag").text(res.data.percentag==0?"-":res.data.percentag);
                 if(res.data.roseType == 0){

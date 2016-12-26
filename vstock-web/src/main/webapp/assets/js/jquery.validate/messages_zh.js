@@ -11,7 +11,7 @@
  * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
  */
 $.extend($.validator.messages, {
-	required: "表单不能为空",
+	required: "信息不能为空",
 	remote: "请修正此栏位",
 	email: "请输入有效的电子邮件",
 	url: "请输入有效的网址",

@@ -127,7 +127,7 @@
                     //重新加载页面
                     window.location.reload();
                 }else{
-                    alert(data.retMsg);
+                    alertTips(2,"登录失败",data.retMsg);
                 }
             });
         });
@@ -182,6 +182,11 @@
                     tipshow("请选择尺码");
                     return;
                 }
+                if(!$("#agreement").is(':checked')){
+                    tipshow("请勾选用户使用协议");
+                    return;
+                }
+                tiphide();
                 sendRequest("/register/insertUser",{
                     'mobile':$("#mobile_reg").val(),
                     'password':$.md5($("#password_reg").val()),
@@ -190,9 +195,9 @@
                     'sendSmsCode' : $("#sendSmsCode").val()
                 },function(data){
                     if(data.retCode == 1){
-                        alert("注册成功...");
+                        alertTips(1,"注册成功",data.retMsg);
                     }else{
-                        tipshow(data.retMsg);
+                        alertTips(2,"注册失败",data.retMsg);
                     }
                 });
             },

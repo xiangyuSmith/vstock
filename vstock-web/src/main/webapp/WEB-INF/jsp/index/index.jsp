@@ -26,7 +26,7 @@
             <div class="get-title-search">
                 <form class="am-topbar-left am-form-inline" role="search">
                     <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;">
-                        <input type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......">
+                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
                     </div>
                 </form>
@@ -257,7 +257,12 @@
         var banner_num = new CountUp("banner_num", 56000, 56214, 0, 5, options);
         banner_num.start();
 
-
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+                location.href = "sort?productName="+$("#index_search").val();
+            }
+        }
     });
 </script>
 </body>

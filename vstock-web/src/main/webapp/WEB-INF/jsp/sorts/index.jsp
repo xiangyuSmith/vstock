@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
 <head>
     <%@include file="../layout/head.jsp" %>
     <title>分类页</title>
@@ -20,6 +20,7 @@
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
         .box-sorts-list ul li{ padding: 20px; }
         .active{ color: #FF5A5F!important; }
+        .popover{ min-width:350px!important; }
     </style>
 </head>
 <body>
@@ -27,6 +28,7 @@
 <div class="get-sorts"></div>
 <article>
     <div class="am-g am-container-content">
+        <input type="hidden" id="pageStart" value="${pageStart}"/>
         <div class="am-u-md-2 am-u-xs-12 am-hide-sm">
             <div style="margin-top: 56px;">
                 <div class="title">分类</div>
@@ -79,10 +81,44 @@
         </div>
         <div class="am-u-md-10">
             <div class="am-tips"></div>
-            <div id="box-sorts-list" class="box-sorts-list"></div>
+            <div class="box-sorts-list">
+                <ul id="box-sorts-list-ul" data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
+
+                </ul>
+            </div>
         </div>
     </div>
 </article>
+<div id="tips-model" style="width: 380px;height: 453px;display: none;">
+    <div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">
+        <img id="show-img" style="width: 100%;" src="">
+        <div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;" id="product-name"></span></div>
+    </div>
+    <div class="am-u-md-12 am-text-center am-margin-top-xs">
+        <span class="layout-font-size-24">最后成交价</span><br/>
+        <span class="layout-font-size-24" style="color: #000;">￥<span id="trade-final-money" class="layout-font-size-24" style="color: #000;"></span></span><br/>
+        <span id="price-color" style="color: #3bd278">
+            <span class="layout-font-size-20 roseType" ></span>
+            <span id="difference" class="layout-font-size-20">320</span>
+            <span class="layout-font-size-20">（ </span>
+            <span class="layout-font-size-20 roseType"></span>
+            <span id="percentag" class="layout-font-size-20">17</span>
+            <span class="layout-font-size-20"> %）</span>
+        </span>
+    </div>
+    <div class="am-u-md-12 am-margin-top-sm am-margin-bottom-lg">
+        <div class="am-u-md-6 am-text-center" style="border-right:1px solid #ccc;">
+            <span class="layout-font-size-24">最低售价</span><br/>
+            <span class="layout-font-size-20" style="color: #434343">￥</span>
+            <span id="minimum_selling_price" class="layout-font-size-20" style="color: #434343"></span>
+        </div>
+        <div class="am-u-md-6 am-text-center">
+            <span class="layout-font-size-24">最高出价</span><br/>
+            <span class="layout-font-size-20" style="color: #434343">￥</span>
+            <span id="highest_bid" class="layout-font-size-20" style="color: #434343"></span>
+        </div>
+    </div>
+</div>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <script>
@@ -91,6 +127,8 @@
         var price = "";
         var year = "";
         var brand = "";
+
+        var totalheight = 0;
 
         $(".brand-btn").click(function(){
             var $this = $(this);
@@ -143,10 +181,19 @@
         });
 
         function load(data){
-            ajaxContent("/sorts/list",data,"box-sorts-list",0);
+            ajaxContentAppend("/sorts/list",data,"box-sorts-list-ul",0);
         }
 
         load();
+
+        $(window).scroll( function() {
+            if ($(document).scrollTop() >= (parseFloat($(document).height())-parseFloat($(window).height())-300)) {
+                alert($("#pageStart").val());
+                load({
+                    "pageStart":$("#pageStart").val()
+                });
+            }
+        });
 
         function sendMessage(){
             load({
