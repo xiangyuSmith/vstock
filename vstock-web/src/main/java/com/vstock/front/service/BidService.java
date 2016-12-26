@@ -121,6 +121,7 @@ public class BidService {
         page.setStartPos(0);
         page.setPageSize(1);
         Bid bidObj = findByBid(b,page);
+        String s = getBidSign(basicinformationId,size,amount,bidMd5Key);
         return bidObj.getSign().equals(getBidSign(basicinformationId,size,amount,bidMd5Key));
     }
 

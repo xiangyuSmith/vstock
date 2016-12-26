@@ -2,6 +2,7 @@ package com.vstock.front.controller;
 
 import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
+import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
 import org.apache.log4j.Logger;
@@ -224,6 +225,34 @@ public class UserController extends BaseController {
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
         int retCode = userAddressService.saveAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString(),type,status,id);
         param.put("retCode",retCode);
+        return param;
+    }
+
+    @RequestMapping("updatePassword")
+    @ResponseBody
+    public Map<String,Object> updatePassword(){
+        Map<String,Object> param = new HashMap<String,Object>();
+        User record = new User();
+        String mobile = getParam("mobile","");
+        String password = getParam("password","");
+        User user = userService.findUser(mobile);
+        record.setId(user.getId());
+        record.setPassword(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE));
+        int i =userService.update(record);
+        param.put("retCode",i);
+        return param;
+    }
+
+    @RequestMapping("verification")
+    @ResponseBody
+    public Map<String,Object> verification(){
+        Map<String,Object> param = new HashMap<String,Object>();
+        String sendSmsCode = getParam("sendSmsCode","");
+        Object o = WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE);
+        String u = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE));
+        if(sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
+            param.put("retCode",1);
+        }
         return param;
     }
 

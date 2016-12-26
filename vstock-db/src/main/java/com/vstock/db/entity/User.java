@@ -29,7 +29,7 @@ public class User {
 
     private String last_login_time;
 
-    private int status;
+    private Integer status;
 
     private String create_time;
 
@@ -107,11 +107,11 @@ public class User {
         this.last_login_time = last_login_time;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -134,7 +134,7 @@ public class User {
     public User() {
     }
 
-    public User(String id, String uname, String password, String mobile, String nick, String size, String salt, String last_login_ip, String last_login_time, int status, String create_time, String update_time) {
+    public User(String id, String uname, String password, String mobile, String nick, String size, String salt, String last_login_ip, String last_login_time, Integer status, String create_time, String update_time) {
         this.id = id;
         this.uname = uname;
         this.password = password;

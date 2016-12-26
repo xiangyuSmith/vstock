@@ -27,4 +27,11 @@ public class UserService {
         return userDao.findUser(u);
     }
 
+    /**
+     * 修改方法
+     * @param record
+     * @return
+     */
+    public int update(User record){return userDao.update(record);}
+
 }

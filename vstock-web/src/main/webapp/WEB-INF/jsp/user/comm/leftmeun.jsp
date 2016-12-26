@@ -174,9 +174,14 @@
 
         $("body").on("click",".userAssets-del",function(){
             var $this = $(this);
-            var id = $this.attr("del_data_id");
+            var money = $this.parent().parent().parent().prev().prev().prev().text();
+            var size = $this.parent().parent().parent().prev().prev().prev().prev().prev().text();
+            money = parseFloat(money.replace(/[^\d\.-]/g, ""));
             sendRequest("/bid/updateBid",{
-                id : id,
+                id : $this.attr("del_data_id"),
+                btfId : $this.attr("btf-id"),
+                bidMoney : money,
+                size : size,
                 status : '2'
             },function(res) {
                 if (res.sgin == 1){
@@ -343,9 +348,75 @@
             });
         });
 
-        $("#sendSms").click(function(){
+        $('#verification').bind('input propertychange', function() {
+            var verification = $('#verification').val();
+            sendRequest("/user/verification",{
+                sendSmsCode: verification
+            },function(res) {
+                if (res.retCode == 1){
+                    $('#prompt').html("");
+                    $('#prompt').removeClass("inline-block");
+                    $('#prompt').addClass("none");
+                }else {
+                    $('#prompt').html("");
+                    $('#prompt').text("验证码错误，请重新输入！");
+                    $('#prompt').removeClass("none");
+                    $('#prompt').addClass("inline-block");
+                }
+            });
+        });
+
+        $("body").on("click","#userpass-sbt",function(){
             var $this = $(this);
-            var mobile = $("#mobile_reg").val();
+            var passOne = $.md5($('#passOne').val());
+            var passTow = $.md5($('#passTow').val());
+            var verification = $('#verification').val();
+            if (verification == null || verification == ""){
+                $('#prompt').html("");
+                $('#prompt').text("验证码不能为空！");
+                $('#prompt').removeClass("none");
+                $('#prompt').addClass("inline-block");
+                return;
+            }
+            if (passOne == null || passOne == ""){
+                $('#prompt').html("");
+                $('#prompt').text("请输入密码！");
+                $('#prompt').removeClass("none");
+                $('#prompt').addClass("inline-block");
+                return;
+            }
+            if (passTow == null || passTow == ""){
+                $('#prompt').html("");
+                $('#prompt').text("请再次输入密码！");
+                $('#prompt').removeClass("none");
+                $('#prompt').addClass("inline-block");
+                return;
+            }
+            if (passOne != passTow){
+                $('#prompt').html("");
+                $('#prompt').text("两次密码不同，请重新输入！");
+                $('#prompt').removeClass("none");
+                $('#prompt').addClass("inline-block");
+                return;
+            }
+
+            $('#prompt').html("");
+            $('#prompt').removeClass("inline-block");
+            $('#prompt').addClass("none");
+            sendRequest("/user/updatePassword",{
+                mobile: $("#mobile_reg").text(),
+                password: passOne
+            },function(res) {
+                if (res.retCode == 1){
+                    window.location.reload();
+                    sendRequest("/login/logout",null,function(res) {});
+                }
+            });
+        });
+
+        $("body").on("click","#sendSms",function(){
+            var $this = $(this);
+            var mobile = $("#mobile_reg").text();
             if(mobile == ""){
                 tipshow("请填写手机号");
                 return;

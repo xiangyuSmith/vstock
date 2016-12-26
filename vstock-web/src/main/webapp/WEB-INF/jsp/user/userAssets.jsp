@@ -141,15 +141,15 @@
                             </c:choose>
                             <td style="width: 26%">
                                 <div class="am-fl" style="width: 30%;">
-                                    <a href="#">
+                                    <a href="javascript:void(0);">
                                         <span style="display: block;width: 55px;height: 45px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
                                         <span class="am-margin-left-sm am-link-muted">出售</span>
                                     </a>
                                 </div>
                                 <div class="am-fl am-margin-left-sm" style="width: 35%;">
-                                    <a href="#">
+                                    <a href="javascript:void(0);">
                                         <span style="display: block;width: 50px;height: 45px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -65px -22px;"></span>
-                                        <span class="am-margin-left am-link-muted userAssets-del" del_data_id="${userAssets.id}">删除</span>
+                                        <span class="am-margin-left am-link-muted userAssets-del" btf-id="${userAssets.basicinformationId}" del_data_id="${userAssets.id}">删除</span>
                                     </a>
                                 </div>
                             </td>

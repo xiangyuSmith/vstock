@@ -6,4 +6,5 @@ public interface IVstockConfigService {
     String TRADE__BOGE_VSTOCK_MD5KEY = "_trade_boge_vsotck_md5key";
     String SENDSMS_IHUYI_KEY = "_sendSms_ihuyi_Key";
     String SENDSMS_IHUYI_ACCOUNT = "_sendSms_ihuyi_account";
+    String USER_ASSETS_MD5KEY = "_user_assets_md5key";
 }

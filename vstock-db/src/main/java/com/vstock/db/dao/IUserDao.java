@@ -10,4 +10,6 @@ public interface IUserDao {
     int insertUser(User user);
 
     User findUser(User user);
+
+    int update(User user);
 }

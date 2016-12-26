@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 
 public class UserAssets implements Serializable {
 
+    public final static String USER_ASSETS_MD5_MARK = "@_@";
+
+    public final static String USER_ASSETS_MD5_MARK_NOTIFY = "~o~";
+
     @Id
     private Integer id;
     private Integer userId;
