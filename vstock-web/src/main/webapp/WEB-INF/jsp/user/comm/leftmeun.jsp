@@ -21,12 +21,13 @@
                 <c:if test="${not empty vUser}">
                     <li class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7">${vUser.nick}</li>
                 </c:if>
-                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24 home-frist" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/sale?type=1" data-type="2">购买记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-xs" src="../../../../assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 36px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userInfo" data-type="4">设置</span></a></li>
+                <li><a href="${ctx}/user/index?type=1" id="userInfo-sbt"><div style="float: left; display: block;width: 60px;height: 36px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
         </div>
+        <input type="hidden" id="url-type" value="${urlType}"/>
         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end am-margin-top-xl am-margin-bottom-xl" id="tradeforex_tilie"></div>
     </div>
 </div>
@@ -42,10 +43,10 @@
         var upMoeny;
 
         $(".home-tab").click(function () {
-            load($(this));
+            load($(this),"");
         });
 
-        function load($thoes){
+        function load($thoes,type){
             loadingshow();
             if ($thoes.length > 0) {
                 var th = $thoes.find("span");
@@ -60,10 +61,16 @@
                 }
                 th.removeClass("am-link-muted");
             }else {
-                ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                if (type == 0){
+                    ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                }else {
+                    ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
+                    $('.home-frist').addClass("am-link-muted");
+                    $('.home-last').removeClass("am-link-muted");
+                }
             }
         }
-        load("");
+        load("",$('#url-type').val());
 
         $("body").on("click",".offer-btn",function(){
             var url = $(this).attr("data-url");
@@ -261,25 +268,116 @@
             }
             if (phone == "" && phoneNumber == ""){
                 alertshow("请任意填写一个联系电话！");
-                $("body").on("click","#add-adders",function(){});
                 return;
             }
-            sendRequest("/user/insertAdder",{
+            sendRequest("/user/saveAdder",{
                 localArea : $('#city-name').val(),
                 detailedAddress : $('#adder-name').val(),
                 consigneeName : shopName,
                 phoneNumber : phoneNumber,
-                landlineNumber : phone
+                landlineNumber : phone,
+                id: $('#adder-id').val()
             },function(res) {
                 if (res.retCode == 1){
-                    alertshow("添加成功！");
-                    ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
+                    window.location.reload();
                 }else {
-                    alertshow("添加失败，请重新添加！");
-                    $('#add-adders').click();
+                    alertshow("请求失败，请重新操作！");
                 }
             });
         });
+
+        $("body").on("click","#add-adders",function(){
+            $('#city-name').val("");
+            $('#adder-name').val("");
+            $('#shop-name').val("");
+            $('#phone-number').val("");
+            $('#adder-type').val("");
+            $('#area-code').val("");
+            $('#phone-code').val("");
+            $('#extension-code').val("");
+        });
+
+        $("body").on("click",".userInfo-upsbt",function(){
+            var $this = $(this);
+            $('#city-name').val($this.parent().prev().prev().prev().prev().prev().text());
+            $('#adder-name').val($this.parent().prev().prev().prev().prev().text());
+            $('#shop-name').val($this.parent().prev().prev().prev().prev().prev().prev().text());
+            $('#phone-number').val($this.parent().prev().prev().text());
+            $('#adder-id').val($this.attr('user-id'));
+            var landlineNumber = $this.parent().prev().text();
+            if (landlineNumber.indexOf("-")>=0){
+                var areaCode = landlineNumber.split("-");
+                $('#area-code').val(areaCode[0]);
+                $('#phone-code').val(areaCode[1].substr(0,3));
+                $('#extension-code').val(areaCode[1].substr(4,areaCode[1].length));
+            }
+        });
+
+        $("body").on("click","#up-type",function(){
+            var $this = $(this);
+            sendRequest("/user/saveAdder",{
+                id: $this.attr('user-id'),
+                type : 1
+            },function(res) {
+                if (res.retCode == 1){
+                    alertshow("设置成功！");
+                    ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
+                }else {
+                    alertshow("修改失败，请重新操作！");
+                }
+            });
+        });
+
+        $("body").on("click","#del-status",function(){
+            var $this = $(this);
+            sendRequest("/user/saveAdder",{
+                id: $this.attr('user-id'),
+                status : 1
+            },function(res) {
+                if (res.retCode == 1){
+                    alertshow("删除成功！");
+                    ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
+                }else {
+                    alertshow("删除失败，请重新操作！");
+                }
+            });
+        });
+
+        $("#sendSms").click(function(){
+            var $this = $(this);
+            var mobile = $("#mobile_reg").val();
+            if(mobile == ""){
+                tipshow("请填写手机号");
+                return;
+            }
+            sendsms($this,mobile);
+        });
+
+
+        function sendsms($this,mobile){
+            $this.text("正在发送...");
+            sendRequest("/login/sendSms",{
+                "mobile":mobile
+            },function(res){
+                if(res.retCode==1){
+                    var wait = 10;
+                    $this.attr("disabled",true);
+                    var int = setInterval(function(){
+                        if (wait == 0) {
+                            $this.text("重新发送");
+                            $this.attr("disabled",false);
+                            clearInterval(int);
+                        } else {
+                            $this.text(wait+"s后重新发送");
+                            wait--;
+                        }
+                    },1000);
+                }else{
+                    alert(res.retMsg);
+                }
+            })
+        }
+
     });
 </script>
 </html>

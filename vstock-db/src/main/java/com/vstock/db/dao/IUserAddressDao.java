@@ -20,7 +20,7 @@ public interface IUserAddressDao {
     int insert(UserAddress record);
 
     //修改数据
-    int update(@Param("status") int status, @Param("invalidDate") String invalidDate, @Param("id") Integer id);
+    int update(@Param("obj")UserAddress record);
 
     UserAddress findType(@Param("obj") UserAddress record);
 

@@ -19,9 +19,9 @@ public class UserAddress implements Serializable {
     private Integer type;
     private String createDate;
     private String invalidDate;
-    private String uname;
+    private String nick;
 
-    public UserAddress(Integer id, Integer userId, String localArea, String detailedAddress, String zipCode, String consigneeName, String phoneNumber, String landlineNumber, Integer status, Integer type, String createDate, String invalidDate, String uname) {
+    public UserAddress(Integer id, Integer userId, String localArea, String detailedAddress, String zipCode, String consigneeName, String phoneNumber, String landlineNumber, Integer status, Integer type, String createDate, String invalidDate, String nick) {
         this.id = id;
         this.userId = userId;
         this.localArea = localArea;
@@ -34,7 +34,7 @@ public class UserAddress implements Serializable {
         this.type = type;
         this.createDate = createDate;
         this.invalidDate = invalidDate;
-        this.uname = uname;
+        this.nick = nick;
     }
 
     public UserAddress() {
@@ -137,11 +137,11 @@ public class UserAddress implements Serializable {
         this.invalidDate = invalidDate;
     }
 
-    public String getUname() {
-        return uname;
+    public String getNick() {
+        return nick;
     }
 
-    public void setUname(String uname) {
-        this.uname = uname;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 }

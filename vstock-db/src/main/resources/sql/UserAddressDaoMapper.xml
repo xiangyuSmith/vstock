@@ -15,7 +15,7 @@
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
-        <result column="nick" property="uname" jdbcType="VARCHAR"/>
+        <result column="nick" property="nick" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -228,14 +228,43 @@
     </insert>
 
     <update id="update">
-        UPDATE `user_address` SET
-        <if test="status != null and status != ''">
-            status = #{status,jdbcType=VARCHAR}
-        </if>
-        <if test="invalidDate != null and invalidDate != ''">
-            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
-        </if>
-        WHERE id = #{id,jdbcType=INTEGER}
+        UPDATE `user_address` ua
+        <set>
+            <if test="obj.userId != null and obj.userId != ''">
+                ua.user_id = #{obj.userId,jdbcType=INTEGER},
+            </if>
+            <if test="obj.localArea != null and obj.localArea != ''">
+                ua.local_area = #{obj.localArea,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.detailedAddress != null and obj.detailedAddress != ''">
+                ua.detailed_address = #{obj.detailedAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.zipCode != null and obj.zipCode != ''">
+                ua.zip_code = #{obj.zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.consigneeName != null and obj.consigneeName != ''">
+                ua.consignee_name = #{obj.consigneeName,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.phoneNumber != null and obj.phoneNumber != ''">
+                ua.phone_number = #{obj.phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.landlineNumber != null and obj.landlineNumber != ''">
+                ua.landline_number = #{obj.landlineNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.status != null">
+                ua.status = #{obj.status,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.type != null">
+                ua.type = #{obj.type,jdbcType=INTEGER},
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                ua.create_date = #{obj.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                ua.invalid_date = #{obj.invalidDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{obj.id,jdbcType=INTEGER}
     </update>
 
 </mapper>

@@ -45,7 +45,9 @@ public class UserController extends BaseController {
     private static JSONObject staAdder = new JSONObject();
 
     @RequestMapping("index")
-    public String testIndex(){
+    public String testIndex(ModelMap model){
+        String type = request.getParameter("type");
+        model.put("urlType",type);
         return "/user/comm/leftmeun";
     }
 
@@ -207,18 +209,22 @@ public class UserController extends BaseController {
         return param;
     }
 
-    @RequestMapping("insertAdder")
+    @RequestMapping("saveAdder")
     @ResponseBody
-    public Map<String,Object> insertAdder(){
+    public Map<String,Object> saveAdder(){
         Map<String,Object> param = new HashMap<String,Object>();
         String localArea = request.getParameter("localArea");
         String detailedAddress = request.getParameter("detailedAddress");
         String consigneeName = request.getParameter("consigneeName");
         String phoneNumber = request.getParameter("phoneNumber");
         String landlineNumber = request.getParameter("landlineNumber");
+        String id = request.getParameter("id");
+        String type = request.getParameter("type");
+        String status = request.getParameter("status");
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
-        int retCode = userAddressService.insertAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString());
+        int retCode = userAddressService.saveAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString(),type,status,id);
         param.put("retCode",retCode);
         return param;
     }
+
 }

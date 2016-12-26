@@ -49,7 +49,7 @@ public class UserAddressService {
      * @return
      */
     public int update(UserAddress record){
-        return userAddressDao.update(record.getStatus(),record.getInvalidDate(),record.getId());
+        return userAddressDao.update(record);
     }
 
     /**
@@ -59,13 +59,17 @@ public class UserAddressService {
      */
     public UserAddress findType(UserAddress record){return userAddressDao.findType(record);}
 
+    //界面查询
     public List<UserAddress> findAllUserAddress(UserAddress record){
         Page page = new Page(3,"1");
         List<UserAddress> userAddressList = new ArrayList<UserAddress>();
+        record.setStatus(0);
         List<UserAddress> adderList = this.findAll(record, page);
         record.setType(1);
         UserAddress userAddress = this.findType(record);
-        userAddressList.add(userAddress);
+        if (userAddress != null) {
+            userAddressList.add(userAddress);
+        }
         if (adderList.size() > 0){
             for (int i = 0; i < adderList.size(); i++){
                 if (userAddressList.size() < 3) {
@@ -78,19 +82,32 @@ public class UserAddressService {
         return userAddressList;
     }
 
-    public int insertAdder(String localArea, String detailedAddress, String consigneeName,
-                           String phoneNumber, String landlineNumber, String usid){
+    /**
+     * 保存方法
+     * @param localArea 所属地区
+     * @param detailedAddress 详细地址
+     * @param consigneeName  收货人姓名
+     * @param phoneNumber  手机号码
+     * @param landlineNumber  电话号码
+     * @param usid  用户ID
+     * @param type  是否为默认地址
+     * @param status  状态
+     * @param id  编号
+     * @return
+     */
+    public int saveAdder(String localArea, String detailedAddress, String consigneeName,
+                           String phoneNumber, String landlineNumber, String usid, String type, String status, String id){
         UserAddress record = new UserAddress();
         record.setUserId(Integer.parseInt(usid));
-        Page page = new Page(10,"1");
-        List<UserAddress> userAddressList = this.findAll(record,page);
-        if (userAddressList.size() > 0){
-            record.setStatus(0);
-        }else {
-            record.setStatus(1);
-        }
+        //判断不为空，赋值
         if (localArea != null && !"".equals(localArea)){
             record.setLocalArea(localArea);
+        }
+        if (status != null && !"".equals(status)){
+            record.setStatus(Integer.parseInt(status));
+        }
+        if (type != null && !"".equals(type)){
+            record.setType(Integer.parseInt(type));
         }
         if (detailedAddress != null && !"".equals(detailedAddress)){
             record.setDetailedAddress(detailedAddress);
@@ -104,8 +121,66 @@ public class UserAddressService {
         if (landlineNumber != null && !"".equals(landlineNumber)){
             record.setLandlineNumber(landlineNumber);
         }
-        record.setCreateDate(DateUtils.dateToString(new Date()));
-        return this.insert(record);
+        //判断是否为新增
+        if (id == null || "".equals(id)) {
+            //查询是否有默认地址，没有设本地址为默认地址
+            UserAddress userAddress = this.findType(record);
+            if (userAddress != null){
+                record.setStatus(0);
+            }else {
+                record.setStatus(1);
+            }
+            record.setCreateDate(DateUtils.dateToString(new Date()));
+            return this.insert(record);
+        }else {//为修改
+            record.setId(Integer.parseInt(id));
+            //判断是否修改默认地址
+            if (type == null || "".equals(type)) {
+                return this.update(record);
+            }else {//修改默认地址
+                UserAddress userAddress = new UserAddress();
+                userAddress.setType(Integer.parseInt(type));
+                userAddress = this.findType(userAddress);
+                //查询是否有默认地址
+                if (userAddress.getId() != null && !"".equals(userAddress.getId())){
+                    userAddress.setType(0);
+                    int i = this.update(userAddress);
+                    //有默认地址修改
+                    if (i > 0) {
+                        return this.update(record);
+                    }else {
+                        return i;
+                    }
+                }else {
+                    //判断是否删除
+                    if (status != null && !"".equals(status)) {
+                        UserAddress userAdd = this.findType(record);
+                        int i = this.update(record);
+                        //判断是否删除的是默认地址
+                        if (userAdd.getType() == 1){
+                            if (i > 0){
+                                //是默认地址，修改最近的一条地址为默认地址
+                                UserAddress userAddre = new UserAddress();
+                                Page page = new Page(10,"1");
+                                List<UserAddress> userAddressList = this.findAll(userAddre,page);
+                                if (userAddressList.size() > 0){
+                                    userAddressList.get(0).setType(1);
+                                    return this.update(userAddressList.get(0));
+                                }else {
+                                    return i;
+                                }
+                            }else {
+                                return i;
+                            }
+                        }else {
+                            return i;
+                        }
+                    }else {
+                        return this.update(record);
+                    }
+                }
+            }
+        }
     }
 
 }

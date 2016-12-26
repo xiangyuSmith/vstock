@@ -37,7 +37,7 @@
                             <c:when test="${not empty vUser}">
                                 <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎你：</span>${vUser.mobile} &nbsp;<i class="am-icon-caret-down"></i></a>
                                 <ul class="am-dropdown-content">
-                                    <li><a href="${ctx}/user/index" rel="nofollow">个人中心</a></li>
+                                    <li><a href="${ctx}/user/index?type=0" rel="nofollow">个人中心</a></li>
                                     <li><a href="javascript:;" class="login-out" rel="nofollow">注销</a></li>
                                 </ul>
                             </c:when>

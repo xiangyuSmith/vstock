@@ -34,7 +34,7 @@
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-left-0 am-padding-left-0 am-u-end">
                     <c:if test="${not empty user}">
-                        <span style="font-weight: bolder;">${user.mobile}</span>
+                        <span style="font-weight: bolder;" id="mobile_reg">${user.mobile}</span>
                     </c:if>
                 </div>
             </div>
@@ -77,11 +77,11 @@
                             <div class="am-modal-bd am-g">
                                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
-                                        <span>需要填写您手机号码138***8890收到的验证码</span>
+                                        <span>需要填写您手机号码${user.mobile}收到的验证码</span>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
                                         <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" type="text" placeholder="验证码" required/>
-                                        <span class="am-input-group-label"><a href="#">发送验证码</a></span>
+                                        <span class="am-input-group-label"><a href="javascript:void(0);" id="sendSms">发送验证码</a></span>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
                                         <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" type="text" placeholder="请输入新密码" required/>
@@ -145,9 +145,10 @@
                                 </div>
                             </div>
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6"><a href="javascript: void(0);" class="am-btn am-btn-primary am-fr adder-stn" data-am-modal-close>确定</a></div>
+                                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6"><a href="javascript: void(0);" class="am-btn am-btn-primary am-fr adder-stn">确定</a></div>
                                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6"><a href="javascript: void(0);" class="am-btn am-btn-primary am-fl adder-quit" data-am-modal-close>取消</a></div>
                             </div>
+                        <input type="hidden" id="adder-id"/>
                         </div>
                     </div>
                 </div>
@@ -157,17 +158,34 @@
             <c:if test="${not empty userAddressesList}">
                 <c:forEach items="${userAddressesList}" var="userAddresses">
                     <tr>
-                        <td>${userAddresses.uname}</td>
+                        <td>${userAddresses.consigneeName}</td>
                         <td style="max-width: 80px;">${userAddresses.localArea}</td>
                         <td style="max-width: 100px;">${userAddresses.detailedAddress}</td>
                         <td>${userAddresses.zipCode}</td>
-                        <td>${userAddresses.phoneNumber}</td>
-                        <td>
-                            <a href="#">编辑</a>|<a href="#">删除</a>
+                        <c:choose>
+                            <c:when test="${not empty userAddresses.phoneNumber}">
+                                <td>${userAddresses.phoneNumber}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>--</td>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:choose>
+                            <c:when test="${not empty userAddresses.landlineNumber}">
+                                <td>${userAddresses.landlineNumber}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>--</td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td style="width: 50px;">
+                            <a href="javascript:void(0);" user-id="${userAddresses.id}" class="userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">编辑</a>
+                            <a href="javascript:void(0);" user-id="${userAddresses.id}" id="del-status">删除</a>
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 0}">
-                                <a href="#" class="am-btn am-text-danger am-radius am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;">设为默认地址</a>
+                                <a href="javascript:void(0);" user-id="${userAddresses.id}" id="up-type" class="am-btn am-text-danger am-radius am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;">设为默认地址</a>
                             </c:if>
                         </td>
                     </tr>

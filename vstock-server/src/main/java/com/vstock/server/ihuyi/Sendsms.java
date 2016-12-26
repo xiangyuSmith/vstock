@@ -16,6 +16,14 @@ public class Sendsms {
 
     private static String Url = "http://106.ihuyi.cn/webservice/sms.php?method=Submit";
 
+    /**
+     * 短信接口
+     * @param mobile  电话号码
+     * @param account  账号
+     * @param key   密钥
+     * @param mobile_code  验证码
+     * @return
+     */
     public static boolean sendHuyi(String mobile,String account,String key,int mobile_code){
         HttpClient client = new HttpClient();
         PostMethod method = new PostMethod(Url);
