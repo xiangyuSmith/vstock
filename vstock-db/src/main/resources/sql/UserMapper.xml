@@ -22,6 +22,9 @@
             <if test="uname != null and uname != ''">
                 AND uname = #{uname,jdbcType=VARCHAR}
             </if>
+            <if test="nick != null and nick != ''">
+                AND nick = #{nick,jdbcType=VARCHAR}
+            </if>
             <if test="mobile != null and mobile != ''">
                 AND mobile = #{mobile,jdbcType=VARCHAR}
             </if>

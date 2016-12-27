@@ -3,15 +3,18 @@ package com.vstock.admin.controller;
 import com.vstock.admin.service.TradeService;
 import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.Trade;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +48,7 @@ public class TradeController {
         }
         List<List<String>> statusList = tradeService.status();
         record.setTransactionDate(startTime);
-        record.setEndDate(endTime);
+        record.setUpdateDate(endTime);
         model.put("tradeList",tradeList);
         model.put("statusList",statusList);
         model.put("page",page);
@@ -58,12 +61,26 @@ public class TradeController {
     @RequestMapping("tradeList")
     public String tradeList(Trade record, HttpServletRequest request, ModelMap model) {
         Trade trade = new Trade();
-        String id = request.getParameter("fid");
-        trade.setId(Integer.parseInt(id));
+        trade.setId(record.getId());
         trade = tradeService.findTrade(trade);
+        List<List<String>> statusList = tradeService.status();
+        model.put("statusList",statusList);
         model.put("record",record);
         model.put("trade",trade);
         return "admin/trade/tradeList";
+    }
+
+    @RequestMapping("saveTrade")
+    @ResponseBody
+    public Map<String,Object> saveTrade(HttpServletRequest request){
+        Map<String,Object> param = new HashMap<String,Object>();
+        Trade record = new Trade();
+        record.setId(Integer.parseInt(request.getParameter("id")));
+        record.setStatus(Integer.parseInt(request.getParameter("status")));
+        record.setUpdateDate(DateUtils.getCurrentTimeAsString());
+        int i = tradeService.save(record);
+        param.put("reGode",i);
+        return param;
     }
 
 }

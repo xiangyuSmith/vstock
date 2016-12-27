@@ -70,7 +70,7 @@
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
                             <span class="am-text-lg am-text-middle">交易日期（止）：</span>
-                            <input class="am-input-lg" type="date" id="dtd" name="endTime" placeholder="" value="${trade.endDate}">
+                            <input class="am-input-lg" type="date" id="dtd" name="endTime" placeholder="" value="${trade.updateDate}">
                             <%--<div class="dateEndTime"></div>--%>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                         <th>金额</th>
                         <th>状态</th>
                         <th>订单日期</th>
-                        <th>结束日期</th>
+                        <th>更新日期</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -105,34 +105,15 @@
                                 <td>${trade.bftName}</td>
                                 <td>${trade.bftSize}</td>
                                 <td><fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
-                                <c:choose>
-                                    <c:when test="${trade.status == 0}">
-                                        <td class="am-text-sm">已下单待支付</td>
-                                    </c:when>
-                                    <c:when test="${trade.status == 1}">
-                                        <td class="am-text-sm">已支付待发货</td>
-                                    </c:when>
-                                    <c:when test="${trade.status == 10}">
-                                        <td class="am-text-sm">已发货待检验</td>
-                                    </c:when>
-                                    <c:when test="${trade.status == 20}">
-                                        <td class="am-text-sm">检验通过</td>
-                                    </c:when>
-                                    <c:when test="${trade.status == 21}">
-                                        <td class="am-text-sm">检验未通过</td>
-                                    </c:when>
-                                    <c:when test="${trade.status == 30}">
-                                        <td class="am-text-sm">已发货待签收</td>
-                                    </c:when>
-                                    <c:when test="${trade.status == 40}">
-                                        <td class="am-text-sm">交易完成</td>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <td class="am-text-sm">交易关闭</td>
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:if test="${not empty statusList}">
+                                    <c:forEach items="${statusList}" var="status">
+                                        <c:if test="${trade.status == status.get(0)}">
+                                            <td>${status.get(1)}</td>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
                                 <td>${trade.transactionDate}</td>
-                                <td>${trade.endDate}</td>
+                                <td>${trade.updateDate}</td>
                                 <td><a href="javascript:void(0);" class="sbt-on" data_id="${trade.id}">详情</a></td>
                             </tr>
                         </c:forEach>
@@ -146,6 +127,16 @@
             </div>
         </div>
     </div>
+    <form action="/trade/tradeList" id="trateList" method="post">
+        <input type="hidden" id="id" name="id"/>
+        <input type="hidden" name="buyersName" id="buyId"/>
+        <input type="hidden" name="sellerName" id="sellId"/>
+        <input type="hidden" name="bftName" id="bId"/>
+        <input type="hidden" name="bftSize" id="bSize"/>
+        <input type="hidden" name="status" id="statuse"/>
+        <input type="hidden" id="startTime" name="startTime"/>
+        <input type="hidden" id="endTime" name="endTime"/>
+    </form>
 </div>
 <jsp:include page="../common/bottom.jsp" flush="true"/>
 <script type="text/javascript">
@@ -156,25 +147,15 @@
 //        getDatePic(div1,div2);
 
         $('.sbt-on').click(function () {
-            var fid = $(this).attr("data_id");
-            var buyersName = $('#buyersId').val();
-            var sellerName = $('#sellerId').val();
-            var bftName = $('#bftId').val();
-            var bftSize = $('#bftSize').val();
-            var status = $('#status').val();
-            var startTime = $('#dt').val();
-            var endTime = $('#dtd').val();
-            $.post("/trade/tradeList",{
-                'fid': fid,
-                'buyersName' : buyersName,
-                'sellerName' : sellerName,
-                'bftName' : bftName,
-                'bftSize' : bftSize,
-                'status' : status,
-                'startTime' : startTime,
-                'endTime' : endTime
-            },function(res){
-            });
+            $('#id').val($(this).attr("data_id"));
+            $('#buyId').val($('#buyersId').val());
+            $('#sellId').val($('#sellerId').val());
+            $('#bId').val($('#bftId').val());
+            $('#bSize').val($('#bftSize').val());
+            $('#statuse').val($('#status').val());
+            $('#startTime').val($('#dt').val());
+            $('#endTime').val($('#dtd').val());
+            $('#trateList').submit();
         });
 
     });

@@ -5,6 +5,7 @@ import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.Trade;
 import com.vstock.db.entity.User;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.security.md.ToolMD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -146,13 +147,13 @@ public class TradeService {
     public Trade btfUser(Trade trade){
         if (trade.getBuyersName() != null && !"".equals(trade.getBuyersName())){
             User user = new User();
-            user.setUname(trade.getBuyersName());
+            user.setNick(trade.getBuyersName());
             user = userService.findUser(user);
             trade.setBuyersId(Integer.parseInt(user.getId()));
         }
         if (trade.getSellerName() != null && !"".equals(trade.getSellerName())){
             User user = new User();
-            user.setUname(trade.getSellerName());
+            user.setNick(trade.getSellerName());
             user = userService.findUser(user);
             trade.setSellerId(Integer.parseInt(user.getId()));
         }
@@ -166,10 +167,30 @@ public class TradeService {
         return trade;
     }
 
+    //查询对象
     public Trade findTrade(Trade record){
         Page page = new Page(10,"1");
         List<Trade> tradeList = this.findAndBid(record, page);
         return  tradeList.get(0);
     }
+
+    //保存方法
+    public int save(Trade record){
+        if (record.getId() == null && "".equals(record.getId())){
+            return this.insert(record);
+        }else {
+            return this.update(record);
+        }
+    }
+
+//    public String getSgin(Trade trade){
+//        String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
+//                .append("trade_no=").append(trade.getTrandeNo())
+//                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bid_id=").append(trade)
+//                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("transaction_money=").append(trade.getTransactionMoney())
+//                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bft_size=").append(trade.getBftSize())
+//                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("Md5Sign=").append(VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY))
+//                .toString());
+//    }
 
 }

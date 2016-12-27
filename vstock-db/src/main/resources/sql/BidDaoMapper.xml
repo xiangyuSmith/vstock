@@ -287,6 +287,29 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findBidForSorts" resultMap="BaseResultMap">
+        SELECT * FROM (SELECT bi.id,bi.basicinformation_id,bi.bft_name,bi.bft_size,bi.bid_bond,bi.bid_date,bi.bid_money,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo FROM bid bi
+        ORDER BY bi.bid_date DESC) as bid GROUP BY basicinformation_id
+        ORDER BY bi.bid_date DESC) as bid
+        WHERE 1=1
+        <if test="bftSize != null and bftSize != ''">
+        and bid.bft_size = #{bftSize}
+        </if>
+        <if test="brand != null and brand != ''">
+        and bid.brand = #{brand}
+        </if>
+        <if test="year != null and year != ''">
+        and bid.bcsaledate LIKE CONCAT('%',#{year},'%')
+        </if>
+        <if test="priceStart != null and priceStart != ''">
+        and bid.bid_money  &gt;= #{priceStart}
+        </if>
+        <if test="priceEnd != null and priceEnd != ''">
+        and bid.bid_money  &lt;= #{priceEnd}
+        </if>
+        GROUP BY basicinformation_id
+    </select>
+
     <select id="findByType" parameterType="com.vstock.db.entity.Bid" resultType="com.vstock.db.entity.Bid">
         SELECT
         <include refid="Base_Column_List"/>
