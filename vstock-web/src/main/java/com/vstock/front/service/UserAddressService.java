@@ -60,8 +60,12 @@ public class UserAddressService {
     public UserAddress findType(UserAddress record){return userAddressDao.findType(record);}
 
     //界面查询
-    public List<UserAddress> findAllUserAddress(UserAddress record){
-        Page page = new Page(3,"1");
+    public List<UserAddress> findAllUserAddress(UserAddress record, String type){
+        int startPos = 5;
+        if (type != null && !"".equals(type)){
+            startPos = 20;
+        }
+        Page page = new Page(startPos,"1");
         List<UserAddress> userAddressList = new ArrayList<UserAddress>();
         record.setStatus(0);
         List<UserAddress> adderList = this.findAll(record, page);
@@ -72,7 +76,7 @@ public class UserAddressService {
         }
         if (adderList.size() > 0){
             for (int i = 0; i < adderList.size(); i++){
-                if (userAddressList.size() < 3) {
+                if (userAddressList.size() < startPos) {
                     if (userAddress.getType() != adderList.get(i).getType()) {
                         userAddressList.add(adderList.get(i));
                     }
@@ -126,11 +130,12 @@ public class UserAddressService {
             //查询是否有默认地址，没有设本地址为默认地址
             UserAddress userAddress = this.findType(record);
             if (userAddress != null){
-                record.setStatus(0);
+                record.setType(0);
             }else {
-                record.setStatus(1);
+                record.setType(1);
             }
             record.setCreateDate(DateUtils.dateToString(new Date()));
+            record.setStatus(0);
             return this.insert(record);
         }else {//为修改
             record.setId(Integer.parseInt(id));
@@ -140,6 +145,7 @@ public class UserAddressService {
             }else {//修改默认地址
                 UserAddress userAddress = new UserAddress();
                 userAddress.setType(Integer.parseInt(type));
+                userAddress.setUserId(Integer.parseInt(usid));
                 userAddress = this.findType(userAddress);
                 //查询是否有默认地址
                 if (userAddress.getId() != null && !"".equals(userAddress.getId())){

@@ -141,7 +141,7 @@
                             </c:choose>
                             <td style="width: 26%">
                                 <div class="am-fl" style="width: 30%;">
-                                    <a href="javascript:void(0);">
+                                    <a href="${cxt}/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
                                         <span style="display: block;width: 55px;height: 45px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
                                         <span class="am-margin-left-sm am-link-muted">出售</span>
                                     </a>

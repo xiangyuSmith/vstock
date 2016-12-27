@@ -3,6 +3,7 @@ package com.vstock.front.service;
 import com.vstock.db.dao.IUserAssetsDao;
 import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.UserAssets;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.security.md.ToolMD5;
 import com.vstock.front.service.interfaces.IVstockConfigService;
@@ -81,6 +82,7 @@ public class UserAssetsService {
         BigDecimal changeMoney = new BigDecimal(0);
         Date time = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        time = DateUtils.wantToLose(time,1);
         String startDate = sdf.format(time);
         List<UserAssets> userAssetsList = this.findBasicinformationRoseAll(record,startDate);
         if (userAssetsList.size() > 0) {

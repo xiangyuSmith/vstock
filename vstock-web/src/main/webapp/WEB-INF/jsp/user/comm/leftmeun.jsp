@@ -47,7 +47,7 @@
         });
 
         function load($thoes,type){
-            loadingshow();
+//            loadingshow();
             if ($thoes.length > 0) {
                 var th = $thoes.find("span");
                 var url = th.attr("data-url");
@@ -74,7 +74,14 @@
 
         $("body").on("click",".offer-btn",function(){
             var url = $(this).attr("data-url");
-            loadingshow();
+//            loadingshow();
+            ajaxContent(url, "", "tradeforex_tilie",1);
+        });
+
+        $("body").on("click","#load_more",function(){
+            $(this).children().children().attr("style","");
+            var url = $(this).attr("data-url");
+//            loadingshow();
             ajaxContent(url, "", "tradeforex_tilie",1);
         });
 

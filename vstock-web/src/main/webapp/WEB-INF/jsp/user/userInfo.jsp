@@ -44,7 +44,7 @@
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-left-0 am-padding-left-0 am-u-end">
                     <c:if test="${not empty user}">
-                        <span style="font-weight: bolder;">${user.mobile}</span>
+                        <span style="font-weight: bolder;"></span>
                     </c:if>
                 </div>
             </div>
@@ -194,9 +194,15 @@
             </c:if>
         </tbody>
     </table>
+    <a href="javascript:void(0);" class="am-center" id="load_more" data-url="../user/userInfo?type=1"><span class="am-center am-text-center layout-font-size-18"><i class="am-icon-spinner am-icon-spin" style="display: none;"></i>点击加载更多</span></a>
+    <input type="hidden" id="user-lodaType" value="${type}"/>
 </form>
 <script type="text/javascript" src="../../../../assets/js/address/jquery.address.min.js"></script>
-<script>
+<script type="text/javascript">
+
+    if ($('#user-lodaType').val() != ""){
+        $('#load_more').css('display','none');
+    }
 
     sendRequest("/user/address",null,function(res){
         var c = eval('('+res+')');

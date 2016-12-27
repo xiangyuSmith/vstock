@@ -156,11 +156,13 @@ public class UserController extends BaseController {
     @RequestMapping("userInfo")
     public String userInfo(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        String type = getParam("type","");
         UserAddress record = new UserAddress();
         User user = userService.findById(String.valueOf(suid));
         record.setUserId(Integer.parseInt(user.getId()));
-        List<UserAddress> userAddressesList = userAddressService.findAllUserAddress(record);
+        List<UserAddress> userAddressesList = userAddressService.findAllUserAddress(record,type);
         model.put("userAddressesList",userAddressesList);
+        model.put("type",type);
         model.addAttribute("user",user);
         return "/user/userInfo";
     }
