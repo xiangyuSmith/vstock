@@ -4,6 +4,8 @@ import com.vstock.db.dao.IUserAssetsDao;
 import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.UserAssets;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.security.md.ToolMD5;
+import com.vstock.front.service.interfaces.IVstockConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -124,6 +126,59 @@ public class UserAssetsService {
             strChar = "["+strChar+"]" + ":["+moneyChar+"]";
         }
         return strChar;
+    }
+
+    /**
+     * 获取验证码
+     * @param userId  用户ID
+     * @param basicinformationId  鞋库ID
+     * @param userAssetsSize   鞋码
+     * @param money   金额
+     * @return   sgin加密码
+     */
+    public String verification(Integer userId, Integer basicinformationId, String userAssetsSize, double money){
+        return ToolMD5.encodeMD5Hex(new StringBuilder()
+                .append("userId=").append(userId)
+                .append(UserAssets.USER_ASSETS_MD5_MARK).append("userAssetsSize=").append(userAssetsSize)
+                .append(UserAssets.USER_ASSETS_MD5_MARK_NOTIFY).append("basicinformationId=").append(basicinformationId)
+                .append(UserAssets.USER_ASSETS_MD5_MARK_NOTIFY).append("amount=").append(money)
+                .append(UserAssets.USER_ASSETS_MD5_MARK).append("Md5Sign=").append(VstockConfigService.getConfig(IVstockConfigService.USER_ASSETS_MD5KEY))
+                .toString());
+    }
+
+    //验证是否通过
+    public boolean judgment(UserAssets record){
+        UserAssets userAssets = new UserAssets();
+        userAssets.setId(record.getId());
+        List<UserAssets> userAssetsList = this.findUserAssets(userAssets);
+        if (userAssetsList.size() > 0){
+            String s = this.verification(record.getUserId(), record.getBasicinformationId(),
+                    record.getUserAssetsSize(), Double.valueOf(record.getMoney().toString()));
+            if (userAssetsList.get(0).getSgin().equals(this.verification(record.getUserId(), record.getBasicinformationId(),
+                    record.getUserAssetsSize(), Double.valueOf(record.getMoney().toString())))) {
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
+    //保存方法
+    public int save(UserAssets record){
+        int i = 0;
+        if (record.getId() != null && !"".equals(record.getId())){
+            if (this.judgment(record)) {
+                i = this.update(record);
+            }else {
+                return i;
+            }
+        }else {
+            record.setSgin(this.verification(record.getUserId(),record.getBasicinformationId(),record.getUserAssetsSize(),Double.valueOf(record.getMoney().toString())));
+            i = this.insert(record);
+        }
+        return i;
     }
 
 }

@@ -177,14 +177,15 @@
             var money = $this.parent().parent().parent().prev().prev().prev().text();
             var size = $this.parent().parent().parent().prev().prev().prev().prev().prev().text();
             money = parseFloat(money.replace(/[^\d\.-]/g, ""));
-            sendRequest("/bid/updateBid",{
+            sendRequest("/userAssets/saveUserAssets",{
                 id : $this.attr("del_data_id"),
-                btfId : $this.attr("btf-id"),
-                bidMoney : money,
+                userId : $this.attr("user-id"),
+                bId : $this.attr("btf-id"),
+                money : money,
                 size : size,
                 status : '2'
             },function(res) {
-                if (res.sgin == 1){
+                if (res.retCode == 1){
                     alertshow("删除成功！");
                     $('.offer-btn').click();
                 }else {
