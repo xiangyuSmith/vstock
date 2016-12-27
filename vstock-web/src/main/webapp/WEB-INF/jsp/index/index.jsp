@@ -258,9 +258,11 @@
         banner_num.start();
 
         document.onkeydown = function(e){
-            var ev = document.all ? window.event : e;
-            if(ev.keyCode==13) {
-                location.href = "sort?productName="+$("#index_search").val();
+            if($("#index_search").val() != "" && $("#index_search").val() != undefined){
+                var ev = document.all ? window.event : e;
+                if(ev.keyCode==13) {
+                    location.href = "sort?productName="+$("#index_search").val();
+                }
             }
         }
     });

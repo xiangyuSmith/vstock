@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IUserAccountDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.UserAccount">
+        <id property="id" column="id"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="uname" property="uname" jdbcType="VARCHAR"/>
+        <result column="alipay_account" property="alipay_account" jdbcType="VARCHAR"/>
+        <result column="identify_no" property="identify_no" jdbcType="VARCHAR"/>
+        <result column="identify_img_front" property="identify_img_front" jdbcType="VARCHAR"/>
+        <result column="identify_img_back" property="identify_img_back" jdbcType="VARCHAR"/>
+        <result column="identify_img_handheld" property="identify_img_handheld" jdbcType="VARCHAR"/>
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ua.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ua.user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="alipay_account != null and alipay_account != ''">
+                and ua.alipay_account = #{obj.alipay_account,jdbcType=VARCHAR}
+            </if>
+            <if test="identify_no != null and identify_no != ''">
+                and ua.identify_no = #{obj.identify_no,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ua.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and ua.user_id = #{obj.userId,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.alipay_account != null and obj.alipay_account != ''">
+                and ua.alipay_account = #{obj.alipay_account,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.identify_no != null and obj.identify_no != ''">
+                and ua.identify_no = #{obj.identify_no,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ua.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId != null and userId != ''">
+                and ua.user_id = #{userId,jdbcType=VARCHAR}
+            </if>
+            <if test="alipay_account != null and alipay_account != ''">
+                and ua.alipay_account = #{obj.alipay_account,jdbcType=VARCHAR}
+            </if>
+            <if test="identify_no != null and identify_no != ''">
+                and ua.identify_no = #{obj.identify_no,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ua.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.userId != null and obj.userId != ''">
+                and ua.user_id = #{obj.userId,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.alipay_account != null and obj.alipay_account != ''">
+                and ua.alipay_account = #{obj.alipay_account,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.identify_no != null and obj.identify_no != ''">
+                and ua.identify_no = #{obj.identify_no,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null and obj.status != ''">
+                and ua.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        ua.id as id,
+        ua.user_id as userId,
+        ua.uname,
+        ua.alipay_account,
+        ua.identify_no,
+        ua.identify_img_front,
+        ua.identify_img_back,
+        ua.identify_img_handheld,
+        ua.update_time,
+        ua.status
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.UserAccount" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_account ua
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `user_account`
+        (`id`,`user_id`,`uname`,`alipay_account`,`identify_no`,`identify_img_front`,`identify_img_back`,`identify_img_handheld`,`update_time`,`status`)
+        VALUES(null,#{userId},#{uname},#{alipay_account},#{identify_no},#{identify_img_front},#{identify_img_back},#{identify_img_handheld},#{update_time},#{status})
+    </insert>
+
+    <update id="update">
+        UPDATE `user_account` SET
+        <set>
+            <if test="status != null and status != ''">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="update_time != null and update_time != ''">
+                update_time = #{update_time,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

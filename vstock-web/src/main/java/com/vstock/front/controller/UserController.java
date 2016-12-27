@@ -2,6 +2,7 @@ package com.vstock.front.controller;
 
 import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
+import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
@@ -40,6 +41,9 @@ public class UserController extends BaseController {
 
     @Autowired
     CityAddressService cityAddressService;
+
+    @Autowired
+    UserAccountService userAccountService;
 
     private static Logger logger = Logger.getLogger(BidController.class);
 
@@ -258,4 +262,18 @@ public class UserController extends BaseController {
         return param;
     }
 
+    @RequestMapping("cardIdentify")
+    @ResponseBody
+    public ResultModel cardIdentify(){
+        ResultModel resultModel = new ResultModel();
+        String suid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        UserAccount userAccount = userAccountService.findAccountByUid(suid);
+        if(userAccount != null){
+            if(UserAccount.ACCOUNT_TYPE_SUCCESS.equals(userAccount.getStatus())){
+                resultModel.setRetCode(resultModel.RET_OK);
+                return resultModel;
+            }
+        }
+        return resultModel;
+    }
 }
