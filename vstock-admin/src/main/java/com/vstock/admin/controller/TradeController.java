@@ -1,10 +1,13 @@
 package com.vstock.admin.controller;
 
+import com.vstock.admin.service.BidService;
 import com.vstock.admin.service.TradeService;
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
+import com.vstock.server.util.StatusUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +30,9 @@ public class TradeController {
 
     @Autowired
     TradeService tradeService;
+
+    @Autowired
+    BidService bidService;
 
     @RequestMapping("index")
     public String index(Trade record, HttpServletRequest request, ModelMap model) {
@@ -81,6 +88,36 @@ public class TradeController {
         int i = tradeService.save(record);
         param.put("reGode",i);
         return param;
+    }
+
+    @RequestMapping("bidindex")
+    public String bidindex(Bid record, HttpServletRequest request, ModelMap model) {
+        List<String> sizeList = new ArrayList<String>();
+        List<Bid> bidList = new ArrayList<Bid>();
+        Page page = new Page();
+        String pageNow = request.getParameter("pageNow");
+        String minimumMoney = request.getParameter("minimumMoney");
+        String maximumMoney = request.getParameter("maximumMoney");
+        String linkAddress = request.getRequestURI() + "?1=1";
+        linkAddress = bidService.linkAddress(linkAddress,record,minimumMoney,maximumMoney);
+        Map<Page,List<Bid>> param = bidService.findList(record,pageNow,minimumMoney,maximumMoney);
+        for (Page pages : param.keySet()){
+            page = pages;
+            bidList = param.get(pages);
+        }
+        List<Bid> statusList = StatusUtil.bidStatus();
+        for (int i = 0; i < Basicinformation.sizes.length; i++){
+            sizeList.add(Basicinformation.sizes[i]);
+        }
+        model.put("minimumMoney",minimumMoney);
+        model.put("maximumMoney",maximumMoney);
+        model.put("record",record);
+        model.put("statusList",statusList);
+        model.put("sizeList",sizeList);
+        model.put("page",page);
+        model.put("bidList",bidList);
+        model.put("linkAddress",linkAddress);
+        return "admin/trade/bidIndex";
     }
 
 }

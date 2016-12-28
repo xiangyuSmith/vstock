@@ -21,6 +21,7 @@
         <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
         <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
         <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <association property="basicinformation" column="basicinformation"
                      javaType="com.vstock.db.entity.Basicinformation">
             <id column="bid" property="id"/>
@@ -107,7 +108,7 @@
             <if test="obj.bftName != null and obj.bftName != ''">
                 and b.bft_name = #{obj.bftName,jdbcType=VARCHAR}
             </if>
-            <if test="obj.bftSize != null and obj.bftSize != ''">
+            <if test="obj.bftSize != null and obj.bftSize != 0">
                 and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidMoney != null and obj.bidMoney != ''">
@@ -125,13 +126,10 @@
             <if test="obj.termValidity != null and obj.termValidity != ''">
                 and b.term_validity = #{obj.termValidity,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != null and obj.status != 3">
+            <if test="obj.status != null and obj.status != -1">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status == 3">
-                and b.status NOT IN (#{obj.status,jdbcType=VARCHAR})
-            </if>
-            <if test="obj.type != null">
+            <if test="obj.type != null and obj.type != -1">
                 and b.type = #{obj.type,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidDate != null and obj.bidDate != ''">
@@ -165,7 +163,7 @@
                 and b.bft_name LIKE CONCAT('%',#{bftName,jdbcType=VARCHAR},'%')
             </if>
             <if test="bftSize != null and bftSize != ''">
-                and b.bft_size LIKE CONCAT('%',#{bftSize,jdbcType=VARCHAR},'%')
+                and b.bft_size = #{bftSize,jdbcType=VARCHAR}
             </if>
             <if test="bidMoney != null and bidMoney != ''">
                 and b.bid_money = #{bidMoney,jdbcType=DECIMAL}
@@ -182,11 +180,8 @@
             <if test="termValidity != null and termValidity != ''">
                 and b.term_validity = #{termValidity,jdbcType=DECIMAL}
             </if>
-            <if test="status != null and status != 3">
+            <if test="status != null and status != -1">
                 and b.status = #{status,jdbcType=VARCHAR}
-            </if>
-            <if test="status == 3">
-                and b.status NOT IN (#{status,jdbcType=VARCHAR})
             </if>
             <if test="type != null">
                 and b.type = #{type,jdbcType=VARCHAR}
@@ -221,8 +216,8 @@
             <if test="obj.bftName != null and obj.bftName != ''">
                 and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
             </if>
-            <if test="obj.bftSize != null and obj.bftSize != ''">
-                and b.bft_size LIKE CONCAT('%',#{obj.bftSize,jdbcType=VARCHAR},'%')
+            <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
+                and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidMoney != null and obj.bidMoney != ''">
                 and b.bid_money = #{obj.bidMoney,jdbcType=DECIMAL}
@@ -287,6 +282,23 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAndUser" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
+        SELECT u.nick AS name,
+        <include refid="Base_Column_List"/>
+        FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
+        <include refid="SelectAllByPage_Where_Clause"/>
+        <if test="obj.name != null and obj.name != ''">
+            and u.nick = #{obj.name,jdbcType=VARCHAR}
+        </if>
+        <if test="minimumMoney != null and minimumMoney != ''">
+            and b.bid_money &gt;= #{minimumMoney,jdbcType=DECIMAL}
+        </if>
+        <if test="maximumMoney != null and maximumMoney != ''">
+            and b.bid_money &lt;= #{maximumMoney,jdbcType=DECIMAL}
+        </if>
+        ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findBidForSorts" resultMap="BaseResultMap">
         SELECT * FROM (SELECT bi.id,bi.basicinformation_id,bi.bft_name,bi.bft_size,bi.bid_bond,bi.bid_date,bi.bid_money,bf.brand,bf.`name` as bname,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo FROM bid bi
         ORDER BY bi.bid_date DESC) as bid GROUP BY basicinformation_id
@@ -335,6 +347,20 @@
     <select id="findCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
         SELECT COUNT(*) FROM bid b
         <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <select id="findAndUserCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
+        SELECT COUNT(*) FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
+        <include refid="SelectAllByPage_Where_Clause"/>
+        <if test="obj.name != null and obj.name != ''">
+            and u.nick = #{obj.name,jdbcType=VARCHAR}
+        </if>
+        <if test="minimumMoney != null and minimumMoney != ''">
+            and b.bid_money &gt;= #{minimumMoney,jdbcType=DECIMAL}
+        </if>
+        <if test="maximumMoney != null and maximumMoney != ''">
+            and b.bid_money &lt;= #{maximumMoney,jdbcType=DECIMAL}
+        </if>
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">

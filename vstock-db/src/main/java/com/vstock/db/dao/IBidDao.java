@@ -32,4 +32,10 @@ public interface IBidDao {
     //分页带时间区间查询
     List<Bid> findBidForSorts(@Param("bftSize") String bftSize,@Param("year") String year,@Param("brand") String brand,@Param("priceStart") String priceStart,@Param("priceEnd") String priceEnd);
 
+    //分页带叫价金额区间查询
+    List<Bid> findAndUser(@Param("obj")Bid record,@Param(value = "minimumMoney") BigDecimal minimumMoney,@Param(value = "maximumMoney") BigDecimal maximumMoney, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
+    //查询叫价区间总数
+    int findAndUserCount(@Param("obj")Bid record,@Param(value = "minimumMoney") BigDecimal minimumMoney,@Param(value = "maximumMoney") BigDecimal maximumMoney);
+
 }

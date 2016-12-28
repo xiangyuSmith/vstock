@@ -20,6 +20,8 @@ public class Bid implements Serializable {
     public final static int STATUS_LOCKING = 20; // 已锁定
     public final static int STATUS_SUCCESS = 30; // 交易成功
 
+    public final static String[] statusStr = {"0:待付款","10:已生效","11:已过期","20:已锁定","30:交易成功"};
+
     public final static String TIME_ONE = "1";
     public final static String TIME_THREE = "3";
     public final static String TIME_FIVE = "5";
@@ -37,20 +39,21 @@ public class Bid implements Serializable {
     private BigDecimal bidBond;
     private BigDecimal latelyBid;
     private String termValidity;
-    private int status;
-    private int type;
+    private Integer status;
+    private Integer type;
     private String sign;
     private String bidDate;
     private String invalidDate;
     private BigDecimal highestBid;
     private BigDecimal minimumSellingPrice;
     private Basicinformation basicinformation;
+    private String name;
 
     public Bid() {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, Integer status, Integer type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation, String name) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -70,34 +73,14 @@ public class Bid implements Serializable {
         this.highestBid = highestBid;
         this.minimumSellingPrice = minimumSellingPrice;
         this.basicinformation = basicinformation;
+        this.name = name;
     }
 
-    public Bid( Integer basicinformationId,String bftSize,BigDecimal bidMoney, Integer userId){
+    public Bid(Integer basicinformationId, String bftSize, BigDecimal bidMoney, Integer userId){
         this.userId = userId;
         this.basicinformationId = basicinformationId;
         this.bftSize = bftSize;
         this.bidMoney = bidMoney;
-    }
-
-    public Bid( Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, int status, int type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation) {
-        this.userId = userId;
-        this.basicinformationId = basicinformationId;
-        this.paymentId = paymentId;
-        this.bftName = bftName;
-        this.bftSize = bftSize;
-        this.bidMoney = bidMoney;
-        this.bidFreight = bidFreight;
-        this.bidBond = bidBond;
-        this.latelyBid = latelyBid;
-        this.termValidity = termValidity;
-        this.status = status;
-        this.type = type;
-        this.sign = sign;
-        this.bidDate = bidDate;
-        this.invalidDate = invalidDate;
-        this.highestBid = highestBid;
-        this.minimumSellingPrice = minimumSellingPrice;
-        this.basicinformation = basicinformation;
     }
 
     public Basicinformation getBasicinformation() {
@@ -196,19 +179,19 @@ public class Bid implements Serializable {
         this.termValidity = termValidity;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -242,6 +225,14 @@ public class Bid implements Serializable {
 
     public void setMinimumSellingPrice(BigDecimal minimumSellingPrice) {
         this.minimumSellingPrice = minimumSellingPrice;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setSign(String sign) {
