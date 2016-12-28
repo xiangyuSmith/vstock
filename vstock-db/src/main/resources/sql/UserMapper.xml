@@ -58,7 +58,7 @@
             <if test="last_login_time != null and last_login_time != ''">
                 last_login_time = #{last_login_time,jdbcType=VARCHAR},
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
             <if test="create_time != null and create_time != ''">
@@ -70,4 +70,97 @@
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.User" resultType="com.vstock.db.entity.User">
+        SELECT * FROM `user` u <include refid="SearchAllByPage_Where_Clause"/> ORDER BY u.id DESC
+        limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.User" resultType="Integer">
+        SELECT COUNT(*) FROM `user` u <include refid="SelectAll_Where_Clause"/> ORDER BY u.id DESC
+    </select>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND u.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and u.mobile = #{mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null and password != ''">
+                and u.password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="uname != null and uname != ''">
+                and u.uname = #{uname,jdbcType=VARCHAR}
+            </if>
+            <if test="nick != null and nick != ''">
+                and u.nick LIKE CONCAT('%',#{nick,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="salt != null and salt != ''">
+                and u.salt = #{salt,jdbcType=VARCHAR}
+            </if>
+            <if test="size != null and size != 0">
+                and u.size = #{size,jdbcType=VARCHAR}
+            </if>
+            <if test="last_login_ip != null and last_login_ip != ''">
+                and u.last_login_ip = #{last_login_ip,jdbcType=VARCHAR}
+            </if>
+            <if test="last_login_time != null and last_login_time != ''">
+                and u.last_login_time = #{last_login_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="status != null and status != -1">
+                and u.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="create_time != null and create_time != ''">
+                and u.create_time = #{create_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="update_time != null and update_time != ''">
+                and u.update_time = #{update_time,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND u.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.mobile != null and obj.mobile != ''">
+                and u.mobile = #{obj.mobile,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.password != null and obj.password != ''">
+                and u.password = #{obj.password,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.uname != null and obj.uname != ''">
+                and u.uname = #{obj.uname,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.nick != null and obj.nick != ''">
+                and u.nick LIKE CONCAT('%',#{obj.nick,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.salt != null and obj.salt != ''">
+                and u.salt = #{obj.salt,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.size != null and obj.size != 0">
+                and u.size = #{obj.size,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.last_login_ip != null and obj.last_login_ip != ''">
+                and u.last_login_ip = #{obj.last_login_ip,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.last_login_time != null and obj.last_login_time != ''">
+                and u.last_login_time = #{obj.last_login_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.status != null and obj.status != -1">
+                and u.status = #{obj.status,jdbcType=INTEGER}
+            </if>
+            <if test="obj.create_time != null and obj.create_time != ''">
+                and u.create_time = #{obj.create_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.update_time != null and obj.update_time != ''">
+                and u.update_time = #{obj.update_time,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
 </mapper>
