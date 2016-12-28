@@ -28,7 +28,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     VstockConfigService vstockConfigService;
 
-    @Value("${admin.rooturl}")
+    @Value("${projectPath}")
     String adminrooturl;
 
     List<String> unloginUrls = new ArrayList<>();

@@ -31,13 +31,13 @@
                 <div class="am-form-group">
                     <span for="doc-ipt-3" class="am-u-sm-3 layout-font-size-18 am-text-right am-margin-top-xs">姓名：</span>
                     <div class="am-u-sm-5 am-u-end am-padding-left-0">
-                        <input type="text" id="doc-ipt-3" class="input-text-required" placeholder="请输入您的真实姓名">
+                        <input id="uname" type="text" id="doc-ipt-3" class="input-text-required" placeholder="请输入您的真实姓名">
                     </div>
                 </div>
                 <div class="am-form-group">
                     <span for="doc-ipt-pwd-2" class="am-u-sm-3 layout-font-size-18 am-text-right am-margin-top-xs">身份证号码：</span>
                     <div class="am-u-sm-5 am-u-end am-padding-left-0">
-                        <input type="text" id="doc-ipt-pwd-2" class="input-text-required" placeholder="请输入您的身份证号码">
+                        <input id="identifyNo" type="text" id="doc-ipt-pwd-2" class="input-text-required" placeholder="请输入您的身份证号码">
                     </div>
                 </div>
             </form>
@@ -78,7 +78,7 @@
                         <a href="javascript:;" class="">
                             <div style="width: 100%;height: 100%;">
                                 <div class="bg-uoload" ></div>
-                                <input id="identify_img_handheld" name="identify_img_handheld" type="file" class="bg-uoload-file" style="opacity: 0;" />
+                                <input id="identify_img_handheld" name="identify_img_handheld"  type="file" class="bg-uoload-file" style="opacity: 0;" />
                                 <img id="identify_handheld" src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
                             </div>
                             <span class="clickImg-upload">点击上传</span>
@@ -97,7 +97,7 @@
                 <div class="am-form-group">
                     <span for="doc-ipt-4" class="am-u-sm-3 layout-font-size-18 am-text-right am-margin-top-xs">支付宝账号：</span>
                     <div class="am-u-sm-5 am-u-end am-padding-left-0">
-                        <input type="text" id="doc-ipt-4" class="input-text-required" placeholder="请输入您用于结算的支付宝账号">
+                        <input id="alipayAccount" type="text" id="doc-ipt-4" class="input-text-required" placeholder="请输入您用于结算的支付宝账号">
                     </div>
                 </div>
             </form>
@@ -112,6 +112,7 @@
         </div>
     </div>
 </div>
+<script src="/assets/js/ajaxfileupload.js"></script>
 <script>
     $("#identify_img_front").change(function(){
         var objUrl = getObjectURL(this.files[0]) ;
@@ -136,12 +137,51 @@
     });
 
     $("#submit_userAccount").click(function(){
+        var flag = 0;
+        $(".bg-uoload-file").each(function(){
+            var $this = $(this);
+            if($this.val() == ""){
+                flag = 2;
+            }
+        });
         $(".input-text-required").each(function(){
             var $this = $(this);
             if($this.val() == ""){
+                flag = 1;
                 $this.css("border","1px solid #ff9335");
             }
         });
+        switch(flag){
+            case 0:
+                fileUpload();
+                $.ajaxFileUpload({
+                    url:'/user/uploadUserProfile',
+                    secureuri: false,
+                    data:{
+                        uname:$("#uname").val(),
+                        alipayAccount:$("#alipayAccount").val(),
+                        identifyNo:$("#identifyNo").val()
+                    },
+                    fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
+                    dataType: 'json',
+                    success: function (res) {
+                        alert(res);
+                    },
+                    error: function () {
+                        alertTips(3,"提交失败","远程服务器正忙");
+                    }
+                });
+                alertTips(1,"成功","认证信息已提交");
+                break;
+            case 1:
+                alertTips(3,"信息有误","请填写认证信息");
+                break;
+            case 2:
+                alertTips(3,"信息有误","请上传身份证照片");
+                break;
+            default:
+                break;
+        }
     });
 
     $(".input-text-required").focus(function(){

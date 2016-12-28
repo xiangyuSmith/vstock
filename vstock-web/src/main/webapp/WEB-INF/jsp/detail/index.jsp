@@ -268,7 +268,9 @@
             if(loginType == "false"){
                 $("#login-click").click();
             }else{
+                loadingshow();
                 sendRequest("/user/cardIdentify",null,function(res){
+                    loadingclose();
                     if(res.retCode == 1){
                         $("#sell-click").click();
                     }else{
