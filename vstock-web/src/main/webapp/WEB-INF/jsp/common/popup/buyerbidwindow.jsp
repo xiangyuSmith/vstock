@@ -70,7 +70,7 @@
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-top-xs am-margin-bottom-sm am-text-left">
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
-                        <p class="layout-font-size-18 am-margin-bottom-sm">出售金额：</p>
+                        <p class="layout-font-size-18 am-margin-bottom-sm">出价金额：</p>
                         <div class="am-form-group am-form-icon">
                             <i class="am-icon-cny layout-font-size-18 am-margin-top-xs" style="margin-top: -7px;color: #585858;"></i>
                             <input id="buyer_sell_amount" type="text" class="am-form-field" />
@@ -102,7 +102,7 @@
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18">运费：</span>
-                        <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right">卖家承担</span>
+                        <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right">买家承担</span>
                     </div>
                 </div>
             </div>

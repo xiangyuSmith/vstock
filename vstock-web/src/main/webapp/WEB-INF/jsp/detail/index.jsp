@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
 <head>
     <%@include file="../layout/head.jsp" %>
     <title>Adidas NMD Nice Kicks</title>
@@ -24,6 +24,8 @@
         @media ( max-width: 1440px ){
             .str-title-font{ font-size: 30px; }
         }
+        .xy-dimmer-active{ overflow: auto;}
+        .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
     </style>
 </head>
 <body>
@@ -246,6 +248,14 @@
 <%@include file="../common/popup/checktips.jsp" %>
 <script>
     $(function(){
+
+        $("#now-seller-buy").click(function(){
+            $("body").addClass("xy-dimmer-active");
+            $("#my-popup-buy-detailed").addClass("xy-dimmer-detailed");
+        });
+
+        $("#now-seller-buy").click();
+
         var k = 0;
 
         var loginType = $(".loginType").val();

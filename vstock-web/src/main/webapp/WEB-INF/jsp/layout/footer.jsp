@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="inc.jsp" %>
-<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="vstock-loading">
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="vstock-loading" style="z-index: 9999999;">
     <div class="am-modal-dialog">
         <div id="loading-content" class="am-modal-hd"></div>
         <div class="am-modal-bd">

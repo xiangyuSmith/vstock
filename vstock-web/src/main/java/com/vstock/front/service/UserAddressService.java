@@ -60,8 +60,7 @@ public class UserAddressService {
     public UserAddress findType(UserAddress record){return userAddressDao.findType(record);}
 
     //界面查询
-    public List<UserAddress> findAllUserAddress(UserAddress record, String type){
-        int startPos = 5;
+    public List<UserAddress> findAllUserAddress(UserAddress record,int startPos , String type){
         if (type != null && !"".equals(type)){
             startPos = 20;
         }

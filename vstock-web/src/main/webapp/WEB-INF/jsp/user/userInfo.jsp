@@ -163,23 +163,26 @@
                         <td style="max-width: 80px;">${userAddresses.localArea}</td>
                         <td style="max-width: 100px;">${userAddresses.detailedAddress}</td>
                         <td>${userAddresses.zipCode}</td>
+                        <td>
                         <c:choose>
                             <c:when test="${not empty userAddresses.phoneNumber}">
-                                <td>${userAddresses.phoneNumber}</td>
+                                ${userAddresses.phoneNumber}
                             </c:when>
                             <c:otherwise>
-                                <td>--</td>
+                                --
                             </c:otherwise>
                         </c:choose>
-
+                        </td>
+                        <td>
                         <c:choose>
                             <c:when test="${not empty userAddresses.landlineNumber}">
-                                <td>${userAddresses.landlineNumber}</td>
+                                ${userAddresses.landlineNumber}
                             </c:when>
                             <c:otherwise>
-                                <td>--</td>
+                                --
                             </c:otherwise>
                         </c:choose>
+                        </td>
                         <td style="width: 50px;">
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" class="userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">编辑</a>
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" id="del-status">删除</a>

@@ -21,7 +21,7 @@
                 <!---------- TYPE_LOG ---------->
                 <div data-tab-panel-0 class="am-tab-panel am-active am-g">
                     <div class="am-input-group am-input-group-lg am-center am-margin-top-sm am-margin-right-lg am-margin-left-lg">
-                        <input id="mobile" class="am-form-field" type="text" placeholder="用户名" required/>
+                        <input id="mobile" class="am-form-field" type="text" placeholder="手机号" required/>
                     </div>
                     <div class="am-input-group am-input-group-lg am-center am-margin-right-lg am-margin-left-lg">
                         <input id="password" class="am-form-field" type="password" placeholder="密码" required/>
@@ -53,7 +53,7 @@
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <div class="am-input-group am-input-group-lg">
                                 <div class="am-u-md-8 am-padding-0 am-margin-0">
-                                    <input id="nick_reg" name="nick_reg" type="text" class="am-form-field" placeholder="昵称" required/>
+                                    <input id="nick_reg" name="nick_reg" type="text" class="am-form-field" placeholder="昵称" maxlength="8" required/>
                                 </div>
                                 <div class="am-u-md-4 am-padding-0 am-margin-0">
                                     <span class="am-input-group-btn">

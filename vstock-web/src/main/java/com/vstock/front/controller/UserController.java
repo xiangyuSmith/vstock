@@ -166,7 +166,8 @@ public class UserController extends BaseController {
         UserAddress record = new UserAddress();
         User user = userService.findById(String.valueOf(suid));
         record.setUserId(Integer.parseInt(user.getId()));
-        List<UserAddress> userAddressesList = userAddressService.findAllUserAddress(record,type);
+        int startPos = 5;
+        List<UserAddress> userAddressesList = userAddressService.findAllUserAddress(record,startPos,type);
         model.put("userAddressesList",userAddressesList);
         model.put("type",type);
         model.addAttribute("user",user);
