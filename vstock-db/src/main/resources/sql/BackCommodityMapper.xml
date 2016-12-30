@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IBackCommodityDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.BackCommodity">
+        <id property="id" column="id"/>
+        <result column="btfId" property="btfId" jdbcType="INTEGER"/>
+        <result column="tradeNo" property="tradeNo" jdbcType="VARCHAR"/>
+        <result column="backPerson" property="backPerson" jdbcType="VARCHAR"/>
+        <result column="consignee" property="consignee" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="express" property="express" jdbcType="VARCHAR"/>
+        <result column="courierNumber" property="courierNumber" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="reasons" property="reasons" jdbcType="VARCHAR"/>
+        <result column="btfName" property="btfName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND b.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="btfId != null and btfId != ''">
+                and b.btfId = #{btfId,jdbcType=INTEGER}
+            </if>
+            <if test="tradeNo != null and tradeNo != ''">
+                and b.tradeNo = #{tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="backPerson != null and backPerson != ''">
+                and b.backPerson = #{backPerson,jdbcType=VARCHAR}
+            </if>
+            <if test="consignee != null and consignee != ''">
+                and b.consignee = #{consignee,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                and b.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="express != null and express != ''">
+                and b.express = #{express,jdbcType=VARCHAR}
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and b.courier_number = #{courierNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and b.create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and b.update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="reasons != null and reasons != ''">
+                and b.reasons = #{reasons,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND b.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.btfId != null and obj.btfId != ''">
+                and b.btfId = #{obj.btfId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeNo != null and obj.tradeNo != ''">
+                and b.tradeNo = #{obj.tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.backPerson != null and obj.backPerson != ''">
+                and b.backPerson = #{obj.backPerson,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.consignee != null and obj.consignee != ''">
+                and b.consignee = #{obj.consignee,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null">
+                and b.status = #{obj.status,jdbcType=INTEGER}
+            </if>
+            <if test="obj.express != null and obj.express != ''">
+                and b.express = #{obj.express,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and b.courier_number = #{obj.courierNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createTime != null and obj.createTime != ''">
+                and b.create_time = #{obj.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.updateTime != null and obj.updateTime != ''">
+                and b.update_time = #{obj.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.reasons != null and obj.reasons != ''">
+                and b.reasons = #{obj.reasons,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND b.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="btfId != null and btfId != ''">
+                and b.btfId = #{btfId,jdbcType=INTEGER}
+            </if>
+            <if test="tradeNo != null and tradeNo != ''">
+                and b.tradeNo = #{tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="backPerson != null and backPerson != ''">
+                and b.backPerson LIKE CONCAT('%',#{backPerson,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="consignee != null and consignee != ''">
+                and b.consignee LIKE CONCAT('%',#{consignee,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="status != null">
+                and b.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="express != null and express != ''">
+                and b.express = #{express,jdbcType=VARCHAR}
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and b.courier_number = #{courierNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and b.create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and b.update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="reasons != null and reasons != ''">
+                and b.reasons = #{reasons,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND b.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.btfId != null and obj.btfId != ''">
+                and b.btfId = #{obj.btfId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeNo != null and obj.tradeNo != ''">
+                and b.tradeNo = #{obj.tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.backPerson != null and obj.backPerson != ''">
+                and b.backPerson LIKE CONCAT('%',#{obj.backPerson,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.consignee != null and obj.consignee != ''">
+                and b.consignee LIKE CONCAT('%',#{obj.consignee,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.status != null">
+                and b.status = #{obj.status,jdbcType=INTEGER}
+            </if>
+            <if test="obj.express != null and obj.express != ''">
+                and b.express = #{obj.express,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and b.courier_number = #{obj.courierNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createTime != null and obj.createTime != ''">
+                and b.create_time = #{obj.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.updateTime != null and obj.updateTime != ''">
+                and b.update_time = #{obj.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.reasons != null and obj.reasons != ''">
+                and b.reasons = #{obj.reasons,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        b.id as id,
+        b.btfId as btfId,
+        b.tradeNo as tradeNo,
+        b.backPerson as backPerson,
+        b.consignee as consignee,
+        b.status as status,
+        b.express as express,
+        b.courier_number as courierNumber,
+        b.create_time as createTime,
+        b.update_time as updateTime,
+        b.reasons as reasons
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.BackCommodity" resultType="com.vstock.db.entity.BackCommodity">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM back_commodity b
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.BackCommodity" resultType="Integer">
+        SELECT COUNT(*) FROM back_commodity b
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
+    <select id="findAndBtf" parameterType="com.vstock.db.entity.BackCommodity" resultMap="BaseResultMap">
+        SELECT btf.name AS btfName,
+        <include refid="Base_Column_List"/>
+        FROM back_commodity b LEFT JOIN basicinformation btf ON b.btfId = btf.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="obj.btfName != null and obj.btfName != ''">
+            and btf.name LIKE CONCAT('%',#{obj.btfName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and b.create_time &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and b.create_time &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+        ORDER BY b.id DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findAndBtfCount" parameterType="com.vstock.db.entity.BackCommodity" resultType="Integer">
+        SELECT COUNT(*) FROM back_commodity b LEFT JOIN basicinformation btf ON b.btfId = btf.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="obj.btfName != null and obj.btfName != ''">
+            and btf.name LIKE CONCAT('%',#{obj.btfName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and b.create_time &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and b.create_time &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `back_commodity`
+        (`id`,`btfId`,`tradeNo`,`backPerson`,`consignee`,`status`,`express`,`courier_number`,`create_time`,`update_time`,`reasons`)
+        VALUES(null,#{btfId},#{tradeNo},#{backPerson},#{consignee},#{status},#{express},#{courierNumber},#{createTime},#{updateTime},#{reasons})
+    </insert>
+
+    <update id="update">
+        UPDATE `back_commodity` b SET
+        <set>
+            <if test="btfId != null and btfId != ''">
+                b.btfId = #{btfId,jdbcType=INTEGER},
+            </if>
+            <if test="tradeNo != null and tradeNo != ''">
+                b.tradeNo = #{tradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="backPerson != null and backPerson != ''">
+                b.backPerson = #{backPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="consignee != null and consignee != ''">
+                b.consignee = #{consignee,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null and status != ''">
+                b.status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="express != null and express != ''">
+                b.express = #{express,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                b.courier_number = #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                b.create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                b.update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reasons != null and reasons != ''">
+                b.reasons = #{reasons,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE b.id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
