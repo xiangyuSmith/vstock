@@ -3,7 +3,7 @@
 <form id="userInfo" action="${cxt}/user/userInfo" method="post">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-xl">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-sm" style="border-bottom: 1px solid #CACACA;">
-            <div style="float: left; display: block;width: 66px;height: 45px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -380px -20px;"></div>
+            <div style="float: left; display: block;width: 66px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -380px -20px;"></div>
             <div class="am-margin-bottom-sm"><b class="layout-font-size-30 am-padding-left-sm">个人信息</b></div>
         </div>
         <div class="am-form-group am-text-sm" style="font-weight: normal;">
@@ -106,7 +106,7 @@
 
     <table class="am-table am-table-striped am-table-hover">
         <caption style="border-bottom: 1px solid #CACACA;">
-            <div style="float: left; display: block;width: 66px;height: 60px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -665px -18px;"></div>
+            <div style="float: left; display: block;width: 66px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -665px -18px;"></div>
             <b class="layout-font-size-30 am-fl am-margin-left-sm">收货信息</b>
             <a href="javascript:void(0);" class="add-adders am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">添加新地址</a>
         </caption>

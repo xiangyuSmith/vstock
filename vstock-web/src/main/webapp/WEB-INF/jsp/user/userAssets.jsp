@@ -23,7 +23,7 @@
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm am-padding-left-0">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -721px -21px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -721px -21px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">球鞋数量</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
@@ -41,13 +41,13 @@
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -606px -16px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -606px -16px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">市场价值</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.current_market_value}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">￥<fmt:formatNumber value="${basicinformationRose.current_market_value}" type="currency" pattern="#,#00.0#"/></span>
+                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></span>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -59,13 +59,13 @@
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -492px -22px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -492px -22px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">涨跌幅度</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.change_range}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">￥<fmt:formatNumber value="${basicinformationRose.change_range}" type="currency" pattern="#,#00.0#"/></span>
+                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="￥0.00"/></span>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -77,13 +77,13 @@
                 <li style="height: 80px;" class="am-padding-top-sm">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -307px -18px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -307px -18px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">平均价格</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.percentage_change}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">￥<fmt:formatNumber value="${basicinformationRose.percentage_change}" type="currency" pattern="#,#00.0#"/></span>
+                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.percentage_change}" type="number" pattern="￥0.00"/></span>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -115,10 +115,10 @@
                             <td>${userAssets.basicinformation.name}</td>
                             <td>${userAssets.userAssetsSize}</td>
                             <td>${userAssets.purchaseDate}</td>
-                            <td>￥<fmt:formatNumber value="${userAssets.money}" type="currency" pattern="#,#00.0#"/></td>
+                            <td><fmt:formatNumber value="${userAssets.money}" type="number" pattern="￥0.00"/></td>
                             <c:choose>
                                 <c:when test="${not empty userAssets.basicinformationRose.current_market_value}">
-                                    <td>￥<fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="currency" pattern="#,#00.0#"/></td>
+                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></td>
                                 </c:when>
                                 <c:otherwise>
                                     <td>--</td>
@@ -128,10 +128,10 @@
                                 <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                     <c:choose>
                                         <c:when test="${userAssets.basicinformationRose.type == 0}">
-                                            <td>￥-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="currency" pattern="#,#00.0#"/></td>
+                                            <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="￥0.00"/></td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td>￥<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="currency" pattern="#,#00.0#"/></td>
+                                            <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="￥0.00"/></td>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>
@@ -142,13 +142,13 @@
                             <td style="width: 26%">
                                 <div class="am-fl" style="width: 30%;">
                                     <a href="${cxt}/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
-                                        <span style="display: block;width: 55px;height: 45px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
+                                        <span style="display: block;width: 55px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
                                         <span class="am-margin-left-sm am-link-muted">出售</span>
                                     </a>
                                 </div>
                                 <div class="am-fl am-margin-left-sm" style="width: 35%;">
                                     <a href="javascript:void(0);">
-                                        <span style="display: block;width: 50px;height: 45px; background: url('../../../../assets/shoesImg/personal_center.png'); background-position: -65px -22px;" class="offer-btn" data-url="../user/userAssets"></span>
+                                        <span style="display: block;width: 50px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -65px -22px;" class="offer-btn" data-url="../user/userAssets"></span>
                                         <span class="am-margin-left am-link-muted userAssets-del" user-id="${userAssets.userId}" btf-id="${userAssets.basicinformationId}" del_data_id="${userAssets.id}">删除</span>
                                     </a>
                                 </div>
