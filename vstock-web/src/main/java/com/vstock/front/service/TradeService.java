@@ -112,7 +112,7 @@ public class TradeService {
      */
     public int createTradeOne(Trade trade,String tradeMd5Key){
         String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
-                .append("trade_no=").append(trade.getTrandeNo())
+                .append("trade_no=").append(trade.getTradeNo())
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bid_id=").append(trade)
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("transaction_money=").append(trade.getTransactionMoney())
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bft_size=").append(trade.getBftSize())

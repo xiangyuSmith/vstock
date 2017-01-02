@@ -42,14 +42,9 @@ public class UserController extends BaseController {
     UserAssetsService userAssetsService;
 
     @Autowired
-    CityAddressService cityAddressService;
-
-    @Autowired
     UserAccountService userAccountService;
 
     private static Logger logger = Logger.getLogger(BidController.class);
-
-    private static JSONObject staAdder = new JSONObject();
 
     @RequestMapping("index")
     public String testIndex(ModelMap model){
@@ -61,7 +56,6 @@ public class UserController extends BaseController {
     //个人中心出售记录
     @RequestMapping("sale")
     public String sale(ModelMap model){
-        staAdder = cityAddressService.adderssAll();
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
         String type = request.getParameter("type");
         Bid bid = new Bid();
@@ -198,7 +192,7 @@ public class UserController extends BaseController {
     public void address(HttpServletResponse response){
 //        JSONObject jsonObject = cityAddressService.adderssAll();
         try {
-            response.getWriter().print(staAdder);
+            response.getWriter().print(VstockConfigService.getJsonAdder());
         }catch (Exception ex){
             System.out.print(ex.getMessage());
         }

@@ -21,5 +21,7 @@ public class InitDataListener implements InitializingBean, ServletContextAware {
     @Override
     public void setServletContext(ServletContext servletContext) {
         vstockConfigService.loadTplForexConfig();
+        vstockConfigService.lodingstaAdder();
     }
+
 }
