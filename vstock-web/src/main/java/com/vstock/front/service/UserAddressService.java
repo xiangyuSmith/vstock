@@ -127,7 +127,10 @@ public class UserAddressService {
         //判断是否为新增
         if (id == null || "".equals(id)) {
             //查询是否有默认地址，没有设本地址为默认地址
-            UserAddress userAddress = this.findType(record);
+            UserAddress whereUserAdress = new UserAddress();
+            whereUserAdress.setType(1);
+            whereUserAdress.setUserId(record.getUserId());
+            UserAddress userAddress = this.findType(whereUserAdress);
             if (userAddress != null){
                 record.setType(0);
             }else {
