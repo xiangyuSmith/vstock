@@ -221,7 +221,7 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user_address`
         (`id`,`user_id`,`local_area`,`detailed_address`,`zip_code`,`consignee_name`,`phone_number`,`landline_number`,`status`,`type`,`create_date`,`invalid_date`)
         VALUES(null,#{userId},#{localArea},#{detailedAddress},#{zipCode},#{consigneeName},#{phoneNumber},#{landlineNumber},#{status},#{type},#{createDate},#{invalidDate})
