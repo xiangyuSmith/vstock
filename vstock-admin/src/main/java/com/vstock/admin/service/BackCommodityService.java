@@ -57,4 +57,17 @@ public class BackCommodityService {
      */
     public int findAndBtfCount(BackCommodity record, String startTime, String endTime){return backCommodityDao.findAndBtfCount(record,startTime,endTime);};
 
+    /**
+     * 保存方法
+     * @param record
+     * @return
+     */
+    public int save(BackCommodity record){
+        if (record.getId() != null && !"".equals(record.getId())){
+            return this.update(record);
+        }else {
+            return this.insert(record);
+        }
+    }
+
 }

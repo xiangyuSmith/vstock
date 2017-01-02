@@ -90,4 +90,11 @@ public class BackCommodityController {
         return param;
     }
 
+    @RequestMapping("saveBackCommodity")
+    public ModelMap saveBackCommodity(BackCommodity record, HttpServletRequest request, ModelMap model) {
+        int i = backCommodityService.save(record);
+        model.put("reGode",i);
+        return model;
+    }
+
 }

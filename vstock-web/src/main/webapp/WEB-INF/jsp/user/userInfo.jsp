@@ -148,11 +148,11 @@
                             </c:if>
                         </td>
                     </tr>
+                    <a href="javascript:void(0);" class="am-center" id="load_more" data-url="../user/userInfo?type=1"><span class="am-center am-text-center layout-font-size-18"><i class="am-icon-spinner am-icon-spin" style="display: none;"></i>点击加载更多</span></a>
                 </c:forEach>
             </c:if>
         </tbody>
     </table>
-    <a href="javascript:void(0);" class="am-center" id="load_more" data-url="../user/userInfo?type=1"><span class="am-center am-text-center layout-font-size-18"><i class="am-icon-spinner am-icon-spin" style="display: none;"></i>点击加载更多</span></a>
     <input type="hidden" id="user-lodaType" value="${type}"/>
 </form>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
