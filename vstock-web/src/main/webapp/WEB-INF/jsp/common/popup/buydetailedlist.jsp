@@ -210,7 +210,11 @@
         });
 
         $(".edit-address").click(function(){
-           alert("a");
+           $("#up-address-title").text("修改");
+        });
+
+        $(".add-adders").click(function(){
+            $("#up-address-title").text("新增");
         });
     });
 </script>
