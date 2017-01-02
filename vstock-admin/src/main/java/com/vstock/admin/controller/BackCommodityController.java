@@ -2,8 +2,10 @@ package com.vstock.admin.controller;
 
 import com.vstock.admin.service.BackCommodityService;
 import com.vstock.admin.service.BasicinformationService;
+import com.vstock.admin.service.TradeService;
 import com.vstock.db.entity.BackCommodity;
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.Page;
 import com.vstock.server.util.StatusUtil;
 import org.apache.log4j.Logger;
@@ -29,6 +31,9 @@ public class BackCommodityController {
 
     @Autowired
     BasicinformationService basicinformationService;
+
+    @Autowired
+    TradeService tradeService;
 
     @RequestMapping("index")
     public String index(BackCommodity record, HttpServletRequest request, ModelMap model) {
@@ -64,6 +69,24 @@ public class BackCommodityController {
         Page page = new Page(5,"1");
         List<Basicinformation> btfList = basicinformationService.findbasicAll(record,page,null,null,null,null,null,null);
         param.put("btfList",btfList);
+        return param;
+    }
+
+    @RequestMapping("findTrade")
+    @ResponseBody
+    public Map<String,Object> findTrade(HttpServletRequest request){
+        Map<String,Object> param = new HashMap<String,Object>();
+        String sellerName = request.getParameter("sellerName");
+        String buyersName = request.getParameter("buyersName");
+        String btfName = request.getParameter("btfName");
+        Trade record = new Trade();
+        record.setBuyersName(buyersName);
+        record.setSellerName(sellerName);
+        record.setBftName(btfName);
+        Map<Page,List<Trade>> parames = tradeService.dateFindAll(record, null, null, "1");
+        for (Page page : parames.keySet()){
+            param.put("tradeList",parames.get(page));
+        }
         return param;
     }
 

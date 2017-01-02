@@ -6,55 +6,57 @@
     </div>
     <hr>
     <div class="am-g">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                <span class="am-fr am-text-lg">退货人</span>
+        <form>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <span class="am-fr am-text-lg">退货人</span>
+                </div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                    <input type="text" class="am-input-lg am-padding-left-xs" placeholder="退货人名称"/>
+                </div>
             </div>
-            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                <input type="text" class="am-input-lg am-padding-left-xs" placeholder="退货人名称"/>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <span class="am-fr am-text-lg">收货人</span>
+                </div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                    <input type="text" class="am-input-lg am-padding-left-xs" placeholder="收货人名称"/>
+                </div>
             </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                <span class="am-fr am-text-lg">收货人</span>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <span class="am-fr am-text-lg">商品名称</span>
+                </div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                    <input type="hidden" name="btfId" id="btfId"/>
+                    <input type="text" name="btfName" id="btfName" class="am-input-lg am-padding-left-xs" placeholder="商品名称" data-am-modal="{target: '#btf-modal', width: 700}"/>
+                </div>
             </div>
-            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                <input type="text" class="am-input-lg am-padding-left-xs" placeholder="收货人名称"/>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <span class="am-fr am-text-lg">订单号</span>
+                </div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                    <input type="text" id="trade_no" class="am-input-lg am-padding-left-xs" placeholder="订单号" data-am-modal="{target: '#trade-modal', width: 700}"/>
+                </div>
             </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                <span class="am-fr am-text-lg">商品名称</span>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <span class="am-fr am-text-lg">退货原因</span>
+                </div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                    <textarea type="text" style="min-width: 206px;" class="am-input-lg am-padding-left-xs" placeholder="退货原因"></textarea>
+                </div>
             </div>
-            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                <input type="hidden" name="btfId" id="btfId"/>
-                <input type="text" name="btfName" id="btfName" class="am-input-lg am-padding-left-xs" placeholder="商品名称" data-am-modal="{target: '#btf-modal', width: 700}"/>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top">
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <span class="am-fr">
+                        <a href="javascript: void(0);" class="am-btn am-btn-primary am-btn-lg am-margin-right">提交</a>
+                        <a href="javascript: void(0);" id="qiut-sbt" class="am-btn am-btn-danger am-btn-lg">取消</a>
+                    </span>
+                </div>
             </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                <span class="am-fr am-text-lg">订单号</span>
-            </div>
-            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                <input type="text" class="am-input-lg am-padding-left-xs" placeholder="订单号" data-am-modal="{target: '#trade-modal', width: 700}"/>
-            </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                <span class="am-fr am-text-lg">退货原因</span>
-            </div>
-            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                <textarea type="text" style="min-width: 206px;" class="am-input-lg am-padding-left-xs" placeholder="退货原因"></textarea>
-            </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top">
-            <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                <span class="am-fr">
-                    <a href="#" class="am-btn am-btn-primary am-btn-lg am-margin-right">提交</a>
-                    <a href="#" class="am-btn am-btn-danger am-btn-lg">取消</a>
-                </span>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -100,15 +102,15 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 am-margin-top">
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">
                     <span class="am-fl am-text-default">买家：</span>
-                    <input type="text" style="max-width: 100px;" class="am-input-lg am-fr" placeholder="买家"/>
+                    <input type="text" id="buyName" style="max-width: 100px;" class="am-input-lg am-fr" placeholder="买家"/>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-padding-left-0">
                     <span class="am-fl am-text-default">卖家：</span>
-                    <input type="text" style="max-width: 100px;" class="am-input-lg am-fr" placeholder="卖家"/>
+                    <input type="text" id="sellName" style="max-width: 100px;" class="am-input-lg am-fr" placeholder="卖家"/>
                 </div>
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4 am-padding-left-0 am-padding-right-0">
                     <span class="am-fl am-text-default">球鞋名称：</span>
-                    <input type="text" style="max-width: 145px;" class="am-input-lg am-fr" placeholder="球鞋名称"/>
+                    <input type="text" id="btfnames" style="max-width: 145px;" class="am-input-lg am-fr" placeholder="球鞋名称"/>
                 </div>
                 <div class="am-u-sm-2 am-u-md-2 am-u-lg-2 am-padding-left-0 am-padding-right-0 am-margin-bottom">
                     <a href="#" style="line-height: 14px;" id="trade-sel" class="am-btn am-btn-primary am-btn-sm">查询</a>
@@ -136,10 +138,23 @@
 <script type="text/javascript">
     jQuery(function($){
 
+        $('#qiut-sbt').click(function () {
+            history.back();
+        });
+
         $("body").on("click",".sbt_on",function(){
             var $th = $(this).children().first();
             $('#btfId').val($th.children().val());
             $('#btfName').val($th.next().text());
+        });
+
+        $("body").on("click",".sbt_trade",function(){
+            var $th = $(this).children().first();
+            $('#trade_no').val($th.text());
+        });
+
+        $('#trade-sel').click(function () {
+            tradeList();
         });
 
         $('#sel-btn').click(function () {
@@ -174,23 +189,27 @@
             });
         }
 
+        tradeList();
+
         function tradeList() {
-            $.post("/backCommodity/findBtf",{
-                'name': $('#name').val(),
-                'chineselogo' : $('#chineselogo').val()
+            $.post("/backCommodity/findTrade",{
+                'sellerName': $('#sellName').val(),
+                'buyersName' : $('#buyName').val(),
+                'btfName' : $('#btfnames').val()
             },function(res){
-                if (res.btfList != null && res.btfList != ""){
-                    if (res.btfList.length > 0){
-                        $('#appnd-number').html("");
-                        for (var i = 0; i < res.btfList.length; i++){
-                            var btf = res.btfList[i];
-                            var a = "<tr class='sbt_on' style='cursor: pointer;' data-am-modal-close>\n" +
-                                    "<td><input type=\"hidden\" value=\""+btf.id+"\"/>"+btf.brand+"</td>\n" +
-                                    "<td>"+btf.name+"</td>\n" +
-                                    "<td>"+btf.artNo+"</td>\n" +
-                                    "<td>"+btf.chineselogo+"</td>\n" +
+                if (res.tradeList != null && res.tradeList != ""){
+                    if (res.tradeList.length > 0){
+                        $('#trade').html("");
+                        for (var i = 0; i < res.tradeList.length; i++){
+                            var trade = res.tradeList[i];
+                            var a = "<tr class='sbt_trade' style='cursor: pointer;' data-am-modal-close>\n" +
+                                    "<td>"+trade.tradeNo+"</td>\n" +
+                                    "<td>"+trade.buyersName+"</td>\n" +
+                                    "<td>"+trade.sellerName+"</td>\n" +
+                                    "<td>"+trade.bftName+"</td>\n" +
+                                    "<td>"+trade.transactionMoney+"</td>\n" +
                                     "</tr>";
-                            $('#appnd-number').append(a);
+                            $('#trade').append(a);
                             if (i == 5){
                                 return;
                             }

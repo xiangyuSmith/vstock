@@ -7,6 +7,7 @@
         <result column="sellerId" property="sellerId" jdbcType="INTEGER"/>
         <result column="buyersId" property="buyersId" jdbcType="INTEGER"/>
         <result column="bidId" property="bidId" jdbcType="INTEGER"/>
+        <result column="tradeNo" property="tradeNo" jdbcType="VARCHAR"/>
         <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
         <result column="transactionMoney" property="transactionMoney" jdbcType="DECIMAL"/>
         <result column="tradeFreight" property="tradeFreight" jdbcType="DECIMAL"/>
@@ -210,6 +211,7 @@
         t.id AS id,
         t.seller_id as sellerId,
         t.buyers_id as buyersId,
+        t.trade_no AS tradeNo,
         t.bid_id as bidId,
         t.basicinformation_id as basicinformationId,
         t.transaction_money as transactionMoney,
@@ -237,6 +239,15 @@
         LEFT JOIN `user` a ON t.buyers_id = a.id
         LEFT JOIN bid b ON t.bid_id = b.id
         <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="obj.bftName != null and obj.bftName != ''">
+            and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.buyersName != null and obj.buyersName != ''">
+            and a.nick LIKE CONCAT('%',#{obj.buyersName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.sellerName != null and obj.sellerName != ''">
+            and u.nick LIKE CONCAT('%',#{obj.sellerName,jdbcType=VARCHAR},'%')
+        </if>
         <if test="startDateTime != null and startDateTime != ''">
             and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
         </if>
@@ -247,8 +258,18 @@
     </select>
 
     <select id="findCountDate" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
-        SELECT COUNT(*) FROM trade t LEFT JOIN bid b ON t.bid_id = b.id
+        SELECT COUNT(*) FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
+        LEFT JOIN `user` a ON t.buyers_id = a.id LEFT JOIN bid b ON t.bid_id = b.id
         <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="obj.bftName != null and obj.bftName != ''">
+            and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.buyersName != null and obj.buyersName != ''">
+            and a.nick LIKE CONCAT('%',#{obj.buyersName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.sellerName != null and obj.sellerName != ''">
+            and u.nick LIKE CONCAT('%',#{obj.sellerName,jdbcType=VARCHAR},'%')
+        </if>
         <if test="startDateTime != null and startDateTime != ''">
             and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
         </if>

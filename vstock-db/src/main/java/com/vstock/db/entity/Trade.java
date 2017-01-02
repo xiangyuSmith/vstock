@@ -29,7 +29,7 @@ public class Trade implements Serializable {
 
     @Id
     private Integer id;
-    private String trandeNo;
+    private String tradeNo;
     private Integer sellerId;
     private Integer buyersId;
     private Integer bidId;
@@ -148,12 +148,12 @@ public class Trade implements Serializable {
         this.updateDate = updateDate;
     }
 
-    public String getTrandeNo() {
-        return trandeNo;
+    public String getTradeNo() {
+        return tradeNo;
     }
 
-    public void setTrandeNo(String trandeNo) {
-        this.trandeNo = trandeNo;
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
     }
 
     public String getSign() {
@@ -204,7 +204,7 @@ public class Trade implements Serializable {
         this.companyName = companyName;
     }
 
-    public Trade(String companyName, String buyersName, String sellerName, String bftSize, String bftName, Bid bid, String sign, String updateDate, String transactionDate, Integer status, String courierNumber, BigDecimal tradeFreight, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
+    public Trade(String companyName, String buyersName, String sellerName, String bftSize, String bftName, Bid bid, String sign, String updateDate, String transactionDate, Integer status, String courierNumber, BigDecimal tradeFreight, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String tradeNo) {
         this.companyName = companyName;
         this.buyersName = buyersName;
         this.sellerName = sellerName;
@@ -222,7 +222,7 @@ public class Trade implements Serializable {
         this.bidId = bidId;
         this.buyersId = buyersId;
         this.sellerId = sellerId;
-        this.trandeNo = trandeNo;
+        this.tradeNo = tradeNo;
     }
 
     public Trade( BigDecimal tradeFreight,String bftSize,String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
@@ -236,6 +236,6 @@ public class Trade implements Serializable {
         this.bidId = bidId;
         this.buyersId = buyersId;
         this.sellerId = sellerId;
-        this.trandeNo = trandeNo;
+        this.tradeNo = tradeNo;
     }
 }

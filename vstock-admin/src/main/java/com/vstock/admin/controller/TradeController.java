@@ -39,7 +39,7 @@ public class TradeController {
         List<String> sizeList = new ArrayList<String>();
         List<Trade> tradeList = new ArrayList<Trade>();
         Page page = new Page();
-        record = tradeService.btfUser(record);
+//        record = tradeService.btfUser(record);
         String pageNow = request.getParameter("pageNow");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
