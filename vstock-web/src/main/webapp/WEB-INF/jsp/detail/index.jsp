@@ -246,6 +246,7 @@
 <%@include file="../common/popup/buydetailedlist.jsp" %>
 <%@include file="../common/popup/bindIdentify.jsp" %>
 <%@include file="../common/popup/checktips.jsp" %>
+<%@include file="../common/address/addersAddorEdit.jsp" %>
 <script>
     $(function(){
 
