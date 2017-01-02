@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link rel="stylesheet" href="../../../assets/css/address/address.css" />
 <%@include file="../layout/inc.jsp" %>
 <form id="userInfo" action="${cxt}/user/userInfo" method="post">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-xl">
@@ -109,7 +108,7 @@
         <caption style="border-bottom: 1px solid #CACACA;">
             <div style="float: left; display: block;width: 66px;height: 60px; background: url('../../../assets/shoesImg/personal_center.png'); background-position: -665px -18px;"></div>
             <b class="layout-font-size-30 am-fl am-margin-left-sm">收货信息</b>
-            <a href="javascript:void(0);" id="add-adders" class="am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">添加新地址</a>
+            <a href="javascript:void(0);" class="add-adders am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">添加新地址</a>
         </caption>
         <tbody>
             <c:if test="${not empty userAddressesList}">
@@ -157,7 +156,6 @@
     <input type="hidden" id="user-lodaType" value="${type}"/>
 </form>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
-<script type="text/javascript" src="../../../../assets/js/address/jquery.address.min.js"></script>
 <script type="text/javascript">
     if ($('#user-lodaType').val() != ""){
         $('#load_more').css('display','none');

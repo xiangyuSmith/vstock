@@ -112,12 +112,12 @@
             var id = $this.attr("data_id");
             if (dataType == 0){
                 if (upMoeny < moeny) {
-                    alertshow("最新出价不能高于原始出价");
+                    alertTips(3,"","最新出价不能高于原始出价");
                     return;
                 }
             }else {
                 if (upMoeny > moeny) {
-                    alertshow("最新出价不能低于原始出价");
+                    alertTips(3,"","最新出价不能低于原始出价");
                     return;
                 }
             }
@@ -144,7 +144,7 @@
                         ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
                     }
                 }else {
-                    alertshow("保存失败，请重新输入！");
+                    alertTips(2,"保存失败","请重新输入");
                 }
             });
         });
@@ -171,10 +171,10 @@
                 status : '3'
             },function(res) {
                 if (res.sgin == 1){
-                    alertshow("删除成功！");
+                    alertTips(1,"","删除成功");
                     $('.offer-btn').click();
                 }else {
-                    alertshow("删除失败！");
+                    alertTips(2,"","删除失败");
                 }
             });
         });
@@ -193,10 +193,10 @@
                 status : '2'
             },function(res) {
                 if (res.retCode == 1){
-                    alertshow("删除成功！");
+                    alertTips(1,"","删除成功");
                     $('.offer-btn').click();
                 }else {
-                    alertshow("删除失败！");
+                    alertTips(2,"","删除失败");
                 }
             });
         });
@@ -218,7 +218,7 @@
                 size : bftSize
             },function(res) {
                 if (res.retCode == 1){
-                   alertshow("支付成功！");
+                   alertTips(1,"","支付成功");
                    $this.parent().parent().parent().removeClass("am-active");
                    $this.parent().parent().parent().children().first().attr("disabled", true);
                     if (dataType == 0){
@@ -244,7 +244,7 @@
                 amount : amount
             },function(res) {
                 if (res.retCode == 1){
-                    alertshow("支付成功！");
+                    alertTips(1,"","支付成功");
                     $this.parent().parent().parent().removeClass("am-active");
                     $this.parent().parent().parent().children().first().attr("disabled", true);
                     if (type == 2){
@@ -253,7 +253,7 @@
                         ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
                     }
                 }else {
-                    alertshow("支付失败，请重新支付！");
+                    alertTips(2,"支付失败","请重新支付");
                 }
             });
         });
@@ -261,10 +261,6 @@
         $("body").on("click",".adder-stn",function(){
             var $this = $(this);
             var shopName = $('#shop-name').val();
-            if (shopName.length > 20){
-                alertshow("收货人姓名太长，请修改！")
-                return;
-            }
             var phone = "";
             var phoneNumber = $('#phone-number').val();
             var areaCode = $('#area-code').val();
@@ -280,34 +276,22 @@
                 phone = phone + extensionCode;
             }
             if (phone == "" && phoneNumber == ""){
-                alertshow("请任意填写一个联系电话！");
+                alertTips(3,"编辑地址","请填写手机号或电话");
                 return;
             }
-            sendRequest("/user/saveAdder",{
+            var retCode = sendAddress({
                 localArea : $('#city-name').val(),
                 detailedAddress : $('#adder-name').val(),
                 consigneeName : shopName,
                 phoneNumber : phoneNumber,
                 landlineNumber : phone,
                 id: $('#adder-id').val()
-            },function(res) {
-                if (res.retCode == 1){
-                    window.location.reload();
-                }else {
-                    alertshow("请求失败，请重新操作！");
-                }
             });
-        });
-
-        $("body").on("click","#add-adders",function(){
-            $('#city-name').val("");
-            $('#adder-name').val("");
-            $('#shop-name').val("");
-            $('#phone-number').val("");
-            $('#adder-type').val("");
-            $('#area-code').val("");
-            $('#phone-code').val("");
-            $('#extension-code').val("");
+            if (retCode == 1){
+                window.location.reload();
+            }else {
+                alertTips(2,"服务器繁忙","请重新操作");
+            }
         });
 
         $("body").on("click",".userInfo-upsbt",function(){
@@ -333,10 +317,10 @@
                 type : 1
             },function(res) {
                 if (res.retCode == 1){
-                    alertshow("设置成功！");
+                    alertTips(1,"","操作成功");
                     ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
                 }else {
-                    alertshow("修改失败，请重新操作！");
+                    alertTips(2,"服务器繁忙","请重新操作");
                 }
             });
         });
@@ -348,10 +332,10 @@
                 status : 1
             },function(res) {
                 if (res.retCode == 1){
-                    alertshow("删除成功！");
+                    alertTips(1,"","删除成功");
                     ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
                 }else {
-                    alertshow("删除失败，请重新操作！");
+                    alertTips(2,"服务器繁忙","请重新操作");
                 }
             });
         });
@@ -426,7 +410,7 @@
             var $this = $(this);
             var mobile = $("#mobile_reg").text();
             if(mobile == ""){
-                tipshow("请填写手机号");
+                alertTips(3,"提示","请填写手机号");
                 return;
             }
             sendsms($this,mobile);

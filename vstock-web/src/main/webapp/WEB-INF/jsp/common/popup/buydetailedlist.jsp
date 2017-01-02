@@ -110,7 +110,7 @@
             <div class="am-text-left address-list am-margin-top-lg">
                 <div class="am-text-left am-margin-bottom-xs">
                     <span class="layout-font-size-20" style="color: #8D8D8D;">
-                        收货地址 <a href="javascript:;"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
+                        收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
                 <c:choose>
@@ -141,11 +141,11 @@
                                     <td class="do" style="width: 13%;">
                                         <c:choose>
                                             <c:when test="${userAddresses.type == 0}">
-                                                <a href="javascript:;" class="edit-address" style="display: none;">编辑</a>
+                                                <a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
                                                 <div><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="javascript:;" class="edit-address">编辑</a>
+                                                <a href="javascript:;" class="edit-address" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
                                                 <div style="display: none;"><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
                                             </c:otherwise>
                                         </c:choose>
@@ -209,8 +209,6 @@
             });
         });
 
-        $(".edit-address").click(function(){
-           alert("a");
-        });
+
     });
 </script>
