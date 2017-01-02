@@ -5,7 +5,7 @@
         <div class="am-modal-hd layout-font-size-30" style="font-weight: bolder; border-bottom: 1px solid #CACACA;">
             <span class="layout-font-size-30">
             <span id="up-address-title" class="layout-font-size-30">新增</span>收货地址</span>
-            <%--<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>--%>
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
         </div>
         <div class="am-modal-bd am-g">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top">
