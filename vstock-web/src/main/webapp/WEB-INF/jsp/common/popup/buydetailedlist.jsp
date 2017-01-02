@@ -239,25 +239,24 @@
                 alertTips(3,"编辑地址","请填写手机号或电话");
                 return;
             }
-            var retCode = addAddress({
+            sendRequest("/user/saveAdder",{
                 localArea : $('#city-name').val(),
                 detailedAddress : $('#adder-name').val(),
                 consigneeName : shopName,
                 phoneNumber : phoneNumber,
                 landlineNumber : phone,
                 id: $('#adder-id').val()
+            },function(res) {
+                if (res.retCode == 1){
+                    $("#adders-id").modal('close');
+                }else {
+                    alertTips(2,"服务器繁忙","请重新操作");
+                }
             });
-            if (retCode == 1){
-                window.location.reload();
-            }else {
-                alertTips(2,"服务器繁忙","请重新操作");
-            }
         });
 
         function addAddress(data){
-            sendRequest("/user/saveAdder",data,function(res) {
-                return res.retCode;
-            });
+
         }
     });
 </script>

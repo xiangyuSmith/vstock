@@ -138,7 +138,10 @@ public class UserAddressService {
             }
             record.setCreateDate(DateUtils.dateToString(new Date()));
             record.setStatus(0);
-            return this.insert(record);
+            if(insert(record) != 1){
+                return 0;
+            }
+            return record.getId();
         }else {//为修改
             record.setId(Integer.parseInt(id));
             //判断是否修改默认地址
