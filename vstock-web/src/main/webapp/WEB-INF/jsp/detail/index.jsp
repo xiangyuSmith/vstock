@@ -38,6 +38,7 @@
         <div class="am-g am-u-md-12 am-show-lg-only">
             <span class="str-title-font" style="font-weight: bold;">${basicinformation.name} </span>
             <span class="str-title-font">${basicinformation.chineselogo}</span>
+            <a href="javascript:void(0);" class="assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border: solid 1px #A9A5A0; background-color: #ffffff; font-weight: lighter;" data-am-modal="{target: '#my-popup-assets',width: 440}">加入资产</a>
         </div>
         <div class="am-g">
             <div class="am-u-lg-4 am-u-md-2 am-u-sm-12 am-margin-top-xl">
@@ -238,6 +239,7 @@
 
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
+<%@include file="../common/assets/assets.jsp" %>
 <%@include file="../common/popup/sellbidwindow.jsp" %>
 <%@include file="../common/popup/buyerbidwindow.jsp" %>
 <%@include file="../common/popup/salelistwindow.jsp" %>
@@ -416,6 +418,43 @@
                 }
             });
         }
+
+        $('.assets_btn_add').click(function () {
+            $('#assets_purchaseDate').val("");
+            $('#assets_money').val("");
+            $('#assets_size').val("-1");
+        });
+
+        $('.assetsAdd-btn').click(function () {
+            var assets_purchaseDate = $('#assets_purchaseDate').val();
+            var assets_money = $('#assets_money').val();
+            var assets_size = $('#assets_size').val();
+            if (assets_purchaseDate == null || assets_purchaseDate == ""){
+                alertTips(2,"","日期不能为空");
+                return;
+            }
+            if (assets_money == null || assets_money == ""){
+                alertTips(2,"","金额不能为空");
+                return;
+            }
+            if (assets_size == "-1"){
+                alertTips(2,"","请选择尺码");
+                return;
+            }
+            sendRequest("/userAssets/saveUserAssets",{
+                'money': assets_money,
+                'purchaseDate': assets_purchaseDate,
+                "bId": $('.basicinformationId').val(),
+                'size': assets_size
+            },function(res){
+                if(res.retCode == 1){
+                    alertTips(1,"","添加成功！！");
+                    loadingassetsclose();
+                }else {
+                    alertTips(2,"","添加失败！！");
+                }
+            });
+        });
     });
 </script>
 </body>

@@ -116,6 +116,10 @@ function loadingBidclose() {
     $('#my-popup-bid').modal('close');
 }
 
+function loadingassetsclose() {
+    $('#my-popup-assets').modal('close');
+}
+
 //提示弹框
 function alertshow(msg, callback) {
     $("#alert-content").html(msg);

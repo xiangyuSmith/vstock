@@ -178,6 +178,12 @@ public class UserAssetsService {
             }
         }else {
             record.setSgin(this.verification(record.getUserId(),record.getBasicinformationId(),record.getUserAssetsSize(),Double.valueOf(record.getMoney().toString())));
+            if (record.getStatus() == null || "".equals(record.getStatus())){
+                record.setStatus(0);
+            }
+            if (record.getCreateDate() == null || "".equals(record.getCreateDate())){
+                record.setCreateDate(DateUtils.getCurrentTimeAsString());
+            }
             i = this.insert(record);
         }
         return i;
