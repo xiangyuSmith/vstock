@@ -294,6 +294,12 @@
             }
         });
 
+        function sendAddress(data){
+            sendRequest("/user/saveAdder",data,function(res) {
+                return res.retCode;
+            });
+        }
+
         $("body").on("click",".userInfo-upsbt",function(){
             var $this = $(this);
             $('#city-name').val($this.parent().prev().prev().prev().prev().prev().text());
