@@ -45,17 +45,20 @@
 </div>
 <script type="text/javascript" src="/assets/js/address/jquery.address.min.js"></script>
 <script>
-    $(function(){
+    function clearAddress(){
+        $('#city-name').val("");
+        $('#adder-name').val("");
+        $('#shop-name').val("");
+        $('#phone-number').val("");
+        $('#adder-type').val("");
+        $('#area-code').val("");
+        $('#phone-code').val("");
+        $('#extension-code').val("");
+    }
 
+    $(function(){
         $("body").on("click",".add-adders",function(){
-            $('#city-name').val("");
-            $('#adder-name').val("");
-            $('#shop-name').val("");
-            $('#phone-number').val("");
-            $('#adder-type').val("");
-            $('#area-code').val("");
-            $('#phone-code').val("");
-            $('#extension-code').val("");
+            clearAddress();
         });
 
         sendRequest("/user/address",null,function(res){

@@ -119,7 +119,7 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user_account`
         (`id`,`user_id`,`uname`,`alipay_account`,`identify_no`,`identify_img_front`,`identify_img_back`,`identify_img_handheld`,`update_time`,`status`)
         VALUES(null,#{userId},#{uname},#{alipay_account},#{identify_no},#{identify_img_front},#{identify_img_back},#{identify_img_handheld},#{update_time},#{status})

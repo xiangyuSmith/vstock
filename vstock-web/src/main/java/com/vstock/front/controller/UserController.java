@@ -3,6 +3,7 @@ package com.vstock.front.controller;
 import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,9 +228,36 @@ public class UserController extends BaseController {
         String type = request.getParameter("type");
         String status = request.getParameter("status");
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
-        int retCode = userAddressService.saveAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString(),type,status,id);
-        param.put("retCode",retCode);
+        UserAddress userAddress = userAddressService.saveAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString(),type,status,id);
+        if(userAddress != null){
+            param.put("retCode",1);
+            param.put("obj",userAddress);
+            return param;
+        }
         return param;
+    }
+
+    @RequestMapping("getFindByAddress")
+    @ResponseBody
+    public ResultModel getFindByAddress(){
+        ResultModel resultModel = new ResultModel();
+        UserAddress recode = new UserAddress();
+        Integer userAddressId = getParamToInt("userAddressId");
+        String type = "1";
+        if(userAddressId == null){
+            return resultModel;
+        }
+        UserAddress record = new UserAddress();
+        record.setId(userAddressId);
+        int startPos = 1;
+        List<UserAddress> userAddressesList = userAddressService.findAllUserAddress(record,startPos,type);
+        if(userAddressesList.size() == 0){
+            return resultModel;
+        }
+        recode = userAddressesList.get(0);
+        resultModel.setData(recode);
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
     }
 
     @RequestMapping("updatePassword")
@@ -293,7 +322,7 @@ public class UserController extends BaseController {
         JSONObject jsonObject = new JSONObject(resultJson);
         int result = Integer.parseInt(jsonObject.get("result").toString());
         if(result == 1){
-            int similarity = Integer.parseInt(jsonObject.get("similarity").toString());
+            double similarity = Double.parseDouble(jsonObject.get("similarity").toString());
             if(similarity>60){
                 if(true){
                     userAccount.setUserId(suid);
@@ -303,6 +332,8 @@ public class UserController extends BaseController {
                     userAccount.setIdentify_img_front(userAccountService.uploadFile(identify_img_front,suid));
                     userAccount.setIdentify_img_back(userAccountService.uploadFile(identify_img_back,suid));
                     userAccount.setIdentify_img_handheld(identify_img_handheldUrl);
+                    userAccount.setUpdate_time(DateUtils.dateToString(new Date()));
+                    userAccount.setStatus(userAccount.ACCOUNT_TYPE_SUCCESS);
                     int addRet = userAccountService.insert(userAccount);
                     resultModel.setRetCode(addRet);
                     return resultModel;

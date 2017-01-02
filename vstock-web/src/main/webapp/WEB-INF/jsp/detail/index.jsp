@@ -255,8 +255,6 @@
             $("#my-popup-buy-detailed").addClass("xy-dimmer-detailed");
         });
 
-        $("#now-seller-buy").click();
-
         var k = 0;
 
         var loginType = $(".loginType").val();
@@ -321,17 +319,18 @@
             var amount = $("#seller_detailed_amount").val();
             var size = $("#seller_detailed_size").val();
             var type = 1;
-            box_create_trade(amount,size,type,null);
+            box_create_trade(amount,size,type,null,null);
         });
         $("#buyer_submit_trade_").click(function(){
             var amount = $("#buyer_detailed_amount").val();
             var yunFee = $.trim($("#yunFee").text());
             var size = $("#buyer_detailed_size").val();
+            var addressId = $("#new-address").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
             var type = 0;
-            box_create_trade(amount,size,type,yunFee)
+            box_create_trade(amount,size,type,yunFee,addressId)
         });
 
-        function box_create_trade(amount,size,type,yunFee){
+        function box_create_trade(amount,size,type,yunFee,addressId){
             if (amount == "" || amount == null || amount < 0) {
                 alertshow("出售金额不能为空，且必须大于0");
                 return;
@@ -342,7 +341,8 @@
                 'amount': amount,
                 'yunFee' : yunFee,
                 'size' : size,
-                'type': type
+                'type': type,
+                'addressId' : addressId
             },function(res){
                 if(res.retCode == 1){
                     if(type == 0){
@@ -366,7 +366,7 @@
                         });
                     });
                 }else{
-                    alertshow(res.retMsg);
+                    alertTips(2,"操作失败",res.retMsg);
                 }
             });
         }

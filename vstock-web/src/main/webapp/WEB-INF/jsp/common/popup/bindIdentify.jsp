@@ -153,7 +153,7 @@
         });
         switch(flag){
             case 0:
-//                loadingshow("正在提交认证信息...");
+                loadingshow("正在提交认证信息...");
                 $.ajaxFileUpload({
                     url:'/user/uploadUserProfile',
                     secureuri: false,
@@ -165,15 +165,14 @@
                     fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
                     dataType: 'json',
                     success: function (res) {
-                        alert(res);
                         loadingclose();
+                        $("#my-popup-identify").modal('close');
+                        alertTips(1,"认证结果","信息已通过审核");
                     },
                     error: function () {
                         alertTips(3,"提交失败","远程服务器正忙");
                     }
                 });
-                $("#my-popup-identify").modal('close');
-                alertTips(1,"成功","认证信息已提交");
                 break;
             case 1:
                 alertTips(3,"信息有误","请填写认证信息");

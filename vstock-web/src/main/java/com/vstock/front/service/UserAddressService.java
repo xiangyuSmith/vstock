@@ -98,7 +98,7 @@ public class UserAddressService {
      * @param id  编号
      * @return
      */
-    public int saveAdder(String localArea, String detailedAddress, String consigneeName,
+    public UserAddress saveAdder(String localArea, String detailedAddress, String consigneeName,
                            String phoneNumber, String landlineNumber, String usid, String type, String status, String id){
         UserAddress record = new UserAddress();
         record.setUserId(Integer.parseInt(usid));
@@ -140,14 +140,17 @@ public class UserAddressService {
             record.setCreateDate(DateUtils.dateToString(new Date()));
             record.setStatus(0);
             if(insert(record) != 1){
-                return 0;
+                return null;
             }
-            return record.getId();
+            return record;
         }else {//为修改
             record.setId(Integer.parseInt(id));
             //判断是否修改默认地址
             if (type == null || "".equals(type)) {
-                return this.update(record);
+                if(update(record) == 0){
+                    return null;
+                }
+                return record;
             }else {//修改默认地址
                 UserAddress userAddress = new UserAddress();
                 userAddress.setType(Integer.parseInt(type));
@@ -160,9 +163,12 @@ public class UserAddressService {
                     int i = this.update(userAddress);
                     //有默认地址修改
                     if (i > 0) {
-                        return this.update(record);
+                        if(update(record) != 1){
+                            return null;
+                        }
+                        return record;
                     }else {
-                        return i;
+                        return null;
                     }
                 }else {
                     //判断是否删除
@@ -178,22 +184,27 @@ public class UserAddressService {
                                 List<UserAddress> userAddressList = this.findAll(userAddre,page);
                                 if (userAddressList.size() > 0){
                                     userAddressList.get(0).setType(1);
-                                    return this.update(userAddressList.get(0));
+                                    if(update(userAddressList.get(0)) != 1){
+                                        return null;
+                                    }
+                                    return userAddressList.get(0);
                                 }else {
-                                    return i;
+                                    return null;
                                 }
                             }else {
-                                return i;
+                                return null;
                             }
                         }else {
-                            return i;
+                            return null;
                         }
                     }else {
-                        return this.update(record);
+                        if(update(record) != 1){
+                            return null;
+                        }
+                        return record;
                     }
                 }
             }
         }
     }
-
 }

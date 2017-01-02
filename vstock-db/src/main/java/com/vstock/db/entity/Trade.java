@@ -34,6 +34,7 @@ public class Trade implements Serializable {
     private Integer buyersId;
     private Integer bidId;
     private Integer basicinformationId;
+    private Integer userAddressId;
     private BigDecimal transactionMoney;
     private BigDecimal tradeFreight;
     private String courierNumber;
@@ -204,28 +205,39 @@ public class Trade implements Serializable {
         this.companyName = companyName;
     }
 
-    public Trade(String companyName, String buyersName, String sellerName, String bftSize, String bftName, Bid bid, String sign, String updateDate, String transactionDate, Integer status, String courierNumber, BigDecimal tradeFreight, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String tradeNo) {
-        this.companyName = companyName;
-        this.buyersName = buyersName;
-        this.sellerName = sellerName;
-        this.bftSize = bftSize;
-        this.bftName = bftName;
-        this.bid = bid;
-        this.sign = sign;
-        this.updateDate = updateDate;
-        this.transactionDate = transactionDate;
-        this.status = status;
-        this.courierNumber = courierNumber;
-        this.tradeFreight = tradeFreight;
-        this.transactionMoney = transactionMoney;
-        this.basicinformationId = basicinformationId;
-        this.bidId = bidId;
-        this.buyersId = buyersId;
-        this.sellerId = sellerId;
-        this.tradeNo = tradeNo;
+    public Integer getUserAddressId() {
+        return userAddressId;
     }
 
-    public Trade( BigDecimal tradeFreight,String bftSize,String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
+    public void setUserAddressId(Integer userAddressId) {
+        this.userAddressId = userAddressId;
+    }
+
+    public Trade(Integer id, String tradeNo, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, Integer userAddressId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, Integer status, String transactionDate, String updateDate, String sign, Bid bid, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
+        this.id = id;
+        this.tradeNo = tradeNo;
+        this.sellerId = sellerId;
+        this.buyersId = buyersId;
+        this.bidId = bidId;
+        this.basicinformationId = basicinformationId;
+        this.userAddressId = userAddressId;
+        this.transactionMoney = transactionMoney;
+        this.tradeFreight = tradeFreight;
+        this.courierNumber = courierNumber;
+        this.status = status;
+        this.transactionDate = transactionDate;
+        this.updateDate = updateDate;
+        this.sign = sign;
+        this.bid = bid;
+        this.bftName = bftName;
+        this.bftSize = bftSize;
+        this.sellerName = sellerName;
+        this.buyersName = buyersName;
+        this.companyName = companyName;
+    }
+
+    public Trade(int userAddressId,BigDecimal tradeFreight, String bftSize, String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
+        this.userAddressId = userAddressId;
         this.tradeFreight = tradeFreight;
         this.bftSize = bftSize;
         this.updateDate = updateDate;

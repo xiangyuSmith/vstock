@@ -17,6 +17,7 @@ public class UserAccount {
     private String identify_img_back;
     private String identify_img_handheld;
     private String status;
+    private String update_time;
 
     public int getId() {
         return id;
@@ -90,10 +91,18 @@ public class UserAccount {
         this.status = status;
     }
 
+    public String getUpdate_time() {
+        return update_time;
+    }
+
+    public void setUpdate_time(String update_time) {
+        this.update_time = update_time;
+    }
+
     public UserAccount() {
     }
 
-    public UserAccount(int id, String userId, String uname, String alipay_account, String identify_no, String identify_img_front, String identify_img_back, String identify_img_handheld, String status) {
+    public UserAccount(int id, String userId, String uname, String alipay_account, String identify_no, String identify_img_front, String identify_img_back, String identify_img_handheld, String status, String update_time) {
         this.id = id;
         this.userId = userId;
         this.uname = uname;
@@ -103,5 +112,6 @@ public class UserAccount {
         this.identify_img_back = identify_img_back;
         this.identify_img_handheld = identify_img_handheld;
         this.status = status;
+        this.update_time = update_time;
     }
 }

@@ -296,8 +296,8 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `trade`
-        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`transaction_date`,`update_date`,`sign`)
-        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{transactionDate},#{updateDate},#{sign})
+        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`transaction_date`,`update_date`,`sign`,`user_address_id`)
+        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{transactionDate},#{updateDate},#{sign},#{userAddressId})
     </insert>
 
     <update id="update">
