@@ -144,7 +144,7 @@
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 0}">
-                                <a href="javascript:void(0);" user-id="${userAddresses.id}" id="up-type" class="am-btn am-text-danger am-radius am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;">设为默认地址</a>
+                                <a href="javascript:void(0);" user-id="${userAddresses.id}" id="up-type" class="am-btn am-text-danger am-radius am-margin-left-sm am-margin-left-sm am-padding-left-xs am-padding-right-xs" style="font-size:14px; border: solid 1px #F25C58; background-color: #FFFFFF;">设为默认地址</a>
                             </c:if>
                         </td>
                     </tr>
