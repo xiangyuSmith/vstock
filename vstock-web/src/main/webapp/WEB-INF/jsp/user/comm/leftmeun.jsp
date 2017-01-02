@@ -279,7 +279,7 @@
                 alertTips(3,"编辑地址","请填写手机号或电话");
                 return;
             }
-            var retCode = sendAddress({
+            sendAddress({
                 localArea : $('#city-name').val(),
                 detailedAddress : $('#adder-name').val(),
                 consigneeName : shopName,
@@ -287,16 +287,15 @@
                 landlineNumber : phone,
                 id: $('#adder-id').val()
             });
-            if (retCode == 1){
-                window.location.reload();
-            }else {
-                alertTips(2,"服务器繁忙","请重新操作");
-            }
         });
 
         function sendAddress(data){
             sendRequest("/user/saveAdder",data,function(res) {
-                return res.retCode;
+                if (res.retCode == 1){
+                    window.location.reload();
+                }else {
+                    alertTips(2,"服务器繁忙","请重新操作");
+                }
             });
         }
 
@@ -304,10 +303,10 @@
             var $this = $(this);
             $('#city-name').val($this.parent().prev().prev().prev().prev().prev().text());
             $('#adder-name').val($this.parent().prev().prev().prev().prev().text());
-            $('#shop-name').val($this.parent().prev().prev().prev().prev().prev().prev().text());
-            $('#phone-number').val($this.parent().prev().prev().text());
+            $('#shop-name').val($this.parent().prev().prev().prev().prev().prev().prev().text().replace(/(^\s*)|(\s*$)/g, ""));
+            $('#phone-number').val($this.parent().prev().prev().text().replace(/(^\s*)|(\s*$)/g, ""));
             $('#adder-id').val($this.attr('user-id'));
-            var landlineNumber = $this.parent().prev().text();
+            var landlineNumber = $this.parent().prev().text().replace(/(^\s*)|(\s*$)/g, "");
             if (landlineNumber.indexOf("-")>=0){
                 var areaCode = landlineNumber.split("-");
                 $('#area-code').val(areaCode[0]);

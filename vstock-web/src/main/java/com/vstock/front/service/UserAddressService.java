@@ -130,6 +130,7 @@ public class UserAddressService {
             UserAddress whereUserAdress = new UserAddress();
             whereUserAdress.setType(1);
             whereUserAdress.setUserId(record.getUserId());
+            whereUserAdress.setStatus(0);
             UserAddress userAddress = this.findType(whereUserAdress);
             if (userAddress != null){
                 record.setType(0);
@@ -148,6 +149,7 @@ public class UserAddressService {
                 UserAddress userAddress = new UserAddress();
                 userAddress.setType(Integer.parseInt(type));
                 userAddress.setUserId(Integer.parseInt(usid));
+                userAddress.setStatus(0);
                 userAddress = this.findType(userAddress);
                 //查询是否有默认地址
                 if (userAddress.getId() != null && !"".equals(userAddress.getId())){
