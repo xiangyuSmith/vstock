@@ -287,31 +287,35 @@ public class UserController extends BaseController {
         String alipayAccount = getParam("alipayAccount");
         String uname = getParam("uname");
         String identifyNo = getParam("identifyNo");
-        String imgUrl = "";
-        int status = 0;
         String suid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         UserAccount userAccount = new UserAccount();
         MultipartRequest multipartRequest = (MultipartRequest) request;
         MultipartFile identify_img_front = multipartRequest.getFile("identify_img_front");
         MultipartFile identify_img_back = multipartRequest.getFile("identify_img_back");
         MultipartFile identify_img_handheld = multipartRequest.getFile("identify_img_handheld");
-        String identify_img_frontUrl = userAccountService.uploadFile(identify_img_front,suid);
-        String identify_img_backUrl = userAccountService.uploadFile(identify_img_back,suid);
         String identify_img_handheldUrl = userAccountService.uploadFile(identify_img_handheld,suid);
-        //TODO 调用合一道接口校验身份证
-        String  s = userAccountService.httphyd(uname,identifyNo,identify_img_frontUrl);
-        String  s1 = userAccountService.httphyd(uname,identifyNo,identify_img_frontUrl);
-        String  s2 = userAccountService.httphyd(uname,identifyNo,identify_img_frontUrl);
-        if(true){
-            //新增
-            userAccount.setUserId(suid);
-            userAccount.setAlipay_account(alipayAccount);
-            userAccount.setUname(uname);
-            userAccount.setIdentify_no(identifyNo);
-            userAccount.setIdentify_img_front(identify_img_frontUrl);
-            userAccount.setIdentify_img_back(identify_img_backUrl);
-            userAccount.setIdentify_img_handheld(identify_img_handheldUrl);
+        //调用合一道接口验证身份信息
+        String  resultJson = userAccountService.httphyd(uname,identifyNo,identify_img_handheldUrl);
+        JSONObject jsonObject = new JSONObject(resultJson);
+        int result = Integer.parseInt(jsonObject.get("result").toString());
+        if(result == 1){
+            int similarity = Integer.parseInt(jsonObject.get("similarity").toString());
+            if(similarity>60){
+                if(true){
+                    userAccount.setUserId(suid);
+                    userAccount.setAlipay_account(alipayAccount);
+                    userAccount.setUname(uname);
+                    userAccount.setIdentify_no(identifyNo);
+                    userAccount.setIdentify_img_front(userAccountService.uploadFile(identify_img_front,suid));
+                    userAccount.setIdentify_img_back(userAccountService.uploadFile(identify_img_back,suid));
+                    userAccount.setIdentify_img_handheld(identify_img_handheldUrl);
+                    int addRet = userAccountService.insert(userAccount);
+                    resultModel.setRetCode(addRet);
+                    return resultModel;
+                }
+            }
         }
+        resultModel.setRetCode(0);
         return resultModel;
     }
 }

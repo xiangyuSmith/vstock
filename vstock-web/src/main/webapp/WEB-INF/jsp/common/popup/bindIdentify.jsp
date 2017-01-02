@@ -154,24 +154,24 @@
         switch(flag){
             case 0:
 //                loadingshow("正在提交认证信息...");
-//                $.ajaxFileUpload({
-//                    url:'/user/uploadUserProfile',
-//                    secureuri: false,
-//                    data:{
-//                        uname:$("#uname").val(),
-//                        alipayAccount:$("#alipayAccount").val(),
-//                        identifyNo:$("#identifyNo").val()
-//                    },
-//                    fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
-//                    dataType: 'json',
-//                    success: function (res) {
-//                        loadingclose();
-//                        alert(res);
-//                    },
-//                    error: function () {
-//                        alertTips(3,"提交失败","远程服务器正忙");
-//                    }
-//                });
+                $.ajaxFileUpload({
+                    url:'/user/uploadUserProfile',
+                    secureuri: false,
+                    data:{
+                        uname:$("#uname").val(),
+                        alipayAccount:$("#alipayAccount").val(),
+                        identifyNo:$("#identifyNo").val()
+                    },
+                    fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
+                    dataType: 'json',
+                    success: function (res) {
+                        alert(res);
+                        loadingclose();
+                    },
+                    error: function () {
+                        alertTips(3,"提交失败","远程服务器正忙");
+                    }
+                });
                 $("#my-popup-identify").modal('close');
                 alertTips(1,"成功","认证信息已提交");
                 break;

@@ -2,6 +2,7 @@ package com.vstock.front.service;
 
 import com.vstock.db.dao.IUserAccountDao;
 import com.vstock.db.entity.UserAccount;
+import com.vstock.ext.base.BaseService;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import com.vstock.server.hydsk.Encrypt;
@@ -19,13 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class UserAccountService {
+public class UserAccountService extends BaseService{
 
     @Autowired
     IUserAccountDao userAccountDao;
-
-    @Value("${projectPath}")
-    String projectPath;
 
     public UserAccount findAccountByUid(String suid){
         UserAccount userAccount = new UserAccount();
@@ -41,14 +39,25 @@ public class UserAccountService {
         return userAccountDao.findAll(userAccount);
     }
 
+    public int insert(UserAccount userAccount){
+        return userAccountDao.insert(userAccount);
+    }
 
+
+    /**
+     * 合一道个人照片信息查询
+     * @param pname 姓名
+     * @param pdocument_no 身份证号
+     * @param imgUrl 照片地址
+     * @return
+     */
     public String httphyd(String pname,String pdocument_no,String imgUrl){
         String url = VstockConfigService.getConfig(IVstockConfigService.HYD_V_STOCK_API_URL);
         String query_company_id = VstockConfigService.getConfig(IVstockConfigService.HYD_V_STOCK_COMPANY_ID);
         String query_api_id = VstockConfigService.getConfig(IVstockConfigService.HYD_V_STOCK_API_ID);
         String query_company_orderid = VstockConfigService.getConfig(IVstockConfigService.HYD_V_STOCK_MERCHANT_KEY);
         String company_secret = VstockConfigService.getConfig(IVstockConfigService.HYD_V_STOCK_COMPANY_SECRET);
-        String pphoto = JPGToBase64.getImageBinary("D://1.jpg");
+        String pphoto = JPGToBase64.getImageBinary(projectPath+imgUrl);
         pphoto=pphoto.replaceAll("\r","").replaceAll("\n", "");
         String temp = query_company_id+"|"+query_api_id+"|"+pname+"|"+pdocument_no+"|"+pphoto+"|"+query_company_orderid+"|"+company_secret;
         String md5Sign = Encrypt.md5(temp);

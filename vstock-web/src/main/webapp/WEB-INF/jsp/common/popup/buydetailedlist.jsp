@@ -208,5 +208,9 @@
                 }
             });
         });
+
+        $(".edit-address").click(function(){
+           alert("a");
+        });
     });
 </script>
