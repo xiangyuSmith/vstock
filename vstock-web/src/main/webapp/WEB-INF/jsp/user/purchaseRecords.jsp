@@ -24,10 +24,10 @@
                     <td class="am-text-sm">${bid.bftName}</td>
                     <td class="am-text-sm">${bid.bftSize}</td>
                     <td class="am-text-sm">${bid.bidDate}</td>
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
+                    <td class="am-text-sm"><fmt:formatNumber value="${bid.bidMoney}" type="number" pattern="￥0.00"/></td>
                     <c:choose>
                         <c:when test="${not empty bid.highestBid}">
-                            <td class="am-text-sm">￥<fmt:formatNumber value="${bid.highestBid}" type="currency" pattern="#,#00.0#"/></td>
+                            <td class="am-text-sm"><fmt:formatNumber value="${bid.highestBid}" type="number" pattern="￥0.00"/></td>
                         </c:when>
                         <c:otherwise>
                             <td>--</td>
@@ -35,7 +35,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${not empty bid.highestBid}">
-                            <td class="am-text-sm">￥<fmt:formatNumber value="${bid.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
+                            <td class="am-text-sm"><fmt:formatNumber value="${bid.minimumSellingPrice}" type="number" pattern="￥0.00"/></td>
                         </c:when>
                         <c:otherwise>
                             <td>--</td>
@@ -115,7 +115,7 @@
                     <td class="am-text-sm">${trade.bftName}</td>
                     <td class="am-text-sm">${trade.bftSize}</td>
                     <td class="am-text-sm">${trade.transactionDate}</td>
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
+                    <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
                     <c:forEach items="${statusList}" var="status">
                         <c:if test="${status.id == trade.status}">
                             <td class="am-text-sm">${status.bftName}</td>

@@ -24,10 +24,10 @@
                     <td class="am-text-sm">${bid.bftName}</td>
                     <td class="am-text-sm">${bid.bftSize}</td>
                     <td class="am-text-sm">${bid.bidDate}</td>
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
+                    <td class="am-text-sm"><fmt:formatNumber value="${bid.bidMoney}" type="number" pattern="￥0.00"/></td>
                     <c:choose>
                         <c:when test="${not empty bid.highestBid}">
-                            <td class="am-text-sm">￥<fmt:formatNumber value="${bid.highestBid}" type="currency" pattern="#,#00.0#"/></td>
+                            <td class="am-text-sm"><fmt:formatNumber value="${bid.highestBid}" type="number" pattern="￥0.00"/></td>
                         </c:when>
                         <c:otherwise>
                             <td class="am-text-sm">--</td>
@@ -35,7 +35,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${not empty bid.minimumSellingPrice}">
-                            <td class="am-text-sm">￥<fmt:formatNumber value="${bid.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
+                            <td class="am-text-sm"><fmt:formatNumber value="${bid.minimumSellingPrice}" type="number" pattern="￥0.00"/></td>
                         </c:when>
                         <c:otherwise>
                             <td class="am-text-sm">--</td>
@@ -111,10 +111,10 @@
             <td class="am-text-sm">${trade.bftName}</td>
             <td class="am-text-sm">${trade.bftSize}</td>
             <td class="am-text-sm">${trade.transactionDate}</td>
-            <td class="am-text-sm">￥<fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
+            <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
             <c:choose>
                 <c:when test="${not empty trade.bid.bidBond}">
-                    <td class="am-text-sm">￥<fmt:formatNumber value="${trade.bid.bidBond}" type="currency" pattern="#,#00.0#"/></td>
+                    <td class="am-text-sm"><fmt:formatNumber value="${trade.bid.bidBond}" type="number" pattern="￥0.00"/></td>
                 </c:when>
                 <c:otherwise>
                     <td class="am-text-sm">--</td>
