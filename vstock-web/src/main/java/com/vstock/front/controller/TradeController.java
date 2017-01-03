@@ -1,32 +1,31 @@
 package com.vstock.front.controller;
 
-import com.vstock.db.entity.Bid;
-import com.vstock.db.entity.Payment;
-import com.vstock.db.entity.Trade;
-import com.vstock.db.entity.User;
+import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
-import com.vstock.front.service.BidService;
-import com.vstock.front.service.PaymentService;
-import com.vstock.front.service.TradeService;
-import com.vstock.front.service.VstockConfigService;
+import com.vstock.front.service.*;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/trade")
 public class TradeController extends BaseController{
 
+    @Autowired
+    BasicinformationService basicinformationService;
     @Autowired
     BidService bidService;
     @Autowired
@@ -113,5 +112,17 @@ public class TradeController extends BaseController{
         tradeService.update(trade);
         resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
+    }
+
+    @RequestMapping("saleRecord")
+    public String saleRecord(@Param("bid") Integer bid,ModelMap model){
+        setLastPage(0,5);
+        Trade trade = new Trade();
+        trade.setBidId(bid);
+        List<Trade> tradeList = tradeService.findAll(trade,lagePage);
+        List<Basicinformation> bList = basicinformationService.findByType(6);
+        model.put("bList",bList);
+        model.put("tradeList",tradeList);
+        return "/detail/salelist";
     }
 }

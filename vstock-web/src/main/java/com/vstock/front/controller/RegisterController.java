@@ -28,11 +28,11 @@ public class RegisterController extends BaseController{
     @ResponseBody
     public ResultModel insertUser(){
         ResultModel resultModel = new ResultModel();
-        String sendSmsCode = getParam("sendSmsCode","");
-        if(!sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
-            resultModel.setRetMsg("验证码错误");
-            return resultModel;
-        }
+//        String sendSmsCode = getParam("sendSmsCode","");
+//        if(!sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
+//            resultModel.setRetMsg("验证码错误");
+//            return resultModel;
+//        }
         String mobile = request.getParameter("mobile");
         String pwd = request.getParameter("password");
         String nick = request.getParameter("nick");

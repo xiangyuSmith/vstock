@@ -53,7 +53,7 @@
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <div class="am-input-group am-input-group-lg">
                                 <div class="am-u-md-8 am-padding-0 am-margin-0">
-                                    <input id="nick_reg" name="nick_reg" type="text" class="am-form-field" placeholder="昵称" maxlength="8" required/>
+                                    <input id="nick_reg" name="nick_reg" type="text" class="am-form-field" placeholder="昵称" maxlength="12" required/>
                                 </div>
                                 <div class="am-u-md-4 am-padding-0 am-margin-0">
                                     <span class="am-input-group-btn">
@@ -158,7 +158,7 @@
             rules: {
                 nick_reg : {
                     required: true,
-                    maxlength: 6
+                    maxlength: 12
                 },
                 mobile_reg:{
                     required: true

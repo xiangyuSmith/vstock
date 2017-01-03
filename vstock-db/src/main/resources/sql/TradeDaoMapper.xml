@@ -208,10 +208,10 @@
     </sql>
 
     <sql id="Base_Column_List">
-        t.id AS id,
+        t.id as id,
         t.seller_id as sellerId,
         t.buyers_id as buyersId,
-        t.trade_no AS tradeNo,
+        t.trade_no as tradeNo,
         t.bid_id as bidId,
         t.basicinformation_id as basicinformationId,
         t.transaction_money as transactionMoney,

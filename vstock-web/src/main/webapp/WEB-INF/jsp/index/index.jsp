@@ -98,7 +98,7 @@
     <div class="am-container-content">
         <div class="am-g am-imglist">
             <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-                <span style="font-size: 30px;font-weight: bold;color: #060606;">更多流行</span><br/>
+                <span style="font-size: 30px;font-weight: bold;color: #060606;">爆款推荐</span><br/>
                 <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">

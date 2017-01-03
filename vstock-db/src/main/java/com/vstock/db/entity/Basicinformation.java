@@ -14,6 +14,7 @@ public class Basicinformation implements Serializable {
     public final static int B_TYPE_THREE = 3; // 最高售价
     public final static int B_TYPE_FOUR = 4; // 最大涨幅
     public final static int B_TYPE_FIVE = 5; // 即将发布
+    public final static int B_TYPE_SIX = 6; // 相关推荐
 
     public final static String[] sizes = {"35","35.5","36","36.5","37","37.5","38","38.5","39","39.5","40","40.5","41","41.5","42","42.5"
     ,"43","43.5","44","44.5","45","45.5","46","46.5","47","47.5","48","48.5"};

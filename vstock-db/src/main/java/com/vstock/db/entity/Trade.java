@@ -89,7 +89,7 @@ public class Trade implements Serializable {
         return bidId;
     }
 
-    public void setBidId(Integer priceRecordId) {
+    public void setBidId(Integer bidId) {
         this.bidId = bidId;
     }
 

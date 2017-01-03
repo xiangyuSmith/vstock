@@ -113,7 +113,14 @@
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-top-xs">
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <a href="javascript:;" id="now-buyer-sell" class="am-btn am-btn-danger" data-am-modal="{target: '#my-popup-sell-detailed', width: 900, height: 520}">出售</a>
+                                <c:choose>
+                                    <c:when test="${not empty pricePeak1.highestBid}">
+                                        <a href="javascript:;" id="now-buyer-sell" class="am-btn am-btn-danger" data-am-modal="{target: '#my-popup-sell-detailed', width: 900, height: 520}">出售</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="javascript:;" class="am-btn am-btn-danger" disabled="disabled">出售</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </div>

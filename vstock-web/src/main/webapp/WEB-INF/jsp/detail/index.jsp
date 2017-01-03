@@ -16,6 +16,20 @@
         .am-table thead tr td{ text-align: center;font-size: 20px;color: #595959; border-bottom: 1px solid #ddd; }
         .am-table tbody tr td{ font-size: 18px;color: #595959; border:none;line-height: 1.8; }
         .str-title-font{ font-size: 36px;color: #2d2d2d;letter-spacing: -2px; }
+        .clickZoneName{
+            display: inline-block;
+            margin-top: 2px;
+            font-weight: 400;
+            font-family: BebasNeue;
+            overflow-y: hidden;
+            font-size: 22px;
+            line-height: 22px;
+            letter-spacing: 0.2px;
+            color: #000;
+            text-align: left;
+            width: 100%;
+        }
+        .assets_btn_add{ border: solid 1px #ccc; background-color: #fff; }
         @media ( max-width: 992px ){
             .str-sudio span{ letter-spacing: 1px; }
             .product-market-summary-wrap{ height: 75px;line-height: 75px; }
@@ -36,17 +50,19 @@
     <input class="basicinformationId" type="hidden" value="${basicinformation.id}" />
     <div class="am-container-content" style="margin-top: 4.2rem">
         <div class="am-g am-u-md-12 am-show-lg-only">
-            <span class="str-title-font" style="font-weight: bold;">${basicinformation.name} </span>
+            <span class="str-title-font" style="font-weight: bold;">
+                ${basicinformation.name}
+                <a href="javascript:void(0);" id="join-assets" class="assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg"><i class="am-icon-money am-margin-right-sm" style="color: #F97271;"></i>加入资产</a>
+                <a href="javascript:void(0);" id="join-assets-click" style="display: none;" data-am-modal="{target: '#my-popup-assets',width: 440}"></a>
+            </span>
             <span class="str-title-font"> </span>
-            <a href="javascript:void(0);" id="join-assets" class="assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border: solid 1px #A9A5A0; background-color: #ffffff; font-weight: lighter;">加入资产</a>
-            <a href="javascript:void(0);" id="join-assets-click" style="display: none;" data-am-modal="{target: '#my-popup-assets',width: 440}"></a>
         </div>
         <div class="am-g">
             <div class="am-u-lg-4 am-u-md-2 am-u-sm-12 am-margin-top-xl">
                 <div class="am-fl am-u-lg-4 am-padding-0 str-sudio">
                     <span class="layout-font-size-22">尺码</span>
                     <div style="margin-top: 15px;">
-                        <select id="choose_size" class="am-input-sm am-form-field" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 120,  maxHeight: 200}">
+                        <select id="choose_size" placeholder="请选择" data-am-selected="{btnSize: 'lg',btnWidth: 120,  maxHeight: 180}">
                             <c:choose>
                                 <c:when test="${not empty size}">
                                     <option value="${size}">${size}</option>
@@ -178,67 +194,12 @@
 </article>
 <article class="am-g product-market-summary-wrap">
     <div class="am-container-content am-text-center">
-        <span> 20周 </span><span> 最高/最低 ：</span> <span> + 1680 </span><span> - 1210 </span>
+        <span> 4周 </span><span> 最高/最低 ：</span> <span> + 1680 </span><span> - 1210 </span>
     </div>
 </article>
-<article class="am-g">
-    <div class="am-container-content" style="margin-top: 2.4rem">
-        <div class="am-u-lg-12 am-margin-bottom-lg">
-            <div class="am-text-center">
-                <p style="color:#fe5c5c;font-size: 22px;margin-top: 38px; font-size: 30px;">
-                    ${basicinformation.name} ${basicinformation.chineselogo}
-                </p>
-                <p style="color: #595959;font-size: 18px;">
-                    最后销售记录
-                </p>
-            </div>
-        </div>
-        <div>
-            <table class="am-table am-table-striped am-table-hover am-text-center">
-                <thead>
-                <tr>
-                    <td>尺码</td>
-                    <td>价格</td>
-                    <td>日期</td>
-                    <td>时间</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>7.5</td>
-                    <td>￥1530</td>
-                    <td>2016/4/20</td>
-                    <td>1:06pm</td>
-                </tr>
-                <tr>
-                    <td>7.5</td>
-                    <td>￥1530</td>
-                    <td>2016/4/20</td>
-                    <td>1:06pm</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</article>
-<article class="am-g am-margin-top-xl">
-    <div class="am-container-content">
-        <div class="am-u-lg-12">
-            <div class="am-text-center">
-                <p style="color:#fe5c5c;font-size: 28px;">
-                    相关推荐>
-                </p>
-            </div>
-        </div>
+<div id="sale_record">
 
-    </div>
-</article>
-<div  style="border-bottom: 1px solid #D6D6D6;"></div>
-<article class="am-g am-margin-bottom-xl">
-    <div class="am-container-content">
-        <img src="/assets/i/u1263.png" style="width: 100%;">
-    </div>
-</article>
+</div>
 
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
@@ -464,6 +425,15 @@
                     alertTips(2,"","添加失败！！");
                 }
             });
+        });
+
+        /** 销售记录 **/
+        function loadSaleRecord(data){
+            ajaxContent("/trade/saleRecord",data,"sale_record",0);
+        }
+
+        loadSaleRecord({
+           "bid":bId
         });
     });
 </script>
