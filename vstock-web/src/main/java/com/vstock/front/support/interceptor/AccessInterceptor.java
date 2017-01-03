@@ -1,5 +1,6 @@
 package com.vstock.front.support.interceptor;
 
+import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.User;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.front.service.UserService;
@@ -84,6 +85,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             modelAndView.addObject("resultModel",resultModel);
             modelAndView.addObject("vUser", user);
             modelAndView.addObject("configMap", configMaps);
+            modelAndView.addObject("sizes", Basicinformation.sizes);
         }
     }
 

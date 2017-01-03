@@ -165,9 +165,13 @@
                     fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
                     dataType: 'json',
                     success: function (res) {
-                        loadingclose();
-                        $("#my-popup-identify").modal('close');
-                        alertTips(1,"认证结果","信息已通过审核");
+                        $('#vstock-loading').css("display","none");
+                        if(res.retCode == 1){
+                            $("#my-popup-identify").modal('close');
+                            alertTips(1,"认证结果","信息已通过审核");
+                        }else{
+                            alertTips(3,"认证失败",res.retMsg);
+                        }
                     },
                     error: function () {
                         alertTips(3,"提交失败","远程服务器正忙");

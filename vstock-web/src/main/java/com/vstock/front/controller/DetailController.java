@@ -65,7 +65,6 @@ public class DetailController extends BaseController{
         modelMap.addAttribute("buyer_bid2",buyer_bid2);
         modelMap.addAttribute("trade",trade);
         modelMap.addAttribute("basicinformation",basicinformation);
-        modelMap.addAttribute("sizes",Basicinformation.sizes);
         modelMap.addAttribute("size",size);
         return "/detail/index";
     }

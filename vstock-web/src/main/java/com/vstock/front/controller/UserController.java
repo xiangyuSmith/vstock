@@ -320,7 +320,12 @@ public class UserController extends BaseController {
         //调用合一道接口验证身份信息
         String  resultJson = userAccountService.httphyd(uname,identifyNo,identify_img_handheldUrl);
         JSONObject jsonObject = new JSONObject(resultJson);
-        int result = Integer.parseInt(jsonObject.get("result").toString());
+        int result = 0;
+        try{
+            result = Integer.parseInt(jsonObject.get("result").toString());
+        }catch (Exception e){
+            logger.warn("hyd sign fail...");
+        }
         if(result == 1){
             double similarity = Double.parseDouble(jsonObject.get("similarity").toString());
             if(similarity>60){
@@ -340,6 +345,7 @@ public class UserController extends BaseController {
                 }
             }
         }
+        resultModel.setRetMsg(jsonObject.get("msg").toString());
         resultModel.setRetCode(0);
         return resultModel;
     }

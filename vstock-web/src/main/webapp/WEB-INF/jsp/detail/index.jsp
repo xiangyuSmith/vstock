@@ -37,8 +37,9 @@
     <div class="am-container-content" style="margin-top: 4.2rem">
         <div class="am-g am-u-md-12 am-show-lg-only">
             <span class="str-title-font" style="font-weight: bold;">${basicinformation.name} </span>
-            <span class="str-title-font">${basicinformation.chineselogo}</span>
-            <a href="javascript:void(0);" class="assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border: solid 1px #A9A5A0; background-color: #ffffff; font-weight: lighter;" data-am-modal="{target: '#my-popup-assets',width: 440}">加入资产</a>
+            <span class="str-title-font"> </span>
+            <a href="javascript:void(0);" id="join-assets" class="assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border: solid 1px #A9A5A0; background-color: #ffffff; font-weight: lighter;">加入资产</a>
+            <a href="javascript:void(0);" id="join-assets-click" style="display: none;" data-am-modal="{target: '#my-popup-assets',width: 440}"></a>
         </div>
         <div class="am-g">
             <div class="am-u-lg-4 am-u-md-2 am-u-sm-12 am-margin-top-xl">
@@ -192,16 +193,17 @@
                 </p>
             </div>
         </div>
-        <table class="am-table am-table-striped am-table-hover am-text-center">
-            <thead>
+        <div>
+            <table class="am-table am-table-striped am-table-hover am-text-center">
+                <thead>
                 <tr>
                     <td>尺码</td>
                     <td>价格</td>
                     <td>日期</td>
                     <td>时间</td>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr>
                     <td>7.5</td>
                     <td>￥1530</td>
@@ -214,8 +216,9 @@
                     <td>2016/4/20</td>
                     <td>1:06pm</td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </article>
 <article class="am-g am-margin-top-xl">
@@ -290,6 +293,13 @@
                 })
             }
         });
+        $("#join-assets").click(function(){
+            if(loginType == "false"){
+                $("#login-click").click();
+            }else{
+                $("#join-assets-click").click();
+            }
+        })
         $("#goAuthentication").click(function(){
             $("#my-popup-identify-tips").modal('close');
             $("#identify-click").click();
