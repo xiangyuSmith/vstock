@@ -6,57 +6,55 @@
     </div>
     <hr>
     <div class="am-g">
-        <form>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                    <span class="am-fr am-text-lg">退货人</span>
-                </div>
-                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                    <input type="text" class="am-input-lg am-padding-left-xs" placeholder="退货人名称"/>
-                </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                <span class="am-fr am-text-lg">退货人</span>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                    <span class="am-fr am-text-lg">收货人</span>
-                </div>
-                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                    <input type="text" class="am-input-lg am-padding-left-xs" placeholder="收货人名称"/>
-                </div>
+            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                <input type="text" name="backPerson" id="backPerson" class="am-input-lg am-padding-left-xs" placeholder="退货人名称"/>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                    <span class="am-fr am-text-lg">商品名称</span>
-                </div>
-                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                    <input type="hidden" name="btfId" id="btfId"/>
-                    <input type="text" name="btfName" id="btfName" class="am-input-lg am-padding-left-xs" placeholder="商品名称" data-am-modal="{target: '#btf-modal', width: 700}"/>
-                </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                <span class="am-fr am-text-lg">收货人</span>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                    <span class="am-fr am-text-lg">订单号</span>
-                </div>
-                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                    <input type="text" id="trade_no" class="am-input-lg am-padding-left-xs" placeholder="订单号" data-am-modal="{target: '#trade-modal', width: 700}"/>
-                </div>
+            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                <input type="text" name="consignee" id="consignee" class="am-input-lg am-padding-left-xs" placeholder="收货人名称"/>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
-                <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
-                    <span class="am-fr am-text-lg">退货原因</span>
-                </div>
-                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
-                    <textarea type="text" style="min-width: 206px;" class="am-input-lg am-padding-left-xs" placeholder="退货原因"></textarea>
-                </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                <span class="am-fr am-text-lg">商品名称</span>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top">
-                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                    <span class="am-fr">
-                        <a href="javascript: void(0);" class="am-btn am-btn-primary am-btn-lg am-margin-right">提交</a>
-                        <a href="javascript: void(0);" id="qiut-sbt" class="am-btn am-btn-danger am-btn-lg">取消</a>
-                    </span>
-                </div>
+            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                <input type="hidden" name="btfId" id="btfId"/>
+                <input type="text" name="btfName" id="btfName" class="am-input-lg am-padding-left-xs" placeholder="商品名称" data-am-modal="{target: '#btf-modal', width: 700}"/>
             </div>
-        </form>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                <span class="am-fr am-text-lg">订单号</span>
+            </div>
+            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                <input type="text" id="trade_no" name="tradeNo" class="am-input-lg am-padding-left-xs" placeholder="订单号" data-am-modal="{target: '#trade-modal', width: 700}"/>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom">
+            <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
+                <span class="am-fr am-text-lg">退货原因</span>
+            </div>
+            <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                <textarea type="text" id="reasons" name="reasons" style="min-width: 206px;" class="am-input-lg am-padding-left-xs" placeholder="退货原因"></textarea>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top">
+            <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                <span class="am-fr">
+                    <a href="javascript:void(0);"id="add-sbt" class="am-btn am-btn-primary am-btn-lg am-margin-right">提交</a>
+                    <a href="javascript:void(0);" id="qiut-sbt" class="am-btn am-btn-danger am-btn-lg">取消</a>
+                </span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -141,6 +139,20 @@
         $('#qiut-sbt').click(function () {
             history.back();
         });
+
+        $('#add-sbt').click(function () {
+            var consignee = $('#consignee').val();
+            var backPerson = $('#backPerson').val();
+            var btfName = $('#btfName').val();
+            var tradeNo = $('#trade_no').val();
+            var reasons = $('#reasons').val();
+            $.post("/backCommodity/saveBackCommodity",{
+                'consignee': consignee,
+                'btfId' : $('#btfId').val(),
+                'btfName' : $('#btfnames').val()
+            },function(res){
+            });
+        })
 
         $("body").on("click",".sbt_on",function(){
             var $th = $(this).children().first();

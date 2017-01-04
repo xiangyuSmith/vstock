@@ -27,9 +27,9 @@ public class UserAssetsController extends BaseController {
     public ResultModel saveUserAssets(){
         ResultModel resultModel = new ResultModel();
         UserAssets record = new UserAssets();
-        int userId = Integer.parseInt(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID).toString());
+        Integer userId = Integer.parseInt(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID).toString());
         Integer id = getParamToInt("id");
-        int basicinformationId = getParamToInt("bId");
+        Integer basicinformationId = getParamToInt("bId");
         String purchaseDate = getParam("purchaseDate","");
         Integer status = getParamToInt("status");
         String userAssetsSize = getParam("size");

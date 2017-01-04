@@ -2,7 +2,7 @@ $(function(){
     Highcharts.setOptions({
         timezoneOffset: -8
     });
-    $.getJSON('http://datas.org.cn/jsonp?filename=json/usdeur.json&callback=?', function (data) {
+    $.getJSON('/index/brandMarket?brand=JORDAN', function (data) {
         $('#containerA').highcharts({
             chart: {
                 type: 'line',
@@ -16,10 +16,10 @@ $(function(){
                 labels: {
                     enabled: false
                 },
-                gridLineColor:'#ADF29F',
-                lineColor:'#ADF29F',
+                gridLineColor: '#ADF29F',
+                lineColor: '#ADF29F',
                 type: 'datetime',
-                tickWidth:0,
+                tickWidth: 0,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -32,7 +32,7 @@ $(function(){
                 }
             },
             tooltip: {
-                borderColor:'#ADF29F',
+                borderColor: '#ADF29F',
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -56,10 +56,10 @@ $(function(){
                 enabled: false
             },
             exporting: {
-                enabled:false
+                enabled: false
             },
-            credits:{
-                enabled:false // 禁用版权信息
+            credits: {
+                enabled: false // 禁用版权信息
             },
             plotOptions: {
                 area: {
@@ -88,14 +88,15 @@ $(function(){
                 }
             },
             series: [{
-                color:'#ADF29F',
+                color: '#ADF29F',
                 type: 'area',
                 name: '销售总额',
                 data: data
             }]
         });
+    });
 
-
+    $.getJSON('/index/brandMarket?brand=NIKE', function (data) {
         $('#containerB').highcharts({
             chart: {
                 type: 'line',
@@ -109,10 +110,10 @@ $(function(){
                 labels: {
                     enabled: false
                 },
-                gridLineColor:'#F78181',
-                lineColor:'#F78181',
+                gridLineColor: '#F78181',
+                lineColor: '#F78181',
                 type: 'datetime',
-                tickWidth:0,
+                tickWidth: 0,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -125,7 +126,7 @@ $(function(){
                 }
             },
             tooltip: {
-                borderColor:'#F78181',
+                borderColor: '#F78181',
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -149,10 +150,10 @@ $(function(){
                 enabled: false
             },
             exporting: {
-                enabled:false
+                enabled: false
             },
-            credits:{
-                enabled:false // 禁用版权信息
+            credits: {
+                enabled: false // 禁用版权信息
             },
             plotOptions: {
                 area: {
@@ -181,14 +182,15 @@ $(function(){
                 }
             },
             series: [{
-                color:'#F78181',
+                color: '#F78181',
                 type: 'area',
                 name: '销售总额',
                 data: data
             }]
         });
+    });
 
-
+    $.getJSON('/index/brandMarket?brand=YEZZY', function (data) {
         $('#containerC').highcharts({
             chart: {
                 type: 'line',

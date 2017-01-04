@@ -1,6 +1,8 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.IVstockConfigDao;
+import com.vstock.db.entity.BasicinformationRose;
+import com.vstock.db.entity.Point;
 import com.vstock.db.entity.VstockConfig;
 import org.apache.commons.collections.MapUtils;
 import org.json.JSONObject;
@@ -20,7 +22,12 @@ public class VstockConfigService {
     @Autowired
     CityAddressService cityAddressService;
 
+    @Autowired
+    ResultDataService resultDataService;
+
     final static Map<String, String> configMap = new HashMap<>();
+
+    final static Map<String, List<Point>> brandMap = new HashMap<String, List<Point>>();
 
     static JSONObject jsonAdder = new JSONObject();
 
@@ -44,6 +51,21 @@ public class VstockConfigService {
 
     public static JSONObject getJsonAdder(){return jsonAdder;}
 
+    public static List<Point> getBrand(String key) {
+        if (brandMap.isEmpty()) {
+            throw new RuntimeException("VstockConfigService 获取市场价值数据失败");
+        }
+        return brandMap.get(key);
+    }
+
+    public static Map<String, List<Point>> getBrandMap() {
+        return brandMap;
+    }
+
+    public static void setBrandMap(String brand, List<Point> brandMarket) {
+        brandMap.put(brand,brandMarket);
+    }
+
     class YieldThread extends Thread{
         public YieldThread(String name) {
             super(name);
@@ -52,6 +74,12 @@ public class VstockConfigService {
         public void run() {
             Thread.yield();
             jsonAdder = cityAddressService.adderssAll();
+            for (String brand : BasicinformationRose.brandStr) {
+                List<Point> brad = resultDataService.brandMarket(brand);
+                if (brad != null && !"".equals(brad)) {
+                    brandMap.put(brand, brad);
+                }
+            }
         }
     }
 }

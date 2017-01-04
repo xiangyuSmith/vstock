@@ -2,6 +2,7 @@ package com.vstock.admin.service;
 
 import com.vstock.db.dao.IBackCommodityDao;
 import com.vstock.db.entity.BackCommodity;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,12 @@ public class BackCommodityService {
         if (record.getId() != null && !"".equals(record.getId())){
             return this.update(record);
         }else {
+            if (record.getStatus() == null || "".equals(record.getStatus())){
+                record.setStatus(0);
+            }
+            if (record.getCreateTime() == null || "".equals(record.getCreateTime())){
+                record.setCreateTime(DateUtils.getCurrentTimeAsString());
+            }
             return this.insert(record);
         }
     }

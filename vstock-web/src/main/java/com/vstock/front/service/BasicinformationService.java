@@ -5,10 +5,11 @@ import com.vstock.db.dao.IBasicinformationRoseDao;
 import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.Trade;
-import com.vstock.ext.util.Page;
+import com.vstock.ext.util.DateUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -99,4 +100,5 @@ public class BasicinformationService {
         }
         return resParams;
     }
+
 }

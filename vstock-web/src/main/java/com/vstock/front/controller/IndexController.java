@@ -1,14 +1,19 @@
 package com.vstock.front.controller;
 
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.BasicinformationRose;
+import com.vstock.db.entity.Point;
 import com.vstock.ext.base.BaseController;
+import com.vstock.ext.base.ResultModel;
 import com.vstock.front.service.BasicinformationService;
+import com.vstock.front.service.ResultDataService;
+import com.vstock.front.service.VstockConfigService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -21,6 +26,9 @@ public class IndexController extends BaseController{
     @Autowired
     BasicinformationService basicinformationService;
 
+    @Autowired
+    ResultDataService resultDataService;
+
     @RequestMapping
     public String index(ModelMap modelMap){
         List<Basicinformation> bList = basicinformationService.findByType(-1);
@@ -28,6 +36,28 @@ public class IndexController extends BaseController{
         modelMap.addAttribute("bList",bList);
         modelMap.addAttribute("bCount",bCount);
         return "/index/index";
+    }
+
+    @RequestMapping("brandMarket")
+    @ResponseBody
+    public List<Point> brandMarket(){
+        String brand = getParam("brand","");
+        List<Point> jsonArray = VstockConfigService.getBrand(brand);
+        return jsonArray;
+    }
+
+    @RequestMapping("timingBrandMarket")
+    @ResponseBody
+    public ResultModel timingBrandMarket(){
+        ResultModel resultModel = new ResultModel();
+        for (String brand : BasicinformationRose.brandStr) {
+            List<Point> brad = resultDataService.brandMarket(brand);
+            if (brad != null && !"".equals(brad)) {
+                VstockConfigService.setBrandMap(brand,brad);
+            }
+        }
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
     }
 
     @RequestMapping("test")

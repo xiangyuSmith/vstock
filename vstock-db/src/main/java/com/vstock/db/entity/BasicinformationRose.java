@@ -1,17 +1,20 @@
 package com.vstock.db.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class BasicinformationRose {
+
+    public static String[] brandStr = {"JORDAN","NIKE","YEZZY"};
+
     private long id;
-    private int basicinformation_id;
+    private Integer basicinformation_id;
     private String basicinformation_size;
     private BigDecimal current_market_value;
     private BigDecimal change_range;
     private BigDecimal percentage_change;
-    private int type;
-    private Date create_date;
+    private Integer type;
+    private String create_date;
 
     public long getId() {
         return id;
@@ -21,11 +24,11 @@ public class BasicinformationRose {
         this.id = id;
     }
 
-    public int getBasicinformation_id() {
+    public Integer getBasicinformation_id() {
         return basicinformation_id;
     }
 
-    public void setBasicinformation_id(int basicinformation_id) {
+    public void setBasicinformation_id(Integer basicinformation_id) {
         this.basicinformation_id = basicinformation_id;
     }
 
@@ -61,26 +64,26 @@ public class BasicinformationRose {
         this.percentage_change = percentage_change;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public Date getCreate_date() {
+    public String getCreate_date() {
         return create_date;
     }
 
-    public void setCreate_date(Date create_date) {
+    public void setCreate_date(String create_date) {
         this.create_date = create_date;
     }
 
     public BasicinformationRose() {
     }
 
-    public BasicinformationRose(long id, int basicinformation_id, String basicinformation_size, BigDecimal current_market_value, BigDecimal change_range, BigDecimal percentage_change, int type, Date create_date) {
+    public BasicinformationRose(long id, Integer basicinformation_id, String basicinformation_size, BigDecimal current_market_value, BigDecimal change_range, BigDecimal percentage_change, Integer type, String create_date) {
         this.id = id;
         this.basicinformation_id = basicinformation_id;
         this.basicinformation_size = basicinformation_size;

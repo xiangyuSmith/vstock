@@ -504,7 +504,7 @@ public class DateUtils {
     }
 
     /**
-     * 时间减去30天
+     * 时间减去day天
      *
      * @param dates
      * @return

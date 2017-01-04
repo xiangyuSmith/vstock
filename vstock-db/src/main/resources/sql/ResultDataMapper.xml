@@ -154,6 +154,9 @@
             <if test="storeName != null and storeName != ''">
                 and storeName like CONCAT('%',#{storeName,jdbcType=VARCHAR},'%')
             </if>
+            <if test="brand != null and brand != ''">
+                and brand like CONCAT('%',#{brand,jdbcType=VARCHAR},'%')
+            </if>
             <if test="productName != null and productName != ''">
                 and productName like CONCAT('%',#{productName,jdbcType=VARCHAR},'%')
             </if>
@@ -164,7 +167,7 @@
                 and transactionRecord = #{transactionRecord,jdbcType=VARCHAR}
             </if>
             <if test="createTime != null and createTime != ''">
-                and createTime = #{createTime,jdbcType=VARCHAR}
+                and createTime like CONCAT('%',#{createTime,jdbcType=VARCHAR},'%')
             </if>
         </where>
     </sql>

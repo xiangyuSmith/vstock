@@ -14,4 +14,34 @@
       ORDER BY br.create_date DESC
     </select>
 
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND br.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformation_id != null and obj.basicinformation_id != ''">
+                and br.basicinformation_id = #{obj.basicinformation_id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformation_size != null and obj.basicinformation_size != ''">
+                and br.basicinformation_size = #{obj.basicinformation_size,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.current_market_value != null and obj.current_market_value != ''">
+                and br.current_market_value = #{obj.current_market_value,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.change_range != null and obj.change_range != ''">
+                and br.change_range = #{obj.change_range,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.percentage_change != null and obj.percentage_change != ''">
+                and br.percentage_change = #{obj.percentage_change,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.type != null">
+                and br.type = #{obj.type,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.create_date != null and obj.create_date != ''">
+                and br.create_date = #{obj.create_date,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
 </mapper>
