@@ -65,11 +65,11 @@ public class UserController extends BaseController {
         Trade trade = new Trade();
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
         trade.setSellerId(bid.getUserId());
-        bid.setStatus(3);
-        if (Integer.parseInt(type) == 0) {
-            bid.setType(0);
+        bid.setStatus("3");
+        if ("0".equals(type)) {
+            bid.setType("0");
         }else {
-            bid.setType(1);
+            bid.setType("1");
             trade.setStatus(0);
         }
         int totalCount = bidService.findCount(bid);
@@ -97,11 +97,11 @@ public class UserController extends BaseController {
         Bid bid = new Bid();
         String type = request.getParameter("type");
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
-        bid.setStatus(3);
+        bid.setStatus("3");
         if ("0".equals(type)) {
-            bid.setType(0);
+            bid.setType("0");
         }else {
-            bid.setType(1);
+            bid.setType("1");
         }
         String pageNow = request.getParameter("pageNow");
         int totalCount = bidService.findCount(bid);

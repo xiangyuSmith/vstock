@@ -51,6 +51,7 @@ public class RegisterController extends BaseController{
         user.setSize(size);
         int result = userService.insertUser(user);
         if(result == 1){
+            resultModel.setRetMsg("注册成功，即将自动登录...");
             resultModel.setRetCode(ResultModel.RET_OK);
         }
         return resultModel;

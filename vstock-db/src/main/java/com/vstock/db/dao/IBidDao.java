@@ -15,6 +15,8 @@ public interface IBidDao {
     //分页查询所有
     List<Bid> findAll(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    List<Bid> findAllBid(@Param("obj")Bid record);
+
     //查询所有总数
     int findCount(@Param("obj")Bid record);
 
@@ -22,7 +24,7 @@ public interface IBidDao {
     int insert(Bid record);
 
     //修改数据
-    int update(@Param("status")int status,@Param("paymentId")int paymentId, @Param("bidMoney")BigDecimal bidMoney, @Param("invalidDate")String invalidDate, @Param("id")Integer id);
+    int update(@Param("status")String status,@Param("paymentId")int paymentId, @Param("bidMoney")BigDecimal bidMoney, @Param("invalidDate")String invalidDate, @Param("id")Integer id);
 
     //关联峰值表分页查询
     List<Bid> findAndPricePeak(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);

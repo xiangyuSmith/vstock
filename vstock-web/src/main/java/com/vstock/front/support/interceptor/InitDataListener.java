@@ -1,6 +1,7 @@
 package com.vstock.front.support.interceptor;
 
 import com.vstock.front.service.VstockConfigService;
+import com.vstock.front.support.job.QuartzInit;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class InitDataListener implements InitializingBean, ServletContextAware {
     public void setServletContext(ServletContext servletContext) {
         vstockConfigService.loadTplForexConfig();
         vstockConfigService.lodingstaAdder();
+        QuartzInit.init();
     }
 
 }

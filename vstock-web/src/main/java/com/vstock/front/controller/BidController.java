@@ -19,6 +19,7 @@ import org.springframework.web.util.WebUtils;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -39,13 +40,13 @@ public class BidController extends BaseController{
         setLastPage(0,1);
         String bName = getParam("bname");
         String size = Basicinformation.isContainsSizes(getParam("size"));
-        int type = getParamToInt("type");
+        String type = getParam("type");
         int bId = getParamToInt("bId");
         double amount = Double.valueOf(getParam("amount", "0"));
         String overdueTime = getParam("overdueTime");
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
-                ,type,new BigDecimal(10),Bid.STATUS_PENDING,DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
+                ,type,new BigDecimal(10),String.valueOf(Bid.STATUS_PENDING),DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
         if(resultBid != 0){
             resultModel.setRetCode(resultModel.RET_OK);
         }
@@ -88,7 +89,7 @@ public class BidController extends BaseController{
         bidObj.setId(bid);
         bidObj.setPaymentId(paymentId);
         bidObj.setInvalidDate(DateUtils.dateToString(new Date()));
-        bidObj.setStatus(bidObj.STATUS_INIT);
+        bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
         bidService.update(bidObj);
         resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
@@ -107,5 +108,15 @@ public class BidController extends BaseController{
         int sgin = bidService.updateBid(id,btfId,status,size,endDate,bidMoney);
         param.put("sgin",sgin);
         return param;
+    }
+
+    @RequestMapping("bidTimeis")
+    public void bidTimeis(){
+        Bid record = new Bid();
+        record.setStatus(String.valueOf(record.STATUS_PENDING));
+        List<Bid> bidlist = bidService.findAllBid(record);
+        for (Bid bid : bidlist) {
+            bid.getBidDate();
+        }
     }
 }

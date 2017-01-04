@@ -43,7 +43,7 @@ public class TradeController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         double yunFee = Double.valueOf(getParam("yunFee", "0"));
         String size = getParam("size");
-        int type = getParamToInt("type");
+        String type = getParam("type");
         int addressId = Integer.valueOf(getParam("addressId", "0"));
         Bid bid = new Bid();
         bid.setBidMoney(new BigDecimal(amount));
@@ -51,7 +51,7 @@ public class TradeController extends BaseController{
         bid.setType(type);
         //TODO 运费待加入
 //        bid.setBidFreight(new BigDecimal(yunFee));
-        bid.setStatus(Bid.STATUS_INIT);
+        bid.setStatus(String.valueOf(Bid.STATUS_INIT));
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){
             resultModel.setRetCode(0);
@@ -60,7 +60,7 @@ public class TradeController extends BaseController{
         }
         //TODO 加入订单，关联买家叫价
         Date now = new Date();
-        int status = type==0 ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
+        int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
         Trade trade = new Trade(addressId,new BigDecimal(yunFee),size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status,
                 new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bid1.getUserId(), Integer.parseInt(uid), DateFormatUtils.format(now, "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6));
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));

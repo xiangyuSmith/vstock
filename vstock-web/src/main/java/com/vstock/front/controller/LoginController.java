@@ -38,7 +38,7 @@ public class LoginController extends BaseController {
         }
         User user = userService.findUser(mobile);
         if(user == null){
-            resultModel.setRetMsg("用户不存在");
+            resultModel.setRetMsg("用户名或密码错误");
             return resultModel;
         }
         if (user.getMobile().equals(mobile) && user.getPassword().equals(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE))) {
@@ -46,7 +46,7 @@ public class LoginController extends BaseController {
             resultModel.setRetCode(ResultModel.RET_OK);
             return resultModel;
         }else{
-            resultModel.setRetMsg("密码输入错误");
+            resultModel.setRetMsg("用户名或密码错误");
         }
         return resultModel;
     }

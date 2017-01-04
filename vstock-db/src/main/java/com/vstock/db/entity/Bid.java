@@ -39,8 +39,8 @@ public class Bid implements Serializable {
     private BigDecimal bidBond;
     private BigDecimal latelyBid;
     private String termValidity;
-    private Integer status;
-    private Integer type;
+    private String status;
+    private String type;
     private String sign;
     private String bidDate;
     private String invalidDate;
@@ -53,7 +53,7 @@ public class Bid implements Serializable {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, Integer status, Integer type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation, String name) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation, String name) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -179,19 +179,19 @@ public class Bid implements Serializable {
         this.termValidity = termValidity;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -282,6 +282,13 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAllBid" parameterType="com.vstock.db.entity.Bid" resultType="com.vstock.db.entity.Bid">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
     <select id="findAndUser" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
         SELECT u.nick AS name,
         <include refid="Base_Column_List"/>

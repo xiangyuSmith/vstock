@@ -70,7 +70,7 @@
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <div class="am-input-group am-input-group-lg">
-                                <input id="mobile_reg" name="mobile_reg" class="am-form-field" type="text" placeholder="手机号码" style="border-right: 1px solid #ccc;" required/>
+                                <input id="mobile_reg" name="mobile_reg" class="am-form-field" type="text" placeholder="手机号码" maxlength="11" style="border-right: 1px solid #ccc;" required/>
                                 <span class="am-input-group-btn">
                                     <a href="javascript:;" id="sendSms" class="am-btn am-btn-default" style="font-size: 14px!important;line-height: 27px;background-color: #fff;border:none;border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;">发送验证码</a>
                                 </span>
@@ -119,9 +119,12 @@
             });
         });
         $("#prLogin").click(function(){
+            preLogin($("#mobile").val(),$.md5($("#password").val()));
+        });
+        function preLogin(mobile,pwd){
             sendRequest("/login/prLogin",{
-                'mobile':$("#mobile").val(),
-                'password':$.md5($("#password").val())
+                'mobile': mobile,
+                'password':pwd
             },function(data){
                 if(data.retCode == 1){
                     //重新加载页面
@@ -130,19 +133,15 @@
                     alertTips(2,"登录失败",data.retMsg);
                 }
             });
-        });
-
-
+        }
         function tiphide(){
             $("#tips-tab").css("display","none");
             $("#tips-text").text("");
         }
-
         function tipshow(tips){
             $("#tips-tab").css("display","inline-block");
             $("#tips-text").text(tips);
         }
-
         //校验
         $("#saveUserForm").validate({
             onsubmit:true,
@@ -196,6 +195,9 @@
                 },function(data){
                     if(data.retCode == 1){
                         alertTips(1,"注册成功",data.retMsg);
+                        setTimeout(function(){
+                            preLogin($("#mobile_reg").val(),$.md5($("#password_reg").val()));
+                        },1000);
                     }else{
                         alertTips(2,"注册失败",data.retMsg);
                     }

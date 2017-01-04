@@ -20,7 +20,7 @@ public class StatusUtil {
         for (String str : Bid.statusStr){
             Bid record = new Bid();
             String[] status = str.split(":");
-            record.setStatus(Integer.parseInt(status[0]));
+            record.setStatus(status[0]);
             record.setBftName(status[1]);
             bidList.add(record);
         }

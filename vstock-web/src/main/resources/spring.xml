@@ -10,6 +10,8 @@
 
     <import resource="spring-mvc.xml"/>
 
+    <import resource="spring-quartzs.xml"/>
+
     <context:component-scan base-package="com.vstock.front"/>
 
 </beans>

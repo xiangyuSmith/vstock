@@ -80,7 +80,7 @@
                         <div class="am-u-md-6 am-padding-0">
                             <p class="layout-font-size-18 am-margin-bottom-sm">尺码</p>
                             <div>
-                                <select id="buyer_sell_size" class="select-pom" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 80,  maxHeight: 200}">
+                                <select id="buyer_sell_size" class="select-pom" placeholder="请选择" data-am-selected="{btnWidth: 80,maxHeight: 200}">
                                     <option value=""></option>
                                     <c:forEach items="${sizes}" var="s">
                                         <option value="${s}">${s}</option>
@@ -91,7 +91,7 @@
                         <div class="am-u-md-6 am-padding-0">
                             <p class="layout-font-size-18 am-margin-bottom-sm" style="padding-left: 8px;">有效期</p>
                             <div style="padding-left: 8px;">
-                                <select id="buyer_sell_time" class="am-input-sm am-form-field select-pom" placeholder="请选择" data-am-selected="{btnSize: 'xl',btnWidth: 80,  maxHeight: 200}">
+                                <select id="buyer_sell_time" class="am-input-sm am-form-field select-pom" placeholder="请选择" data-am-selected="{btnWidth: 80}">
                                     <option value="1">1天</option>
                                     <option value="3">3天</option>
                                     <option value="5">5天</option>

@@ -40,6 +40,10 @@ public class BidService {
         return bidDao.findAll(record,page.getStartPos(),page.getPageSize());
     }
 
+    public List<Bid> findAllBid(Bid record){
+        return bidDao.findAllBid(record);
+    }
+
     /**
      * 查询所有总数
      * @param record
@@ -71,7 +75,7 @@ public class BidService {
     public int insert(Bid record){return bidDao.insert(record);}
 
     public int createBid(String bName, int uid, int bId, String size, double amount,String overdueTime,
-                         int type,BigDecimal bidBond,int status,String bidDate,String bidMd5Key){
+                         String type,BigDecimal bidBond,String status,String bidDate,String bidMd5Key){
         if(amount <= 0){
             logger.warn("叫价金额为0或小于0");
             return 0;
@@ -115,8 +119,6 @@ public class BidService {
     public boolean isBidSign(int bid,int basicinformationId,String size,double amount,String bidMd5Key){
         Bid b = new Bid();
         b.setId(bid);
-        b.setType(-1);
-        b.setStatus(-1);
         Page page = new Page();
         page.setStartPos(0);
         page.setPageSize(1);
@@ -146,7 +148,7 @@ public class BidService {
      * @param sort 排序方式 1：ASC  2：DESC
      * @return
      */
-    public Bid getHightAndMinPrice(int bid,int type,int sort, Page page){
+    public Bid getHightAndMinPrice(int bid,String type,int sort, Page page){
         Bid bids = new Bid();
         bids.setBasicinformationId(bid);
         bids.setType(type);
@@ -179,8 +181,6 @@ public class BidService {
         Bid record = new Bid();
         record.setInvalidDate(DateUtils.dateToString(new Date()));
         record.setPaymentId(-1);
-        record.setStatus(-1);
-        record.setType(-1);
         if (id != null && !"".equals(id)) {
             record.setId(Integer.parseInt(id));
          }
@@ -192,7 +192,7 @@ public class BidService {
              record.setBidMoney(bigDecimal);
         }
         if (status != null && !"".equals(status)) {
-            record.setStatus(Integer.parseInt(status));
+            record.setStatus(status);
             if (this.isBidSign(Integer.parseInt(id),Integer.parseInt(btfId),size,Double.parseDouble(bidMoney),VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY))) {
                 return this.update(record);
             }

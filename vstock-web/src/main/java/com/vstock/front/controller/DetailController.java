@@ -52,10 +52,10 @@ public class DetailController extends BaseController{
         //TODO 传递尺码时根据尺码查询最高最低价，不传尺码时查询最高最低价并获取对应尺码
         PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bid,size,1,lagePage);
         PricePeak pricePeak2 = pricePeakService.getHighestAndlowest(bid,size,2,lagePage);
-        Bid sell_bid1 = bidService.getHightAndMinPrice(bid,0,1,lagePage);
-        Bid sell_bid2 = bidService.getHightAndMinPrice(bid,0,2,lagePage);
-        Bid buyer_bid1 = bidService.getHightAndMinPrice(bid,1,1,lagePage);
-        Bid buyer_bid2 = bidService.getHightAndMinPrice(bid,1,2,lagePage);
+        Bid sell_bid1 = bidService.getHightAndMinPrice(bid,"0",1,lagePage);
+        Bid sell_bid2 = bidService.getHightAndMinPrice(bid,"0",2,lagePage);
+        Bid buyer_bid1 = bidService.getHightAndMinPrice(bid,"1",1,lagePage);
+        Bid buyer_bid2 = bidService.getHightAndMinPrice(bid,"1",2,lagePage);
         modelMap.addAttribute("resParams",resParams);
         modelMap.addAttribute("pricePeak1",pricePeak1);
         modelMap.addAttribute("pricePeak2",pricePeak2);

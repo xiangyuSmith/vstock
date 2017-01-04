@@ -16,6 +16,7 @@
         .am-table thead tr td{ text-align: center;font-size: 20px;color: #595959; border-bottom: 1px solid #ddd; }
         .am-table tbody tr td{ font-size: 18px;color: #595959; border:none;line-height: 1.8; }
         .str-title-font{ font-size: 36px;color: #2d2d2d;letter-spacing: -2px; }
+        .am-selected-btn span{ line-height: 20px; }
         .clickZoneName{
             display: inline-block;
             margin-top: 2px;
