@@ -45,23 +45,13 @@
                                 <td class="am-text-sm">--</td>
                             </c:otherwise>
                         </c:choose>
-                        <c:choose>
-                            <c:when test="${bid.status == 0}">
-                                <td class="am-text-sm">已生效</td>
-                            </c:when>
-                            <c:when test="${bid.status == 10}">
-                                <td class="am-text-sm">待付款</td>
-                            </c:when>
-                            <c:when test="${bid.status == 11}">
-                                <td class="am-text-sm">开始交易</td>
-                            </c:when>
-                            <c:when test="${bid.status == 20}">
-                                <td class="am-text-sm">交易成功</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td class="am-text-sm">已过期</td>
-                            </c:otherwise>
-                        </c:choose>
+                        <td>
+                            <c:if test="${not empty bidStatus}">
+                                <c:forEach items="${bidStatus}" var="bidStatus">
+                                    <c:if test="${bid.status == bidStatus.status}">${bidStatus.bftName}</c:if>
+                                </c:forEach>
+                            </c:if>
+                        </td>
                         <td>
                             <div class="am-dropdown" data-am-dropdown>
                                 <c:choose>

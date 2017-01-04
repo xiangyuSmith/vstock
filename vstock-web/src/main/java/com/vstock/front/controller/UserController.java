@@ -7,6 +7,7 @@ import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
+import com.vstock.server.util.StatusUtil;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,8 @@ public class UserController extends BaseController {
         List<Bid> bidList = bidService.findBid(bid,page);
         List<Trade> tradeList = tradeService.findTrade(trade,page);
         List<Trade> statusList = tradeService.status();
+        List<Bid> bidStatus = StatusUtil.bidStatus();
+        model.addAttribute("bidStatus",bidStatus);
         model.addAttribute("bidList",bidList);
         model.addAttribute("tradeList",tradeList);
         model.addAttribute("statusList",statusList);
@@ -103,7 +106,8 @@ public class UserController extends BaseController {
         String pageNow = request.getParameter("pageNow");
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,pageNow);
-        List<Bid> bidList = bidService.findAndPricePeak(bid,page);
+        List<Bid> bidList = bidService.findAndPricePeak(bid,page);List<Bid> bidStatus = StatusUtil.bidStatus();
+        model.addAttribute("bidStatus",bidStatus);
         model.addAttribute("page",page);
         model.addAttribute("type",type);
         model.addAttribute("bidList",bidList);
