@@ -8,6 +8,7 @@ public class BasicinformationRose {
     public static String[] brandStr = {"JORDAN","NIKE","YEZZY"};
 
     private long id;
+    private String brand;
     private Integer basicinformation_id;
     private String basicinformation_size;
     private BigDecimal current_market_value;
@@ -22,6 +23,14 @@ public class BasicinformationRose {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public Integer getBasicinformation_id() {
@@ -83,8 +92,9 @@ public class BasicinformationRose {
     public BasicinformationRose() {
     }
 
-    public BasicinformationRose(long id, Integer basicinformation_id, String basicinformation_size, BigDecimal current_market_value, BigDecimal change_range, BigDecimal percentage_change, Integer type, String create_date) {
+    public BasicinformationRose(long id, String brand, Integer basicinformation_id, String basicinformation_size, BigDecimal current_market_value, BigDecimal change_range, BigDecimal percentage_change, Integer type, String create_date) {
         this.id = id;
+        this.brand = brand;
         this.basicinformation_id = basicinformation_id;
         this.basicinformation_size = basicinformation_size;
         this.current_market_value = current_market_value;

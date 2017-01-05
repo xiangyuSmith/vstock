@@ -4,11 +4,13 @@ import com.vstock.db.dao.IVstockConfigDao;
 import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.Point;
 import com.vstock.db.entity.VstockConfig;
+import com.vstock.ext.util.DateUtils;
 import org.apache.commons.collections.MapUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +27,14 @@ public class VstockConfigService {
     @Autowired
     ResultDataService resultDataService;
 
+    @Autowired
+    BasiciformationRoseService basiciformationRoseService;
+
     final static Map<String, String> configMap = new HashMap<>();
 
-    final static Map<String, List<Point>> brandMap = new HashMap<String, List<Point>>();
+    final static Map<String, List<Point>> brandMap = new HashMap<>();
+
+    final static Map<String, Map<String, Object>> roesMap = new HashMap<>();
 
     static JSONObject jsonAdder = new JSONObject();
 
@@ -66,6 +73,21 @@ public class VstockConfigService {
         brandMap.put(brand,brandMarket);
     }
 
+    public static Map<String, Map<String, Object>> getRoesMap() {
+        return roesMap;
+    }
+
+    public static void setRoesMap(String brand, Map<String, Object> roes) {
+        roesMap.put(brand,roes);
+    }
+
+    public static Map<String, Object> getRoes(String key) {
+        if (brandMap.isEmpty()) {
+            throw new RuntimeException("VstockConfigService 获取市场价值数据失败");
+        }
+        return roesMap.get(key);
+    }
+
     class YieldThread extends Thread{
         public YieldThread(String name) {
             super(name);
@@ -75,8 +97,12 @@ public class VstockConfigService {
             Thread.yield();
             jsonAdder = cityAddressService.adderssAll();
             for (String brand : BasicinformationRose.brandStr) {
+                Map<String, Object> roseDegree = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(new Date(),"yyyy-MM-dd"));
+                if (roseDegree.size() > 0) {
+                    roesMap.put(brand, roseDegree);
+                }
                 List<Point> brad = resultDataService.brandMarket(brand);
-                if (brad != null && !"".equals(brad)) {
+                if (brad.size() > 0) {
                     brandMap.put(brand, brad);
                 }
             }

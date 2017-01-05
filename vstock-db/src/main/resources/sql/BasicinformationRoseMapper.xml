@@ -14,11 +14,19 @@
       ORDER BY br.create_date DESC
     </select>
 
+    <select id="findAllDate" parameterType="com.vstock.db.entity.BasicinformationRose" resultType="com.vstock.db.entity.BasicinformationRose">
+        select * from basicinformation_rose br
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
     <sql id="SearchAllByPage_Where_Clause">
         <where>
             1=1
             <if test="obj.id != null and obj.id != ''">
                 AND br.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.brand != null and obj.brand != ''">
+                and br.brand LIKE CONCAT('%',#{obj.brand,jdbcType=VARCHAR},'%')
             </if>
             <if test="obj.basicinformation_id != null and obj.basicinformation_id != ''">
                 and br.basicinformation_id = #{obj.basicinformation_id,jdbcType=INTEGER}

@@ -5,6 +5,8 @@ import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.Point;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
+import com.vstock.ext.util.DateUtils;
+import com.vstock.front.service.BasiciformationRoseService;
 import com.vstock.front.service.BasicinformationService;
 import com.vstock.front.service.ResultDataService;
 import com.vstock.front.service.VstockConfigService;
@@ -15,7 +17,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/index")
@@ -25,6 +29,9 @@ public class IndexController extends BaseController{
 
     @Autowired
     BasicinformationService basicinformationService;
+
+    @Autowired
+    BasiciformationRoseService basiciformationRoseService;
 
     @Autowired
     ResultDataService resultDataService;
@@ -54,6 +61,28 @@ public class IndexController extends BaseController{
             List<Point> brad = resultDataService.brandMarket(brand);
             if (brad != null && !"".equals(brad)) {
                 VstockConfigService.setBrandMap(brand,brad);
+            }
+        }
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
+    }
+
+    @RequestMapping("overallIncrease")
+    @ResponseBody
+    public Map<String, Object> overallIncrease(){
+        String brand = getParam("brand","");
+        Map<String, Object> resultModel = VstockConfigService.getRoes(brand);
+        return resultModel;
+    }
+
+    @RequestMapping("timingOverallIncrease")
+    @ResponseBody
+    public ResultModel timingOverallIncrease(){
+        ResultModel resultModel = new ResultModel();
+        for (String brand : BasicinformationRose.brandStr) {
+            Map<String, Object> brad = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(new Date(),"yyyy-MM-dd"));
+            if (brad != null && !"".equals(brad)) {
+                VstockConfigService.setRoesMap(brand,brad);
             }
         }
         resultModel.setRetCode(resultModel.RET_OK);
