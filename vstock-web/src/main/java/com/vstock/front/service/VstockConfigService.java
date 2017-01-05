@@ -6,6 +6,7 @@ import com.vstock.db.entity.Point;
 import com.vstock.db.entity.VstockConfig;
 import com.vstock.ext.util.DateUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.Map;
 
 @Service
 public class VstockConfigService {
+
+    final static Logger logger = Logger.getLogger(VstockConfigService.class);
 
     @Autowired
     IVstockConfigDao vstockConfigDao;
@@ -60,7 +63,7 @@ public class VstockConfigService {
 
     public static List<Point> getBrand(String key) {
         if (brandMap.isEmpty()) {
-            throw new RuntimeException("VstockConfigService 获取市场价值数据失败");
+            logger.warn("VstockConfigService 获取市场价值数据失败");
         }
         return brandMap.get(key);
     }
@@ -83,7 +86,7 @@ public class VstockConfigService {
 
     public static Map<String, Object> getRoes(String key) {
         if (brandMap.isEmpty()) {
-            throw new RuntimeException("VstockConfigService 获取市场价值数据失败");
+            logger.warn("VstockConfigService 获取市场价值数据失败");
         }
         return roesMap.get(key);
     }

@@ -39,8 +39,7 @@ public class SortsController extends BaseController{
 
     @RequestMapping
     public String index(ModelMap modelMap){
-        List<String> brandList = basicinformationService.getBrands();
-        modelMap.addAttribute("brandList",brandList);
+        modelMap.addAttribute("brandName",getParam("brandName",""));
         modelMap.addAttribute("sizes",Basicinformation.sizes);
         modelMap.addAttribute("productName",getParam("productName"));
         return "/sorts/index";

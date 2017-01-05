@@ -48,12 +48,13 @@ public class Bid implements Serializable {
     private BigDecimal minimumSellingPrice;
     private Basicinformation basicinformation;
     private String name;
+    private User user;
 
     public Bid() {
         super();
     }
 
-    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation, String name) {
+    public Bid(Integer id, Integer userId, Integer basicinformationId, Integer paymentId, String bftName, String bftSize, BigDecimal bidMoney, BigDecimal bidFreight, BigDecimal bidBond, BigDecimal latelyBid, String termValidity, String status, String type, String sign, String bidDate, String invalidDate, BigDecimal highestBid, BigDecimal minimumSellingPrice, Basicinformation basicinformation, String name, User user) {
         this.id = id;
         this.userId = userId;
         this.basicinformationId = basicinformationId;
@@ -74,6 +75,7 @@ public class Bid implements Serializable {
         this.minimumSellingPrice = minimumSellingPrice;
         this.basicinformation = basicinformation;
         this.name = name;
+        this.user = user;
     }
 
     public Bid(Integer basicinformationId, String bftSize, BigDecimal bidMoney, Integer userId){
@@ -241,6 +243,14 @@ public class Bid implements Serializable {
 
     public String getSign() {
         return sign;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LabelDto getStatusLbl(int status) {

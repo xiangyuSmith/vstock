@@ -29,12 +29,13 @@
 <article>
     <div class="am-g am-container-content">
         <input type="hidden" id="pageStart" value="${pageStart}"/>
+        <input type="hidden" id="brandName" value="${brandName}"/>
         <div class="am-u-md-2 am-u-xs-12 am-hide-sm">
             <div style="margin-top: 56px;">
                 <div class="title">分类</div>
                 <ul id="brandClass" class="am-nav left-list">
                     <c:forEach items="${brandList}" var="brand" >
-                        <li><a href="javasript:;" class="brand-btn">${brand}</a></li>
+                        <li><a href="javasript:;" class="brand-btn<c:if test="${brandName==brand}"> active</c:if>">${brand}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -157,8 +158,14 @@
                 ajaxContent("/sorts/list",data,"box-sorts-list-ul",0);
             }
         }
-
-        load();
+        var brandName = $("#brandName").val();
+        if(brandName != "" && brandName != undefined){
+            load({
+                "brand":brandName
+            });
+        }else{
+            load();
+        }
 
         $(window).scroll( function() {
             if ($(document).scrollTop() >= (parseFloat($(document).height())-parseFloat($(window).height())-300)) {

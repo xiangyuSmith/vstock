@@ -8,9 +8,9 @@
                 <ul class="m-nav am-nav am-nav-pills am-fr">
                     <li class="am-dropdown" data-am-dropdown=""><a href="/anli.html" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle="">所有商品 <i class="am-icon-caret-down"></i></a>
                         <ul class="am-dropdown-content">
-                            <li><a href="#" rel="nofollow">分类1...</a></li>
-                            <li><a href="#" rel="nofollow">分类2...</a></li>
-                            <li><a href="#" rel="nofollow">分类3...</a></li>
+                            <c:forEach items="${brandList}" var="brand" >
+                                <li><a href="/sorts?brandName=${brand}" rel="nofollow">${brand}</a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">即将发布</a></li>

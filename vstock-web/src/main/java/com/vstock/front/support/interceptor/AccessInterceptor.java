@@ -3,6 +3,7 @@ package com.vstock.front.support.interceptor;
 import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.User;
 import com.vstock.ext.base.ResultModel;
+import com.vstock.front.service.BasicinformationService;
 import com.vstock.front.service.UserService;
 import com.vstock.front.service.VstockConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,10 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
     UserService userService;
-
     @Autowired
     VstockConfigService vstockConfigService;
-
+    @Autowired
+    BasicinformationService basicinformationService;
     @Value("${projectPath}")
     String adminrooturl;
 
@@ -76,11 +77,13 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Map<String, String> configMaps = vstockConfigService.getConfigMap();
+        List<String> brandList = basicinformationService.getBrands();
         if (modelAndView != null) {
             modelAndView.addObject("resultModel",resultModel);
             modelAndView.addObject("vUser", user);
             modelAndView.addObject("configMap", configMaps);
             modelAndView.addObject("sizes", Basicinformation.sizes);
+            modelAndView.addObject("brandList",brandList);
         }
     }
 

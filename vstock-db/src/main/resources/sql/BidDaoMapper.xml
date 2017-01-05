@@ -33,6 +33,33 @@
         </association>
     </resultMap>
 
+    <resultMap id="UserResultMap" type="com.vstock.db.entity.Bid">
+        <id property="id" column="id"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="paymentId" property="paymentId" jdbcType="INTEGER"/>
+        <result column="bftName" property="bftName" jdbcType="VARCHAR"/>
+        <result column="bftSize" property="bftSize" jdbcType="VARCHAR"/>
+        <result column="bidMoney" property="bidMoney" jdbcType="DECIMAL"/>
+        <result column="bidFreight" property="bidFreight" jdbcType="DECIMAL"/>
+        <result column="bidBond" property="bidBond" jdbcType="DECIMAL"/>
+        <result column="lately_bid" property="latelyBid" jdbcType="DECIMAL"/>
+        <result column="termValidity" property="termValidity" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
+        <result column="bidDate" property="bidDate" jdbcType="TIMESTAMP"/>
+        <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <association property="user" column="user"
+                     javaType="com.vstock.db.entity.User">
+            <id column="uid" property="id"/>
+            <result column="mobile" property="mobile"/>
+        </association>
+    </resultMap>
+
     <sql id="SelectAll_Where_Clause">
         <where>
             1=1
@@ -282,11 +309,20 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findNewAll" parameterType="com.vstock.db.entity.Bid" resultMap="UserResultMap">
+        SELECT u.mobile,
+        <include refid="Base_Column_List"/>
+        FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findAllBid" parameterType="com.vstock.db.entity.Bid" resultType="com.vstock.db.entity.Bid">
         SELECT
         <include refid="Base_Column_List"/>
         FROM bid b
         <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY b.bid_date
     </select>
 
     <select id="findAndUser" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">

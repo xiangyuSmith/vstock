@@ -16,6 +16,14 @@
         .am_news_load { max-width: 810px; margin: 0 auto; color: #d1d1d1; height: 43px; line-height: 43px; background: #fff; text-align: center; margin-top: 20px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
         .am-container-content ul li{ padding: 20px; }
+        body{font-size:12px}
+        #buyBid,#sellBid{
+            overflow:hidden;
+            height:100px;
+            width:280px;
+            position:relative;
+        }
+        ul li{ list-style-type:none; }
     </style>
 </head>
 <body>
@@ -47,9 +55,14 @@
             <div class="am-u-md-12" style="background-color: #EDFEF1;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #3fcd65;">买家</span></div>
                 <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
-                    <p>138****6859</p>
-                    <p>Adidas Yee idaBlack (2016)</p>
-                    <p>出价：2500元</p>
+                    <div id="buyBid">
+                        <ul id="buyBid1">
+                            <c:forEach items="${buyBidList}" var="buybid">
+                                <li><p><c:out value="${fn:substring(buybid.user.mobile, 0, 3)}" />****<c:out value="${fn:substring(buybid.user.mobile, 7, 11)}" /></p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
+                            </c:forEach>
+                        </ul>
+                        <ul id="buyBid2"></ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,9 +70,14 @@
             <div class="am-u-md-12" style="background-color: #FEEFEF;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #E26472;">卖家</span></div>
                 <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
-                    <p>138****6859</p>
-                    <p>Adidas Yee idaBlack (2016)</p>
-                    <p>出价：2500元</p>
+                    <div id="sellBid">
+                        <ul id="sellBid1">
+                            <c:forEach items="${sellBidList}" var="sellbid">
+                                <li><p><c:out value="${fn:substring(sellbid.user.mobile, 0, 3)}" />****<c:out value="${fn:substring(sellbid.user.mobile, 7, 11)}" /></p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
+                            </c:forEach>
+                        </ul>
+                        <ul id="sellBid2"></ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -237,6 +255,67 @@
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <script type="text/javascript">
+    window.onload=function(){
+        var speed=15;
+        var buyBid=document.getElementById("buyBid");
+        var buyBid2=document.getElementById("buyBid2");
+        var buyBid1=document.getElementById("buyBid1");
+        var sellBid=document.getElementById("sellBid");
+        var sellBid2=document.getElementById("sellBid2");
+        var sellBid1=document.getElementById("sellBid1");
+        buyBid2.innerHTML=buyBid1.innerHTML
+        sellBid2.innerHTML=sellBid1.innerHTML
+        function Marquee(){
+            if(buyBid.scrollTop>=buyBid1.offsetHeight){
+                buyBid.scrollTop=0;
+                sellBid.scrollTop=0;
+                speedNum = 0;
+                var bidhtml = "";
+                var sellhtml = "";
+                sendRequest("/index/getNewBid",null,function(res){
+                    var buyList = res.data.buyBidList;
+                    var sellList = res.data.sellBidList;
+                    for(var i = 0;i < buyList.length;i++){
+                        var mobile = buyList[i].user.mobile;
+                        var bftName = buyList[i].bftName;
+                        var bidMoney = buyList[i].bidMoney;
+                        bidhtml += '<li><p>'+mobile.substr(0,3)+'****'+mobile.substr(7,11)+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
+                    }
+                    for(var i = 0;i < sellList.length;i++){
+                        var mobile = sellList[i].user.mobile;
+                        var bftName = sellList[i].bftName;
+                        var bidMoney = sellList[i].bidMoney;
+                        sellhtml += '<li><p>'+mobile.substr(0,3)+'****'+mobile.substr(7,11)+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
+                    }
+                    buyBid1.innerHTML=bidhtml;
+                    buyBid2.innerHTML=bidhtml;
+                    sellBid1.innerHTML=sellhtml;
+                    sellBid2.innerHTML=sellhtml;
+                });
+            }else{
+                if(buyBid.scrollTop==0){
+                    buyBid.scrollTop=buyBid.scrollTop+1;
+                    sellBid.scrollTop=sellBid.scrollTop+1
+                }else{
+                    if(buyBid.scrollTop%124==0){
+                        outInterval();
+                    }else{
+                        buyBid.scrollTop=buyBid.scrollTop+1;
+                        sellBid.scrollTop=sellBid.scrollTop+1;
+                    }
+                }
+            }
+        }
+        var MyMar = setInterval(Marquee,speed)
+        function outInterval(){
+            clearInterval(MyMar);
+            setTimeout(function(){
+                buyBid.scrollTop=buyBid.scrollTop+1;
+                sellBid.scrollTop=sellBid.scrollTop+1;
+                MyMar=setInterval(Marquee,speed);
+            },1500);
+        }
+    }
     $(function(){
 
         //@懒加载

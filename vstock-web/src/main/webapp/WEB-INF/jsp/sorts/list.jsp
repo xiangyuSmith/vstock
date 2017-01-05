@@ -19,7 +19,16 @@
                 <div class="price">
                     <div class="price-line">
                         <div class="price-label" style="padding-left: 5px;">最后出价</div>
-                        <div style="font-size: 24px;">￥<fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,#00.0#"/></div>
+                        <div style="font-size: 24px;">￥
+                            <c:choose>
+                                <c:when test="${not empty bid.bid.bidMoney}">
+                                    <fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,#00.0#"/>
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </div>
             </div>

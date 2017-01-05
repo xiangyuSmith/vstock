@@ -37,6 +37,10 @@ public class BidService {
         return bidDao.findAll(record,page.getStartPos(),page.getPageSize());
     }
 
+    public List<Bid> findNewAll(Bid record, Page page){
+        return bidDao.findNewAll(record,page.getStartPos(),page.getPageSize());
+    }
+
     public List<Bid> findAllBid(Bid record){
         return bidDao.findAllBid(record);
     }

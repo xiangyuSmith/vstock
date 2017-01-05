@@ -15,6 +15,9 @@ public interface IBidDao {
     //分页查询所有
     List<Bid> findAll(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    //分页查询所有关联用户
+    List<Bid> findNewAll(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
     List<Bid> findAllBid(@Param("obj")Bid record);
 
     //查询所有总数
