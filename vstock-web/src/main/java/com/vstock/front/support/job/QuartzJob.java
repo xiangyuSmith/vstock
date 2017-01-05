@@ -27,13 +27,19 @@ public class QuartzJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         CustomJob customJob = (CustomJob)context.getMergedJobDataMap().get("scheduleJob");
         logger.info(customJob.getJobName()+"starting ...");
-        int bid_result = quartzBid();
-        int trade_result = quartzTrade();
-        if(bid_result == 0){
-            logger.warn("update bid fail ...");
+        if("trade_bid_list".equals(customJob.getJobName())){
+            //实时任务
+            int bid_result = quartzBid();
+            int trade_result = quartzTrade();
+            if(bid_result == 0){
+                logger.warn("update bid fail ...");
+            }
+            if(trade_result == 0){
+                logger.warn("update trade fail ...");
+            }
         }
-        if(trade_result == 0){
-            logger.warn("update trade fail ...");
+        if("initTimer".equals(customJob.getJobName())){
+            //TODO 每日轮询任务
         }
     }
 

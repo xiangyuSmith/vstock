@@ -24,6 +24,7 @@ public class InitDataListener implements InitializingBean, ServletContextAware {
         vstockConfigService.loadTplForexConfig();
         vstockConfigService.lodingstaAdder();
         QuartzInit.init();
+        QuartzInit.initTimer();
     }
 
 }
