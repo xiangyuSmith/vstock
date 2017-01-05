@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class BasicinformationRose {
 
-    public static String[] brandStr = {"JORDAN","NIKE","YEZZY"};
+    public static String[] brandStr = {"JORDAN","NIKE","ADIDAS"};
 
     private long id;
     private String brand;

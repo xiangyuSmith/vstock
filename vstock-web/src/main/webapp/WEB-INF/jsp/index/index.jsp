@@ -89,24 +89,24 @@
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
                 <span class="layout-font-size-26 am-padding-left-sm" id="frist_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
                 <div id="containerA" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;"></span><br/>
-                <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change"></span>
+                <span class="layout-font-size-30 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;">￥130，678</span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change">￥1，306(0.06)</span>
             </div>
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
                 <span class="layout-font-size-26 am-padding-left-sm" id="sen_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
                 <div id="containerB" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;"></span><br/>
-                <span class="layout-font-size-22 am-padding-left-sm" id="nike_change"></span>
+                <span class="layout-font-size-30 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;">￥156，835</span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm" id="nike_change">￥1，864(0.12)</span>
             </div>
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
                 <span class="layout-font-size-26 am-padding-left-sm" id="th_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
                 <div id="containerC" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;"></span><br/>
-                <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change"></span>
+                <span class="layout-font-size-30 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;">￥-6，624</span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change">￥-624(0.03)</span>
             </div>
         </div>
     </div>
@@ -366,9 +366,9 @@
         });
 
         sendRequest("/index/overallIncrease",{
-            brand : 'YEZZY'
+            brand : 'ADIDAS'
         },function(res) {
-            $('#th_brand').text("YEZZY");
+            $('#th_brand').text("ADIDAS");
             if (res) {
                 $('#yezzy_current').text(res.Current_market_value);
                 $('#yezzy_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "");

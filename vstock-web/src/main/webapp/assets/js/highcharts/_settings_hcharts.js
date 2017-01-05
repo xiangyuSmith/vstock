@@ -190,7 +190,7 @@ $(function(){
         });
     });
 
-    $.getJSON('/index/brandMarket?brand=YEZZY', function (data) {
+    $.getJSON('/index/brandMarket?brand=ADIDAS', function (data) {
         $('#containerC').highcharts({
             chart: {
                 type: 'line',
