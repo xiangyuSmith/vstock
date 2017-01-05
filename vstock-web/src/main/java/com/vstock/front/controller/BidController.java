@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.security.md.ToolMD5;
 import com.vstock.front.service.BidService;
 import com.vstock.front.service.PaymentService;
@@ -108,15 +109,5 @@ public class BidController extends BaseController{
         int sgin = bidService.updateBid(id,btfId,status,size,endDate,bidMoney);
         param.put("sgin",sgin);
         return param;
-    }
-
-    @RequestMapping("bidTimeis")
-    public void bidTimeis(){
-        Bid record = new Bid();
-        record.setStatus(String.valueOf(record.STATUS_PENDING));
-        List<Bid> bidlist = bidService.findAllBid(record);
-        for (Bid bid : bidlist) {
-            bid.getBidDate();
-        }
     }
 }

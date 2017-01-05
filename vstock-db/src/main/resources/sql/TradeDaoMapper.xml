@@ -232,6 +232,13 @@
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAllTrade" parameterType="com.vstock.db.entity.Trade" resultType="com.vstock.db.entity.Trade">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM trade t
+        <include refid="SelectAllByPage_Where_Clause"/>
+    </select>
+
     <select id="findAllDate" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
         SELECT u.nick AS sellerName, a.nick AS buyersName, b.bft_name,b.bft_size, b.bid_bond as bidBond,
         <include refid="Base_Column_List"/>
@@ -301,10 +308,15 @@
     </insert>
 
     <update id="update">
-        UPDATE `trade` SET update_date = #{updateDate,jdbcType=TIMESTAMP}
-        <if test="status != null and status != ''">
-            ,status = #{status,jdbcType=VARCHAR}
-        </if>
+        UPDATE `trade`
+        <set>
+            <if test="updateDate != null and updateDate != ''">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 

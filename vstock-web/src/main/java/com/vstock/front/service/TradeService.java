@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by administor on 2016/12/7.
- */
-@Service
+@Service("trade")
 public class TradeService {
 
     final static Logger logger = Logger.getLogger(TradeService.class);
@@ -30,6 +27,10 @@ public class TradeService {
      */
     public List<Trade> findAll(Trade record, Page page){
         return tradeDao.findAll(record,page.getStartPos(),page.getPageSize());
+    }
+
+    public List<Trade> findAllTrade(Trade record){
+        return tradeDao.findAllTrade(record);
     }
 
     /**

@@ -14,10 +14,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by administor on 2016/12/6.
- */
-@Service
+@Service("bid")
 public class BidService {
 
     final static Logger logger = Logger.getLogger(BidService.class);

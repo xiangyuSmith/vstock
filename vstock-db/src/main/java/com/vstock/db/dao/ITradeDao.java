@@ -13,6 +13,8 @@ public interface ITradeDao {
     //分页查询所有
     List<Trade> findAll(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    List<Trade> findAllTrade(@Param("obj")Trade record);
+
     //带时间区间分页查询
     List<Trade> findAllDate(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize,
                             @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
