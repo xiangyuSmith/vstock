@@ -18,7 +18,7 @@
 <header class="m-hd am-margin-bottom-0">
     <section data-am-sticky class="am-show-md-up">
         <div class="am-container" style="line-height: 30px;">
-            <a href="/index" class="v-logo am-fr"></a>
+            <%--<a href="/index" class="v-logo am-fr"></a>--%>
             <nav>
                 <ul class="m-nav x-ul am-nav-pills am-fr" style="margin:5px;">
                     <li class="am-dropdown" data-am-dropdown="">

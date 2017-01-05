@@ -4,7 +4,6 @@
     <%@include file="../layout/head.jsp" %>
     <title>首页</title>
     <style type="text/css">
-        .am-container-content{ max-width: 1000px; margin: auto; }
         .am-container-sell{ max-width: 1000px; margin: auto; }
         .am-imglist{ margin-top:50px; }
         .am_list_block { padding: 10px; background: #fff; position: relative; }
@@ -16,6 +15,7 @@
         .am_news_load { max-width: 810px; margin: 0 auto; color: #d1d1d1; height: 43px; line-height: 43px; background: #fff; text-align: center; margin-top: 20px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
         .am-container-content ul li{ padding: 20px; }
+        .m-hd{ position: absolute!important; }
         body{font-size:12px}
         #buyBid,#sellBid{
             overflow:hidden;
@@ -28,25 +28,24 @@
 </head>
 <body>
 <%@include file="../layout/top-index.jsp" %>
-<div class="get-index" style="margin-top: -80px;">
-    <div class="am-g">
+<div class="get-index">
+    <div class="am-g" style="height: 90%;">
         <div class="am-u-lg-12">
-            <div class="get-title-search">
-                <form class="am-topbar-left am-form-inline" role="search">
-                    <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;">
-                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......">
+            <div class="get-title-search" style="width: 100%;">
+                <div style="margin:0 auto;margin-bottom:30px;">
+                    <img class="logo-stock" src="/assets/i/logo_stock.png">
+                </div>
+                <form class="am-topbar-left am-form-inline" role="search" style="width: 100%;">
+                    <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 50%;">
+                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......" style="width: 100%;">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="am-u-lg-12">
-            <div class="get-title" data-am-scrollspy="{animation:'fade',repeat: true}">
-                <div class="get_font_left am-hide-sm">当前鞋库</div>
-                <div class="get_font_center" id="banner_num" >56000</div>
-                <div class="get_font_rigth am-hide-sm">双鞋</div>
-            </div>
-        </div>
+    </div>
+    <div class="">
+        <span class="layout-font-size-28" style="color: #eee;">股票式球鞋交易平台</span>
     </div>
 </div>
 <article class="am-show-lg-only">
@@ -84,29 +83,29 @@
     </div>
 </article>
 <article class="am-show-lg-only am-text-center">
-    <div style="max-width: 1000px;margin:auto;margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center" >
+    <div style="margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center am-container-content" >
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
                 <span class="layout-font-size-26 am-padding-left-sm" id="frist_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
                 <div id="containerA" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;">￥130，678</span><br/>
-                <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change">￥1，306(0.06)</span>
+                <span class="layout-font-size-30 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;"></span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change"></span>
             </div>
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
                 <span class="layout-font-size-26 am-padding-left-sm" id="sen_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
                 <div id="containerB" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;">￥156，835</span><br/>
-                <span class="layout-font-size-22 am-padding-left-sm" id="nike_change">￥1，864(0.12)</span>
+                <span class="layout-font-size-30 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;"></span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm" id="nike_change"></span>
             </div>
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
                 <span class="layout-font-size-26 am-padding-left-sm" id="th_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
                 <div id="containerC" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;">￥-6，624</span><br/>
-                <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change">￥-624(0.03)</span>
+                <span class="layout-font-size-30 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;"></span><br/>
+                <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change"></span>
             </div>
         </div>
     </div>
@@ -115,9 +114,9 @@
 <article>
     <div class="am-container-content">
         <div class="am-g am-imglist">
-            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-                <span style="font-size: 30px;font-weight: bold;color: #060606;">爆款推荐</span><br/>
-                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            <div class="am-text-center" style="border-bottom: 1px solid #ccc;">
+                <span class="am-fr" style="font-size: 30px;font-weight: bold;color: #060606;">爆款推荐</span>
+                <a href="/sorts" class="am-fr"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
@@ -254,6 +253,7 @@
 </article>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
+<script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
 <script type="text/javascript">
     window.onload=function(){
         var speed=15;
