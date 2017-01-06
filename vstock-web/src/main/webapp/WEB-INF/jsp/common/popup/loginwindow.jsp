@@ -30,7 +30,7 @@
                         <p><a href="#" class="am-text-left am-fl" style="color: #646464;">忘记密码？</a></p>
                     </div>
                     <div class="am-u-md-12" style="padding: 10px 30px 20px 30px;">
-                        <a id="prLogin" href="javascript:void(0)" class="am-btn am-btn-danger am-btn-block" style="height: 35px;line-height: 15px;">登陆</a>
+                        <a id="prLogin" href="javascript:void(0)" class="am-btn am-btn-danger am-btn-block" style="height: 35px;line-height: 15px;">登录</a>
                     </div>
                     <div class="am-u-md-12" style="padding: 10px 30px 0px 30px;">
                         <div class="am-panel-group am-margin-bottom-0" id="accordion">
@@ -114,8 +114,8 @@
 <script>
     $(function(){
         $(".login-out").click(function(){
-            sendRequest("/login/logout","",function(data){
-                window.location.reload();
+            sendRequest("/login/logout",null,function(data){
+                location.href = "/index";
             });
         });
         $("#prLogin").click(function(){

@@ -120,7 +120,7 @@
     display: inline-block;
     padding-top: 12%;
 }
-.am-container-content{ max-width: 1000px; margin: auto; }
+.am-container-content{ max-width: 1080px; margin: auto; }
 @media (max-width: 1600px){
     .get-title-search {
         display: inline-block;
@@ -136,7 +136,7 @@
         display: inline-block;
         padding-top: 13.6%;
     }
-    .am-container-content{ max-width: 1080px; margin: auto; }
+    .am-container-content{ max-width: 980px; margin: auto; }
     .get-index{
         background: url("/assets/i/banner.png") center no-repeat;
         height: 580px;
