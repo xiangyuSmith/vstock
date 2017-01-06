@@ -19,6 +19,12 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `basicinformation_rose`
+        (`id`,`basicinformation_id`,`brand`,`basicinformation_size`,`current_market_value`,`change_range`,`percentage_change`,`type`,`create_date`)
+        VALUES(null,#{basicinformation_id},#{brand},#{basicinformation_size},#{current_market_value},#{change_range},#{percentage_change},#{type},#{create_date})
+    </insert>
+
     <sql id="SearchAllByPage_Where_Clause">
         <where>
             1=1

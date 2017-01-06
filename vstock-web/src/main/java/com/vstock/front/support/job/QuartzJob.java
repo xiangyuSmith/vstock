@@ -7,6 +7,7 @@ import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.ToolSpring;
 import com.vstock.front.service.BidService;
+import com.vstock.front.service.ResultDataService;
 import com.vstock.front.service.TradeService;
 import org.apache.log4j.Logger;
 import org.quartz.Job;
@@ -22,6 +23,8 @@ public class QuartzJob implements Job {
     BidService bidService = (BidService) ToolSpring.getBean("bid");
 
     TradeService tradeService = (TradeService) ToolSpring.getBean("trade");
+
+    ResultDataService resultDataService = (ResultDataService) ToolSpring.getBean("resultData");
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -39,7 +42,8 @@ public class QuartzJob implements Job {
             }
         }
         if("initTimer".equals(customJob.getJobName())){
-            //TODO 每日轮询任务
+            //每日凌晨一点，调用涨幅表任务
+            resultDataService.insertRose();
         }
     }
 

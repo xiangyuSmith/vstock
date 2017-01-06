@@ -12,4 +12,6 @@ public interface IBasicinformationRoseDao {
 
     List<BasicinformationRose> findAllDate(@Param("obj")BasicinformationRose record);
 
+    int insert(BasicinformationRose record);
+
 }

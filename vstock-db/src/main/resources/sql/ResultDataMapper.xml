@@ -148,6 +148,9 @@
             <if test="commodityDataId != null and commodityDataId != ''">
                 and commodityDataId = #{commodityDataId,jdbcType=VARCHAR}
             </if>
+            <if test="basiciformationId != null and basiciformationId != ''">
+                AND basiciformationId = #{basiciformationId,jdbcType=VARCHAR}
+            </if>
             <if test="storeId != null and storeId != ''">
                 and storeId = #{storeId,jdbcType=VARCHAR}
             </if>

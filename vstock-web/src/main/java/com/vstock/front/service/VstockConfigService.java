@@ -100,7 +100,7 @@ public class VstockConfigService {
             Thread.yield();
             jsonAdder = cityAddressService.adderssAll();
             for (String brand : BasicinformationRose.brandStr) {
-                Map<String, Object> roseDegree = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(new Date(),"yyyy-MM-dd"));
+                Map<String, Object> roseDegree = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(DateUtils.wantToLose(new Date(),1),"yyyy-MM-dd"));
                 if (roseDegree.size() > 0) {
                     roesMap.put(brand, roseDegree);
                 }

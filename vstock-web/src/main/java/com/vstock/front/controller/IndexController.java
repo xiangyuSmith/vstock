@@ -107,7 +107,7 @@ public class IndexController extends BaseController{
     public ResultModel timingOverallIncrease(){
         ResultModel resultModel = new ResultModel();
         for (String brand : BasicinformationRose.brandStr) {
-            Map<String, Object> brad = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(new Date(),"yyyy-MM-dd"));
+            Map<String, Object> brad = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(DateUtils.wantToLose(new Date(),1),"yyyy-MM-dd"));
             if (brad != null && !"".equals(brad)) {
                 VstockConfigService.setRoesMap(brand,brad);
             }
@@ -118,6 +118,7 @@ public class IndexController extends BaseController{
 
     @RequestMapping("test")
     public String test(){
+        resultDataService.insertRose();
         return "/index/test";
     }
 

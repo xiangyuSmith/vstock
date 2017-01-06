@@ -26,9 +26,8 @@ public class QuartzInit {
         job.setJobName("initTimer");
         job.setJobGroup("b_rose_id");
         job.setJobStatus(1);
-        //TODO 时间更新
-//        job.setCronExpression("0/5 * * * * ?");
-//        quartzOvr(job);
+        job.setCronExpression("0 0 1 * * ?");
+        quartzOvr(job);
     }
 
     private static void quartzOvr(CustomJob job){
