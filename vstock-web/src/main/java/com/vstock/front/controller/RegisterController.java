@@ -42,6 +42,11 @@ public class RegisterController extends BaseController{
             resultModel.setRetMsg("注册密码不能为空");
             return resultModel;
         }
+        User isuser = userService.findUser(mobile);
+        if(isuser != null){
+            resultModel.setRetMsg("手机号已存在");
+            return resultModel;
+        }
         String salt = MD5Util.getSha(mobile + pwd + nowTime);
         User user = new User();
         user.setMobile(mobile);

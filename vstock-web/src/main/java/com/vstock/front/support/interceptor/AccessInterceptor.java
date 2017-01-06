@@ -57,6 +57,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         // 退出的话直接处理掉
         if (uri.equals("/login/logout")) {
             WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, null);
+            WebUtils.setSessionAttribute(request, User.SESSION_USER, null);
             resultModel.setRelogin(false);
             user = null;
         }
@@ -65,6 +66,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             resultModel.setRelogin(true);
             uid = String.valueOf(suid);
             user = userService.findById(uid);
+            WebUtils.setSessionAttribute(request, User.SESSION_USER, user);
         }else{
             resultModel.setRelogin(false);
             if(checkNotNeedLogin(uri)){
@@ -78,9 +80,10 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Map<String, String> configMaps = vstockConfigService.getConfigMap();
         List<String> brandList = basicinformationService.getBrands();
+        User usersnow = (User)WebUtils.getSessionAttribute(request, User.SESSION_USER);
         if (modelAndView != null) {
             modelAndView.addObject("resultModel",resultModel);
-            modelAndView.addObject("vUser", user);
+            modelAndView.addObject("vUser", usersnow);
             modelAndView.addObject("configMap", configMaps);
             modelAndView.addObject("sizes", Basicinformation.sizes);
             modelAndView.addObject("brandList",brandList);

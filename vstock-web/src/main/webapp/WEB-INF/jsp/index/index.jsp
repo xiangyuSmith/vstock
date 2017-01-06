@@ -16,6 +16,9 @@
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
         .am-container-content ul li{ padding: 20px; }
         .m-hd{ position: absolute!important; }
+        .index-icon{ display: inline-block;width: 50px;height: 45px; }
+        #sellBid ul li p{ font-size: 14px;}
+        #buyBid ul li p{ font-size: 14px;}
         body{font-size:12px}
         #buyBid,#sellBid{
             overflow:hidden;
@@ -57,7 +60,7 @@
                     <div id="buyBid">
                         <ul id="buyBid1">
                             <c:forEach items="${buyBidList}" var="buybid">
-                                <li><p><c:out value="${fn:substring(buybid.user.mobile, 0, 3)}" />****<c:out value="${fn:substring(buybid.user.mobile, 7, 11)}" /></p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
+                                <li><p><c:out value="${fn:substring(buybid.user.mobile, 0, 3)}" />****<c:out value="${fn:substring(buybid.user.mobile, 7, 11)}" /></p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
                             </c:forEach>
                         </ul>
                         <ul id="buyBid2"></ul>
@@ -109,14 +112,14 @@
             </div>
         </div>
     </div>
-
 </article>
 <article>
     <div class="am-container-content">
         <div class="am-g am-imglist">
-            <div class="am-text-center" style="border-bottom: 1px solid #ccc;">
-                <span class="am-fr" style="font-size: 30px;font-weight: bold;color: #060606;">爆款推荐</span>
-                <a href="/sorts" class="am-fr"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -50px 6px;"></span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">爆款推荐</span>
+                <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
@@ -140,9 +143,10 @@
             </ul>
         </div>
         <div class="am-g am-imglist">
-            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-                <span style="font-size: 30px;font-weight: bold;color: #060606;">最低卖价</span><br/>
-                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -115px 6px;"></span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最低卖价</span>
+                <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
@@ -166,9 +170,10 @@
             </ul>
         </div>
         <div class="am-g am-imglist">
-            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-                <span style="font-size: 30px;font-weight: bold;color: #060606;">最高叫价</span><br/>
-                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -180px 6px;"></span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最高叫价</span>
+                <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
@@ -192,9 +197,10 @@
             </ul>
         </div>
         <div class="am-g am-imglist">
-            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-                <span style="font-size: 30px;font-weight: bold;color: #060606;">最大涨幅</span><br/>
-                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -245px 6px;"></span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最大涨幅</span>
+                <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
@@ -219,9 +225,10 @@
             </ul>
         </div>
         <div class="am-g am-imglist">
-            <div class="am-text-center" data-am-scrollspy="{animation: 'slide-right', repeat: false}">
-                <span style="font-size: 30px;font-weight: bold;color: #060606;">即将发布</span><br/>
-                <a href="/sorts"><span style="font-size: 18px;color: #060606;">了解更多 ></span></a>
+            <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -305px 6px;"></span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">即将发布</span>
+                <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
@@ -317,34 +324,6 @@
         }
     }
     $(function(){
-
-        //@懒加载
-        $("img.am_img").lazyload();
-        $("a.am_img_bg").lazyload({
-            effect : 'fadeIn'
-        });
-
-        //@首页 数字跳动
-        var options = {
-            useEasing : true,
-            useGrouping : true,
-            separator : '',
-            decimal : '.',
-            prefix : '',
-            suffix : ''
-        };
-        var banner_num = new CountUp("banner_num", 56000, 56214, 0, 5, options);
-        banner_num.start();
-
-        document.onkeydown = function(e){
-            if($("#index_search").val() != "" && $("#index_search").val() != undefined){
-                var ev = document.all ? window.event : e;
-                if(ev.keyCode==13) {
-                    location.href = "sort?productName="+$("#index_search").val();
-                }
-            }
-        }
-
         sendRequest("/index/overallIncrease",{
             brand : 'JORDAN'
         },function(res) {
@@ -374,6 +353,28 @@
                 $('#yezzy_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "");
             }
         });
+        $("img.am_img").lazyload();
+        $("a.am_img_bg").lazyload({
+            effect : 'fadeIn'
+        });
+        var options = {
+            useEasing : true,
+            useGrouping : true,
+            separator : '',
+            decimal : '.',
+            prefix : '',
+            suffix : ''
+        };
+        document.onkeydown = function(e){
+            if($("#index_search").val() != "" && $("#index_search").val() != undefined){
+                var ev = document.all ? window.event : e;
+                if(ev.keyCode==13) {
+                    location.href = "sort?productName="+$("#index_search").val();
+                }
+            }
+        };
+//        var banner_num = new CountUp("banner_num", 56000, 56214, 0, 5, options);
+//        banner_num.start();
     });
 </script>
 </body>

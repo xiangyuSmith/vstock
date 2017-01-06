@@ -4,7 +4,6 @@
 <script src="${ctx}/assets/js/jquery.min.js"></script><!-- PRE_WINDOW -->
 <script src="${ctx}/assets/js/amazeui.min.js"></script>
 <script src="${ctx}/assets/js/md5.min.js"></script>
-<script src="${ctx}/assets/js/echarts-all.js"></script>
 <script src="${ctx}/assets/js/countUp.min.js"></script>
 <script src="${ctx}/assets/js/amazeui.lazyload.min.js"></script>
 <script src="${ctx}/assets/js/echo.min.js"></script>
