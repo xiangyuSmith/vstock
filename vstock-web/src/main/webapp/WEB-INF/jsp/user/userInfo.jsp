@@ -98,7 +98,7 @@
         <caption style="border-bottom: 1px solid #CACACA;">
             <div style="float: left; display: block;width: 66px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -665px -18px;"></div>
             <b class="layout-font-size-26 am-fl am-margin-left-sm">收货信息</b>
-            <a href="javascript:void(0);" class="add-adders am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">添加新地址</a>
+            <a href="javascript:void(0);" class="add-adders am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">添加新地址</a>
         </caption>
         <tbody>
             <c:if test="${not empty userAddressesList}">

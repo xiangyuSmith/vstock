@@ -114,95 +114,97 @@
 </div>
 <script src="/assets/js/ajaxfileupload.js"></script>
 <script>
-    $("#identify_img_front").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        if (objUrl) {
-            $("#identify_front").attr("src", objUrl) ;
-            $(".clickImg-upload").eq(0).css("display","none");
-        }
-    });
-    $("#identify_img_back").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        if (objUrl) {
-            $("#identify_back").attr("src", objUrl) ;
-            $(".clickImg-upload").eq(1).css("display","none");
-        }
-    });
-    $("#identify_img_handheld").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        if (objUrl) {
-            $("#identify_handheld").attr("src", objUrl) ;
-            $(".clickImg-upload").eq(2).css("display","none");
-        }
-    });
+    $(function(){
+        $("#identify_img_front").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                $("#identify_front").attr("src", objUrl) ;
+                $(".clickImg-upload").eq(0).css("display","none");
+            }
+        });
+        $("#identify_img_back").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                $("#identify_back").attr("src", objUrl) ;
+                $(".clickImg-upload").eq(1).css("display","none");
+            }
+        });
+        $("#identify_img_handheld").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                $("#identify_handheld").attr("src", objUrl) ;
+                $(".clickImg-upload").eq(2).css("display","none");
+            }
+        });
 
-    $("#submit_userAccount").click(function(){
-        var flag = 0;
-        $(".bg-uoload-file").each(function(){
-            var $this = $(this);
-            if($this.val() == ""){
-                flag = 2;
-            }
-        });
-        $(".input-text-required").each(function(){
-            var $this = $(this);
-            if($this.val() == ""){
-                flag = 1;
-                $this.css("border","1px solid #ff9335");
-            }
-        });
-        switch(flag){
-            case 0:
-                loadingshow("正在提交认证信息...");
-                $.ajaxFileUpload({
-                    url:'/user/uploadUserProfile',
-                    secureuri: false,
-                    data:{
-                        uname:$("#uname").val(),
-                        alipayAccount:$("#alipayAccount").val(),
-                        identifyNo:$("#identifyNo").val()
-                    },
-                    fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
-                    dataType: 'json',
-                    success: function (res) {
-                        $('#vstock-loading').css("display","none");
-                        if(res.retCode == 1){
-                            $("#my-popup-identify").modal('close');
-                            alertTips(1,"认证结果","信息已通过审核");
-                        }else{
-                            alertTips(3,"认证失败",res.retMsg);
+        $("#submit_userAccount").click(function(){
+            var flag = 0;
+            $(".bg-uoload-file").each(function(){
+                var $this = $(this);
+                if($this.val() == ""){
+                    flag = 2;
+                }
+            });
+            $(".input-text-required").each(function(){
+                var $this = $(this);
+                if($this.val() == ""){
+                    flag = 1;
+                    $this.css("border","1px solid #ff9335");
+                }
+            });
+            switch(flag){
+                case 0:
+                    loadingshow("正在提交认证信息...");
+                    $.ajaxFileUpload({
+                        url:'/user/uploadUserProfile',
+                        secureuri: false,
+                        data:{
+                            uname:$("#uname").val(),
+                            alipayAccount:$("#alipayAccount").val(),
+                            identifyNo:$("#identifyNo").val()
+                        },
+                        fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
+                        dataType: 'json',
+                        success: function (res) {
+                            $('#vstock-loading').css("display","none");
+                            if(res.retCode == 1){
+                                $("#my-popup-identify").modal('close');
+                                alertTips(1,"认证结果","信息已通过审核");
+                            }else{
+                                alertTips(3,"认证失败",res.retMsg);
+                            }
+                        },
+                        error: function () {
+                            alertTips(3,"提交失败","远程服务器正忙");
                         }
-                    },
-                    error: function () {
-                        alertTips(3,"提交失败","远程服务器正忙");
-                    }
-                });
-                break;
-            case 1:
-                alertTips(3,"信息有误","请填写认证信息");
-                break;
-            case 2:
-                alertTips(3,"信息有误","请上传身份证照片");
-                break;
-            default:
-                break;
+                    });
+                    break;
+                case 1:
+                    alertTips(3,"信息有误","请填写认证信息");
+                    break;
+                case 2:
+                    alertTips(3,"信息有误","请上传身份证照片");
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        $(".input-text-required").focus(function(){
+            $(this).css("border","1px solid #ccc");
+        });
+
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
         }
     });
-
-    $(".input-text-required").focus(function(){
-        $(this).css("border","1px solid #ccc");
-    });
-
-    //建立一個可存取到該file的url
-    function getObjectURL(file) {
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
-        }
-        return url ;
-    }
 </script>

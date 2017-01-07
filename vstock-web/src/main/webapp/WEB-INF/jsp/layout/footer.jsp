@@ -39,7 +39,7 @@
         </section>
         <section class="am-g m-footer-container" style="height: 30px;">
             <section class="am-u-sm-12 am-u-md-12">
-                <span class="layout-font-size-14" style="color: #9f9fa0;">沪ICP备14051504号-4</span>
+                <span class="layout-font-size-14" style="color: #9f9fa0;">Copyright 2017 BOGE | 沪ICP备14051504号-4</span>
             </section>
         </section>
     </div>

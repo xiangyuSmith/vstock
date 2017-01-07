@@ -54,9 +54,22 @@ public class TradeController extends BaseController{
         bid.setStatus(String.valueOf(Bid.STATUS_INIT));
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){
-            resultModel.setRetCode(0);
             resultModel.setRetMsg("未找到叫价记录");
             return resultModel;
+        }
+        if(String.valueOf(bid1.getUserId()).equals(uid)){
+            if("1".equals(type)){
+                resultModel.setRetMsg("不能出售自己叫价的鞋子");
+            }else{
+                resultModel.setRetMsg("不能购买自己出价的鞋子");
+            }
+            return resultModel;
+        }
+        if("0".equals(type)){
+            if(addressId == 0){
+                resultModel.setRetMsg("您还没有设置收货地址哦~");
+                return resultModel;
+            }
         }
         //TODO 加入订单，关联买家叫价
         Date now = new Date();

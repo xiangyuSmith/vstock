@@ -39,7 +39,7 @@
                     <img class="logo-stock" src="/assets/i/logo_stock.png">
                 </div>
                 <form class="am-topbar-left am-form-inline" role="search" style="width: 100%;">
-                    <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 50%;">
+                    <div id="index_search_div" class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 50%;">
                         <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......" style="width: 100%;">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
                     </div>
@@ -320,7 +320,7 @@
                 buyBid.scrollTop=buyBid.scrollTop+1;
                 sellBid.scrollTop=sellBid.scrollTop+1;
                 MyMar=setInterval(Marquee,speed);
-            },1500);
+            },5000);
         }
     }
     $(function(){
@@ -373,8 +373,15 @@
                 }
             }
         };
-//        var banner_num = new CountUp("banner_num", 56000, 56214, 0, 5, options);
-//        banner_num.start();
+
+    });
+    $(window).scroll(function () {
+        var a = document.getElementById("index_search_div").offsetTop;
+        if (a >= $(window).scrollTop() && a < ($(window).scrollTop() + $(window).height())) {
+            $("#am-form-field").fadeOut(200);
+        }else{
+            $("#am-form-field").fadeIn(500);
+        }
     });
 </script>
 </body>

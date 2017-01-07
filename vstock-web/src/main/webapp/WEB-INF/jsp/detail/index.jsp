@@ -216,7 +216,6 @@
 <%@include file="../common/address/addersAddorEdit.jsp" %>
 <script>
     $(function(){
-
         $("#now-seller-buy").click(function(){
             $("body").addClass("xy-dimmer-active");
             $("#my-popup-buy-detailed").addClass("xy-dimmer-detailed");
@@ -261,7 +260,7 @@
             }else{
                 $("#join-assets-click").click();
             }
-        })
+        });
         $("#goAuthentication").click(function(){
             $("#my-popup-identify-tips").modal('close');
             $("#identify-click").click();

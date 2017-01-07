@@ -1,9 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-body {
-	color: #333;
-	font: 400 12px/1.6 arial, sans-serif;
-}
+::-webkit-input-placeholder{ font-size: 14px; }
 #city-select {
 	position: absolute;
 	display:none;
