@@ -408,6 +408,7 @@
                 if (res.retCode == 1){
                     window.location.reload();
                     sendRequest("/login/logout",null,function(res) {});
+                    window.location.href = "/index";
                 }
             });
         });
@@ -429,7 +430,7 @@
                 "mobile":mobile
             },function(res){
                 if(res.retCode==1){
-                    var wait = 10;
+                    var wait = 60;
                     $this.attr("disabled",true);
                     var int = setInterval(function(){
                         if (wait == 0) {
@@ -443,6 +444,7 @@
                     },1000);
                 }else{
                     alert(res.retMsg);
+                    $this.text("重新发送");
                 }
             })
         }
