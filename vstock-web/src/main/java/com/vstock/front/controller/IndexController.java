@@ -80,39 +80,11 @@ public class IndexController extends BaseController{
         return jsonArray;
     }
 
-    @RequestMapping("timingBrandMarket")
-    @ResponseBody
-    public ResultModel timingBrandMarket(){
-        ResultModel resultModel = new ResultModel();
-        for (String brand : BasicinformationRose.brandStr) {
-            List<Point> brad = resultDataService.brandMarket(brand);
-            if (brad != null && !"".equals(brad)) {
-                VstockConfigService.setBrandMap(brand,brad);
-            }
-        }
-        resultModel.setRetCode(resultModel.RET_OK);
-        return resultModel;
-    }
-
     @RequestMapping("overallIncrease")
     @ResponseBody
     public Map<String, Object> overallIncrease(){
         String brand = getParam("brand","");
         Map<String, Object> resultModel = VstockConfigService.getRoes(brand);
-        return resultModel;
-    }
-
-    @RequestMapping("timingOverallIncrease")
-    @ResponseBody
-    public ResultModel timingOverallIncrease(){
-        ResultModel resultModel = new ResultModel();
-        for (String brand : BasicinformationRose.brandStr) {
-            Map<String, Object> brad = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(DateUtils.wantToLose(new Date(),1),"yyyy-MM-dd"));
-            if (brad != null && !"".equals(brad)) {
-                VstockConfigService.setRoesMap(brand,brad);
-            }
-        }
-        resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
     }
 

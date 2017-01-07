@@ -41,6 +41,18 @@ public class ResultDataService {
     public List<ResultData> findResultDataAll(ResultData record){return resultDataDao.findResultDataAll(record);}
 
     /**
+     * 计算品牌历史价格趋势（精确到前一天）
+     */
+    public void getBrandMarket(){
+        for (String brand : BasicinformationRose.brandStr) {
+            List<Point> brad = brandMarket(brand);
+            if (brad != null && !"".equals(brad)) {
+                VstockConfigService.setBrandMap(brand,brad);
+            }
+        }
+    }
+
+    /**
      * 根据品牌获取所有总销售价格
      * @param brand
      * @return
@@ -109,6 +121,10 @@ public class ResultDataService {
         return sizePrice;
     }
 
+    /**
+     * 每天更新 每个尺码 & 每双鞋 & 涨幅数值 & 百分比
+     * @return
+     */
     public int insertRose(){
         Basicinformation record = new Basicinformation();
         DecimalFormat df = new DecimalFormat("######0.00");

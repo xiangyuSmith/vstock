@@ -64,7 +64,6 @@ public class UserController extends BaseController {
         Bid bid = new Bid();
         Trade trade = new Trade();
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
-        bid.setStatus("3");
         if ("0".equals(type)) {
             bid.setType("0");
             trade.setSellerId(bid.getUserId());

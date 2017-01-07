@@ -8,13 +8,13 @@
         </caption>
         <thead>
             <tr>
-                <th style="width: 20%;">球鞋名称</th>
-                <th>尺码</th>
-                <th>出价日期</th>
-                <th>我的出价</th>
-                <th>最高出价</th>
-                <th>最低售价</th>
-                <th>叫价状态</th>
+                <td style="width: 20%;">球鞋名称</td>
+                <td>尺码</td>
+                <td>出价日期</td>
+                <td>我的出价</td>
+                <td>最高出价</td>
+                <td>最低售价</td>
+                <td>叫价状态</td>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,9 @@
                 <tr>
                     <td class="am-text-sm">${bid.bftName}</td>
                     <td class="am-text-sm">${bid.bftSize}</td>
-                    <td class="am-text-sm">${bid.bidDate}</td>
+                    <td class="am-text-sm">
+                        <c:out value="${fn:substring(bid.bidDate, 0, 10)}" />
+                    </td>
                     <td class="am-text-sm"><fmt:formatNumber value="${bid.bidMoney}" type="number" pattern="￥0.00"/></td>
                     <c:choose>
                         <c:when test="${not empty bid.highestBid}">
@@ -87,12 +89,12 @@
     </caption>
     <thead>
     <tr>
-        <th style="width: 30%;">球鞋名称</th>
-        <th>尺码</th>
-        <th>出售日期</th>
-        <th>金额</th>
-        <th>保证金</th>
-        <th>状态</th>
+        <td style="width: 30%;">球鞋名称</td>
+        <td>尺码</td>
+        <td>出售日期</td>
+        <td>金额</td>
+        <td>保证金</td>
+        <td>状态</td>
     </tr>
     </thead>
     <tbody>
@@ -100,7 +102,9 @@
         <c:forEach items="${tradeList}" var="trade">
             <td class="am-text-sm">${trade.bftName}</td>
             <td class="am-text-sm">${trade.bftSize}</td>
-            <td class="am-text-sm">${trade.transactionDate}</td>
+            <td class="am-text-sm">
+                <c:out value="${fn:substring(trade.transactionDate, 0, 10)}" />
+            </td>
             <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
             <c:choose>
                 <c:when test="${not empty trade.bid.bidBond}">
@@ -118,7 +122,7 @@
             <td>
                 <div class="am-dropdown" data-am-dropdown>
                     <c:choose>
-                        <c:when test="${trade.status == 0}">
+                        <c:when test="${trade.status == 0 || trade.status == 2}">
                             <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                         </c:when>
                         <c:otherwise>

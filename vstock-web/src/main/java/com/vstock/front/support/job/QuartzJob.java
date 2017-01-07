@@ -6,6 +6,7 @@ import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.ToolSpring;
+import com.vstock.front.service.BasiciformationRoseService;
 import com.vstock.front.service.BidService;
 import com.vstock.front.service.ResultDataService;
 import com.vstock.front.service.TradeService;
@@ -26,6 +27,8 @@ public class QuartzJob implements Job {
 
     ResultDataService resultDataService = (ResultDataService) ToolSpring.getBean("resultData");
 
+    BasiciformationRoseService basiciformationRoseService = (BasiciformationRoseService) ToolSpring.getBean("basiciformationRose");
+
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         CustomJob customJob = (CustomJob)context.getMergedJobDataMap().get("scheduleJob");
@@ -44,6 +47,8 @@ public class QuartzJob implements Job {
         if("initTimer".equals(customJob.getJobName())){
             //每日凌晨一点，调用涨幅表任务
             resultDataService.insertRose();
+            resultDataService.getBrandMarket();
+            basiciformationRoseService.getRoseDegree();
         }
     }
 

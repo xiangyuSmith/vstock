@@ -4,15 +4,17 @@ import com.vstock.db.dao.IBasicinformationRoseDao;
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.User;
+import com.vstock.ext.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("basiciformationRose")
 public class BasiciformationRoseService {
 
     @Autowired
@@ -25,6 +27,18 @@ public class BasiciformationRoseService {
      */
     public List<BasicinformationRose> findAllDate(BasicinformationRose record){
         return basicinformationRoseDao.findAllDate(record);
+    }
+
+    /**
+     * 计算品牌涨幅数值 & 百分比
+     */
+    public void getRoseDegree(){
+        for (String brand : BasicinformationRose.brandStr) {
+            Map<String, Object> brad = roseDegree(brand, DateUtils.dateToString(DateUtils.wantToLose(new Date(),1),"yyyy-MM-dd"));
+            if (brad != null && !"".equals(brad)) {
+                VstockConfigService.setRoesMap(brand,brad);
+            }
+        }
     }
 
     /**

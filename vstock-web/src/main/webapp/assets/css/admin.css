@@ -3,6 +3,7 @@
     font-family: "微软雅黑";
     font-size:16px;
 }
+.layout-font-size-14{ font-size: 14px; }
 .layout-font-size-16{ font-size: 16px; }
 .layout-font-size-18{ font-size: 18px; }
 .layout-font-size-20{ font-size: 20px; }
@@ -16,6 +17,7 @@
 .layout-font-size-36{ font-size: 36px; }
 @media (max-width: 1450px){
     *{ font-size:14px; }
+    .layout-font-size-14{ font-size: 12px; }
     .layout-font-size-16{ font-size: 14px; }
     .layout-font-size-18{ font-size: 16px; }
     .layout-font-size-20{ font-size: 18px; }
@@ -29,6 +31,7 @@
     .layout-font-size-36{ font-size: 34px; }
 }
 @media (max-width: 768px){
+    .layout-font-size-14{ font-size: 12px; }
     .layout-font-size-16{ font-size: 12px; }
     .layout-font-size-18{ font-size: 14px; }
     .layout-font-size-20{ font-size: 16px; }
@@ -79,10 +82,6 @@
 }
 .m-hd .am-container {
     position: relative;
-}
-.am-container {
-    max-width: 1200px;
-    /*min-width: 750px;*/
 }
 .am-sticky {
     position: fixed!important;
@@ -195,10 +194,10 @@
     color: #fff;
 }
 .am-container {
-    max-width: 1200px;
+    max-width: 1000px;
 }
 .m-footer-container{
-    padding-bottom: 60px;
+    padding-bottom: 2px;
 }
 
 /** SIDE **/

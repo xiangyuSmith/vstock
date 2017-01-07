@@ -51,7 +51,7 @@ function ajaxContent(url, data, content,type){
         cache: false,
         success:function(returnData){
             $("#"+content).html(returnData);
-            $("#"+content).fadeIn(200);
+            $("#"+content).fadeIn(500);
             if(type == 1){
                 loadingclose();
             }
