@@ -118,7 +118,7 @@ public class TradeController extends BaseController{
     public String saleRecord(@Param("bid") Integer bid,ModelMap model){
         setLastPage(0,5);
         Trade trade = new Trade();
-        trade.setBidId(bid);
+        trade.setBasicinformationId(bid);
         List<Trade> tradeList = tradeService.findAll(trade,lagePage);
         List<Basicinformation> bList = basicinformationService.findByType(6);
         model.put("bList",bList);

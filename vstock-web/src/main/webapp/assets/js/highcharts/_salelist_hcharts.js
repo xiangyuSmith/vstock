@@ -22,6 +22,7 @@ function saleHcharGet(Url) {
                 gridLineColor: '#ADF29F',
                 lineColor: '#ADF29F',
                 type: 'datetime',
+                minTickInterval: Number,
                 tickWidth: 0,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',

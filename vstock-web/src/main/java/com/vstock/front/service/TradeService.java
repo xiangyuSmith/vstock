@@ -165,7 +165,8 @@ public class TradeService {
             String time =  DateUtils.dateToString(DateUtils.wantToLose(DateUtils.getDate(startDate,"yyyy-MM-dd"),-i),"yyyy-MM-dd");
             List<Trade> tradeList = tradeDao.findAllDate(record, page.getStartPos(), page.getPageSize(), time+" 00:00:00", time+" 23:59:59");
             for (Trade trade : tradeList) {
-                point.setX(DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss").getTime());
+                point.setX(DateUtils.getDate(trade.getTransactionDate(),"yyyy-MM-dd HH:mm:ss").getTime());
+//                DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss")
                 point.setY(trade.getTransactionMoney().intValue());
                 pointList.add(point);
             }
