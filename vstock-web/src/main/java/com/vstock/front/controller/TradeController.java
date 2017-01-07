@@ -125,4 +125,15 @@ public class TradeController extends BaseController{
         model.put("tradeList",tradeList);
         return "/detail/salelist";
     }
+
+    @RequestMapping("saleMarket")
+    @ResponseBody
+    public List<Point> saleMarket(){
+        String bidId = getParam("bidId","");
+        String size = getParam("size","");
+        String startDate = getParam("startDate","");
+        String endDate = getParam("endDate","");
+        List<Point> saleMarket = tradeService.tradeHchar(bidId,size,startDate,endDate);
+        return saleMarket;
+    }
 }

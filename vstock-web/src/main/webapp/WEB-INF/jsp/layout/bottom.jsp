@@ -10,6 +10,7 @@
 <script src="${ctx}/assets/js/highcharts/highcharts.js"></script>
 <script src="${ctx}/assets/js/highcharts/exporting.js"></script>
 <script src="${ctx}/assets/js/admin.js"></script>
+<script src="${ctx}/assets/js/date.js"></script>
 <script src="${ctx}/assets/js/jquery.validate/jquery.validate.min.js"></script>
 <script src="${ctx}/assets/js/jquery.validate/messages_zh.js"></script>
 <script src="${ctx}/assets/js/jquery.toaster.js"></script>

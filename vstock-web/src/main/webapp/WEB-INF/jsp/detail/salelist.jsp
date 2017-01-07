@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
+<style>
+    .hchar_btn{background-color: #FF4A4E!important; color:#FBFDF5!important; }
+    .hchar_sel{background-color: #FFFFFF!important;}
+</style>
 <article class="am-g">
     <div class="am-container-content" style="margin-top: 2.4rem">
         <div class="am-u-lg-12 am-margin-bottom-lg">
@@ -43,6 +47,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        <%@include file="../detail/salehchar.jsp" %>
     </div>
 </article>
 <article class="am-g am-margin-top-xl">

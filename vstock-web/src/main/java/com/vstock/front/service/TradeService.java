@@ -1,7 +1,9 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.ITradeDao;
+import com.vstock.db.entity.Point;
 import com.vstock.db.entity.Trade;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.security.md.ToolMD5;
 import org.apache.log4j.Logger;
@@ -139,5 +141,35 @@ public class TradeService {
             tradeList.add(trade);
         }
         return tradeList;
+    }
+
+    /**
+     * 查询鞋子某个尺码或者全部每天的销售价格
+     * @param bidId  鞋子ID
+     * @param size   鞋码
+     * @param startDate   创建开始时间
+     * @param endDate     创建结束时间
+     * @return
+     */
+    public List<Point> tradeHchar(String bidId, String size, String startDate, String endDate){
+        List<Point> pointList = new ArrayList<Point>();
+        Long date = DateUtils.getCurrentAllDays(DateUtils.getDate(startDate,"yyyy-MM-dd"),DateUtils.getDate(endDate,"yyyy-MM-dd"),true);
+        Trade record = new Trade();
+        record.setBasicinformationId(Integer.parseInt(bidId));
+        Page page = new Page(100000,"1");
+        page.setStartPos(0);
+        page.setPageSize(100000);
+        record.setBftSize(size);
+        for (int i = 0; i < date; i++) {
+            Point point = new Point();
+            String time =  DateUtils.dateToString(DateUtils.wantToLose(DateUtils.getDate(startDate,"yyyy-MM-dd"),-i),"yyyy-MM-dd");
+            List<Trade> tradeList = tradeDao.findAllDate(record, page.getStartPos(), page.getPageSize(), time+" 00:00:00", time+" 23:59:59");
+            for (Trade trade : tradeList) {
+                point.setX(DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss").getTime());
+                point.setY(trade.getTransactionMoney().intValue());
+                pointList.add(point);
+            }
+        }
+        return pointList;
     }
 }
