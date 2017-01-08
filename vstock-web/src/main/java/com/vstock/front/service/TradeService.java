@@ -3,6 +3,7 @@ package com.vstock.front.service;
 import com.vstock.db.dao.ITradeDao;
 import com.vstock.db.entity.Point;
 import com.vstock.db.entity.Trade;
+import com.vstock.db.entity.TradeYunfee;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.security.md.ToolMD5;

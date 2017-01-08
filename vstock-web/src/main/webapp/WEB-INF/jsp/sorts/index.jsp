@@ -30,6 +30,8 @@
     <div class="am-g am-container-content">
         <input type="hidden" id="pageStart" value="${pageStart}"/>
         <input type="hidden" id="brandName" value="${brandName}"/>
+        <input type="hidden" id="type" value="${type}"/>
+        <input type="hidden" id="productName" value="${productName}"/>
         <div class="am-u-md-2 am-u-xs-12 am-hide-sm">
             <div style="margin-top: 56px;">
                 <div class="title">分类</div>
@@ -83,9 +85,7 @@
         <div class="am-u-md-10">
             <div class="am-tips"></div>
             <div class="box-sorts-list">
-                <ul id="box-sorts-list-ul" data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout">
-
-                </ul>
+                <ul id="box-sorts-list-ul" data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-5 am-gallery-default am_index_addimglist am-no-layout"></ul>
             </div>
         </div>
     </div>
@@ -93,14 +93,15 @@
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <script>
+    var brandName = $("#brandName").val();
+    var type = $("#type").val();
+    var productName = $("#productName").val();
+    var size = "";
+    var price = "";
+    var year = "";
+    var brand = "";
+    var totalheight = 0;
     $(function(){
-        var size = "";
-        var price = "";
-        var year = "";
-        var brand = "";
-
-        var totalheight = 0;
-
         $(".brand-btn").click(function(){
             var $this = $(this);
             $this.parents().find("a").removeClass("active");
@@ -151,21 +152,12 @@
             sendMessage();
         });
 
-        function load(data,type){
-            if(type == 1){
-                ajaxContentAppend("/sorts/list",data,"box-sorts-list-ul",0);
-            }else{
-                ajaxContent("/sorts/list",data,"box-sorts-list-ul",0);
-            }
-        }
-        var brandName = $("#brandName").val();
-        if(brandName != "" && brandName != undefined){
-            load({
-                "brand":brandName
-            });
-        }else{
-            load();
-        }
+
+        load({
+            "brand":brandName,
+            "type":type,
+            "productName":productName
+        });
 
         $(window).scroll( function() {
             if ($(document).scrollTop() >= (parseFloat($(document).height())-parseFloat($(window).height())-300)) {
@@ -174,7 +166,8 @@
                     "size":size,
                     "price":price,
                     "year":year,
-                    "brand":brand
+                    "brand":brand,
+                    "productName":productName
                 },1);
             }
         });
@@ -184,22 +177,38 @@
                 "size":size,
                 "price":price,
                 "year":year,
-                "brand":brand
+                "brand":brand,
+                "productName":productName
             });
         }
-//        $(".size").click(function(){
-//            var $this = $(this);
-//            if($this.hasClass("active")){
-//                $this.removeClass('active');
-//                sizes = $.grep(sizes, function(value) {
-//                    return value != $.trim($this.text());
-//                });
-//            }else{
-//                $this.addClass("active");
-//                sizes.splice(-1,0,$.trim($this.text()));
-//            }
-//            sendMessage();
-//        });
+    });
+    function load(data,type){
+        if(type == 1){
+            ajaxContentAppend("/sorts/list",data,"box-sorts-list-ul",0);
+        }else{
+            ajaxContent("/sorts/list",data,"box-sorts-list-ul",0);
+        }
+    }
+    document.onkeydown=keyDownSearch;
+
+    function keyDownSearch(e) {
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            load({
+                "size":size,
+                "price":price,
+                "year":year,
+                "brand":brand,
+                "productName":$(".index_search_top").val()
+            });
+            return false;
+        }
+        return true;
+    }
+
+    $("body").on("keyup",".index_search_top",function(){
+        $(".index_search_top").val($(this).val());
     });
 </script>
 </body>

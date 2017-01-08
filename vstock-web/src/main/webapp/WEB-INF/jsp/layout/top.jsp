@@ -13,7 +13,7 @@
                             </c:forEach>
                         </ul>
                     </li>
-                    <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">即将发布</a></li>
+                    <li class="am-hide-sm am-hide-md"><a href="/sorts?type=5" rel="nofollow">即将发布</a></li>
                     <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">常见问题</a></li>
                     <li class="am-dropdown" data-am-dropdown="">
                         <c:choose>

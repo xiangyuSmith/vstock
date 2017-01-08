@@ -10,12 +10,10 @@
             <nav>
                 <ul class="m-nav am-nav am-nav-pills am-fr">
                     <li class="am-hide-sm am-hide-md" style="margin-top: 3px;">
-                        <form class="am-topbar-left am-form-inline" role="search">
-                            <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
-                                <input type="text" class="am-form-field" placeholder="搜索颜色、款式......">
-                                <i class="am-icon-search"></i>
-                            </div>
-                        </form>
+                        <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
+                            <input type="text" class="am-form-field index_search_top" value="${productName}" placeholder="搜索颜色、货号......">
+                            <i class="am-icon-search"></i>
+                        </div>
                     </li>
                     <li class="am-dropdown" data-am-dropdown=""><a href="/anli.html" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle="">所有商品 <i class="am-icon-caret-down"></i></a>
                         <ul class="am-dropdown-content">
@@ -24,7 +22,7 @@
                             </c:forEach>
                         </ul>
                     </li>
-                    <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">即将发布</a></li>
+                    <li class="am-hide-sm am-hide-md"><a href="/sorts?type=5" rel="nofollow">即将发布</a></li>
                     <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">常见问题</a></li>
                     <li class="am-dropdown" data-am-dropdown="">
                         <c:choose>
@@ -52,7 +50,7 @@
             <li>
                 <form class="am-topbar-left am-form-inline" role="search">
                     <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
-                        <input type="text" class="am-form-field" placeholder="搜索颜色、款式......">
+                        <input type="text" class="am-form-field index_search_top" value="${productName}" placeholder="搜索颜色、款式......">
                         <i class="am-icon-search"></i>
                     </div>
                 </form>

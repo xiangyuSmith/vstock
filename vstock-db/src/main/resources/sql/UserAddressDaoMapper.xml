@@ -209,6 +209,13 @@
         ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAddressById" parameterType="com.vstock.db.entity.UserAddress" resultType="com.vstock.db.entity.UserAddress">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_address ua
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
     <select id="findType" parameterType="com.vstock.db.entity.UserAddress" resultType="com.vstock.db.entity.UserAddress">
         SELECT u.nick,
         <include refid="Base_Column_List"/>

@@ -75,7 +75,7 @@
             <if test="obj.minimumSellingPrice != null and obj.minimumSellingPrice != ''">
                 and p.minimum_selling_price = #{obj.minimumSellingPrice,jdbcType=DECIMAL}
             </if>
-            <if test="obj.status != null and obj.status != ''">
+            <if test="obj.status != null">
                 and p.status = #{obj.status,jdbcType=VARCHAR}
             </if>
             <if test="obj.highestBidderId != null and obj.highestBidderId != ''">

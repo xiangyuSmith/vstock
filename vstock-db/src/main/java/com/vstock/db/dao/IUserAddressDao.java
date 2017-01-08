@@ -13,6 +13,8 @@ public interface IUserAddressDao {
     //分页查询所有
     List<UserAddress> findAll(@Param("obj") UserAddress record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    List<UserAddress> findAddressById(@Param("obj") UserAddress record);
+
     //查询所有总数
     int findCount(@Param("obj") UserAddress record);
 

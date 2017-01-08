@@ -1,6 +1,7 @@
 package com.vstock.db.dao;
 
 import com.vstock.db.entity.Trade;
+import com.vstock.db.entity.TradeYunfee;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;

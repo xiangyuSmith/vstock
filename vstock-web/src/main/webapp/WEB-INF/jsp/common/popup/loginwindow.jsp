@@ -5,9 +5,10 @@
     .pre-login .am-form-field:focus{outline:none;box-shadow: none;border-bottom: 1px solid #ccc;}
     .check-size{  font-size: 14px;  }
     .check-size option{  text-align: center;  }
-    .tips-tab-error {
-        color: #CC0000;
-    }
+    .tips-tab-error { color: #CC0000; }
+    .am-tabs-d2 .am-tabs-nav>.am-active a{ color: #DC4D48; }
+    .am-tabs-d2 .am-tabs-nav>.am-active{ border-bottom: 2px solid #DC4D48; }
+    .am-tabs-d2 .am-tabs-nav>.am-active:after{ border-bottom-color: #DC4D48; }
 </style>
 <!--------------------  Type_Login  -------------------->
 <div class="am-modal am-modal-no-btn" id="my-popup-login">
@@ -59,9 +60,9 @@
                                     <span class="am-input-group-btn">
                                             <select id="size_reg" class="am-form-field check-size" style="height: 38px;">
                                               <option value="">选择尺码</option>
-                                              <option value="41">41</option>
-                                              <option value="42">42</option>
-                                              <option value="43">43</option>
+                                              <c:forEach items="${sizes}" var="s">
+                                                 <option value="${s}">${s}</option>
+                                              </c:forEach>
                                             </select>
                                             <i class="am-selected-icon am-icon-caret-down" style="margin-top: 11px;margin-left: -20px;z-index: 2;position: absolute;"></i>
                                     </span>
@@ -99,7 +100,7 @@
                                 <input id="agreement" type="checkbox" class="am-padding-top-lg am-fl"/>
                             </div>
                             <div class="am-u-sm-11 am-u-md-11 am-u-lg-11 am-padding-left-0 am-margin-left-0">
-                                <span class="am-text-sm am-margin-left-0 am-text-left am-fl"><label for="agreement" style="font-weight: normal;">我已阅读并同意《<a href="#" style="color: #646464;">用户使用协议</a>》</label></span>
+                                <span class="am-text-sm am-margin-left-0 am-text-left am-fl"><label for="agreement" style="font-weight: normal;">我已阅读并同意<a href="javascript:;" style="color: #DC4D48;" data-am-modal="{target: '#my-popup-agreement'}">《服务条款》</a>和<a href="javascript:;" style="color: #DC4D48;" data-am-modal="{target: '#my-popup-privacy'}">《隐私权政策》</a></label></span>
                             </div>
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -111,6 +112,7 @@
         </div>
     </div>
 </div>
+<%@include file="../register/agreement.jsp" %>
 <script>
     $(function(){
         $(".login-out").click(function(){

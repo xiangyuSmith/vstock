@@ -23,8 +23,8 @@
                 <div class="am-u-md-6">
                     <form id="am-form-field" class="am-topbar-left am-form-inline" role="search" style="width:100%;display: none;">
                         <div class="am-form-group am-form-icon am-fr" style="color: #EB615F;font-size: 16px;width:50%;">
-                            <input type="text" class="am-form-field" placeholder="搜索颜色、款式......" style="width:100%;margin-top: 8px;" />
-                            <i class="am-icon-search"></i>
+                            <input type="text" class="am-form-field index_search_top" placeholder="搜索颜色、货号......" style="width:100%;margin-top: 8px;" />
+                            <i class="am-icon-search" style="margin-top:-3px;"></i>
                         </div>
                     </form>
                 </div>
@@ -39,7 +39,7 @@
                                     </c:forEach>
                                 </ul>
                             </li>
-                            <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">即将发布</a></li>
+                            <li class="am-hide-sm am-hide-md"><a href="/sorts?type=5" rel="nofollow">即将发布</a></li>
                             <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">常见问题</a></li>
                             <li class="am-dropdown" data-am-dropdown="">
                                 <c:choose>
@@ -69,7 +69,7 @@
             <li>
                 <form class="am-topbar-left am-form-inline" role="search">
                     <div class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;">
-                        <input type="text" class="am-form-field" placeholder="搜索颜色、款式......">
+                        <input type="text" class="am-form-field index_search_top" placeholder="搜索颜色、款式......">
                         <i class="am-icon-search"></i>
                     </div>
                 </form>

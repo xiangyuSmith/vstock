@@ -30,6 +30,16 @@ public class UserAddressService {
     }
 
     /**
+     * 查询单个地址
+     */
+    public UserAddress findAddressById(UserAddress record){
+        if(userAddressDao.findAddressById(record).size() > 0){
+            return userAddressDao.findAddressById(record).get(0);
+        }
+        return null;
+    }
+
+    /**
      * 查询所有总数
      * @param record
      * @return

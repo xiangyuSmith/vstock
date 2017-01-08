@@ -18,10 +18,10 @@
                 </p>
             </section>
             <section class="am-u-sm-12 am-u-md-6 am-u-lg-3 am-padding-left-lg" style="border-right: 1px solid #4E4C4D;height: 220px;">
-                <span class="layout-font-size-16">关于V-STOCK</span>
+                <span class="layout-font-size-16">联系方式</span>
                 <p>
                     <span class="layout-font-size-14">客服邮箱：</span><br/>
-                    <span class="layout-font-size-14">boge@163.com</span>
+                    <span class="layout-font-size-14">service@v-stock.com</span>
                 </p>
                 <p>
                     <span class="layout-font-size-14">工作时间：</span><br/>

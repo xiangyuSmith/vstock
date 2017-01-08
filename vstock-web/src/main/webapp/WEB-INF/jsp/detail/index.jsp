@@ -53,7 +53,7 @@
         <div class="am-g am-u-md-12 am-show-lg-only">
             <span class="str-title-font" style="font-weight: bold;">
                 ${basicinformation.name}
-                <a href="javascript:void(0);" id="join-assets" class="assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg"><i class="am-icon-money am-margin-right-sm" style="color: #F97271;"></i>加入资产</a>
+                <a href="javascript:void(0);" id="join-assets" class="layout-font-size-18 assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border-radius: 3px;width: 150px;"><i class="am-icon-money am-margin-right-sm layout-font-size-18" style="color: #F97271;"></i>加入资产</a>
                 <a href="javascript:void(0);" id="join-assets-click" style="display: none;" data-am-modal="{target: '#my-popup-assets',width: 440}"></a>
             </span>
             <span class="str-title-font"> </span>
@@ -140,7 +140,7 @@
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty pricePeak2.minimumSellingPrice}">
-                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,##0.0#"/>
                             </c:when>
                             <c:otherwise>
                                 -
@@ -216,6 +216,7 @@
 <%@include file="../common/address/addersAddorEdit.jsp" %>
 <script>
     $(function(){
+
         $("#now-seller-buy").click(function(){
             $("body").addClass("xy-dimmer-active");
             $("#my-popup-buy-detailed").addClass("xy-dimmer-detailed");
@@ -232,11 +233,11 @@
         //选择尺码
         $("#choose_size").change(function(){
             //TODO 异步读取数据
-//            if(k == 1){
-//                location.href = "/detail?proName="+bname+"&size="+$.trim($(this).val());
-//            }else{
-//                k = 1;
-//            }
+            if(k == 1){
+                location.href = "/detail?proName="+bname+"&size="+$.trim($(this).val());
+            }else{
+                k = 1;
+            }
         });
 
         $("#sell").click(function(){
@@ -304,8 +305,16 @@
         });
 
         function box_create_trade(amount,size,type,yunFee,addressId){
+            if(addressId == undefined){
+                alertTips(2,"购买失败","请选择收货地址");
+                return;
+            }
             if (amount == "" || amount == null || amount < 0) {
                 alertshow("出售金额不能为空，且必须大于0");
+                return;
+            }
+            if(yunFee <= 0){
+                alertTips(3,"购买失败","运费价格有误");
                 return;
             }
             sendRequest("/trade",{

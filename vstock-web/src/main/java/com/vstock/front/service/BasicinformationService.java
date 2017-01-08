@@ -47,8 +47,8 @@ public class BasicinformationService {
      * @param priceEnd 价格区间:end
      * @return
      */
-    public List<Basicinformation> findBasicinForSorts(String bftSize,String year,String brand,String priceStart,String priceEnd,Integer pageStart,Integer pageSize){
-        return basicinformationDao.findBasicinForSorts(bftSize,year,brand,priceStart,priceEnd,pageStart,pageSize);
+    public List<Basicinformation> findBasicinForSorts(String productName,Integer type,String bftSize,String year,String brand,String priceStart,String priceEnd,Integer pageStart,Integer pageSize){
+        return basicinformationDao.findBasicinForSorts(productName,type,bftSize,year,brand,priceStart,priceEnd,pageStart,pageSize);
     }
 
     /**

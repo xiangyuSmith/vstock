@@ -3,6 +3,10 @@
     font-family: "微软雅黑";
     font-size:16px;
 }
+body{
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+}
 .layout-font-size-14{ font-size: 14px; }
 .layout-font-size-16{ font-size: 16px; }
 .layout-font-size-18{ font-size: 18px; }
@@ -105,12 +109,14 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     color: #fff;
 }
 .get-index{
-    background: url("/assets/i/banner.png") top center no-repeat;
+    background: url("/assets/i/banner.png") center no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     color: #fff;
     text-align: center;
     height: 680px;
@@ -127,6 +133,10 @@
     }
     .get-index{
         background: url("/assets/i/banner.png") center no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
         height: 580px;
     }
 }
@@ -138,6 +148,10 @@
     .am-container-content{ max-width: 980px; margin: auto; }
     .get-index{
         background: url("/assets/i/banner.png") center no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
         height: 580px;
     }
 }

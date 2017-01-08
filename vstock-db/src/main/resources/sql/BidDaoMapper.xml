@@ -56,6 +56,7 @@
         <association property="user" column="user"
                      javaType="com.vstock.db.entity.User">
             <id column="uid" property="id"/>
+            <result column="nick" property="nick"/>
             <result column="mobile" property="mobile"/>
         </association>
     </resultMap>
@@ -310,7 +311,7 @@
     </select>
 
     <select id="findNewAll" parameterType="com.vstock.db.entity.Bid" resultMap="UserResultMap">
-        SELECT u.mobile,
+        SELECT u.mobile,u.nick,
         <include refid="Base_Column_List"/>
         FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
         <include refid="SearchAllByPage_Where_Clause"/>

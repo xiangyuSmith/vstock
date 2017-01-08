@@ -49,5 +49,5 @@ public interface IBasicinformation {
     /**
      * 分类页查询
      */
-    List<Basicinformation> findBasicinForSorts(@Param("bftSize") String bftSize,@Param("year") String year,@Param("brand") String brand,@Param("priceStart") String priceStart,@Param("priceEnd") String priceEnd,@Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+    List<Basicinformation> findBasicinForSorts(@Param("productName") String productName,@Param("type")Integer type,@Param("bftSize") String bftSize,@Param("year") String year,@Param("brand") String brand,@Param("priceStart") String priceStart,@Param("priceEnd") String priceEnd,@Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 }

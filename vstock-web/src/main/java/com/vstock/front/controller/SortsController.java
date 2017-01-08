@@ -42,6 +42,7 @@ public class SortsController extends BaseController{
         modelMap.addAttribute("brandName",getParam("brandName",""));
         modelMap.addAttribute("sizes",Basicinformation.sizes);
         modelMap.addAttribute("productName",getParam("productName"));
+        modelMap.addAttribute("type",getParamToInt("type"));
         return "/sorts/index";
     }
 
@@ -51,6 +52,7 @@ public class SortsController extends BaseController{
         String priceEnd = "";
         int pageStart = Integer.parseInt(getParam("pageStart","0"));
         String productName = getParam("productName","");
+        Integer type = getParamToInt("type");
         String size = request.getParameter("size");
         String price = request.getParameter("price");
         String year = request.getParameter("year");
@@ -59,12 +61,14 @@ public class SortsController extends BaseController{
             priceStart = price.split("-")[0];
             priceEnd = price.split("-")[1];
         }
-        List<Basicinformation> bidList = basicinformationService.findBasicinForSorts(size,year,brand,priceStart,priceEnd,pageStart,20);
+        List<Basicinformation> bidList = basicinformationService.findBasicinForSorts(productName,type,size,year,brand,priceStart,priceEnd,pageStart,20);
         modelMap.addAttribute("bidList",bidList);
         modelMap.addAttribute("size",size);
         modelMap.addAttribute("price",price);
         modelMap.addAttribute("year",year);
         modelMap.addAttribute("brand",brand);
+        modelMap.addAttribute("productName",productName);
+        modelMap.addAttribute("type",type);
         modelMap.addAttribute("pageStart",pageStart);
         return "/sorts/list";
     }

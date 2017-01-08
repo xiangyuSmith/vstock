@@ -91,7 +91,7 @@
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-xs">
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18">运费：</span>
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right">￥
-                            <span id="yunFee">10</span>
+                            <span id="yunFee"></span>
                         </span>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm" style="border-bottom: 1px solid #ccc;"></div>
@@ -182,10 +182,35 @@
 <script>
     $(function(){
         var $editAddress = "";
-        var yunFee = $.trim($("#yunFee").text());
+        var countMoney = 0;
         var amount = $("#buyer_detailed_amount").val();
-        var countMoney = parseFloat(yunFee) + parseFloat(amount);
-        $(".countMoney").text(countMoney.toFixed(2));
+        var addressId = $("#new-address").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
+        if(addressId == undefined){
+            $("#yunFee").text("-");
+        }else{
+            //计算运费
+            jisuan(addressId);
+        }
+        $("#new-address").find("tr td input:radio[name='check-address']").click(function(){
+            jisuan($(this).attr("data-userAddress"));
+        });
+        function jisuan(addressId){
+            sendRequest("/trade/getYunfee",{
+                "addressId": addressId
+            },function(res){
+                if(res.retCode == 1){
+                    $("#yunFee").text(res.data);
+                    var yunFee = $.trim($("#yunFee").text());
+                    if(yunFee != "-" && yunFee != 0 && yunFee != ""){
+                        countMoney = parseFloat(yunFee) + parseFloat(amount);
+                    }
+                    $(".countMoney").text(countMoney.toFixed(2));
+                }else{
+                    alertTips(2,"提示",res.retMsg);
+                }
+            });
+        }
+
         $("#loading-address").click(function(){
             $(this).css("display","none");
             $("#loading-img").fadeIn(200);
@@ -207,6 +232,7 @@
                     $this.parent().parent().siblings().find("input[type='radio']").prop("checked","checked");
                     $(".default-span-tips").css("display","none");
                     $this.parent().parent().siblings().find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
+                    jisuan($this.attr("data-userAddress"));
                     alertTips(1,"地址设置","默认收货地址已更新");
                 }
             });
