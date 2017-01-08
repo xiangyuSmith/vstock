@@ -79,13 +79,13 @@ public class TradeController extends BaseController{
         Integer userTradeId = 0;
         if("0".equals(type)){
             bidId = Integer.parseInt(uid);
-            userTradeId = bid1.getId();
+            userTradeId = bid1.getUserId();
             if(addressId == 0){
                 resultModel.setRetMsg("您还没有设置收货地址哦~");
                 return resultModel;
             }
         }else{
-            bidId = bid1.getId();
+            bidId = bid1.getUserId();
             userTradeId = Integer.parseInt(uid);
         }
         //TODO 加入订单，关联买家叫价
