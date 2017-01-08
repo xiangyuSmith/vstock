@@ -381,4 +381,9 @@
         <include refid="SearchAllPage_Where_Clause"/>
     </select>
 
+    <select id="findAllYunFee" parameterType="com.vstock.db.entity.TradeYunfee" resultType="com.vstock.db.entity.TradeYunfee">
+        select tyf.id,tyf.city_name as cityName,tyf.fee_money as feeMoney from trade_yun_fee tyf
+        where tyf.status = 1
+    </select>
+
 </mapper>

@@ -39,8 +39,8 @@
                     <img class="logo-stock" src="/assets/i/logo_stock.png">
                 </div>
                 <form class="am-topbar-left am-form-inline" role="search" style="width: 100%;">
-                    <div id="index_search_div" class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 50%;">
-                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、款式......" style="width: 100%;">
+                    <div id="index_search_div" class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 42%;">
+                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、货号......" style="width: 100%;border-radius: 2px;">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
                     </div>
                 </form>
@@ -60,7 +60,7 @@
                     <div id="buyBid">
                         <ul id="buyBid1">
                             <c:forEach items="${buyBidList}" var="buybid">
-                                <li><p><c:out value="${fn:substring(buybid.user.mobile, 0, 3)}" />****<c:out value="${fn:substring(buybid.user.mobile, 7, 11)}" /></p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
+                                <li><p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
                             </c:forEach>
                         </ul>
                         <ul id="buyBid2"></ul>
@@ -75,7 +75,7 @@
                     <div id="sellBid">
                         <ul id="sellBid1">
                             <c:forEach items="${sellBidList}" var="sellbid">
-                                <li><p><c:out value="${fn:substring(sellbid.user.mobile, 0, 3)}" />****<c:out value="${fn:substring(sellbid.user.mobile, 7, 11)}" /></p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
+                                <li><p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
                             </c:forEach>
                         </ul>
                         <ul id="sellBid2"></ul>
@@ -132,7 +132,7 @@
                                 <div class="am_listimg_info">
                                     <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
-                                        <div style="font-size: 16px;">最近售出</div>
+                                        <div style="font-size: 16px;">最近30天售出</div>
                                         <div style="font-size: 22px;">68双</div>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -115px 6px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">最低卖价</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最低叫价</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -159,8 +159,8 @@
                                 <div class="am_listimg_info">
                                     <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
-                                        <div style="font-size: 16px;">最近售出</div>
-                                        <div style="font-size: 22px;">68双</div>
+                                        <div style="font-size: 16px;">最低叫价</div>
+                                        <div style="font-size: 22px;">￥600.00</div>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -180px 6px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">最高叫价</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最高出价</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -186,8 +186,8 @@
                                 <div class="am_listimg_info">
                                     <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
-                                        <div style="font-size: 16px;">最近售出</div>
-                                        <div style="font-size: 22px;">68双</div>
+                                        <div style="font-size: 16px;">最高出价</div>
+                                        <div style="font-size: 22px;">￥3564.66</div>
                                     </div>
                                 </div>
                             </div>
@@ -213,9 +213,7 @@
                                 <div class="am_listimg_info">
                                     <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
-                                        <div style="font-size: 16px;">最低卖价</div>
                                         <div style="font-size: 22px;">￥800（12%）</div>
-                                        <div class="am-margin-top-sm" style="font-size: 14px;">20分钟前</div>
                                     </div>
                                 </div>
                             </div>
@@ -250,11 +248,8 @@
                 </c:forEach>
             </ul>
         </div>
-
-        <div class="am_news_load am_news_load_index"><span><i class="am-icon-spinner am-icon-spin" style="display: none;"></i>了解更多</span></div>
-        <br>
-        <br>
-        <br>
+        <br/>
+        <%--<div class="am_news_load am_news_load_index"><span><i class="am-icon-spinner am-icon-spin" style="display: none;"></i>了解更多</span></div>--%>
     </div>
 
 </article>
@@ -283,16 +278,16 @@
                     var buyList = res.data.buyBidList;
                     var sellList = res.data.sellBidList;
                     for(var i = 0;i < buyList.length;i++){
-                        var mobile = buyList[i].user.mobile;
+                        var mobile = buyList[i].user.nick;
                         var bftName = buyList[i].bftName;
                         var bidMoney = buyList[i].bidMoney;
-                        bidhtml += '<li><p>'+mobile.substr(0,3)+'****'+mobile.substr(7,11)+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
+                        bidhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
                     }
                     for(var i = 0;i < sellList.length;i++){
-                        var mobile = sellList[i].user.mobile;
+                        var mobile = sellList[i].user.nick;
                         var bftName = sellList[i].bftName;
                         var bidMoney = sellList[i].bidMoney;
-                        sellhtml += '<li><p>'+mobile.substr(0,3)+'****'+mobile.substr(7,11)+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
+                        sellhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
                     }
                     buyBid1.innerHTML=bidhtml;
                     buyBid2.innerHTML=bidhtml;
@@ -322,6 +317,17 @@
                 MyMar=setInterval(Marquee,speed);
             },5000);
         }
+    };
+    document.onkeydown=keyDownSearch;
+
+    function keyDownSearch(e) {
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            location.href = "/sorts?productName="+$("#index_search").val();
+            return false;
+        }
+        return true;
     }
     $(function(){
         sendRequest("/index/overallIncrease",{
@@ -353,6 +359,7 @@
                 $('#yezzy_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
             }
         });
+
         $("img.am_img").lazyload();
         $("a.am_img_bg").lazyload({
             effect : 'fadeIn'
@@ -365,21 +372,21 @@
             prefix : '',
             suffix : ''
         };
-        document.onkeydown = function(e){
-            if($("#index_search").val() != "" && $("#index_search").val() != undefined){
-                var ev = document.all ? window.event : e;
-                if(ev.keyCode==13) {
-                    location.href = "sort?productName="+$("#index_search").val();
-                }
-            }
-        };
 
+        $("body").on("keyup","#index_search",function(){
+            $(".index_search_top").val($(this).val());
+        });
+        $("body").on("keyup",".index_search_top",function(){
+            $("#index_search").val($(this).val());
+        });
     });
     $(window).scroll(function () {
         var a = document.getElementById("index_search_div").offsetTop;
         if (a >= $(window).scrollTop() && a < ($(window).scrollTop() + $(window).height())) {
+            $("#index_search").val($(".index_search_top").val());
             $("#am-form-field").fadeOut(200);
         }else{
+            $(".index_search_top").val($("#index_search").val());
             $("#am-form-field").fadeIn(500);
         }
     });

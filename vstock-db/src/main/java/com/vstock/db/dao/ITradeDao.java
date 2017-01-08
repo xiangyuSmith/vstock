@@ -36,4 +36,6 @@ public interface ITradeDao {
     List<Trade> findAllWeb(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
     int findCountWeb(@Param("obj")Trade record);
+
+    List<TradeYunfee> findAllYunFee();
 }

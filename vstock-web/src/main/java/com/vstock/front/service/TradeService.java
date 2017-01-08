@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,4 +226,22 @@ public class TradeService {
         }
         return pointList;
     }
+
+    /**
+     * 查询运费表
+     * @param cityname 城市名称
+     * @return
+     */
+    public BigDecimal findAllYunFee(String cityname){
+        List<TradeYunfee> tradeYunfeeList = tradeDao.findAllYunFee();
+        cityname = cityname.substring(0,2);
+        for (TradeYunfee yunfee : tradeYunfeeList) {
+            boolean isCity = yunfee.getCityName().contains(cityname);
+            if(isCity){
+                return yunfee.getFeeMoney();
+            }
+        }
+        return null;
+    }
+
 }

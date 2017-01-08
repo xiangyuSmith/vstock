@@ -64,10 +64,15 @@ public class PricePeakService {
     }
 
 
+    /**
+     * @param sort
+     * @return
+     */
     public PricePeak getHighestAndlowest(int bid,String size,int sort, Page page){
         PricePeak pricePeak = new PricePeak();
         pricePeak.setBasicinformationId(bid);
         pricePeak.setPeakSize(size);
+        pricePeak.setStatus(0);
         List<PricePeak> pricePeaks = findByType(pricePeak,sort,page);
         if(pricePeaks.size() != 0){
             return pricePeaks.get(0);

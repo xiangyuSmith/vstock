@@ -25,6 +25,11 @@ import java.util.List;
 public class TradeController extends BaseController{
 
     @Autowired
+    UserAddressService userAddressService;
+    @Autowired
+    PricePeakService pricePeakService;
+
+    @Autowired
     BasicinformationService basicinformationService;
     @Autowired
     BidService bidService;
@@ -41,16 +46,21 @@ public class TradeController extends BaseController{
         setLastPage(0,1);
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         double amount = Double.valueOf(getParam("amount", "0"));
-        double yunFee = Double.valueOf(getParam("yunFee", "0"));
         String size = getParam("size");
         String type = getParam("type");
         int addressId = Integer.valueOf(getParam("addressId", "0"));
+        UserAddress u = new UserAddress();
+        u.setId(addressId);
+        UserAddress userAddress = userAddressService.findAddressById(u);
+        BigDecimal yunFee = tradeService.findAllYunFee(userAddress.getLocalArea());
+        if(yunFee == null){
+            resultModel.setRetMsg("运费信息异常");
+            return resultModel;
+        }
         Bid bid = new Bid();
         bid.setBidMoney(new BigDecimal(amount));
         bid.setBftSize(size);
         bid.setType(type);
-        //TODO 运费待加入
-//        bid.setBidFreight(new BigDecimal(yunFee));
         bid.setStatus(String.valueOf(Bid.STATUS_INIT));
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){
@@ -65,23 +75,46 @@ public class TradeController extends BaseController{
             }
             return resultModel;
         }
+        Integer bidId = 0;
+        Integer userTradeId = 0;
         if("0".equals(type)){
+            bidId = Integer.parseInt(uid);
+            userTradeId = bid1.getId();
             if(addressId == 0){
                 resultModel.setRetMsg("您还没有设置收货地址哦~");
                 return resultModel;
             }
+        }else{
+            bidId = bid1.getId();
+            userTradeId = Integer.parseInt(uid);
         }
         //TODO 加入订单，关联买家叫价
         Date now = new Date();
         int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
-        Trade trade = new Trade(addressId,new BigDecimal(yunFee),size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status,
-                new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bid1.getUserId(), Integer.parseInt(uid), DateFormatUtils.format(now, "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6));
+        Trade trade = new Trade(addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status,
+                new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId, DateFormatUtils.format(now, "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6));
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
         if(tradeId == 0){
             resultModel.setRetCode(0);
             resultModel.setRetMsg("服务器繁忙，请稍后再试");
             return resultModel;
         }
+        int sort = 0;
+        if("0".equals(type)){
+            sort = 2;
+        }else{
+            sort = 1;
+        }
+        PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),size,sort,lagePage);
+        PricePeak p = new PricePeak();
+        p.setStatus(1);
+        p.setId(pricePeak.getId());
+        Bid b = new Bid();
+        b.setId(bid1.getId());
+        b.setBidFreight(yunFee);
+        b.setStatus(String.valueOf(b.STATUS_SUCCESS));
+        bidService.update(b);
+        pricePeakService.update(p);
         resultModel.setRetCode(resultModel.RET_OK);
         resultModel.setData(tradeId);
         return resultModel;
@@ -158,4 +191,23 @@ public class TradeController extends BaseController{
         resultModel.setRetCode(i);
         return resultModel;
     }
+
+    @RequestMapping("getYunfee")
+    @ResponseBody
+    public ResultModel getYunfee(){
+        ResultModel resultModel = new ResultModel();
+        Integer addressId = getParamToInt("addressId");
+        UserAddress u = new UserAddress();
+        u.setId(addressId);
+        UserAddress userAddress = userAddressService.findAddressById(u);
+        BigDecimal yunFee = tradeService.findAllYunFee(userAddress.getLocalArea());
+        if(yunFee == null){
+            resultModel.setRetMsg("远程服务器繁忙");
+            return resultModel;
+        }
+        resultModel.setRetCode(resultModel.RET_OK);
+        resultModel.setData(yunFee);
+        return resultModel;
+    }
+
 }
