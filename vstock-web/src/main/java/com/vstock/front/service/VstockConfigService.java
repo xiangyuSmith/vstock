@@ -85,7 +85,7 @@ public class VstockConfigService {
     }
 
     public static Map<String, Object> getRoes(String key) {
-        if (brandMap.isEmpty()) {
+        if (roesMap.isEmpty()) {
             logger.warn("VstockConfigService 获取市场价值数据失败");
         }
         return roesMap.get(key);
@@ -100,7 +100,7 @@ public class VstockConfigService {
             Thread.yield();
             jsonAdder = cityAddressService.adderssAll();
             for (String brand : BasicinformationRose.brandStr) {
-                Map<String, Object> roseDegree = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(DateUtils.wantToLose(new Date(),1),"yyyy-MM-dd"));
+                Map<String, Object> roseDegree = basiciformationRoseService.roseDegree(brand, DateUtils.dateToString(new Date(),"yyyy-MM-dd"));
                 if (roseDegree.size() > 0) {
                     roesMap.put(brand, roseDegree);
                 }

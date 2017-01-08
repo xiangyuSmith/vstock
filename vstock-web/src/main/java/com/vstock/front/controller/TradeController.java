@@ -149,4 +149,13 @@ public class TradeController extends BaseController{
         List<Point> saleMarket = tradeService.tradeHchar(bidId,size,startDate,endDate);
         return saleMarket;
     }
+
+    @RequestMapping("saveTrade")
+    @ResponseBody
+    public ResultModel saveTrade(Trade record){
+        ResultModel resultModel = new ResultModel();
+        int i = tradeService.save(record,VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
+        resultModel.setRetCode(i);
+        return resultModel;
+    }
 }

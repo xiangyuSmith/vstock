@@ -23,5 +23,5 @@ public interface IPricePeakDao {
     int insert(PricePeak record);
 
     //修改数据
-    int update(@Param("status")int status, @Param("endDate")String endDate, @Param("id")Integer id);
+    int update(PricePeak record);
 }

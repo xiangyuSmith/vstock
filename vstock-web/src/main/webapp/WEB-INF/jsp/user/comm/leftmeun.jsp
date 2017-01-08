@@ -105,13 +105,13 @@
 
         $("body").on("click",".sale-sub",function(){
             var $this = $(this);
-            var dataType = $this.attr("data_type");
+            var type = $this.attr('data_type');
             var btf = $this.attr("btf-id");
             var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
             var moeny = $thoes.children().val();
             var size = $thoes.prev().prev().text();
             var id = $this.attr("data_id");
-            if (dataType == 0){
+            if (type == 0){
                 if (upMoeny < moeny) {
                     alertTips(3,"","最新出价不能高于原始出价");
                     return;
@@ -126,6 +126,7 @@
                 id : id,
                 bidMoney : moeny,
                 btfId : btf,
+                type : type,
                 size : size
             },function(res) {
                 if (res.sgin == 1) {
@@ -139,7 +140,7 @@
                     var $th = $this.parent().parent().parent().parent().parent().parent().parent().parent().find("a[select_type='select-btn']");
                     $this.parent().parent().parent().removeClass("am-active");
                     $th.attr("disabled", false);
-                    if (dataType == 0){
+                    if (type == 0){
                         ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
                     }else {
                         ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
@@ -205,12 +206,12 @@
         $("body").on("click",".deliver-goods",function(){
             var $this = $(this);
             var dataType = $this.attr("bid_type");
-            var amount = $this.parent().parent().parent().parent().prev().prev().prev().prev().text();
+            var amount = $this.parent().parent().parent().parent().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             var type = $this.attr("data-type");
             var bId = $this.attr("bft-id");
             var bid = $this.attr("bid-id");
-            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().text();
+            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().text();
             sendRequest("/bid/createPay",{
                 bid : bid,
                 bId : bId,
@@ -228,7 +229,41 @@
                         ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
                     }
                 }else {
-                    alertshow("支付失败，请重新支付！");
+                    alertshow("支付失败，请重新操作！");
+                }
+            });
+        });
+
+        $("body").on("click",".trade-save",function(){
+            var $this = $(this);
+            var explain = $this.attr('explain');
+            var type = $this.attr('utype');
+            var status = $this.attr('status');
+            var id = $this.attr('data-id');
+            var bidId = $this.attr('bidId');
+            var tradeNo = $this.attr('trade-no');
+            var amount = $this.parent().parent().parent().parent().prev().prev().text();
+            amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
+            var size = $this.parent().parent().parent().parent().prev().prev().prev().text();
+            sendRequest("/trade/saveTrade",{
+                id : id,
+                bidId : bidId,
+                tradeNo : tradeNo,
+                transactionMoney : amount,
+                bftSize : size,
+                status : status
+            },function(res) {
+                if (res.retCode == 1){
+                    alertTips(1,"",explain+"成功");
+                    $this.parent().parent().parent().removeClass("am-active");
+                    $this.parent().parent().parent().children().first().attr("disabled", true);
+                    if (type == 2){
+                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                    }else {
+                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                    }
+                }else {
+                    alertTips(2,explain+"失败","请重新操作！");
                 }
             });
         });
@@ -237,7 +272,7 @@
             var $this = $(this);
             var bidId = $this.attr("data-id");
             var type = $this.attr("trade-type");
-            var amount = $this.parent().parent().parent().parent().prev().prev().prev().text();
+            var amount = $this.parent().parent().parent().parent().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             sendRequest("/trade/createTradePay",{
                 tradeId : bidId,

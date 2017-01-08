@@ -320,4 +320,65 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
+    <sql id="SearchAllPage_Where_Clause">
+        <where>
+            1=1 and t.status NOT IN (50)
+            <if test="obj.id != null and obj.id != ''">
+                AND t.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.sellerId != null and obj.sellerId != ''">
+                and t.seller_id = #{obj.sellerId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.buyersId != null and obj.buyersId != ''">
+                and t.buyers_id = #{obj.buyersId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bidId != null and obj.bidId != ''">
+                and t.bid_id = #{obj.bidId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and t.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.transactionMoney != null and obj.transactionMoney != ''">
+                and t.transaction_money = #{obj.transactionMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
+                and t.trade_freight = #{obj.tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and t.courier_number LIKE CONCAT('%',#{obj.courierNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.status != null and obj.status != 50 and obj.status != -1">
+                and t.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status == 50">
+                and t.status NOT IN (0)
+            </if>
+            <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
+                and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.transactionDate != null and obj.transactionDate != ''">
+                and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.updateDate != null and obj.updateDate != ''">
+                and t.end_date = #{obj.updateDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and t.sign LIKE CONCAT('%',#{obj.sign,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="findAllWeb" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
+        SELECT b.bft_name,b.bft_size, b.bid_bond as bidBond,
+        <include refid="Base_Column_List"/>
+        FROM trade t LEFT JOIN bid b ON t.bid_id = b.id
+        <include refid="SearchAllPage_Where_Clause"/>
+        ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCountWeb" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
+        SELECT COUNT(*) FROM trade t
+        <include refid="SearchAllPage_Where_Clause"/>
+    </select>
+
 </mapper>

@@ -212,14 +212,37 @@
         VALUES(null,#{basicinformationId},#{peakSize},#{highestBid},#{minimumSellingPrice},#{status},#{highestBidderId},#{minimumSellingId},#{createDate},#{invalidDate})
     </insert>
 
-    <update id="update">
-        UPDATE `price_peak` SET
-        <if test="status != null and status != ''">
-            status = #{status,jdbcType=VARCHAR}
-        </if>
-        <if test="invalidDate != null and invalidDate != ''">
-            invalid_date = #{invalidDate,jdbcType=TIMESTAMP}
-        </if>
+    <update id="update" parameterType="com.vstock.db.entity.PricePeak">
+        UPDATE `price_peak`
+        <set>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                basicinformation_id = #{basicinformationId,jdbcType=INTEGER},
+            </if>
+            <if test="peakSize != null and peakSize != ''">
+                peak_size = #{peakSize,jdbcType=VARCHAR},
+            </if>
+            <if test="highestBid != null and highestBid != ''">
+                highest_bid = #{highestBid,jdbcType=VARCHAR},
+            </if>
+            <if test="minimumSellingPrice != null and minimumSellingPrice != ''">
+                minimum_selling_price = #{minimumSellingPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="highestBidderId != null and highestBidderId != ''">
+                highest_bidder_id = #{highestBidderId,jdbcType=VARCHAR},
+            </if>
+            <if test="minimumSellingId != null and minimumSellingId != ''">
+                minimum_selling_id = #{minimumSellingId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                invalid_date = #{invalidDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 

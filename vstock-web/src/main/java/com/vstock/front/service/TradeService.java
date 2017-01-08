@@ -102,6 +102,21 @@ public class TradeService {
         return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
     }
 
+    /**
+     * web个人中心查询
+     * @param record
+     * @param page
+     * @return
+     */
+    public List<Trade> findAllWeb (Trade record,Page page){return tradeDao.findAllWeb(record,page.getStartPos(),page.getPageSize());}
+
+    /**
+     * web前台个人中心查询
+     * @param record
+     * @return
+     */
+    public int findCountWeb(Trade record){return tradeDao.findCountWeb(record);}
+
     //个人中心出售查询
     public List<Trade> findTrade(Trade record, Page page){
         return this.findAndBid(record, page);
@@ -116,7 +131,7 @@ public class TradeService {
     public int createTradeOne(Trade trade,String tradeMd5Key){
         String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
                 .append("trade_no=").append(trade.getTradeNo())
-                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bid_id=").append(trade)
+                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bid_id=").append(trade.getBid())
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("transaction_money=").append(trade.getTransactionMoney())
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bft_size=").append(trade.getBftSize())
                 .append(Trade.TRADE_MD5_MARK_NOTIFY).append("Md5Sign=").append(tradeMd5Key)
@@ -128,6 +143,43 @@ public class TradeService {
             return 0;
         }
         return trade.getId();
+    }
+
+    public boolean verificationSgin(Trade record,String tradeMd5Key){
+        Trade trade = new Trade();
+        trade.setId(record.getId());
+        if(record.getTradeNo() == ""){
+            record.setTradeNo(null);
+        }
+        List<Trade> tradeList = this.findAllTrade(trade);
+        if (tradeList.size() > 0 ){
+            String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
+                    .append("trade_no=").append(record.getTradeNo())
+                    .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bid_id=").append(record.getBid())
+                    .append(Trade.TRADE_MD5_MARK_NOTIFY).append("transaction_money=").append(record.getTransactionMoney())
+                    .append(Trade.TRADE_MD5_MARK_NOTIFY).append("bft_size=").append(record.getBftSize())
+                    .append(Trade.TRADE_MD5_MARK_NOTIFY).append("Md5Sign=").append(tradeMd5Key)
+                    .toString());
+            if (tradeList.get(0).getSign().equals(sign)){
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+
+    public int save(Trade record,String tradeMd5Key){
+        int i = 0;
+        if (record.getId() != null && !"".equals(record.getId())){
+            if (this.verificationSgin(record,tradeMd5Key)) {
+                i = this.update(record);
+            }
+        }else {
+            i = this.createTradeOne(record,tradeMd5Key);
+        }
+        return i;
     }
 
     //获取订单状态
@@ -165,8 +217,8 @@ public class TradeService {
             String time =  DateUtils.dateToString(DateUtils.wantToLose(DateUtils.getDate(startDate,"yyyy-MM-dd"),-i),"yyyy-MM-dd");
             List<Trade> tradeList = tradeDao.findAllDate(record, page.getStartPos(), page.getPageSize(), time+" 00:00:00", time+" 23:59:59");
             for (Trade trade : tradeList) {
-                point.setX(DateUtils.getDate(trade.getTransactionDate(),"yyyy-MM-dd HH:mm:ss").getTime());
-//                DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss")
+                point.setX(DateUtils.getDate(trade.getTransactionDate(),"yyyy-").getTime());
+                DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss");
                 point.setY(trade.getTransactionMoney().intValue());
                 pointList.add(point);
             }

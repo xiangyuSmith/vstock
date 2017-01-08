@@ -66,7 +66,7 @@
                                     <li><a class="am-btn am-btn-xs am-text-left deliver-goods" bid-id="${bid.id}" bft-id="${bid.basicinformationId}" data-type="${bid.type}" bid_type="0" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
                                 </c:if>
                                 <c:if test="${bid.status == 10}">
-                                    <li><a class="am-btn am-btn-xs am-text-left sale-up" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
+                                    <li><a class="am-btn am-btn-xs am-text-left sale-up" data_type="0" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
                                     <li><a class="am-btn am-btn-xs am-text-left sale-sub" data_type="0" data_id="${bid.id}" btf-id="${bid.basicinformationId}" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
                                     <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
                                 </c:if>
@@ -84,16 +84,16 @@
 
     <table class="am-table am-table-striped am-table-hover">
     <caption>
-        <p class="am-fl layout-font-size-30">出售历史</p>
+        <p class="am-fl layout-font-size-30">出售记录</p>
         <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="javascript:void(0)" data-url="../user/buysell?type=0&pageNow=1" class="offer-btn layout-font-size-18">更多记录</a></span>
     </caption>
     <thead>
     <tr>
         <td style="width: 30%;">球鞋名称</td>
-        <td>尺码</td>
         <td>出售日期</td>
-        <td>金额</td>
         <td>保证金</td>
+        <td>尺码</td>
+        <td>金额</td>
         <td>状态</td>
     </tr>
     </thead>
@@ -101,11 +101,9 @@
     <c:if test="${not empty tradeList}">
         <c:forEach items="${tradeList}" var="trade">
             <td class="am-text-sm">${trade.bftName}</td>
-            <td class="am-text-sm">${trade.bftSize}</td>
             <td class="am-text-sm">
                 <c:out value="${fn:substring(trade.transactionDate, 0, 10)}" />
             </td>
-            <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
             <c:choose>
                 <c:when test="${not empty trade.bid.bidBond}">
                     <td class="am-text-sm"><fmt:formatNumber value="${trade.bid.bidBond}" type="number" pattern="￥0.00"/></td>
@@ -114,6 +112,8 @@
                     <td class="am-text-sm">--</td>
                 </c:otherwise>
             </c:choose>
+            <td class="am-text-sm">${trade.bftSize}</td>
+            <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
             <c:forEach items="${statusList}" var="status">
                 <c:if test="${status.id == trade.status}">
                     <td class="am-text-sm">${status.bftName}</td>
@@ -135,7 +135,7 @@
                                 <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
                             </c:when>
                             <c:when test="${trade.status == 2}">
-                                <li><a class="am-btn am-btn-xs am-text-left deliver-goods" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
+                                <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
                             </c:when>
                         </c:choose>
                     </ul>

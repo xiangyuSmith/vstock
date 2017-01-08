@@ -60,7 +60,7 @@ public class PricePeakService {
      * @return
      */
     public int update(PricePeak record){
-        return pricePeakDao.update(record.getStatus(),record.getInvalidDate(),record.getId());
+        return pricePeakDao.update(record);
     }
 
 
@@ -99,13 +99,22 @@ public class PricePeakService {
     public int isAmount(PricePeak pricePeak,BigDecimal amount,int bId,String size,String userId,int type){
         int result = 0;
         if(pricePeak != null){
-            if(amount.compareTo(pricePeak.getHighestBid()) == 1){
-                pricePeak.setHighestBid(amount);
-                result = update(pricePeak);
+            if(type == 1){
+                if(amount.compareTo(pricePeak.getHighestBid()) == 1){
+                    pricePeak.setHighestBid(amount);
+                    pricePeak.setHighestBidderId(userId);
+                    result = update(pricePeak);
+                }
+            }else if(type == 0){
+                if(amount.compareTo(pricePeak.getMinimumSellingPrice()) == -1){
+                    pricePeak.setMinimumSellingPrice(amount);
+                    pricePeak.setMinimumSellingId(userId);
+                    result = update(pricePeak);
+                }
             }
         }else{
             if(type == 0){
-                PricePeak p = new PricePeak( bId, size , null , amount, 0, userId , "", DateUtils.dateToString(new Date()));
+                PricePeak p = new PricePeak( bId, size , null , amount, 0, "" , userId, DateUtils.dateToString(new Date()));
                 result = insert(p);
             }else if(type == 1){
                 PricePeak p = new PricePeak( bId, size , amount , null, 0, userId , "", DateUtils.dateToString(new Date()));
@@ -113,6 +122,17 @@ public class PricePeakService {
             }
         }
         return result;
+    }
+
+    public int save(Page page, String amount,String bId,String size,String userId,String type){
+        PricePeak record = new PricePeak();
+        record.setBasicinformationId(Integer.parseInt(bId));
+        record.setPeakSize(size);
+        List<PricePeak> pricePeakList = this.findAll(record,page);
+        if (pricePeakList.size() > 0){
+            record = pricePeakList.get(0);
+        }
+        return this.isAmount(record,new BigDecimal(amount),Integer.parseInt(bId),size,userId,Integer.parseInt(type));
     }
 
 }

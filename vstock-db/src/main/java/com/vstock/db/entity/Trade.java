@@ -15,7 +15,7 @@ public class Trade implements Serializable {
 
     public final static String TRADE_MD5_MARK_NOTIFY = "^|^";
 
-    public final static String[] statuses = {"0:待支付保证金","1:待支付鞋款","2:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭"};
+    public final static String[] statuses = {"0:待支付保证金","1:待支付鞋款","2:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭","50:订单删除"};
 
     public final static int TRADE_NOTIFIY_PAY_BOND = 0; //待支付保证金
     public final static int TRADE_NOTIFIY_PAY = 1;      //已下单待支付
@@ -26,6 +26,7 @@ public class Trade implements Serializable {
     public final static int TRADE_WAIT_TAKE = 30;       //已发货待签收
     public final static int TRADE_SUCESS = 40;          //交易成功
     public final static int TRADE_CLOSE = 41;           //交易失败
+    public final static int TRADE_DEL = 50;           //订单删除
 
     @Id
     private Integer id;

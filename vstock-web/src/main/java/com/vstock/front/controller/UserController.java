@@ -66,17 +66,17 @@ public class UserController extends BaseController {
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
         if ("0".equals(type)) {
             bid.setType("0");
+            trade.setStatus(50);
             trade.setSellerId(bid.getUserId());
         }else {
             bid.setType("1");
-            trade.setStatus(0);
             trade.setBuyersId(bid.getUserId());
         }
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,"1");
         page.setPageSize(5);
         List<Bid> bidList = bidService.findBid(bid,page);
-        List<Trade> tradeList = tradeService.findTrade(trade,page);
+        List<Trade> tradeList = tradeService.findAllWeb(trade,page);
         List<Trade> statusList = tradeService.status();
         List<Bid> bidStatus = StatusUtil.bidStatus();
         model.addAttribute("bidStatus",bidStatus);
@@ -97,7 +97,6 @@ public class UserController extends BaseController {
         Bid bid = new Bid();
         String type = request.getParameter("type");
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
-        bid.setStatus("3");
         if ("0".equals(type)) {
             bid.setType("0");
         }else {
@@ -122,13 +121,16 @@ public class UserController extends BaseController {
         String type = request.getParameter("type");
         if ("0".equals(type)) {
             trade.setSellerId(Integer.parseInt(String.valueOf(suid)));
+            trade.setStatus(50);
         }else {
             trade.setBuyersId(Integer.parseInt(String.valueOf(suid)));
         }
         String pageNow = request.getParameter("pageNow");
-        int totalCount = tradeService.findCount(trade);
+        int totalCount = tradeService.findCountWeb(trade);
         Page page = new Page(totalCount,pageNow);
-        List<Trade> tradeList = tradeService.findAndBid(trade,page);
+        List<Trade> tradeList = tradeService.findAllWeb(trade,page);
+        List<Trade> statusList = tradeService.status();
+        model.addAttribute("statusList",statusList);
         model.addAttribute("page",page);
         model.addAttribute("type",type);
         model.addAttribute("tradeList",tradeList);

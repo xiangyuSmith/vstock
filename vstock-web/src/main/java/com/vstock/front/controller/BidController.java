@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.Page;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.security.md.ToolMD5;
 import com.vstock.front.service.BidService;
@@ -100,13 +101,19 @@ public class BidController extends BaseController{
     @ResponseBody
     public Map<String,Object> updateBid(){
         Map<String,Object> param = new HashMap<String,Object>();
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         String id = request.getParameter("id");
+        String type = request.getParameter("type");
         String btfId = request.getParameter("btfId");
         String status = request.getParameter("status");
         String endDate = request.getParameter("endDate");
         String bidMoney = request.getParameter("bidMoney");
         String size = request.getParameter("size");
         int sgin = bidService.updateBid(id,btfId,status,size,endDate,bidMoney);
+        if (sgin > 0){
+            Page page = new Page(10,"1");
+            pricePeakService.save(page,bidMoney,btfId,size,uid.toString(),type);
+        }
         param.put("sgin",sgin);
         return param;
     }
