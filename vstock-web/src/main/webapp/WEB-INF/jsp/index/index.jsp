@@ -328,9 +328,9 @@
             brand : 'JORDAN'
         },function(res) {
             $('#frist_brand').text("JORDAN");
-            if (res) {
+            if (res.Current_market_value) {
                 $('#jordan_current').text(res.Current_market_value);
-                $('#jordan_change').text("￥"+res.Change_range + "(" + res.Percentage_change + ")");
+                $('#jordan_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
             }
         });
 
@@ -338,9 +338,9 @@
             brand : 'NIKE'
         },function(res) {
             $('#sen_brand').text("NIKE");
-            if (res) {
+            if (res.Current_market_value) {
                 $('#nike_current').text(res.Current_market_value);
-                $('#nike_change').text("￥"+res.Change_range + "(" + res.Percentage_change + ")");
+                $('#nike_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
             }
         });
 
@@ -348,9 +348,9 @@
             brand : 'ADIDAS'
         },function(res) {
             $('#th_brand').text("ADIDAS");
-            if (res) {
+            if (res.Current_market_value) {
                 $('#yezzy_current').text(res.Current_market_value);
-                $('#yezzy_change').text("￥"+res.Change_range + "(" + res.Percentage_change + ")");
+                $('#yezzy_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
             }
         });
         $("img.am_img").lazyload();

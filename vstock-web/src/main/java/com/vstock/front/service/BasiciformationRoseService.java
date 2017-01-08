@@ -3,12 +3,14 @@ package com.vstock.front.service;
 import com.vstock.db.dao.IBasicinformationRoseDao;
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.entity.BasicinformationRose;
+import com.vstock.db.entity.Point;
 import com.vstock.db.entity.User;
 import com.vstock.ext.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -73,6 +75,35 @@ public class BasiciformationRoseService {
             roseDegree.put("Percentage_change",percentageTotal);
         }
         return roseDegree;
+    }
+
+    public Map<String,Object> reseDegreeN(String brand){
+        Map<String, Object> resultModel = new HashMap<String, Object>();
+        DecimalFormat df = new DecimalFormat("######0.0000");
+        BigDecimal totalAmount = new BigDecimal(0);
+        BigDecimal totalRiseFall = new BigDecimal(0);
+        BigDecimal percentageTotal = new BigDecimal(0);
+        List<Point> jsonArray = VstockConfigService.getBrand(brand);
+        if (jsonArray.size() > 0){
+            totalAmount = new BigDecimal(jsonArray.get(jsonArray.size()-1).getY());
+            if (jsonArray.size() > 1){
+                totalRiseFall = new BigDecimal(jsonArray.get(jsonArray.size()-1).getY() - jsonArray.get(jsonArray.size()-2).getY());
+                if (totalRiseFall.toString().contains("-")){
+                    resultModel.put("Change_range",totalRiseFall);
+                    totalRiseFall = new BigDecimal(totalRiseFall.toString().substring(1,totalRiseFall.toString().length()));
+                }else {
+                    resultModel.put("Change_range",totalRiseFall);
+                }
+                percentageTotal = new BigDecimal(Double.parseDouble(df.format(totalRiseFall.doubleValue()/jsonArray.get(jsonArray.size()-2).getY()))*100);
+            }else {
+                totalRiseFall = new BigDecimal(jsonArray.get(jsonArray.size()-1).getY());
+                resultModel.put("Change_range",totalRiseFall);
+                percentageTotal = new BigDecimal(100);
+            }
+        }
+        resultModel.put("Current_market_value",totalAmount);
+        resultModel.put("Percentage_change",percentageTotal);
+        return resultModel;
     }
 
 }

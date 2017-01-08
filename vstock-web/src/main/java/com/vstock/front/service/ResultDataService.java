@@ -33,6 +33,9 @@ public class ResultDataService {
     @Autowired
     IBasicinformationRoseDao basicinformationRoseDao;
 
+    @Autowired
+    BasiciformationRoseService basiciformationRoseService;
+
     /**
      * 查询所有
      * @param record
@@ -48,6 +51,10 @@ public class ResultDataService {
             List<Point> brad = brandMarket(brand);
             if (brad != null && !"".equals(brad)) {
                 VstockConfigService.setBrandMap(brand,brad);
+            }
+            Map<String, Object> roseDegree = basiciformationRoseService.reseDegreeN(brand);
+            if (roseDegree.size() > 0) {
+                VstockConfigService.setRoesMap(brand, roseDegree);
             }
         }
     }
