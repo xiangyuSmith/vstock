@@ -35,10 +35,10 @@
     <div class="am-g" style="height: 90%;">
         <div class="am-u-lg-12">
             <div class="get-title-search" style="width: 100%;">
-                <div style="margin:0 auto;margin-bottom:30px;">
-                    <img class="logo-stock" src="/assets/i/logo_stock.png">
-                </div>
-                <form class="am-topbar-left am-form-inline" role="search" style="width: 100%;">
+                <%--<div style="margin:0 auto;margin-bottom:30px;">--%>
+                    <%--<img class="logo-stock" src="/assets/i/logo_stock.png">--%>
+                <%--</div>--%>
+                <form class="am-topbar-left am-form-inline" role="search" style="width: 100%; margin-top: 110px;">
                     <div id="index_search_div" class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 42%;">
                         <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、货号......" style="width: 100%;border-radius: 2px;">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
@@ -336,7 +336,12 @@
             $('#frist_brand').text("JORDAN");
             if (res.Current_market_value) {
                 $('#jordan_current').text(res.Current_market_value);
-                $('#jordan_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
+                if (res.Change_range < 0){
+                    var price = res.Change_range + "";
+                    $('#jordan_change').text("-￥" + price.substring(1,res.Change_range.length) + "(" + res.Percentage_change.toFixed(2) + "%)");
+                }else {
+                    $('#jordan_change').text("+￥" + res.Change_range + "(" + res.Percentage_change.toFixed(2) + "%)");
+                }
             }
         });
 
@@ -346,7 +351,12 @@
             $('#sen_brand').text("NIKE");
             if (res.Current_market_value) {
                 $('#nike_current').text(res.Current_market_value);
-                $('#nike_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
+                if (res.Change_range < 0){
+                    var price = res.Change_range + "";
+                    $('#nike_change').text("-￥" + price.substring(1,res.Change_range.length) + "(" + res.Percentage_change.toFixed(2) + "%)");
+                }else {
+                    $('#nike_change').text("+￥" + res.Change_range + "(" + res.Percentage_change.toFixed(2) + "%)");
+                }
             }
         });
 
@@ -356,7 +366,12 @@
             $('#th_brand').text("ADIDAS");
             if (res.Current_market_value) {
                 $('#yezzy_current').text(res.Current_market_value);
-                $('#yezzy_change').text("￥"+res.Change_range + "(" + res.Percentage_change + "%)");
+                if (res.Change_range < 0){
+                    var price = res.Change_range + "";
+                    $('#yezzy_change').text("-￥" + price.substring(1,res.Change_range.length) + "(" + res.Percentage_change.toFixed(2) + "%)");
+                }else {
+                    $('#yezzy_change').text("+￥" + res.Change_range + "(" + res.Percentage_change.toFixed(2) + "%)");
+                }
             }
         });
 

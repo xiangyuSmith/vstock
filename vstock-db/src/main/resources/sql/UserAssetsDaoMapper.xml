@@ -193,10 +193,11 @@
     </sql>
 
     <select id="findAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
-        SELECT br.current_market_value, br.change_range, br.percentage_change, br.type, b.name,
+        SELECT br.current_market_value, br.change_range, br.percentage_change, br.type, br.name,
         <include refid="Base_Column_List"/>
-        FROM user_assets ua LEFT JOIN basicinformation_rose br ON br.basicinformation_id = ua.basicinformation_id
-        LEFT JOIN basicinformation b ON b.id = ua.basicinformation_id
+        FROM user_assets ua LEFT JOIN (select b.*,bft.`name` from basicinformation_rose b
+        LEFT JOIN basicinformation bft ON b.basicinformation_id = bft.id where b.create_date = CURDATE()) br ON
+        br.basicinformation_id = ua.basicinformation_id and br.basicinformation_size = ua.user_assets_size
         <include refid="SearchAllByPage_Where_Clause"/>
         ORDER BY ua.create_date DESC limit #{startPos},#{pageSize}
     </select>

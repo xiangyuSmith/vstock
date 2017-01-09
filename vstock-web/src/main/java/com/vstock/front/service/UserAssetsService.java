@@ -82,7 +82,7 @@ public class UserAssetsService {
         BigDecimal changeMoney = new BigDecimal(0);
         Date time = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        time = DateUtils.wantToLose(time,1);
+//        time = DateUtils.wantToLose(time,1);
         String startDate = sdf.format(time);
         List<UserAssets> userAssetsList = this.findBasicinformationRoseAll(record,startDate);
         if (userAssetsList.size() > 0) {

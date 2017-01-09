@@ -305,15 +305,15 @@
         });
 
         function box_create_trade(amount,size,type,yunFee,addressId){
-            if(addressId == undefined){
-                alertTips(2,"购买失败","请选择收货地址");
+            if (type == 0 && addressId == undefined) {
+                alertTips(2, "购买失败", "请选择收货地址");
                 return;
             }
             if (amount == "" || amount == null || amount < 0) {
                 alertshow("出售金额不能为空，且必须大于0");
                 return;
             }
-            if(yunFee <= 0){
+            if(type == 0 && yunFee <= 0){
                 alertTips(3,"购买失败","运费价格有误");
                 return;
             }

@@ -53,7 +53,7 @@
                             <div style="width: 100%;height: 100%;">
                                 <div class="bg-uoload" ></div>
                                 <input id="identify_img_front" name="identify_img_front" type="file" class="bg-uoload-file" style="opacity: 0;" />
-                                <img id="identify_front" src="http://s.amazeui.org/media/i/demos/bing-1.jpg"  alt="远方 有一个地方 那里种有我们的梦想" />
+                                <img id="identify_front" src="/assets/i/positive_identity_card.png"/>
                             </div>
                             <span class="clickImg-upload">点击上传</span>
                             <h3 class="am-gallery-title">身份证正面</h3>
@@ -66,7 +66,7 @@
                             <div style="width: 100%;height: 100%;">
                                 <div class="bg-uoload" ></div>
                                 <input id="identify_img_back" name="identify_img_back" type="file" class="bg-uoload-file" style="opacity: 0;" />
-                                <img id="identify_back" src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
+                                <img id="identify_back" src="/assets/i/opposite_of_card.png"/>
                             </div>
                             <span class="clickImg-upload">点击上传</span>
                             <h3 class="am-gallery-title">身份证背面</h3>
@@ -79,7 +79,7 @@
                             <div style="width: 100%;height: 100%;">
                                 <div class="bg-uoload" ></div>
                                 <input id="identify_img_handheld" name="identify_img_handheld"  type="file" class="bg-uoload-file" style="opacity: 0;" />
-                                <img id="identify_handheld" src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
+                                <img id="identify_handheld" src="/assets/i/handheld_id_card.png"/>
                             </div>
                             <span class="clickImg-upload">点击上传</span>
                             <h3 class="am-gallery-title">手持身份证</h3>

@@ -188,7 +188,7 @@
             money = parseFloat(money.replace(/[^\d\.-]/g, ""));
             sendRequest("/userAssets/saveUserAssets",{
                 id : $this.attr("del_data_id"),
-                userId : $this.attr("user-id"),
+//                userId : $this.attr("user-id"),
                 bId : $this.attr("btf-id"),
                 money : money,
                 size : size,
