@@ -186,7 +186,7 @@
             <if test="obj.courierNumber != null and obj.courierNumber != ''">
                 and t.courier_number LIKE CONCAT('%',#{obj.courierNumber,jdbcType=VARCHAR},'%')
             </if>
-            <if test="obj.status != null and obj.status != 0 and obj.status != -1">
+            <if test="obj.status != null and obj.status != -1">
                 and t.status = #{obj.status,jdbcType=VARCHAR}
             </if>
             <if test="obj.status == 50">
