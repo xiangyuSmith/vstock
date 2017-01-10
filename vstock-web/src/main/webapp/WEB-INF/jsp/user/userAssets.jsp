@@ -100,12 +100,12 @@
             <caption><p class="layout-font-size-30 am-fl">资产明细</p></caption>
             <thead>
                 <tr>
-                    <th style="width: 20%;">球鞋名称</th>
-                    <th>尺码</th>
-                    <th>购买日期</th>
-                    <th>金额</th>
-                    <th>当前市场价值</th>
-                    <th>涨跌幅度</th>
+                    <td style="width: 20%;">球鞋名称</td>
+                    <td>尺码</td>
+                    <td>购买日期</td>
+                    <td>金额</td>
+                    <td>当前市场价值</td>
+                    <td>涨跌幅度</td>
                 </tr>
             </thead>
             <tbody>
@@ -159,9 +159,22 @@
             </tbody>
         </table>
     </div>
+    <input type="hidden" id="userAssets_btf_id"/>
+    <input type="hidden" id="userAssets_del_data_id"/>
+    <input type="hidden" id="userAssets_del_money"/>
+    <input type="hidden" id="userAssets_del_size"/>
 </div>
 <script type="text/javascript">
     jQuery(function($){
+
+        $(".userAssets-del").click(function(){
+            var $this = $(this);
+            $('#userAssets_btf_id').val($this.attr("btf-id"));
+            $('#userAssets_del_data_id').val($this.attr("del_data_id"));
+            $('#userAssets_del_money').val($this.parent().parent().parent().prev().prev().prev().text());
+            $('#userAssets_del_size').val($this.parent().parent().parent().prev().prev().prev().prev().prev().text());
+            alertConfirm("是否需要删除！","","");
+        });
 
         sendRequest("/user/hchar",null,function(res) {
             var a;
