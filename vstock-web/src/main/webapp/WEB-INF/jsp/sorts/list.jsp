@@ -13,7 +13,7 @@
                     <span class="helper"></span>
                     <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" style="display: inline;">
                 </div>
-                <div class="name" style="padding-left: 5px;">
+                <div class="name" style="padding-left: 5px;height: 70px;">
                     <div>${bid.name}</div>
                 </div>
                 <div class="price">
