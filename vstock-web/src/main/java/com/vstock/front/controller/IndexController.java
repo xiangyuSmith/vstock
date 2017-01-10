@@ -56,6 +56,11 @@ public class IndexController extends BaseController{
         return "/index/index";
     }
 
+    @RequestMapping("problem")
+    public String problem(){
+        return "/problem/index";
+    }
+
     @RequestMapping("getNewBid")
     @ResponseBody
     public ResultModel getNewBid(){
