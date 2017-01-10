@@ -88,7 +88,7 @@
                         </div>
                         <div class="am-u-md-6 am-margin-top-xs">
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <a href="javascript:;" id="now-sell-bid" class="am-btn am-btn-success" data-am-modal="{target: '#my-popup-sell-bid', width: 900, height: 520}">叫价</a>
+                                <a href="javascript:;" id="now-sell-bid" style="background-color: #3bd278" class="am-btn am-btn-success" data-am-modal="{target: '#my-popup-sell-bid', width: 900, height: 520}">叫价</a>
                             </div>
                         </div>
                     </div>
