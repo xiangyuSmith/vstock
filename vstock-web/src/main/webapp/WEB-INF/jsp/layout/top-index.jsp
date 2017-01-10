@@ -40,7 +40,7 @@
                                 </ul>
                             </li>
                             <li class="am-hide-sm am-hide-md"><a href="/sorts?type=5" rel="nofollow">即将发布</a></li>
-                            <li class="am-hide-sm am-hide-md"><a href="#" rel="nofollow">常见问题</a></li>
+                            <li class="am-hide-sm am-hide-md"><a href="/index/problem" rel="nofollow">常见问题</a></li>
                             <li class="am-dropdown" data-am-dropdown="">
                                 <c:choose>
                                     <c:when test="${not empty vUser}">
@@ -55,7 +55,7 @@
                                     </c:otherwise>
                                 </c:choose>
                             </li>
-                            <li><a href="#" class="v-a-boder" rel="nofollow" style="color: #EA5958!important;">SELL</a></li>
+                            <li><a href="/sorts" class="v-a-boder" rel="nofollow" style="color: #EA5958!important;">SELL</a></li>
                         </ul>
                     </nav>
                 </div>

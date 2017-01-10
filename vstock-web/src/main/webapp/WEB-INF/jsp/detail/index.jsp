@@ -61,7 +61,7 @@
         <div class="am-g">
             <div class="am-u-lg-4 am-u-md-2 am-u-sm-12 am-margin-top-xl">
                 <div class="am-fl am-u-lg-4 am-padding-0 str-sudio">
-                    <span class="layout-font-size-22">尺码</span>
+                    <span class="str layout-font-size-22">尺码</span>
                     <div style="margin-top: 15px;">
                         <select id="choose_size" placeholder="请选择" data-am-selected="{btnSize: 'lg',btnWidth: 120,  maxHeight: 180}">
                             <c:choose>
