@@ -60,6 +60,9 @@ public class UserController extends BaseController {
     @RequestMapping("sale")
     public String sale(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid == null || "".equals(suid)){
+            return "/index/index";
+        }
         String type = request.getParameter("type");
         Bid bid = new Bid();
         Trade trade = new Trade();
@@ -94,6 +97,9 @@ public class UserController extends BaseController {
     @RequestMapping("offerlist")
     public String offerlist(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid == null || "".equals(suid)){
+            return "/index/index";
+        }
         Bid bid = new Bid();
         String type = request.getParameter("type");
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
@@ -117,6 +123,9 @@ public class UserController extends BaseController {
     @RequestMapping("buysell")
     public String buysell(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid == null || "".equals(suid)){
+            return "/index/index";
+        }
         Trade trade = new Trade();
         String type = request.getParameter("type");
         if ("0".equals(type)) {
@@ -164,6 +173,9 @@ public class UserController extends BaseController {
     @RequestMapping("userInfo")
     public String userInfo(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid == null || "".equals(suid)){
+            return "/index/index";
+        }
         String type = getParam("type","");
         UserAddress record = new UserAddress();
         User user = userService.findById(String.valueOf(suid));
@@ -180,6 +192,9 @@ public class UserController extends BaseController {
     @RequestMapping("userAssets")
     public String userAssets(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid == null || "".equals(suid)){
+            return "/index/index";
+        }
         UserAssets record = new UserAssets();
         record.setUserId(Integer.parseInt(String.valueOf(suid)));
         record.setStatus(0);

@@ -181,15 +181,15 @@
             });
         });
 
-        $("body").on("click",".userAssets-del",function(){
+        $("body").on("click","#createPay",function(){
             var $this = $(this);
-            var money = $this.parent().parent().parent().prev().prev().prev().text();
-            var size = $this.parent().parent().parent().prev().prev().prev().prev().prev().text();
+            var money = $('#userAssets_del_money').val();
+            var size = $('#userAssets_del_size').val();
             money = parseFloat(money.replace(/[^\d\.-]/g, ""));
             sendRequest("/userAssets/saveUserAssets",{
-                id : $this.attr("del_data_id"),
+                id : $('#userAssets_del_data_id').val(),
 //                userId : $this.attr("user-id"),
-                bId : $this.attr("btf-id"),
+                bId : $('#userAssets_btf_id').val(),
                 money : money,
                 size : size,
                 status : '2'
