@@ -205,13 +205,24 @@
 
         $("body").on("click",".deliver-goods",function(){
             var $this = $(this);
-            var dataType = $this.attr("bid_type");
             var amount = $this.parent().parent().parent().parent().prev().prev().text();
+            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().text();
+            alipay($this,amount,bftSize);
+        });
+
+        $("body").on("click",".deliver-bid-goods",function(){
+            var $this = $(this);
+            var amount = $this.parent().parent().parent().parent().prev().prev().prev().prev().text();
+            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().text();
+            alipay($this,amount,bftSize);
+        });
+
+        function alipay($this,amount,bftSize){
+            var dataType = $this.attr("bid_type");
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             var type = $this.attr("data-type");
             var bId = $this.attr("bft-id");
             var bid = $this.attr("bid-id");
-            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().text();
             sendRequest("/bid/createPay",{
                 bid : bid,
                 bId : bId,
@@ -229,10 +240,10 @@
                         ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
                     }
                 }else {
-                    alertshow("支付失败，请重新操作！");
+                    alertTips(2,"","支付失败，请重新操作！");
                 }
             });
-        });
+        }
 
         $("body").on("click",".trade-save",function(){
             var $this = $(this);

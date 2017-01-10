@@ -69,10 +69,10 @@ public class UserController extends BaseController {
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
         if ("0".equals(type)) {
             bid.setType("0");
-            trade.setStatus(50);
             trade.setSellerId(bid.getUserId());
         }else {
             bid.setType("1");
+            trade.setStatus(50);
             trade.setBuyersId(bid.getUserId());
         }
         int totalCount = bidService.findCount(bid);
