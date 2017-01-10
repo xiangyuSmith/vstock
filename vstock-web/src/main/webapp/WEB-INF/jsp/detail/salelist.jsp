@@ -8,8 +8,8 @@
     <div class="am-container-content" style="margin-top: 2.4rem">
         <div class="am-u-lg-12 am-margin-bottom-lg">
             <div class="am-text-center">
-                <p style="color:#fe5c5c;font-size: 22px;margin-top: 38px; font-size: 30px;">
-                    ${basicinformation.name}
+                <p style="color:#e36471;font-size: 22px;margin-top: 38px; font-size: 30px;">
+                    ${bname}
                 </p>
                 <p style="color: #595959;font-size: 18px;">
                     最后销售记录

@@ -2,7 +2,19 @@ $(function(){
     Highcharts.setOptions({
         timezoneOffset: -8
     });
+    var maxColor = '#F78181';
+    var minColor = '#ADF29F';
+    var result = "";
+    var resultNum = 2;
     $.getJSON('/index/brandMarket?brand=JORDAN', function (data) {
+        var s = parseInt(data[data.length-1].y) - parseInt(data[data.length-2].y);
+        if( s > 0){
+            result = maxColor;
+            resultNum = 8;
+        }else{
+            result = minColor;
+            resultNum = 2;
+        }
         $('#containerA').highcharts({
             chart: {
                 type: 'line',
@@ -16,8 +28,8 @@ $(function(){
                 labels: {
                     enabled: false
                 },
-                gridLineColor: '#ADF29F',
-                lineColor: '#ADF29F',
+                gridLineColor: result,
+                lineColor: result,
                 type: 'datetime',
                 tickWidth: 0,
                 dateTimeLabelFormats: {
@@ -32,7 +44,7 @@ $(function(){
                 }
             },
             tooltip: {
-                borderColor: '#ADF29F',
+                borderColor: result,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -71,8 +83,8 @@ $(function(){
                             y2: 1
                         },
                         stops: [
-                            [0, Highcharts.getOptions().colors[2]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.5).get('rgba')]
+                            [0, Highcharts.getOptions().colors[resultNum]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[resultNum]).setOpacity(0.5).get('rgba')]
                         ]
                     },
                     marker: {
@@ -88,7 +100,7 @@ $(function(){
                 }
             },
             series: [{
-                color: '#ADF29F',
+                color: result,
                 type: 'area',
                 name: '销售总额',
                 data: data
@@ -97,6 +109,14 @@ $(function(){
     });
 
     $.getJSON('/index/brandMarket?brand=NIKE', function (data) {
+        var s = parseInt(data[data.length-1].y) - parseInt(data[data.length-2].y);
+        if( s > 0){
+            result = maxColor;
+            resultNum = 8;
+        }else{
+            result = minColor;
+            resultNum = 2;
+        }
         $('#containerB').highcharts({
             chart: {
                 type: 'line',
@@ -110,8 +130,8 @@ $(function(){
                 labels: {
                     enabled: false
                 },
-                gridLineColor: '#F78181',
-                lineColor: '#F78181',
+                gridLineColor: result,
+                lineColor: result,
                 type: 'datetime',
                 tickWidth: 0,
                 dateTimeLabelFormats: {
@@ -126,7 +146,7 @@ $(function(){
                 }
             },
             tooltip: {
-                borderColor: '#F78181',
+                borderColor: result,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -165,8 +185,8 @@ $(function(){
                             y2: 1
                         },
                         stops: [
-                            [0, Highcharts.getOptions().colors[8]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[8]).setOpacity(0.5).get('rgba')]
+                            [0, Highcharts.getOptions().colors[resultNum]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[resultNum]).setOpacity(0.5).get('rgba')]
                         ]
                     },
                     marker: {
@@ -182,7 +202,7 @@ $(function(){
                 }
             },
             series: [{
-                color: '#F78181',
+                color: result,
                 type: 'area',
                 name: '销售总额',
                 data: data
@@ -191,6 +211,14 @@ $(function(){
     });
 
     $.getJSON('/index/brandMarket?brand=ADIDAS', function (data) {
+        var s = parseInt(data[data.length-1].y) - parseInt(data[data.length-2].y);
+        if( s > 0){
+            result = maxColor;
+            resultNum = 8;
+        }else{
+            result = minColor;
+            resultNum = 2;
+        }
         $('#containerC').highcharts({
             chart: {
                 type: 'line',
@@ -204,6 +232,8 @@ $(function(){
                 labels: {
                     enabled: false
                 },
+                gridLineColor: result,
+                lineColor: result,
                 type: 'datetime',
                 tickWidth:0,
                 dateTimeLabelFormats: {
@@ -218,6 +248,7 @@ $(function(){
                 }
             },
             tooltip: {
+                borderColor: result,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -256,8 +287,8 @@ $(function(){
                             y2: 1
                         },
                         stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                            [0, Highcharts.getOptions().colors[resultNum]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[resultNum]).setOpacity(0.5).get('rgba')]
                         ]
                     },
                     marker: {
@@ -273,6 +304,7 @@ $(function(){
                 }
             },
             series: [{
+                color: result,
                 type: 'area',
                 name: '销售总额',
                 data: data

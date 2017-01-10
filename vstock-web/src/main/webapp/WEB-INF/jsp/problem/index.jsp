@@ -132,7 +132,7 @@
             <div class="am-panel am-panel-default">
                 <div class="am-panel-hd q-title-bg">
                     <span class="am-panel-title layout-font-size-22" data-am-collapse="{parent: '#accordion', target: '#do-not-say-8'}">
-                        Q：8)为什么要支付保证金？
+                        Q：为什么要支付保证金？
                     </span>
                 </div>
                 <div id="do-not-say-8" class="a-content-bg am-panel-collapse am-collapse">

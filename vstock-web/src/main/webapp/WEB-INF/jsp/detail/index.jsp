@@ -6,30 +6,19 @@
     <style>
         .am-container-content{ max-width: 1000px; margin: auto; }
         .am-bid-border{ border-left:1px solid #595959; }
-        .str{ color: #595959; }
+        .str{ color: #060606; }
         .str-title{ font-size: 22px; }
         .str-price{ color: #2d2d2d; }
         .str-size{ font-size: 18px; }
         .product-detail div{ font-size: 18px;color: #595959; }
-        .product-market-summary-wrap{ margin-top: 5px;background-color: #f5f5f5; height: 130px;line-height: 130px;margin-top: 15px; }
+        .product-market-summary-wrap{ margin-top: 5px;background-color: #faf9f1; height: 130px;line-height: 130px;margin-top: 15px;border-bottom: 1px solid #cacaca; }
         .product-market-summary-wrap span { font-size: 35px;color: #595959; }
         .am-table thead tr td{ text-align: center;font-size: 20px;color: #595959; border-bottom: 1px solid #ddd; }
         .am-table tbody tr td{ font-size: 18px;color: #595959; border:none;line-height: 1.8; }
         .str-title-font{ font-size: 36px;color: #2d2d2d;letter-spacing: -2px; }
         .am-selected-btn span{ line-height: 20px; }
-        .clickZoneName{
-            display: inline-block;
-            margin-top: 2px;
-            font-weight: 400;
-            font-family: BebasNeue;
-            overflow-y: hidden;
-            font-size: 22px;
-            line-height: 22px;
-            letter-spacing: 0.2px;
-            color: #000;
-            text-align: left;
-            width: 100%;
-        }
+        .am-selected-btn{  }
+        .clickZoneName{ display: inline-block; margin-top: 2px; font-weight: 400; font-family: BebasNeue; overflow-y: hidden; font-size: 22px; line-height: 22px; letter-spacing: 0.2px; color: #000; text-align: left;  width: 100%; }
         .assets_btn_add{ border: solid 1px #ccc; background-color: #fff; }
         @media ( max-width: 992px ){
             .str-sudio span{ letter-spacing: 1px; }
@@ -41,6 +30,7 @@
         }
         .xy-dimmer-active{ overflow: auto;}
         .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
+        .am-selected-btn{ border:1px solid #aeaeae; }
     </style>
 </head>
 <body>
@@ -442,7 +432,8 @@
         }
 
         loadSaleRecord({
-           "bid":bId
+            "bid":bId,
+            "bname" : bname
         });
     });
 </script>

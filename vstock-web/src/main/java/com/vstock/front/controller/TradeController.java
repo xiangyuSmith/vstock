@@ -169,6 +169,7 @@ public class TradeController extends BaseController{
         List<Basicinformation> bList = basicinformationService.findByType(6);
         model.put("bList",bList);
         model.put("tradeList",tradeList);
+        model.put("bname",getParam("bname",""));
         return "/detail/salelist";
     }
 

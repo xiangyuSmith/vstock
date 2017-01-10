@@ -21,19 +21,19 @@
             <div class="am-tabs-bd" style="background-color: #EFEEEC;">
                 <!---------- TYPE_LOG ---------->
                 <div data-tab-panel-0 class="am-tab-panel am-active am-g">
-                    <div class="am-input-group am-input-group-lg am-center am-margin-top-sm am-margin-right-lg am-margin-left-lg">
+                    <div class="am-input-group am-input-group-lg am-center am-margin-top-lg am-margin-right-lg am-margin-left-lg">
                         <input id="mobile" class="am-form-field" type="text" placeholder="手机号" required/>
                     </div>
                     <div class="am-input-group am-input-group-lg am-center am-margin-right-lg am-margin-left-lg">
                         <input id="password" class="am-form-field" type="password" placeholder="密码" required/>
                     </div>
                     <div class="am-u-md-12 am-padding-left-0 am-margin-top-sm am-margin-left-lg">
-                        <p><a href="#" class="am-text-left am-fl" style="color: #646464;">忘记密码？</a></p>
+                        <p><a href="#" class="am-text-left am-fl layout-font-size-14" style="color: #646464;">忘记密码？</a></p>
                     </div>
-                    <div class="am-u-md-12" style="padding: 10px 30px 20px 30px;">
+                    <div class="am-u-md-12" style="padding: 15px 30px 20px 30px;">
                         <a id="prLogin" href="javascript:void(0)" class="am-btn am-btn-danger am-btn-block" style="height: 35px;line-height: 15px;">登录</a>
                     </div>
-                    <div class="am-u-md-12" style="padding: 10px 30px 0px 30px;">
+                    <div class="am-u-md-12" style="padding: 15px 30px 0px 30px;">
                         <div class="am-panel-group am-margin-bottom-0" id="accordion">
                             <div class="am-panel-default">
                                 <div class="">

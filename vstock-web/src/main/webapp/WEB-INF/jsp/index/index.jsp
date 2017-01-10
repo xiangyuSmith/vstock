@@ -54,8 +54,8 @@
 <article class="am-show-lg-only">
     <div class="am-container-sell" style="height: 135px;">
         <div class="am-u-md-6 am-padding-right-sm">
-            <div class="am-u-md-12" style="background-color: #EDFEF1;padding: 3px;">
-                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #3fcd65;">买家</span></div>
+            <div class="am-u-md-12" style="background-color: #eefdf2;padding: 3px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #3fcd65;">买家</span></div>
                 <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
                     <div id="buyBid">
                         <ul id="buyBid1">
@@ -69,8 +69,8 @@
             </div>
         </div>
         <div class="am-u-md-6 am-padding-0">
-            <div class="am-u-md-12" style="background-color: #FEEFEF;padding: 3px;">
-                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span style="font-size: 26px;color: #E26472;">卖家</span></div>
+            <div class="am-u-md-12" style="background-color: #ffeef0;padding: 3px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #E26472;">卖家</span></div>
                 <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
                     <div id="sellBid">
                         <ul id="sellBid1">
@@ -89,25 +89,25 @@
     <div style="margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center am-container-content" >
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-26 am-padding-left-sm" id="frist_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="frist_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
                 <div id="containerA" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;"></span><br/>
+                <span class="layout-font-size-34 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change"></span>
             </div>
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-26 am-padding-left-sm" id="sen_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="sen_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
                 <div id="containerB" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;"></span><br/>
+                <span class="layout-font-size-34 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="nike_change"></span>
             </div>
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-26 am-padding-left-sm" id="th_brand"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="th_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
                 <div id="containerC" style="height: 136px;"></div>
-                <span class="layout-font-size-30 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;"></span><br/>
+                <span class="layout-font-size-34 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change"></span>
             </div>
         </div>
@@ -335,11 +335,13 @@
         },function(res) {
             $('#frist_brand').text("JORDAN");
             if (res.Current_market_value) {
-                $('#jordan_current').text(res.Current_market_value);
+                $('#jordan_current').text(fmoney(res.Current_market_value,0));
                 if (res.Change_range < 0){
                     var price = res.Change_range + "";
+                    $('#jordan_change').css("color","#3fcd65");
                     $('#jordan_change').text("-￥" + price.substring(1,res.Change_range.length) + "(" + res.Percentage_change.toFixed(2) + "%)");
                 }else {
+                    $('#jordan_change').css("color","#E26472");
                     $('#jordan_change').text("+￥" + res.Change_range + "(" + res.Percentage_change.toFixed(2) + "%)");
                 }
             }
@@ -350,11 +352,13 @@
         },function(res) {
             $('#sen_brand').text("NIKE");
             if (res.Current_market_value) {
-                $('#nike_current').text(res.Current_market_value);
+                $('#nike_current').text(fmoney(res.Current_market_value,0));
                 if (res.Change_range < 0){
                     var price = res.Change_range + "";
+                    $('#nike_change').css("color","#3fcd65");
                     $('#nike_change').text("-￥" + price.substring(1,res.Change_range.length) + "(" + res.Percentage_change.toFixed(2) + "%)");
                 }else {
+                    $('#nike_change').css("color","#E26472");
                     $('#nike_change').text("+￥" + res.Change_range + "(" + res.Percentage_change.toFixed(2) + "%)");
                 }
             }
@@ -365,11 +369,13 @@
         },function(res) {
             $('#th_brand').text("ADIDAS");
             if (res.Current_market_value) {
-                $('#yezzy_current').text(res.Current_market_value);
+                $('#yezzy_current').text(fmoney(res.Current_market_value,0));
                 if (res.Change_range < 0){
                     var price = res.Change_range + "";
+                    $('#yezzy_change').css("color","#3fcd65");
                     $('#yezzy_change').text("-￥" + price.substring(1,res.Change_range.length) + "(" + res.Percentage_change.toFixed(2) + "%)");
                 }else {
+                    $('#yezzy_change').css("color","#E26472");
                     $('#yezzy_change').text("+￥" + res.Change_range + "(" + res.Percentage_change.toFixed(2) + "%)");
                 }
             }
