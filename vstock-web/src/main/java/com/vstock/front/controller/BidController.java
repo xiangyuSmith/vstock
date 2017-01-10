@@ -117,4 +117,26 @@ public class BidController extends BaseController{
         param.put("sgin",sgin);
         return param;
     }
+
+    @RequestMapping("ischeck")
+    @ResponseBody
+    public ResultModel ischeck(){
+        ResultModel resultModel = new ResultModel();
+        setLastPage(0,1);
+        double amount = Double.valueOf(getParam("amount", "0"));
+        String size = getParam("size");
+        String type = getParam("type");
+        int basicinfortionId = getParamToInt("bId");
+        Bid bid = new Bid();
+        bid.setBidMoney(new BigDecimal(amount));
+        bid.setBftSize(size);
+        bid.setType(type);
+        bid.setBasicinformationId(basicinfortionId);
+        bid.setStatus(String.valueOf(Bid.STATUS_INIT));
+        Bid bid1 = bidService.findByBid(bid,lagePage);
+        if(bid1 != null){
+            resultModel.setRetCode(resultModel.RET_OK);
+        }
+        return resultModel;
+    }
 }

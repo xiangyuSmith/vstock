@@ -123,6 +123,7 @@
                 <input id="identify-click" type="hidden" data-am-modal="{target: '#my-popup-identify',width: 644}" />
                 <input id="identify-tips-click" type="hidden" data-am-modal="{target: '#my-popup-identify-tips', width: 490}" />
                 <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
+                <input id="isbidcheck-click" type="hidden" data-am-modal="{target: '#my-popup-isbidcheck-tips', width: 490}" />
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
@@ -203,6 +204,7 @@
 <%@include file="../common/popup/buydetailedlist.jsp" %>
 <%@include file="../common/popup/bindIdentify.jsp" %>
 <%@include file="../common/popup/checktips.jsp" %>
+<%@include file="../common/popup/isbidcheck.jsp" %>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
 <script>
     $(function(){
@@ -300,7 +302,7 @@
                 return;
             }
             if (amount == "" || amount == null || amount < 0) {
-                alertshow("出售金额不能为空，且必须大于0");
+                alertTips(3,"购买失败","金额不能为空且必须大于0");
                 return;
             }
             if(type == 0 && yunFee <= 0){
@@ -353,10 +355,33 @@
         });
 
         function box_bid(amount,size,overdueTime,type){
-            if (amount == "" || amount == null || amount < 0) {
-                alertshow("出售金额不能为空，且必须大于0");
+            if (amount == "" || amount == undefined || amount < 0) {
+                alertTips(3,"叫价失败","金额不能为空且必须大于0");
                 return;
             }
+            if(type==0){
+                if($("#seller_buy_size").val() == "" || $("#seller_buy_size").val() == undefined){
+                    alertTips(3,"叫价失败","请选择尺码");
+                    return;
+                }
+            }else{
+                if($("#buyer_sell_size").val() == "" || $("#buyer_sell_size").val() == undefined){
+                    alertTips(3,"叫价失败","请选择尺码");
+                    return;
+                }
+            }
+            sendRequest("/bid/ischeck",{
+                "bId": bId,
+                'size': size,
+                'type': type
+            },function(res){
+                if(res.retCode == 1){
+                    $("#isbidcheck-click").click();
+                }else{
+
+                }
+            });
+            return;
             sendRequest("/bid",{
                 "bname": bname,
                 "bId": bId,
