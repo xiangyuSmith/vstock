@@ -370,18 +370,6 @@
                     return;
                 }
             }
-            sendRequest("/bid/ischeck",{
-                "bId": bId,
-                'size': size,
-                'type': type
-            },function(res){
-                if(res.retCode == 1){
-                    $("#isbidcheck-click").click();
-                }else{
-
-                }
-            });
-            return;
             sendRequest("/bid",{
                 "bname": bname,
                 "bId": bId,
