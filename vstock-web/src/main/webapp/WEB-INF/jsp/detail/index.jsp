@@ -414,36 +414,48 @@
                     return;
                 }
             }
-            sendRequest("/bid",{
-                "bname": bname,
-                "bId": bId,
-                'size': size,
-                'amount': amount,
-                'overdueTime': overdueTime,
+            sendRequest("/bid/isbid",{
+                "bftName": bname,
+                "basicinformationId": bId,
+                'bftSize': size,
                 'type': type
             },function(res){
-                if(res.retCode == 1){
-                    if(type == 0){
-                        alertConfirm("叫价成功","是否去支付?");
-                    }else{
-                        alertConfirm("出价成功","是否去支付?");
-                    }
-                    $("#createPay").click(function(){
-                        sendRequest("/bid/createPay",{
-                            'amount': amount,
-                            'type': type,
-                            "bId": bId,
-                            'size': size,
-                            'bid' : res.data
-                        },function(res){
-                            if(res.retCode == 1){
-                                alertshow("支付成功！！");
-                                location.reload();
+                if (res.retCode > 0){
+                    alertTips(2,"叫价失败","不能重复叫价");
+                }else {
+                    sendRequest("/bid",{
+                        "bname": bname,
+                        "bId": bId,
+                        'size': size,
+                        'amount': amount,
+                        'overdueTime': overdueTime,
+                        'type': type
+                    },function(res){
+                        if(res.retCode == 1){
+                            if(type == 0){
+                                alertConfirm("叫价成功","是否去支付?");
+                            }else{
+                                alertConfirm("出价成功","是否去支付?");
                             }
-                        })
+                            $("#createPay").click(function(){
+                                sendRequest("/bid/createPay",{
+                                    'amount': amount,
+                                    'type': type,
+                                    "bId": bId,
+                                    'size': size,
+                                    'bid' : res.data
+                                },function(res){
+                                    if(res.retCode == 1){
+                                        alertshow("支付成功！！");
+                                        location.reload();
+                                    }
+                                })
+                            });
+                        }
                     });
                 }
             });
+
         }
 
         $('.assets_btn_add').click(function () {

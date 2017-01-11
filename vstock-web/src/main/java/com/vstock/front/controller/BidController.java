@@ -142,4 +142,14 @@ public class BidController extends BaseController{
         }
         return resultModel;
     }
+
+    @RequestMapping("isbid")
+    @ResponseBody
+    public ResultModel isbid(Bid record){
+        ResultModel resultModel = new ResultModel();
+        record.setStatus("10");
+        int i  = bidService.findCount(record);
+        resultModel.setRetCode(i);
+        return resultModel;
+    }
 }

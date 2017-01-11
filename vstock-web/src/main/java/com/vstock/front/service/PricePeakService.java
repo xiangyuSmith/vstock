@@ -84,7 +84,7 @@ public class PricePeakService {
         PricePeak pricePeak = new PricePeak();
         pricePeak.setBasicinformationId(bid);
         pricePeak.setPeakSize(size);
-        pricePeak.setCreateDate(dateTime);
+        pricePeak.setCreateDate(DateUtils.dateToString(DateUtils.getDate(dateTime,"yyyy-MM-dd"),"yyyy-MM-dd"));
         List<PricePeak> pricePeaks = findAll(pricePeak,page);
         if(pricePeaks.size() != 0){
             return pricePeaks.get(0);
@@ -105,13 +105,25 @@ public class PricePeakService {
         int result = 0;
         if(pricePeak != null){
             if(type == 1){
-                if(amount.compareTo(pricePeak.getHighestBid()) == 1){
+                if (pricePeak.getHighestBid() != null && !"".equals(pricePeak.getHighestBid())) {
+                    if (amount.compareTo(pricePeak.getHighestBid()) == 1) {
+                        pricePeak.setHighestBid(amount);
+                        pricePeak.setHighestBidderId(userId);
+                        result = update(pricePeak);
+                    }
+                }else {
                     pricePeak.setHighestBid(amount);
                     pricePeak.setHighestBidderId(userId);
                     result = update(pricePeak);
                 }
             }else if(type == 0){
-                if(amount.compareTo(pricePeak.getMinimumSellingPrice()) == -1){
+                if (pricePeak.getMinimumSellingPrice() != null && !"".equals(pricePeak.getMinimumSellingPrice())) {
+                    if (amount.compareTo(pricePeak.getMinimumSellingPrice()) == -1) {
+                        pricePeak.setMinimumSellingPrice(amount);
+                        pricePeak.setMinimumSellingId(userId);
+                        result = update(pricePeak);
+                    }
+                }else {
                     pricePeak.setMinimumSellingPrice(amount);
                     pricePeak.setMinimumSellingId(userId);
                     result = update(pricePeak);
