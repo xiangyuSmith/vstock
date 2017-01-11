@@ -14,7 +14,7 @@
 </head>
 <body>
 <%@include file="../../layout/top-search.jsp"%>
-<div class="am-g">
+<div>
     <div class="am-container-content" style="overflow:hidden;">
         <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;">
             <input type="hidden" id="url-type" value="${urlType}"/>
