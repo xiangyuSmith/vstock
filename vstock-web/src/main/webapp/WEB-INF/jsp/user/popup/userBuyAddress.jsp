@@ -194,7 +194,7 @@
         });
 
 
-        $("body").on("click",".adder-stn",function(){
+        $("body").on("click","#address-btn",function(){
             var $this = $(this);
             var shopName = $('#shop-name').val();
             var phone = "";

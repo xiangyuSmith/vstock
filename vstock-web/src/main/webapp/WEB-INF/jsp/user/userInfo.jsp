@@ -152,4 +152,34 @@
     if ($('#user-lodaType').val() != ""){
         $('#load_more').css('display','none');
     }
+    $("body").on("click",".adder-stn",function(){
+        var $this = $(this);
+        var shopName = $('#shop-name').val();
+        var phone = "";
+        var phoneNumber = $('#phone-number').val();
+        var areaCode = $('#area-code').val();
+        var phoneCode = $('#phone-code').val();
+        var extensionCode = $('#extension-code').val();
+        if (areaCode){
+            phone = phone + areaCode + "-";
+        }
+        if (phoneCode){
+            phone = phone + phoneCode;
+        }
+        if (extensionCode){
+            phone = phone + extensionCode;
+        }
+        if (phone == "" && phoneNumber == ""){
+            alertTips(3,"编辑地址","请填写手机号或电话");
+            return;
+        }
+        sendAddress({
+            localArea : $('#city-name').val(),
+            detailedAddress : $('#adder-name').val(),
+            consigneeName : shopName,
+            phoneNumber : phoneNumber,
+            landlineNumber : phone,
+            id: $('#adder-id').val()
+        });
+    });
 </script>

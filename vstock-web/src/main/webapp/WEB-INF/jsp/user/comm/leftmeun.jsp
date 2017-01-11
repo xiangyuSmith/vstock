@@ -40,6 +40,15 @@
     window.onload=function(){
         document.getElementById("div1").style.height = document.getElementById("tradeforex_tilie").offsetHeight+"px";
     }
+    function sendAddress(data){
+        sendRequest("/user/saveAdder",data,function(res) {
+            if (res.retCode == 1){
+                window.location.reload();
+            }else {
+                alertTips(2,"服务器繁忙","请重新操作");
+            }
+        });
+    }
     jQuery(function($){
 
         var upMoeny;
@@ -328,14 +337,14 @@
                     }
                     if(address[x].type==1){
                         html += '<tr class="show-tr-address '+checkTr+'">' +
-                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
                                 '<td> '+address[x].consigneeName+'</td>' +
                                 '<td> '+phoneNumber+' </td>' +
                                 '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                 '</tr>'
                     }else{
                         html += '<tr class="show-tr-address '+checkTr+'">' +
-                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'"  /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
                                 '<td> '+address[x].consigneeName+'</td>' +
                                 '<td> '+phoneNumber+' </td>' +
                                 '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
@@ -346,10 +355,12 @@
 
 
                 $("#buyer_submit_trade_S").click(function(){
+                    var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
                     sendRequest("/trade/createTradePay",{
                         tradeId : tradeId,
                         type : type,
-                        amount : amount
+                        amount : amount,
+                        addressId: addressId
                     },function(res) {
                         if (res.retCode == 1){
                             alertTips(1,"","支付成功");
@@ -363,53 +374,12 @@
                         }else {
                             alertTips(2,"支付失败","请重新支付");
                         }
-                        $("#my-popup-buy-userBuyAddress")
+                        $("#my-popup-buy-userBuyAddress").modal('close');
                     });
                 });
             });
             $("#now-seller-buy-detailed").click();
         });
-
-        $("body").on("click",".adder-stn",function(){
-            var $this = $(this);
-            var shopName = $('#shop-name').val();
-            var phone = "";
-            var phoneNumber = $('#phone-number').val();
-            var areaCode = $('#area-code').val();
-            var phoneCode = $('#phone-code').val();
-            var extensionCode = $('#extension-code').val();
-            if (areaCode){
-                phone = phone + areaCode + "-";
-            }
-            if (phoneCode){
-                phone = phone + phoneCode;
-            }
-            if (extensionCode){
-                phone = phone + extensionCode;
-            }
-            if (phone == "" && phoneNumber == ""){
-                alertTips(3,"编辑地址","请填写手机号或电话");
-                return;
-            }
-            sendAddress({
-                localArea : $('#city-name').val(),
-                detailedAddress : $('#adder-name').val(),
-                consigneeName : shopName,
-                phoneNumber : phoneNumber,
-                landlineNumber : phone,
-                id: $('#adder-id').val()
-            });
-        });
-
-        function sendAddress(data){
-            sendRequest("/user/saveAdder",data,function(res) {
-                if (res.retCode == 1){
-                    window.location.reload();
-                }else {
-                    alertTips(2,"服务器繁忙","请重新操作");
-                }
-            });
-        }
 
         $("body").on("click",".userInfo-upsbt",function(){
             var $this = $(this);
