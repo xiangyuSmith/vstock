@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.ILogisticsInformationDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.LogisticsInformation">
+        <id property="id" column="id"/>
+        <result column="tradeId" property="tradeId" jdbcType="INTEGER"/>
+        <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
+        <result column="information" property="information" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
+        <result column="logisticsExplain" property="logisticsExplain" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND li.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="tradeId != null and tradeId != ''">
+                and li.trade_id = #{tradeId,jdbcType=INTEGER}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and li.company_name = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="information != null and information != ''">
+                and li.information = #{information,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and li.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and li.create_date = #{createDate,jdbcType=VARCHAR}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and li.invalid_date = #{invalidDate,jdbcType=VARCHAR}
+            </if>
+            <if test="sign != null and sign != ''">
+                and li.sign = #{sign,jdbcType=VARCHAR}
+            </if>
+            <if test="logisticsExplain != null and logisticsExplain != ''">
+                and li.logistics_explain = #{logisticsExplain,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND li.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeId != null and obj.tradeId != ''">
+                and li.trade_id = #{obj.tradeId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.companyName != null and obj.companyName != ''">
+                and li.company_name = #{obj.companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.information != null and obj.information != ''">
+                and li.information = #{obj.information,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null">
+                and li.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and li.create_date = #{obj.createDate,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and li.invalid_date = #{obj.invalidDate,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and li.sign = #{obj.sign,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.logisticsExplain != null and obj.logisticsExplain != ''">
+                and li.logistics_explain = #{obj.logisticsExplain,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND li.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="tradeId != null and tradeId != ''">
+                and li.trade_id = #{tradeId,jdbcType=INTEGER}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and li.company_name LIKE CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="information != null and information != ''">
+                and li.information = #{information,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and li.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and li.create_date = #{createDate,jdbcType=VARCHAR}
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                and li.invalid_date = #{invalidDate,jdbcType=VARCHAR}
+            </if>
+            <if test="sign != null and sign != ''">
+                and li.sign = #{sign,jdbcType=VARCHAR}
+            </if>
+            <if test="logisticsExplain != null and logisticsExplain != ''">
+                and li.logistics_explain = #{logisticsExplain,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND li.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeId != null and obj.tradeId != ''">
+                and li.trade_id = #{obj.tradeId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.companyName != null and obj.companyName != ''">
+                and li.company_name LIKE CONCAT('%',#{obj.companyName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.information != null and obj.information != ''">
+                and li.information = #{obj.information,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null">
+                and li.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and li.create_date = #{obj.createDate,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.invalidDate != null and obj.invalidDate != ''">
+                and li.invalid_date = #{obj.invalidDate,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and li.sign = #{obj.sign,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.logisticsExplain != null and obj.logisticsExplain != ''">
+                and li.logistics_explain = #{obj.logisticsExplain,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        li.id as id,
+        li.trade_id as tradeId,
+        li.company_name as companyName,
+        li.information as information,
+        li.status as status,
+        li.create_date as createDate,
+        li.invalid_date as invalidDate,
+        li.sign as sign,
+        li.logistics_explain as logisticsExplain,
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.LogisticsInformation" resultType="com.vstock.db.entity.LogisticsInformation">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM logistics_information li
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.LogisticsInformation" resultType="Integer">
+        SELECT COUNT(*) FROM logistics_information li
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `logistics_information`
+        (`id`,`trade_id`,`company_name`,`information`,`status`,`create_date`,`invalid_date`,`sign`,`logistics_explain`)
+        VALUES(null,#{tradeId},#{companyName},#{information},#{status},#{createDate},#{invalidDate},#{sign},#{logisticsExplain})
+    </insert>
+
+    <update id="update" parameterType="com.vstock.db.entity.LogisticsInformation">
+        UPDATE `logistics_information`
+        <set>
+            <if test="tradeId != null and tradeId != ''">
+                trade_id = #{tradeId,jdbcType=INTEGER},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="information != null and information != ''">
+                information = #{information,jdbcType=VARCHAR},
+            </if>
+            <if test="status!= null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                create_date = #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="invalidDate != null and invalidDate != ''">
+                invalid_date = #{invalidDate,jdbcType=VARCHAR},
+            </if>
+            <if test="sign != null and sign != ''">
+                sign = #{sign,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsExplain != null and logisticsExplain != ''">
+                logistics_explain = #{logisticsExplain,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
