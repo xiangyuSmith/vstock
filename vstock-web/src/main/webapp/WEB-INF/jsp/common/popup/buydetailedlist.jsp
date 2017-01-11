@@ -113,6 +113,7 @@
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
+                <div style=" height: 136px;overflow-y: scroll;">
                 <c:choose>
                     <c:when test="${not empty userAddressesList}">
                     <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
@@ -167,6 +168,7 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
+                </div>
             </div>
             <div class="am-u-md-8"></div>
             <div class="am-u-md-4 am-text-left">

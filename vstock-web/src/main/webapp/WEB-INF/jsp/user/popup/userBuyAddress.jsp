@@ -5,7 +5,7 @@
     .set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
     .set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
 </style>
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-userBuyAddress">
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 200px;">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #FF5A60;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
@@ -84,11 +84,11 @@
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm" style="border-bottom: 1px solid #ccc;"></div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18">总计：</span>
-                        <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right countMoney">1600</span>
+                        <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right countMoney"></span>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
                         <span class="am-u-md-7 am-padding-0 layout-font-size-18">支付金额：</span>
-                        <span class="am-u-md-5 am-padding-0 layout-font-size-20 am-text-right countMoney" style="font-weight: bold;color: #EA5957;">1600</span>
+                        <span class="am-u-md-5 am-padding-0 layout-font-size-20 am-text-right countMoney" style="font-weight: bold;color: #EA5957;"></span>
                     </div>
                 </div>
             </div>
@@ -100,11 +100,13 @@
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
-                <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
-                    <tbody id="new-address-tbody">
+                <div style=" height: 136px;overflow-y: scroll;">
+                    <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
+                        <tbody id="new-address-tbody">
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <div>
                     <a id="loading-address" href="javascript:;">其他收货地址</a>
                     <div id="loading-img" class="am-text-center" style="display: none;">
@@ -116,11 +118,9 @@
             <div class="am-u-md-4 am-text-left">
                 <div class="am-padding-sm">
                     <div class="am-text-center am-margin-top-xs">
-                        <a href="javascript:;" id="buyer_submit_trade_" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
+                        <a href="javascript:;" id="buyer_submit_trade_S" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
                     </div>
                 </div>
-
-
 
             </div>
         </div>

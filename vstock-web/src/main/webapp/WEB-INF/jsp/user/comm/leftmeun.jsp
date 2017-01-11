@@ -301,6 +301,7 @@
                 $("#buyer_detailed_amount").val(res.data.trade.transactionMoney);
                 $("#yunFee").text(res.data.trade.tradeFreight);
                 $("#buyer_detailed_size").val(size);
+                $(".countMoney").val();
                 if(res.data.pricePeak1 == undefined){
                     $(".pricePeak1HighestBid").text("-");
                 }else{
@@ -312,8 +313,8 @@
                     $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
                 }
                 $("body").addClass("xy-dimmer-active");
-//                $("#my-popup-buy-userBuyAddress").addClass("xy-dimmer-detailed");
                 var html = "";
+                $("#new-address-tbody").html("");
                 for(var x = 0;x < address.length;x++){
                     var checkTr = "";
                     var phoneNumber = "";
@@ -343,28 +344,30 @@
                 }
                 $("#new-address-tbody").append(html);
 
-//                $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
+
+                $("#buyer_submit_trade_S").click(function(){
+                    sendRequest("/trade/createTradePay",{
+                        tradeId : tradeId,
+                        type : type,
+                        amount : amount
+                    },function(res) {
+                        if (res.retCode == 1){
+                            alertTips(1,"","支付成功");
+                            $this.parent().parent().parent().removeClass("am-active");
+                            $this.parent().parent().parent().children().first().attr("disabled", true);
+                            if (type == 2){
+                                ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                            }else {
+                                ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                            }
+                        }else {
+                            alertTips(2,"支付失败","请重新支付");
+                        }
+                        $("#my-popup-buy-userBuyAddress")
+                    });
+                });
             });
             $("#now-seller-buy-detailed").click();
-            return;
-            sendRequest("/trade/createTradePay",{
-                tradeId : tradeId,
-                type : type,
-                amount : amount
-            },function(res) {
-                if (res.retCode == 1){
-                    alertTips(1,"","支付成功");
-                    $this.parent().parent().parent().removeClass("am-active");
-                    $this.parent().parent().parent().children().first().attr("disabled", true);
-                    if (type == 2){
-                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
-                    }else {
-                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
-                    }
-                }else {
-                    alertTips(2,"支付失败","请重新支付");
-                }
-            });
         });
 
         $("body").on("click",".adder-stn",function(){
