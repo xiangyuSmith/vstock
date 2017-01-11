@@ -174,6 +174,9 @@
             <if test="obj.bidId != null and obj.bidId != ''">
                 and t.bid_id = #{obj.bidId,jdbcType=INTEGER}
             </if>
+            <if test="obj.tradeNo != null and obj.tradeNo != ''">
+                and t.trade_no = #{obj.tradeNo,jdbcType=VARCHAR}
+            </if>
             <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
                 and t.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
             </if>
@@ -385,5 +388,45 @@
         select tyf.id,tyf.city_name as cityName,tyf.fee_money as feeMoney from trade_yun_fee tyf
         where tyf.status = 1
     </select>
+
+    <update id="updateAll" parameterType="com.vstock.db.entity.Trade">
+        UPDATE `trade`
+        <set>
+            <if test="sellerId != null and sellerId != ''">
+                seller_id = #{sellerId,jdbcType=INTEGER},
+            </if>
+            <if test="buyersId != null and buyersId != ''">
+                buyers_id = #{buyersId,jdbcType=INTEGER},
+            </if>
+            <if test="bidId != null and bidId != ''">
+                bid_id = #{bidId,jdbcType=INTEGER},
+            </if>
+            <if test="basicinformationId != null and basicinformationId != ''">
+                basicinformation_id = #{basicinformationId,jdbcType=INTEGER},
+            </if>
+            <if test="transactionMoney != null and transactionMoney != ''">
+                transaction_money = #{transactionMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeFreight != null and tradeFreight != ''">
+                trade_freight = #{tradeFreight,jdbcType=DECIMAL},
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                courier_number = #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionDate != null and transactionDate != ''">
+                transaction_date = #{transactionDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sign != null and sign != ''">
+                sign = #{sign,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>

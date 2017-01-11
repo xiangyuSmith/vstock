@@ -117,7 +117,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${trade.status == 20}">
-                                            <a href="javascript:void(0);" class="sbt-on" data-am-modal="{target: '#deliverDoods-pop', width: 350}">发货</a>
+                                            <a href="javascript:void(0);" data-id="${trade.id}" class="sbt-on deliver-btn" data-am-modal="{target: '#deliverDoods-pop', width: 450}">发货</a>
                                         </c:when>
                                         <c:otherwise>
                                             <a href="javascript:void(0);" class="sbt-on stn-details" data_id="${trade.id}">详情</a>
@@ -166,6 +166,25 @@
             $('#startTime').val($('#dt').val());
             $('#endTime').val($('#dtd').val());
             $('#trateList').submit();
+        });
+
+        var trade = "";
+        $('.deliver-btn').click(function () {trade = $(this).attr('data-id');});
+
+        $('.logistics-btn').click(function () {
+            $.post("/trade/saveLogisticsIn",{
+                'id' : trade,
+                'companyName': $('#logisticsIn-name').val(),
+                'courierNumber' : $('#logisticsIn-number').val()
+            },function(res){
+                if (res.reGode == 1){
+                    $('.logistics-quit').click();
+                    window.location.reload();
+                    alert("发货成功！");
+                }else {
+                    alert("发货失败，重新发货！");
+                }
+            });
         });
 
     });

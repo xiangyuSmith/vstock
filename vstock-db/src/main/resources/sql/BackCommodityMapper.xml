@@ -152,7 +152,7 @@
             <if test="obj.consignee != null and obj.consignee != ''">
                 and b.consignee LIKE CONCAT('%',#{obj.consignee,jdbcType=VARCHAR},'%')
             </if>
-            <if test="obj.status != null">
+            <if test="obj.status != null and obj.status != '-1'">
                 and b.status = #{obj.status,jdbcType=INTEGER}
             </if>
             <if test="obj.express != null and obj.express != ''">
@@ -192,6 +192,7 @@
         <include refid="Base_Column_List"/>
         FROM back_commodity b
         <include refid="SelectAll_Where_Clause"/>
+        ORDER BY b.id DESC
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.BackCommodity" resultType="Integer">
@@ -236,8 +237,8 @@
         VALUES(null,#{btfId},#{tradeNo},#{backPerson},#{consignee},#{status},#{express},#{courierNumber},#{createTime},#{updateTime},#{reasons})
     </insert>
 
-    <update id="update">
-        UPDATE `back_commodity` b SET
+    <update id="update" parameterType="com.vstock.db.entity.BackCommodity">
+        UPDATE `back_commodity` b
         <set>
             <if test="btfId != null and btfId != ''">
                 b.btfId = #{btfId,jdbcType=INTEGER},
@@ -251,7 +252,7 @@
             <if test="consignee != null and consignee != ''">
                 b.consignee = #{consignee,jdbcType=VARCHAR},
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 b.status = #{status,jdbcType=INTEGER},
             </if>
             <if test="express != null and express != ''">

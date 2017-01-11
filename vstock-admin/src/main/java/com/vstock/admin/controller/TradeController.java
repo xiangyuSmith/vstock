@@ -1,10 +1,10 @@
 package com.vstock.admin.controller;
 
 import com.vstock.admin.service.BidService;
+import com.vstock.admin.service.ExpressService;
+import com.vstock.admin.service.LogisticsInformationService;
 import com.vstock.admin.service.TradeService;
-import com.vstock.db.entity.Basicinformation;
-import com.vstock.db.entity.Bid;
-import com.vstock.db.entity.Trade;
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.server.util.StatusUtil;
@@ -34,10 +34,17 @@ public class TradeController {
     @Autowired
     BidService bidService;
 
+    @Autowired
+    ExpressService expressService;
+
+    @Autowired
+    LogisticsInformationService logisticsInformationService;
+
     @RequestMapping("index")
     public String index(Trade record, HttpServletRequest request, ModelMap model) {
         List<String> sizeList = new ArrayList<String>();
         List<Trade> tradeList = new ArrayList<Trade>();
+        Express express = new Express();
         Page page = new Page();
 //        record = tradeService.btfUser(record);
         String pageNow = request.getParameter("pageNow");
@@ -54,10 +61,12 @@ public class TradeController {
             sizeList.add(Basicinformation.sizes[i]);
         }
         List<List<String>> statusList = tradeService.status();
+        List<Express> expressList = expressService.findAll(express);
         record.setTransactionDate(startTime);
         record.setUpdateDate(endTime);
         model.put("tradeList",tradeList);
         model.put("statusList",statusList);
+        model.put("expressList",expressList);
         model.put("page",page);
         model.put("trade",record);
         model.put("sizeList",sizeList);
@@ -118,6 +127,28 @@ public class TradeController {
         model.put("bidList",bidList);
         model.put("linkAddress",linkAddress);
         return "admin/trade/bidIndex";
+    }
+
+    @RequestMapping("saveLogisticsIn")
+    @ResponseBody
+    public Map<String,Object> saveLogisticsIn(HttpServletRequest request){
+        Map<String,Object> param = new HashMap<String,Object>();
+        LogisticsInformation record = new LogisticsInformation();
+        Trade trade = new Trade();
+        String id = request.getParameter("id");
+        String companyName = request.getParameter("companyName");
+        String courierNumber = request.getParameter("courierNumber");
+        trade.setId(Integer.parseInt(id));
+        trade.setCourierNumber(courierNumber);
+        trade.setStatus(30);
+        record.setTradeId(Integer.parseInt(id));
+        record.setCompanyName(companyName);
+        int i = logisticsInformationService.save(record);
+        if (i > 0) {
+            i = tradeService.save(trade);
+        }
+        param.put("reGode",i);
+        return param;
     }
 
 }

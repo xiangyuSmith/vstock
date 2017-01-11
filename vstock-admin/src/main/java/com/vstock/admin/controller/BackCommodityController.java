@@ -2,9 +2,11 @@ package com.vstock.admin.controller;
 
 import com.vstock.admin.service.BackCommodityService;
 import com.vstock.admin.service.BasicinformationService;
+import com.vstock.admin.service.ExpressService;
 import com.vstock.admin.service.TradeService;
 import com.vstock.db.entity.BackCommodity;
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.Express;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.Page;
 import com.vstock.server.util.StatusUtil;
@@ -35,8 +37,12 @@ public class BackCommodityController {
     @Autowired
     TradeService tradeService;
 
+    @Autowired
+    ExpressService expressService;
+
     @RequestMapping("index")
     public String index(BackCommodity record, HttpServletRequest request, ModelMap model) {
+        Express express = new Express();
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String pageNow = request.getParameter("pageNow");
@@ -44,6 +50,8 @@ public class BackCommodityController {
         Page page = new Page(dCListCount,pageNow);
         List<BackCommodity> backCommodityList = backCommodityService.findAndBtf(record,startTime,endTime,page);
         List<BackCommodity> statusList = StatusUtil.backStatus();
+        List<Express> expressList = expressService.findAll(express);
+        model.put("expressList",expressList);
         model.put("backCommodityList",backCommodityList);
         model.put("statusList",statusList);
         model.put("page",page);
@@ -55,6 +63,28 @@ public class BackCommodityController {
         String type = request.getParameter("type");
         model.put("type",type);
         return "admin/trade/insertBack";
+    }
+
+    @RequestMapping("backList")
+    public String backList(BackCommodity record, HttpServletRequest request, ModelMap model) {
+        String btfName = request.getParameter("btfName");
+        String startTime = request.getParameter("startTime");
+        String endTime = request.getParameter("endTime");
+        BackCommodity backCommodity = new BackCommodity();
+        backCommodity.setId(record.getId());
+        Page page = new Page(10,"1");
+        List<BackCommodity> backCommodityList = backCommodityService.findAndBtf(backCommodity,startTime,endTime,page);
+        if (backCommodityList.size() > 0){
+            backCommodity = backCommodityList.get(0);
+        }
+        List<BackCommodity> statusList = StatusUtil.backStatus();
+        model.put("backCommodity",backCommodity);
+        model.put("statusList",statusList);
+        model.put("record",record);
+        model.put("btfName",btfName);
+        model.put("startTime",startTime);
+        model.put("endTime",endTime);
+        return "admin/trade/backList";
     }
 
     @RequestMapping("findBtf")
@@ -91,10 +121,21 @@ public class BackCommodityController {
     }
 
     @RequestMapping("saveBackCommodity")
-    public ModelMap saveBackCommodity(BackCommodity record, HttpServletRequest request, ModelMap model) {
+    @ResponseBody
+    public Map<String, Object> saveBackCommodity(BackCommodity record, HttpServletRequest request) {
+        Map<String, Object> param = new HashMap<String, Object>();
         int i = backCommodityService.save(record);
-        model.put("reGode",i);
-        return model;
+        if (record.getStatus() != null && !"".equals(record.getStatus())) {
+            Trade trade = new Trade();
+            trade.setTradeNo(record.getTradeNo());
+            trade = tradeService.findTrade(trade);
+            trade.setStatus(41);
+            if (record.getStatus() == 10) {
+                i = tradeService.save(trade);
+            }
+        }
+        param.put("reGode",i);
+        return param;
     }
 
 }

@@ -147,10 +147,21 @@
             var tradeNo = $('#trade_no').val();
             var reasons = $('#reasons').val();
             $.post("/backCommodity/saveBackCommodity",{
+                'tradeNo' : tradeNo,
+                'backPerson' : backPerson,
                 'consignee': consignee,
+                'status' : 0,
                 'btfId' : $('#btfId').val(),
-                'btfName' : $('#btfnames').val()
+                'btfName' : btfName,
+                'reasons' : reasons
             },function(res){
+                if (res.reGode > 0){
+                    $('#qiut-sbt').click();
+                    $('#qiut-sbt').click();
+                    window.location.reload();
+                }else {
+                    alert("添加失败，重新操作！");
+                }
             });
         })
 

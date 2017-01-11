@@ -13,15 +13,15 @@
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">退货人：</span>
-                            <input type="text" name="buyersName" id="buyersId" class="am-input-lg am-padding-left-xs" placeholder="退货人"/>
+                            <input type="text" name="backPerson" id="backPersonId" class="am-input-lg am-padding-left-xs" placeholder="退货人"/>
                         </div>
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">收货人：</span>
-                            <input type="text" name="sellerName" id="sellerId" class="am-input-lg am-padding-left-xs" placeholder="收货人"/>
+                            <input type="text" name="consignee" id="consigneeId" class="am-input-lg am-padding-left-xs" placeholder="收货人"/>
                         </div>
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">订单号：</span>
-                            <input type="text" name="bftName" id="bftId" class="am-input-lg am-padding-left-xs" placeholder="订单号"/>
+                            <input type="text" name="tradeNo" id="tradeNoId" class="am-input-lg am-padding-left-xs" placeholder="订单号"/>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
@@ -88,18 +88,30 @@
                             <tr>
                                 <td>${backCommodity.backPerson}</td>
                                 <td>${backCommodity.consignee}</td>
-                                <td>${backCommodity.bftName}</td>
+                                <td>${backCommodity.btfName}</td>
                                 <td>${backCommodity.tradeNo}</td>
                                 <c:if test="${not empty statusList}">
                                     <c:forEach items="${statusList}" var="status">
                                         <c:if test="${backCommodity.status == status.status}">
-                                            <td>${status.bftName}</td>
+                                            <td>${status.btfName}</td>
                                         </c:if>
                                     </c:forEach>
                                 </c:if>
                                 <td>${backCommodity.createTime}</td>
                                 <td>${backCommodity.updateTime}</td>
-                                <td><a href="javascript:void(0);" class="sbt-on" data_id="${backCommodity.id}">详情</a></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${backCommodity.status == 10}">
+                                            <a href="javascript:void(0);" data-id="${backCommodity.id}" class="sbt-on deliver-btn" data-am-modal="{target: '#deliverDoods-pop', width: 450}">发货</a>
+                                        </c:when>
+                                        <c:when test="${backCommodity.status == 11}">
+                                            <a href="javascript:void(0);" data-id="${backCommodity.id}" class="sbt-on deliver-close">关闭</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="javascript:void(0);" class="sbt-on stn-details" data_id="${backCommodity.id}">详情</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -112,17 +124,18 @@
             </div>
         </div>
     </div>
-    <%--<form action="/trade/tradeList" id="trateList" method="post">--%>
-        <%--<input type="hidden" id="id" name="id"/>--%>
-        <%--<input type="hidden" name="buyersName" id="buyId"/>--%>
-        <%--<input type="hidden" name="sellerName" id="sellId"/>--%>
-        <%--<input type="hidden" name="bftName" id="bId"/>--%>
-        <%--<input type="hidden" name="bftSize" id="bSize"/>--%>
-        <%--<input type="hidden" name="status" id="statuse"/>--%>
-        <%--<input type="hidden" id="startTime" name="startTime"/>--%>
-        <%--<input type="hidden" id="endTime" name="endTime"/>--%>
-    <%--</form>--%>
+    <form action="/backCommodity/backList" id="trateList" method="post">
+        <input type="hidden" name="id" id="id"/>
+        <input type="hidden" name="backPerson" id="backPerson"/>
+        <input type="hidden" name="consignee" id="consignee"/>
+        <input type="hidden" name="tradeNo" id="tradeNo"/>
+        <input type="hidden" name="btfName" id="btfName"/>
+        <input type="hidden" name="status" id="statuse"/>
+        <input type="hidden" id="startTime" name="startTime"/>
+        <input type="hidden" id="endTime" name="endTime"/>
+    </form>
 </div>
+<jsp:include page="../common/deliverDoods.jsp" flush="true"/>
 <jsp:include page="../common/bottom.jsp" flush="true"/>
 <script type="text/javascript">
     jQuery(function($){
@@ -131,17 +144,52 @@
 //        var div2 = "#dtd";
 //        getDatePic(div1,div2);
 
-//        $('.sbt-on').click(function () {
-//            $('#id').val($(this).attr("data_id"));
-//            $('#buyId').val($('#buyersId').val());
-//            $('#sellId').val($('#sellerId').val());
-//            $('#bId').val($('#bftId').val());
-//            $('#bSize').val($('#bftSize').val());
-//            $('#statuse').val($('#status').val());
-//            $('#startTime').val($('#dt').val());
-//            $('#endTime').val($('#dtd').val());
-//            $('#trateList').submit();
-//        });
+        $('.stn-details').click(function () {
+            $('#id').val($(this).attr("data_id"));
+            $('#backPerson').val($('#backPersonId').val());
+            $('#consignee').val($('#consigneeId').val());
+            $('#tradeNo').val($('#tradeNoId').val());
+            $('#btfName').val($('#bftName').val());
+            $('#statuse').val($('#status').val());
+            $('#startTime').val($('#dt').val());
+            $('#endTime').val($('#dtd').val());
+            $('#trateList').submit();
+        });
+
+        var backId = "";
+        $('.deliver-btn').click(function () {backId = $(this).attr('data-id');});
+
+        $('.logistics-btn').click(function () {
+            $.post("/backCommodity/saveBackCommodity",{
+                'id' : backId,
+                'status' : 20,
+                'express': $('#logisticsIn-name').val(),
+                'courierNumber' : $('#logisticsIn-number').val()
+            },function(res){
+                if (res.reGode == 1){
+                    $('.logistics-quit').click();
+                    window.location.reload();
+                    alert("发货成功！");
+                }else {
+                    alert("发货失败，重新发货！");
+                }
+            });
+        });
+
+        $('.deliver-close').click(function () {
+            var id = $(this).attr('data-id');
+            $.post("/backCommodity/saveBackCommodity",{
+                'id' : id,
+                'status' : 40
+            },function(res){
+                if (res.reGode == 1){
+                    window.location.reload();
+                    alert("关闭申请单成功！");
+                }else {
+                    alert("关闭申请单失败，重新操作！");
+                }
+            });
+        });
 
     });
 </script>

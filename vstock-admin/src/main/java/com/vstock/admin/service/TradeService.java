@@ -73,6 +73,13 @@ public class TradeService {
     public int insert(Trade record){return tradeDao.insert(record);}
 
     /**
+     * 修改所有
+     * @param record
+     * @return
+     */
+    public int updateAll(Trade record){return tradeDao.updateAll(record);}
+
+    /**
      * 修改
      * @param record
      * @return
@@ -179,7 +186,7 @@ public class TradeService {
         if (record.getId() == null && "".equals(record.getId())){
             return this.insert(record);
         }else {
-            return this.update(record);
+            return this.updateAll(record);
         }
     }
 

@@ -155,7 +155,7 @@
         li.create_date as createDate,
         li.invalid_date as invalidDate,
         li.sign as sign,
-        li.logistics_explain as logisticsExplain,
+        li.logistics_explain as logisticsExplain
     </sql>
 
     <select id="findAll" parameterType="com.vstock.db.entity.LogisticsInformation" resultType="com.vstock.db.entity.LogisticsInformation">
