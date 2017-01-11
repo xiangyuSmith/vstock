@@ -10,6 +10,8 @@
         .am-table>tbody>tr>td{vertical-align: inherit;}
         .cc input:focus {outline:none;}
         .leftmenunInfo li { padding:0 5px; }
+        .xy-dimmer-active{ overflow: auto;}
+        .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
     </style>
 </head>
 <body>
@@ -291,6 +293,7 @@
                 "size" : size
             },function(res){
                 var site_imgUrl = $("#site_url").val();
+                var address = res.data.userAddressesList;
                 $("#buyProductImgId").attr("src",site_imgUrl+res.data.basicinformation.smallImgUrl);
                 $(".basicinformationBrand").text(res.data.basicinformation.brand);
                 $(".basicinformationName").text(res.data.basicinformation.name);
@@ -308,6 +311,38 @@
                 }else{
                     $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
                 }
+                $("body").addClass("xy-dimmer-active");
+//                $("#my-popup-buy-userBuyAddress").addClass("xy-dimmer-detailed");
+                var html = "";
+                for(var x = 0;x < address.length;x++){
+                    var checkTr = "";
+                    var phoneNumber = "";
+                    if(address[x].type == 1){
+                        checkTr = "checked-tr";
+                    }
+                    if(address[x].phoneNumber != undefined){
+                        phoneNumber = address[x].phoneNumber;
+                    }else{
+                        phoneNumber = "--";
+                    }
+                    if(address[x].type==1){
+                        html += '<tr class="show-tr-address '+checkTr+'">' +
+                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                '<td> '+address[x].consigneeName+'</td>' +
+                                '<td> '+phoneNumber+' </td>' +
+                                '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                '</tr>'
+                    }else{
+                        html += '<tr class="show-tr-address '+checkTr+'">' +
+                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                '<td> '+address[x].consigneeName+'</td>' +
+                                '<td> '+phoneNumber+' </td>' +
+                                '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                '</tr>'
+                    }
+                }
+                $("#new-address-tbody").append(html);
+
 //                $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
             });
             $("#now-seller-buy-detailed").click();

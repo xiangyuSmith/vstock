@@ -234,6 +234,15 @@ public class TradeController extends BaseController{
         Basicinformation basicinformation = basicinformationService.findObj(b);
         PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bidId,size,1,lagePage);
         PricePeak pricePeak2 = pricePeakService.getHighestAndlowest(bidId,size,2,lagePage);
+        if( WebUtils.getSessionAttribute(request, User.SESSION_USER_ID) != null){
+            int uuid = Integer.parseInt(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID)));
+            UserAddress r = new UserAddress();
+            int startPos = 3;
+            String type = "0";
+            r.setUserId(uuid);
+            List<UserAddress> addressesList = userAddressService.findAllUserAddress(r,startPos,type);
+            params.put("userAddressesList",addressesList);
+        }
         params.put("pricePeak1",pricePeak1);
         params.put("pricePeak2",pricePeak2);
         params.put("basicinformation",basicinformation);

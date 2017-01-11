@@ -100,63 +100,17 @@
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
+                <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
+                    <tbody id="new-address-tbody">
 
-
-
-                <c:choose>
-                    <c:when test="${not empty userAddressesList}">
-                    <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
-                            <c:forEach items="${userAddressesList}" var="userAddresses" varStatus="idx">
-                                <tr class="show-tr-address <c:if test="${userAddresses.type == 1}">checked-tr</c:if>" <c:if test="${idx.index>2}">style="display:none;"</c:if>>
-                                    <td>
-                                        <input id="doc-ipt-o-${userAddresses.id}" type="radio" data-userAddress="${userAddresses.id}" name="check-address" <c:if test="${userAddresses.type == 1}">checked="checked"</c:if> />
-                                    </td>
-                                    <td>
-                                        <label for="doc-ipt-o-${userAddresses.id}" style="font-weight: normal;">
-                                                <span class="am-margin-right-xs default-span-tips" style="color:#E77779;<c:if test="${userAddresses.type != 1}">display: none;</c:if>">[默认]</span>
-                                                <span class="addressInfo">${userAddresses.localArea} ${userAddresses.detailedAddress}</span>
-                                        </label>
-                                    </td>
-                                    <td><span>${userAddresses.consigneeName}</span></td>
-                                    <td><span>
-                                        <c:choose>
-                                            <c:when test="${not empty userAddresses.phoneNumber}">
-                                                ${userAddresses.phoneNumber}
-                                            </c:when>
-                                            <c:otherwise>
-                                                --
-                                            </c:otherwise>
-                                        </c:choose>
-                                        </span>
-                                    </td>
-                                    <td class="do" style="width: 13%;">
-                                        <c:choose>
-                                            <c:when test="${userAddresses.type == 0}">
-                                                <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" style="display: none;" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
-                                                <div><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
-                                                <div style="display: none;"><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                    </table>
-                    <div>
-                        <a id="loading-address" href="javascript:;">其他收货地址</a>
-                        <div id="loading-img" class="am-text-center" style="display: none;">
-                            <img src="/assets/i/loading.gif" />
-                        </div>
+                    </tbody>
+                </table>
+                <div>
+                    <a id="loading-address" href="javascript:;">其他收货地址</a>
+                    <div id="loading-img" class="am-text-center" style="display: none;">
+                        <img src="/assets/i/loading.gif" />
                     </div>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="am-text-center">
-                            <span style="color:#8D8D8D;">亲，您还没有添加收货地址哦 ~</span>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+                </div>
             </div>
             <div class="am-u-md-8"></div>
             <div class="am-u-md-4 am-text-left">
@@ -172,6 +126,7 @@
         </div>
     </div>
 </div>
+<%@include file="../../common/address/addersAddorEdit.jsp" %>
 <script>
     $(function(){
         var $editAddress = "";
@@ -230,7 +185,6 @@
                 }
             });
         });
-
         $(".edit-address").click(function(){
            $("#up-address-title").text("编辑");
         });
