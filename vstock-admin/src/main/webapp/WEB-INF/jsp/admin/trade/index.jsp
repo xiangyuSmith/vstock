@@ -114,7 +114,16 @@
                                 </c:if>
                                 <td>${trade.transactionDate}</td>
                                 <td>${trade.updateDate}</td>
-                                <td><a href="javascript:void(0);" class="sbt-on" data_id="${trade.id}">详情</a></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${trade.status == 20}">
+                                            <a href="javascript:void(0);" class="sbt-on" data-am-modal="{target: '#deliverDoods-pop', width: 350}">发货</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="javascript:void(0);" class="sbt-on stn-details" data_id="${trade.id}">详情</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -138,6 +147,7 @@
         <input type="hidden" id="endTime" name="endTime"/>
     </form>
 </div>
+<jsp:include page="../common/deliverDoods.jsp" flush="true"/>
 <jsp:include page="../common/bottom.jsp" flush="true"/>
 <script type="text/javascript">
     jQuery(function($){
@@ -146,7 +156,7 @@
 //        var div2 = "#dtd";
 //        getDatePic(div1,div2);
 
-        $('.sbt-on').click(function () {
+        $('.stn-details').click(function () {
             $('#id').val($(this).attr("data_id"));
             $('#buyId').val($('#buyersId').val());
             $('#sellId').val($('#sellerId').val());

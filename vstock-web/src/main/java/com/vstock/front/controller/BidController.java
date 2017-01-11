@@ -122,20 +122,23 @@ public class BidController extends BaseController{
     @ResponseBody
     public ResultModel ischeck(){
         ResultModel resultModel = new ResultModel();
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         setLastPage(0,1);
-        double amount = Double.valueOf(getParam("amount", "0"));
+//        double amount = Double.valueOf(getParam("amount", "0"));
         String size = getParam("size");
         String type = getParam("type");
         int basicinfortionId = getParamToInt("bId");
         Bid bid = new Bid();
-        bid.setBidMoney(new BigDecimal(amount));
+//        bid.setBidMoney(new BigDecimal(amount));
         bid.setBftSize(size);
+        bid.setUserId(Integer.parseInt(uid));
         bid.setType(type);
         bid.setBasicinformationId(basicinfortionId);
         bid.setStatus(String.valueOf(Bid.STATUS_INIT));
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 != null){
-            resultModel.setRetCode(resultModel.RET_OK);
+            resultModel.setRetCode(bid1.getId());
+            resultModel.setRetMsg(bid1.getBidMoney().toString());
         }
         return resultModel;
     }

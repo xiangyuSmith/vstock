@@ -194,7 +194,7 @@ public class BidService {
         }
         if (status != null && !"".equals(status)) {
             record.setStatus(status);
-            if (this.isBidSign(Integer.parseInt(id),Integer.parseInt(btfId),size,Double.parseDouble(bidMoney),VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY))) {
+            if (this.isBidSign(Integer.parseInt(id),Integer.parseInt(btfId),size,Double.parseDouble(bidMoney),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY))) {
                 return this.update(record);
             }
         }else {

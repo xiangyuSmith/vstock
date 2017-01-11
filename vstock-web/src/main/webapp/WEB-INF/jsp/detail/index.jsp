@@ -123,7 +123,7 @@
                 <input id="identify-click" type="hidden" data-am-modal="{target: '#my-popup-identify',width: 644}" />
                 <input id="identify-tips-click" type="hidden" data-am-modal="{target: '#my-popup-identify-tips', width: 490}" />
                 <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
-                <input id="isbidcheck-click" type="hidden" data-am-modal="{target: '#my-popup-isbidcheck-tips', width: 490}" />
+                <input id="isbidcheck-click" type="hidden" data-am-modal="{target: '#my-popup-isbidcheck-tips', width: 530}" />
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
@@ -309,9 +309,55 @@
                 alertTips(3,"购买失败","运费价格有误");
                 return;
             }
+
+            var dataType = "";
+            if (type == 0){
+                dataType = 1;
+            }else {
+                dataType = 0;
+            }
+
+            sendRequest("/bid/ischeck",{
+                'bId': bId,
+                'size' : size,
+                'type': dataType
+            },function(res){
+                if(res.retCode > 0){
+                    $('#isbidcheck-click').click();
+                    $(".goAuthentication").click(function(){
+                        var $this = $(this);
+                        var data_type = $this.attr('data-type');
+                        if (data_type == 1){
+                            sendRequest("/bid/updateBid",{
+                                'id' : res.retCode,
+                                'btfId': bId,
+                                'status' : "11",
+                                'bidMoney' : res.retMsg,
+                                'endDate' : TimeObjectUtil.formatterDate(new Date()),
+                                'size' : size,
+                                'type': dataType
+                            },function(param){
+                                if (param.sgin > 0){
+                                    alertTips(1,"","关闭成功,去支付");
+                                    $('#isbidcheck-stn').click();
+                                }else {
+                                    alertTips(3,"","关闭失败,下单失败");
+                                }
+                            });
+                        }else {
+                            paybox_create_trade(amount,size,type,yunFee,addressId);
+                        }
+                    });
+                }else {
+                    paybox_create_trade(amount,size,type,yunFee,addressId);
+                }
+            });
+        }
+
+        function paybox_create_trade(amount,size,type,yunFee,addressId) {
             sendRequest("/trade",{
-                "bname": bname,
-                "bId": bId,
+                'bname': bname,
+                'bId': bId,
                 'amount': amount,
                 'yunFee' : yunFee,
                 'size' : size,
