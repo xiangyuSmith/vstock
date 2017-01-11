@@ -309,14 +309,12 @@
                 alertTips(3,"购买失败","运费价格有误");
                 return;
             }
-
             var dataType = "";
             if (type == 0){
                 dataType = 1;
             }else {
                 dataType = 0;
             }
-
             sendRequest("/bid/ischeck",{
                 'bId': bId,
                 'size' : size,

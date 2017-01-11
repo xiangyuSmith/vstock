@@ -51,29 +51,31 @@
                         </c:if>
                     </td>
                     <td>
-                        <div class="am-dropdown" data-am-dropdown>
-                            <c:choose>
-                                <c:when test="${bid.status == 0 || bid.status == 10 || bid.status == 1}">
-                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
-                                </c:otherwise>
-                            </c:choose>
+                        <div class="doc-dropdown-justify-js">
+                            <div class="am-dropdown doc-dropdown-js">
+                                <c:choose>
+                                    <c:when test="${bid.status == 0 || bid.status == 10 || bid.status == 1}">
+                                        <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                    </c:otherwise>
+                                </c:choose>
 
-                            <ul class="am-dropdown-content">
-                                <c:if test="${bid.status == 0}">
-                                    <li><a class="am-btn am-btn-xs am-text-left deliver-bid-goods" bid-id="${bid.id}" bft-id="${bid.basicinformationId}" data-type="${bid.type}" bid_type="0" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
-                                </c:if>
-                                <c:if test="${bid.status == 10}">
-                                    <li><a class="am-btn am-btn-xs am-text-left sale-up" data_type="0" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
-                                    <li><a class="am-btn am-btn-xs am-text-left sale-sub" data_type="0" data_id="${bid.id}" btf-id="${bid.basicinformationId}" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
-                                    <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
-                                </c:if>
-                                <c:if test="${bid.status == 1}">
-                                    <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" del_data_id="${bid.id}" href="javascript:void(0)"><img class="am-margin-right-xs" src="/assets/shoesImg/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
-                                </c:if>
-                            </ul>
+                                <ul class="am-dropdown-content">
+                                    <c:if test="${bid.status == 0}">
+                                        <li><a class="am-btn am-btn-xs am-text-left deliver-bid-goods" bid-id="${bid.id}" bft-id="${bid.basicinformationId}" data-type="${bid.type}" bid_type="0" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                    </c:if>
+                                    <c:if test="${bid.status == 10}">
+                                        <li><a class="am-btn am-btn-xs am-text-left sale-up" data_type="0" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
+                                        <li><a class="am-btn am-btn-xs am-text-left sale-sub" data_type="0" data_id="${bid.id}" btf-id="${bid.basicinformationId}" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
+                                        <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
+                                    </c:if>
+                                    <c:if test="${bid.status == 1}">
+                                        <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" del_data_id="${bid.id}" href="javascript:void(0)"><img class="am-margin-right-xs" src="/assets/shoesImg/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
+                                    </c:if>
+                                </ul>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -81,7 +83,6 @@
         </c:if>
         </tbody>
     </table>
-
     <table class="am-table am-table-striped am-table-hover">
     <caption>
         <p class="am-fl layout-font-size-30">出售记录</p>
@@ -120,25 +121,27 @@
                 </c:if>
             </c:forEach>
             <td>
-                <div class="am-dropdown" data-am-dropdown>
-                    <c:choose>
-                        <c:when test="${trade.status == 0 || trade.status == 2}">
-                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
-                        </c:when>
-                        <c:otherwise>
-                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
-                        </c:otherwise>
-                    </c:choose>
-                    <ul class="am-dropdown-content">
+                <div class="doc-dropdown-justify-js">
+                    <div class="am-dropdown doc-dropdown-js">
                         <c:choose>
-                            <c:when test="${trade.status == 0}">
-                                <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                            <c:when test="${trade.status == 0 || trade.status == 2}">
+                                <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                             </c:when>
-                            <c:when test="${trade.status == 2}">
-                                <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
-                            </c:when>
+                            <c:otherwise>
+                                <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                            </c:otherwise>
                         </c:choose>
-                    </ul>
+                        <ul class="am-dropdown-content">
+                            <c:choose>
+                                <c:when test="${trade.status == 0}">
+                                    <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                </c:when>
+                                <c:when test="${trade.status == 2}">
+                                    <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
+                                </c:when>
+                            </c:choose>
+                        </ul>
+                    </div>
                 </div>
             </td>
             </tr>
@@ -147,4 +150,10 @@
     </tbody>
 </table>
 </form>
-<script src="${ctx}/assets/js/amazeui.min.js"></script>
+<script>
+    $(function(){
+        $(".doc-dropdown-js").each(function(index){
+            $(this).dropdown({justify: '.doc-dropdown-justify-js:eq('+index+')'});
+        });
+    });
+</script>

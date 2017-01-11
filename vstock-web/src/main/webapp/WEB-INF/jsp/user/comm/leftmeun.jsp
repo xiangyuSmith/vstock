@@ -281,12 +281,39 @@
 
         $("body").on("click",".trade-pament",function(){
             var $this = $(this);
-            var bidId = $this.attr("data-id");
+            var tradeId = $this.attr("data-id");
             var type = $this.attr("trade-type");
+            var size = $this.attr("trade-size");
             var amount = $this.parent().parent().parent().parent().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
+            sendRequest("/trade/getBuyInfo",{
+                "tradeId":tradeId,
+                "size" : size
+            },function(res){
+                var site_imgUrl = $("#site_url").val();
+                $("#buyProductImgId").attr("src",site_imgUrl+res.data.basicinformation.smallImgUrl);
+                $(".basicinformationBrand").text(res.data.basicinformation.brand);
+                $(".basicinformationName").text(res.data.basicinformation.name);
+                $(".basicinformationChineselogo").text(res.data.basicinformation.chineselogo);
+                $("#buyer_detailed_amount").val(res.data.trade.transactionMoney);
+                $("#yunFee").text(res.data.trade.tradeFreight);
+                $("#buyer_detailed_size").val(size);
+                if(res.data.pricePeak1 == undefined){
+                    $(".pricePeak1HighestBid").text("-");
+                }else{
+                    $(".pricePeak1HighestBid").text(res.data.pricePeak1.highestBid);
+                }
+                if(res.data.pricePeak2 == undefined){
+                    $(".pricePeak2MinimumSellingPrice").text("-");
+                }else{
+                    $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
+                }
+//                $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
+            });
+            $("#now-seller-buy-detailed").click();
+            return;
             sendRequest("/trade/createTradePay",{
-                tradeId : bidId,
+                tradeId : tradeId,
                 type : type,
                 amount : amount
             },function(res) {

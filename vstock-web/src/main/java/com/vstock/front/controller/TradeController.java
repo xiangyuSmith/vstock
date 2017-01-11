@@ -18,7 +18,9 @@ import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/trade")
@@ -28,7 +30,6 @@ public class TradeController extends BaseController{
     UserAddressService userAddressService;
     @Autowired
     PricePeakService pricePeakService;
-
     @Autowired
     BasicinformationService basicinformationService;
     @Autowired
@@ -211,4 +212,33 @@ public class TradeController extends BaseController{
         return resultModel;
     }
 
+    @RequestMapping("getBuyInfo")
+    @ResponseBody
+    public ResultModel getBuyInfo(){
+        ResultModel resultModel = new ResultModel();
+        Map<String,Object> params = new HashMap<String,Object>();
+        setLastPage(0,1);
+        int tradeId = getParamToInt("tradeId");
+        String size = getParam("size","");
+        Trade t = new Trade();
+        t.setId(tradeId);
+        List<Trade> tradeList = tradeService.findTrade(t,lagePage);
+        if(tradeList.size() <= 0){
+            resultModel.setRetMsg("订单失效或不存在");
+            return resultModel;
+        }
+        Trade trade = tradeList.get(0);
+        Integer bidId = trade.getBasicinformationId();
+        Basicinformation b = new Basicinformation();
+        b.setId(String.valueOf(bidId));
+        Basicinformation basicinformation = basicinformationService.findObj(b);
+        PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bidId,size,1,lagePage);
+        PricePeak pricePeak2 = pricePeakService.getHighestAndlowest(bidId,size,2,lagePage);
+        params.put("pricePeak1",pricePeak1);
+        params.put("pricePeak2",pricePeak2);
+        params.put("basicinformation",basicinformation);
+        params.put("trade",trade);
+        resultModel.setData(params);
+        return resultModel;
+    }
 }
