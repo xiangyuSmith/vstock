@@ -94,7 +94,7 @@
             $this.parent().next().next().children().attr("disabled", false);
             $this.parent().next().next().next().children().attr("disabled", true);
             $this.attr("disabled", true);
-            var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
+            var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
             var moeny = $thoes.text();
             upMoeny = parseFloat(moeny.substring(1,moeny.legend).replace(/[^\d\.-]/g, ""));
             var a = "<input type='text' value='"+upMoeny+"' style='width: 120px;'/>"
@@ -109,7 +109,7 @@
             var $this = $(this);
             var type = $this.attr('data_type');
             var btf = $this.attr("btf-id");
-            var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
+            var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
             var moeny = $thoes.children().val();
             var size = $thoes.prev().prev().text();
             var id = $this.attr("data_id");
