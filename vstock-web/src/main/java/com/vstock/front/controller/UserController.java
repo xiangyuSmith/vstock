@@ -47,6 +47,12 @@ public class UserController extends BaseController {
     @Autowired
     UserAccountService userAccountService;
 
+    @Autowired
+    ExpressService expressService;
+
+    @Autowired
+    LogisticsInformationService logisticsInformationService;
+
     private static Logger logger = Logger.getLogger(BidController.class);
 
     @RequestMapping("index")
@@ -60,6 +66,7 @@ public class UserController extends BaseController {
     @RequestMapping("sale")
     public String sale(ModelMap model){
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        Express express = new Express();
         if (suid == null || "".equals(suid)){
             return "/index/index";
         }
@@ -82,6 +89,8 @@ public class UserController extends BaseController {
         List<Trade> tradeList = tradeService.findAllWeb(trade,page);
         List<Trade> statusList = tradeService.status();
         List<Bid> bidStatus = StatusUtil.bidStatus();
+        List<Express> expressList = expressService.findAll(express);
+        model.addAttribute("expressList",expressList);
         model.addAttribute("bidStatus",bidStatus);
         model.addAttribute("bidList",bidList);
         model.addAttribute("tradeList",tradeList);
@@ -127,6 +136,7 @@ public class UserController extends BaseController {
             return "/index/index";
         }
         Trade trade = new Trade();
+        Express express = new Express();
         String type = request.getParameter("type");
         if ("0".equals(type)) {
             trade.setSellerId(Integer.parseInt(String.valueOf(suid)));
@@ -139,6 +149,8 @@ public class UserController extends BaseController {
         Page page = new Page(totalCount,pageNow);
         List<Trade> tradeList = tradeService.findAllWeb(trade,page);
         List<Trade> statusList = tradeService.status();
+        List<Express> expressList = expressService.findAll(express);
+        model.addAttribute("expressList",expressList);
         model.addAttribute("statusList",statusList);
         model.addAttribute("page",page);
         model.addAttribute("type",type);
@@ -368,6 +380,22 @@ public class UserController extends BaseController {
         }
         resultModel.setRetMsg(jsonObject.get("msg").toString());
         resultModel.setRetCode(0);
+        return resultModel;
+    }
+
+    @RequestMapping("insertlogiscsIn")
+    @ResponseBody
+    public ResultModel insertlogiscsIn(LogisticsInformation record){
+        ResultModel resultModel = new ResultModel();
+        Trade trade = new Trade();
+        String courierNumber = getParam("courierNumber","");
+        trade.setCourierNumber(courierNumber);
+        trade.setId(record.getTradeId());
+        int i = tradeService.updateAll(trade);
+        if (i > 0) {
+            i = logisticsInformationService.save(record);
+        }
+        resultModel.setRetCode(i);
         return resultModel;
     }
 }

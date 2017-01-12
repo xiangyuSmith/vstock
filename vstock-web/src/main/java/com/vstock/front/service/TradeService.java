@@ -104,6 +104,8 @@ public class TradeService {
         return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
     }
 
+    public int updateAll(Trade record){return tradeDao.updateAll(record);}
+
     /**
      * web个人中心查询
      * @param record
