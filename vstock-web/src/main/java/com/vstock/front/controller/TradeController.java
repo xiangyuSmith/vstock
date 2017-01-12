@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -108,14 +109,40 @@ public class TradeController extends BaseController{
         }
         PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),size,sort,lagePage);
         PricePeak p = new PricePeak();
-        p.setStatus(1);
         p.setId(pricePeak.getId());
         Bid b = new Bid();
         b.setId(bid1.getId());
         b.setBidFreight(yunFee);
         b.setStatus(String.valueOf(b.STATUS_SUCCESS));
         bidService.update(b);
-        pricePeakService.update(p);
+        Page page = new Page(1,"1");
+        b.setBidFreight(new BigDecimal(0));
+        b = bidService.findByBid(b,page);
+        Bid bidT = new Bid();
+        bidT.setBasicinformationId(b.getBasicinformationId());
+        bidT.setBftSize(b.getBftSize());
+        bidT.setStatus("10");
+        List<Bid> bidList = bidService.findOrderByMoney(bidT);
+        if (bidList.size() > 0) {
+            if (Integer.parseInt(b.getType()) == 0){
+                p.setMinimumSellingPrice(bidList.get(0).getBidMoney());
+                p.setMinimumSellingId(bidList.get(0).getUserId().toString());
+            }else {
+                p.setHighestBid(bidList.get(0).getBidMoney());
+                p.setHighestBidderId(bidList.get(0).getUserId().toString());
+            }
+            pricePeakService.update(p);
+        }else {
+            if (Integer.parseInt(b.getType()) == 0){
+                p.setMinimumSellingPrice(new BigDecimal(0));
+                p.setMinimumSellingId("0");
+            }else {
+                p.setHighestBid(new BigDecimal(0));
+                p.setHighestBidderId("0");
+            }
+            pricePeakService.update(p);
+        }
+
         resultModel.setRetCode(resultModel.RET_OK);
         resultModel.setData(tradeId);
         return resultModel;
