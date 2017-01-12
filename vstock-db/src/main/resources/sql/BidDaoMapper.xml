@@ -310,6 +310,14 @@
         ORDER BY b.bid_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findOrderByMoney" parameterType="com.vstock.db.entity.Bid" resultType="com.vstock.db.entity.Bid">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY b.bid_money DESC
+    </select>
+
     <select id="findNewAll" parameterType="com.vstock.db.entity.Bid" resultMap="UserResultMap">
         SELECT u.mobile,u.nick,
         <include refid="Base_Column_List"/>

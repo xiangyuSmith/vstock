@@ -137,6 +137,13 @@ public class BidService {
         return bidDao.update(record.getStatus(),record.getPaymentId(), record.getBidMoney(),record.getInvalidDate(),record.getId());
     }
 
+    /**
+     * 查询所有（根据金额倒序）
+     * @param record
+     * @return
+     */
+    public List<Bid> findOrderByMoney(Bid record){return bidDao.findOrderByMoney(record);}
+
     //出售记录个人中心查询
     public List<Bid> findBid(Bid record, Page page){
         return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());

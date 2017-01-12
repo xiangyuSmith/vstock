@@ -20,6 +20,8 @@ public interface IBidDao {
 
     List<Bid> findAllBid(@Param("obj")Bid record);
 
+    List<Bid> findOrderByMoney(@Param("obj")Bid record);
+
     //查询所有总数
     int findCount(@Param("obj")Bid record);
 
