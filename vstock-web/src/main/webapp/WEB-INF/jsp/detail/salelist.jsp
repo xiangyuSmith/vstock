@@ -57,7 +57,7 @@
         <div class="am-u-lg-12">
             <div class="am-text-center">
                 <p style="color:#fe5c5c;font-size: 28px;">
-                    相关推荐>
+                    相关推荐
                 </p>
             </div>
         </div>

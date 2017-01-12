@@ -113,7 +113,7 @@
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
-                <div style="    height: 136px;overflow-y: scroll;">
+                <div id="new-address-div-content" style="max-height: 136px;overflow-y: scroll;">
                 <c:choose>
                     <c:when test="${not empty userAddressesList}">
                     <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
@@ -163,7 +163,7 @@
                     </div>
                     </c:when>
                     <c:otherwise>
-                        <div class="am-text-center">
+                        <div id="not-address-tips" class="am-text-center">
                             <span style="color:#8D8D8D;">亲，您还没有添加收货地址哦 ~</span>
                         </div>
                     </c:otherwise>
@@ -291,13 +291,27 @@
                         }else{
                             phoneNumber = "--";
                         }
-                        var html = '<tr class="show-tr-address '+checkTr+'">' +
-                                '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
-                                '<td> '+address.consigneeName+'</td>' +
-                                '<td> '+phoneNumber+' </td>' +
-                                '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
-                                '</tr>'
-                        $("#new-address tr:eq(0)").after(html);
+                        var html = "";
+                        if(undefined == $("#new-address tr:eq(0)").attr("class")){
+                            html = '<table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs"><tbody id="new-address-tbody">' +
+                                    '<tr class="show-tr-address '+checkTr+'">' +
+                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
+                                    '<td> '+address.consigneeName+'</td>' +
+                                    '<td> '+phoneNumber+' </td>' +
+                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '</tr>'+
+                                    '</tbody></table>';
+                            $("#not-address-tips").css("display","none");
+                            $("#new-address-div-content").append(html);
+                        }else{
+                            html = '<tr class="show-tr-address '+checkTr+'">' +
+                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
+                                    '<td> '+address.consigneeName+'</td>' +
+                                    '<td> '+phoneNumber+' </td>' +
+                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '</tr>'
+                            $("#new-address tr:eq(0)").after(html);
+                        }
                         alertTips(1,"","添加地址成功");
                     }else{
                         $editAddress.parent().siblings().eq(1).find("label .addressInfo").text(address.localArea+address.detailedAddress);
