@@ -264,29 +264,45 @@
             var id = $this.attr('data-id');
             var bidId = $this.attr('bidId');
             var tradeNo = $this.attr('trade-no');
-            var amount = $this.parent().parent().parent().parent().prev().prev().text();
+            var amount = $this.parent().parent().parent().parent().parent().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
-            var size = $this.parent().parent().parent().parent().prev().prev().prev().text();
-            sendRequest("/trade/saveTrade",{
-                id : id,
-                bidId : bidId,
-                tradeNo : tradeNo,
-                transactionMoney : amount,
-                bftSize : size,
-                status : status
-            },function(res) {
-                if (res.retCode == 1){
-                    alertTips(1,"",explain+"成功");
-                    $this.parent().parent().parent().removeClass("am-active");
-                    $this.parent().parent().parent().children().first().attr("disabled", true);
-                    if (type == 2){
-                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+            var size = $this.parent().parent().parent().parent().parent().prev().prev().prev().text();
+            $("body").on("click",".logistics-btn",function(){
+                var companyName = $('#logisticsIn-name').val();
+                var courierNumber = $('#logisticsIn-number').val();
+                sendRequest("/user/insertlogiscsIn",{
+                    tradeId : id,
+                    companyName : companyName,
+                    courierNumber : courierNumber
+                },function(res) {
+                    if (res.retCode > 0){
+                        $('#logistics-quit').click();
+                        $('#logistics-quit').click();
+                        sendRequest("/trade/saveTrade",{
+                            id : id,
+                            bidId : bidId,
+                            tradeNo : tradeNo,
+                            transactionMoney : amount,
+                            bftSize : size,
+                            status : status
+                        },function(res) {
+                            if (res.retCode == 1){
+                                alertTips(1,"",explain+"成功");
+                                $this.parent().parent().parent().removeClass("am-active");
+                                $this.parent().parent().parent().children().first().attr("disabled", true);
+                                if (type == 2){
+                                    ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                                }else {
+                                    ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                                }
+                            }else {
+                                alertTips(2,explain+"失败","请重新操作！");
+                            }
+                        });
                     }else {
-                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                        alertTips(2,"发货提示","发货失败，请重新填写物流信息")
                     }
-                }else {
-                    alertTips(2,explain+"失败","请重新操作！");
-                }
+                });
             });
         });
 
