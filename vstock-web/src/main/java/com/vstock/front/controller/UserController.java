@@ -242,9 +242,11 @@ public class UserController extends BaseController {
         record.setUserId(Integer.parseInt(String.valueOf(suid)));
         record.setStatus(0);
         String hchar = userAssetsService.hChar(record);
-        String[] strChar = hchar.split(":");
-        param.put("hchar",strChar[0]);
-        param.put("moneyChar",strChar[1]);
+        if("".equals(hchar)){
+            String[] strChar = hchar.split(":");
+            param.put("hchar",strChar[0]);
+            param.put("moneyChar",strChar[1]);
+        }
         return param;
     }
 

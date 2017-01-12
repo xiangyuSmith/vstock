@@ -32,7 +32,9 @@
                         <c:forEach items="${tradeList}" var="trade">
                             <tr>
                                 <td>${trade.bftSize}</td>
-                                <td>￥${trade.transactionMoney}</td>
+                                <td>￥
+                                    <fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,##0.0#"/>
+                                </td>
                                 <td><c:out value="${fn:substring(trade.transactionDate, 0, 4)}" />/<c:out value="${fn:substring(trade.transactionDate, 5, 7)}" />/<c:out value="${fn:substring(trade.transactionDate,8, 10)}" /></td>
                                 <td><c:out value="${fn:substring(trade.transactionDate, 10, 16)}" /></td>
                             </tr>

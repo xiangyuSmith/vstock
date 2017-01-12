@@ -21,7 +21,7 @@
         <c:if test="${not empty bidList}">
             <c:forEach items="${bidList}" var="bid">
                 <tr>
-                    <td class="am-text-sm">${bid.bftName}</td>
+                    <td class="am-text-sm"><a href="/detail?proName=${bid.bftName}" target="_blank"><span style="color: #333;">${bid.bftName}</span></a></td>
                     <td class="am-text-sm">${bid.bftSize}</td>
                     <td class="am-text-sm">
                         <c:out value="${fn:substring(bid.bidDate, 0, 10)}" />
@@ -101,7 +101,7 @@
     <tbody>
     <c:if test="${not empty tradeList}">
         <c:forEach items="${tradeList}" var="trade">
-            <td class="am-text-sm">${trade.bftName}</td>
+            <td class="am-text-sm"><a href="/detail?proName=${trade.bftName}" target="_blank"><span style="color: #333;">${trade.bftName}</span></a></td>
             <td class="am-text-sm">
                 <c:out value="${fn:substring(trade.transactionDate, 0, 10)}" />
             </td>
