@@ -20,7 +20,7 @@ public class Bid implements Serializable {
     public final static int STATUS_LOCKING = 20; // 已锁定
     public final static int STATUS_SUCCESS = 30; // 交易成功
 
-    public final static String[] statusStr = {"0:待付款","10:已生效","11:已过期","20:已锁定","30:交易成功"};
+    public final static String[] statusStr = {"0:待付款","10:叫价中","11:已过期","20:已锁定","30:交易成功"};
 
     public final static String TIME_ONE = "1";
     public final static String TIME_THREE = "3";
@@ -256,7 +256,7 @@ public class Bid implements Serializable {
     public LabelDto getStatusLbl(int status) {
         switch (status) {
             case STATUS_INIT:
-                return new LabelDto("已生效", "warning");
+                return new LabelDto("叫价中", "warning");
             case STATUS_OVERDUE:
                 return new LabelDto("已过期", "default");
             case STATUS_PENDING:

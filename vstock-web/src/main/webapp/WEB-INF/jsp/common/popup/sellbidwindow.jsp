@@ -98,8 +98,8 @@
                                 <select id="seller_buy_time" class="am-input-sm am-form-field select-pom" placeholder="请选择" data-am-selected="{btnWidth: 80}">
                                     <option value="1">1天</option>
                                     <option value="3">3天</option>
-                                    <option value="5">5天</option>
                                     <option value="7">7天</option>
+                                    <option value="15">15天</option>
                                 </select>
                             </div>
                         </div>

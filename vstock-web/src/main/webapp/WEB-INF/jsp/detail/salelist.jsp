@@ -12,7 +12,7 @@
                     ${bname}
                 </p>
                 <p style="color: #595959;font-size: 18px;">
-                    最后销售记录
+                    销售记录
                 </p>
             </div>
         </div>

@@ -3,7 +3,7 @@
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #FF5A60;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
-                <span class="am-fl am-text-lg">最新出价</span>
+                <span class="am-fl am-text-lg">买家出价</span>
             </div>
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
         </div>
@@ -94,8 +94,8 @@
                                 <select id="buyer_sell_time" class="am-input-sm am-form-field select-pom" placeholder="请选择" data-am-selected="{btnWidth: 80}">
                                     <option value="1">1天</option>
                                     <option value="3">3天</option>
-                                    <option value="5">5天</option>
                                     <option value="7">7天</option>
+                                    <option value="15">15天</option>
                                 </select>
                             </div>
                         </div>
