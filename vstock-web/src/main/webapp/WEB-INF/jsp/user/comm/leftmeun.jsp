@@ -18,7 +18,7 @@
 <%@include file="../../layout/top-search.jsp"%>
 <div>
     <div class="am-container-content" style="overflow:hidden;">
-        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;">
+        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;min-height: 450px;">
             <input type="hidden" id="url-type" value="${urlType}"/>
             <c:if test="${not empty vUser}">
                 <div class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7;padding: 25px 20px;">${vUser.nick}</div>

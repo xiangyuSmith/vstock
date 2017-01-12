@@ -2,7 +2,7 @@
 <%@include file="../../layout/inc.jsp" %>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="deliverDoods-pop">
     <div class="am-modal-dialog pre-sale">
-        <div class="am-modal-hd" style="background-color: #4aaa4a;">
+        <div class="am-modal-hd" style="background-color: #0CCF7A;">
             <div class="am-active am-g am-margin-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-text-xl am-fl">发货信息</span>
             </div>
