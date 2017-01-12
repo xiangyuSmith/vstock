@@ -303,6 +303,7 @@
             },function(res){
                 var site_imgUrl = $("#site_url").val();
                 var address = res.data.userAddressesList;
+                amount = res.data.trade.transactionMoney;
                 $("#buyProductImgId").attr("src",site_imgUrl+res.data.basicinformation.smallImgUrl);
                 $(".basicinformationBrand").text(res.data.basicinformation.brand);
                 $(".basicinformationName").text(res.data.basicinformation.name);
@@ -310,7 +311,8 @@
                 $("#buyer_detailed_amount").val(res.data.trade.transactionMoney);
                 $("#yunFee").text(res.data.trade.tradeFreight);
                 $("#buyer_detailed_size").val(size);
-                $(".countMoney").val();
+                var sssresult = parseFloat(amount)+parseFloat(res.data.trade.tradeFreight);
+                $(".countMoney").text(sssresult);
                 if(res.data.pricePeak1 == undefined){
                     $(".pricePeak1HighestBid").text("-");
                 }else{
@@ -352,8 +354,6 @@
                     }
                 }
                 $("#new-address-tbody").append(html);
-
-
                 $("#buyer_submit_trade_S").click(function(){
                     var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
                     sendRequest("/trade/createTradePay",{
@@ -371,10 +371,10 @@
                             }else {
                                 ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
                             }
+                            $("#my-popup-buy-userBuyAddress").modal('close');
                         }else {
                             alertTips(2,"支付失败","请重新支付");
                         }
-                        $("#my-popup-buy-userBuyAddress").modal('close');
                     });
                 });
             });
