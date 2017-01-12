@@ -223,8 +223,8 @@
 
         $("body").on("click",".deliver-bid-goods",function(){
             var $this = $(this);
-            var amount = $this.parent().parent().parent().parent().prev().prev().prev().prev().text();
-            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().text();
+            var amount = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev().text();
+            var bftSize = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().text();
             alipay($this,amount,bftSize);
         });
 

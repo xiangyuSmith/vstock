@@ -212,6 +212,7 @@ public class UserController extends BaseController {
         record.setStatus(0);
         List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
+        basicinformationRose.setId(userAssetsList.size());
         model.put("basicinformationRose",basicinformationRose);
         model.put("userAssetsList",userAssetsList);
         return "/user/userAssets";
@@ -242,7 +243,7 @@ public class UserController extends BaseController {
         record.setUserId(Integer.parseInt(String.valueOf(suid)));
         record.setStatus(0);
         String hchar = userAssetsService.hChar(record);
-        if("".equals(hchar)){
+        if(!"".equals(hchar)){
             String[] strChar = hchar.split(":");
             param.put("hchar",strChar[0]);
             param.put("moneyChar",strChar[1]);

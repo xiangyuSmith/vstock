@@ -29,7 +29,14 @@
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.id}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">${basicinformationRose.id}</span>
+                                    <c:choose>
+                                        <c:when test="${basicinformationRose.id > 0}">
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">${basicinformationRose.id}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -47,7 +54,14 @@
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.current_market_value}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></span>
+                                    <c:choose>
+                                        <c:when test="${basicinformationRose.current_market_value > 0}">
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -65,7 +79,14 @@
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.change_range}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="￥0.00"/></span>
+                                    <c:choose>
+                                        <c:when test="${basicinformationRose.change_range > 0}">
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="￥0.00"/></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -83,7 +104,14 @@
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.percentage_change}">
-                                    <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.percentage_change}" type="number" pattern="￥0.00"/></span>
+                                    <c:choose>
+                                        <c:when test="${basicinformationRose.change_range > 0}">
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.percentage_change}" type="number" pattern="￥0.00"/></span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
