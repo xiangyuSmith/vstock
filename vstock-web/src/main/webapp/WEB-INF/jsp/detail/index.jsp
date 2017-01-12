@@ -20,6 +20,7 @@
         .am-selected-btn{  }
         .clickZoneName{ display: inline-block; margin-top: 2px; font-weight: 400; font-family: BebasNeue; overflow-y: hidden; font-size: 22px; line-height: 22px; letter-spacing: 0.2px; color: #000; text-align: left;  width: 100%; }
         .assets_btn_add{ border: solid 1px #ccc; background-color: #fff; }
+        .index-icon{ display: inline-block;width: 35px;height: 20px; }
         @media ( max-width: 992px ){
             .str-sudio span{ letter-spacing: 1px; }
             .product-market-summary-wrap{ height: 75px;line-height: 75px; }
@@ -159,9 +160,17 @@
             <img src="${configMap._site_url}${basicinformation.imgUrl}" style="width:80%;" />
         </div>
         <div class="am-g am-text-center am-hide-sm product-detail" style="margin-top: -20px;margin-bottom: 30px;">
-            <div class="am-u-lg-3 am-u-md-12">编码: ${basicinformation.artNo}</div>
-            <div class="am-u-lg-3 am-u-md-12">颜色: ${basicinformation.colores}</div>
-            <div class="am-u-lg-3 am-u-md-12">发售日期:
+            <div class="am-u-lg-3 am-u-md-12">
+                <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -138px -21px;"></span>
+                编码: ${basicinformation.artNo}
+            </div>
+            <div class="am-u-lg-3 am-u-md-12">
+                <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -165px -21px;"></span>
+                颜色: ${basicinformation.colores}
+            </div>
+            <div class="am-u-lg-3 am-u-md-12">
+                <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -216px -21px;"></span>
+                发售日期:
                 <c:choose>
                     <c:when test="${not empty basicinformation.csaledate}">
                         ${basicinformation.csaledate}
@@ -171,7 +180,9 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div class="am-u-lg-3 am-u-md-12">原始售价：￥
+            <div class="am-u-lg-3 am-u-md-12">
+                <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -190px -21px;"></span>
+                原始售价：￥
                 <c:choose>
                     <c:when test="${not empty basicinformation.cofferprice}">
                         ${basicinformation.cofferprice}
@@ -186,7 +197,10 @@
 </article>
 <article class="am-g product-market-summary-wrap">
     <div class="am-container-content am-text-center">
-        <span> 4周 </span><span> 最高/最低 ：</span> <span> + 1680 </span><span> - 1210 </span>
+        <span> 4周 </span>
+        <span> 最高/最低 ：</span>
+        <span> <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -259px -23px;"></span> 1680 </span>
+        <span> <span class="index-icon am-margin-right-sm" style="background: url('/assets/i/detail_icon.png');background-position: -311px -23px;"></span>1210 </span>
     </div>
 </article>
 <div id="sale_record">

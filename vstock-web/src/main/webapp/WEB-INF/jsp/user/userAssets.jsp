@@ -103,8 +103,8 @@
                     <td style="width: 20%;">球鞋名称</td>
                     <td>尺码</td>
                     <td>购买日期</td>
-                    <td>金额</td>
-                    <td>当前市场价值</td>
+                    <td>购买金额</td>
+                    <td>当前市场价</td>
                     <td>涨跌幅度</td>
                 </tr>
             </thead>
