@@ -18,7 +18,7 @@
 <%@include file="../../layout/top-search.jsp"%>
 <div>
     <div class="am-container-content" style="overflow:hidden;">
-        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;">
+        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;min-height: 450px;">
             <input type="hidden" id="url-type" value="${urlType}"/>
             <c:if test="${not empty vUser}">
                 <div class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7;padding: 25px 20px;">${vUser.nick}</div>
@@ -27,7 +27,7 @@
                 <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('/assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24 home-frist" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('/assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/sale?type=1" data-type="2">购买记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-xs" src="/assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
-                <li><a href="${ctx}/user/index?type=1" id="userInfo-sbt"><div style="float: left; display: block;width: 60px;height: 36px; background: url('/assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
+                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 36px; background: url('/assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
         </div>
         <div class="am-u-sm-9 am-u-md-9 am-margin-top-xl am-margin-bottom-xl" id="tradeforex_tilie"></div>
