@@ -41,6 +41,13 @@ public class PricePeakService {
     }
 
     /**
+     * 最低卖价 & 最高叫价
+     */
+    public List<PricePeak> findBySellAndBuy(int sort){
+        return pricePeakDao.findBySellAndBuy(sort);
+    }
+
+    /**
      * 查询所有总数
      * @param record
      * @return

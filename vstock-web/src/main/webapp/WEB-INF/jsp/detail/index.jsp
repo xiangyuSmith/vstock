@@ -32,6 +32,10 @@
         .xy-dimmer-active{ overflow: auto;}
         .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
         .am-selected-btn{ border:1px solid #aeaeae; }
+        .join-assets-icon{ display: inline-block;width: 90px;height: 22px;line-height: 26px;text-align: right;background: url('/assets/i/detail_icon.png');background-position: -610px -21px; }
+        .question-tips{ width: 22px;height: 16px;display: inline-block;position: absolute;cursor: pointer; }
+        .wenxin-tips{ width: 22px;height: 22px;display: block;float: left; }
+        .question-tips-text{ width: 180px; }
     </style>
 </head>
 <body>
@@ -44,7 +48,7 @@
         <div class="am-g am-u-md-12 am-show-lg-only">
             <span class="str-title-font" style="font-weight: bold;">
                 ${basicinformation.name}
-                <a href="javascript:void(0);" id="join-assets" class="layout-font-size-18 assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border-radius: 3px;width: 150px;"><i class="am-icon-money am-margin-right-sm layout-font-size-18" style="color: #F97271;"></i>加入资产</a>
+                <a href="javascript:void(0);" id="join-assets" class="layout-font-size-18 assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border-radius: 3px;width: 138px;"><span class="join-assets-icon">加入资产</span></a>
                 <a href="javascript:void(0);" id="join-assets-click" style="display: none;" data-am-modal="{target: '#my-popup-assets',width: 440}"></a>
             </span>
             <span class="str-title-font"> </span>

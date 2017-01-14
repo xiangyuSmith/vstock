@@ -33,6 +33,21 @@
         </association>
     </resultMap>
 
+    <resultMap id="ResultDataMap" type="com.vstock.db.entity.Basicinformation">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="colores" property="colores"/>
+        <result column="artNo" property="artNo"/>
+        <result column="type" property="type"/>
+        <result column="smallImgUrl" property="smallImgUrl"/>
+        <result column="csaledate" property="csaledate"/>
+        <association property="resultData" column="resultData"
+                     javaType="com.vstock.db.entity.ResultData">
+            <id property="id" column="id"/>
+            <result column="transactionRecord" property="transactionRecord" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
     <insert id="insert" parameterType="com.vstock.db.entity.Basicinformation" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `basicinformation`
         (`id`,`brand`,`name`,`artNo`,`colores`,`csaledate`,`esaledate`,`cofferprice`,`eofferprice`,`chineselogo`,`imgUrl`,`smallImgUrl`,`createTime`,`state`)
@@ -131,9 +146,9 @@
     </select>
 
     <!-- 按类型查询 -->
-    <select id="findByType" resultType="com.vstock.db.entity.Basicinformation">
-        SELECT * FROM `basicinformation` b
-        WHERE 1=1
+    <select id="findByType" resultMap="ResultDataMap">
+        select * from basicinformation b
+        where 1=1
         <choose>
             <when test="type == -1">
                 AND b.type != 0
@@ -142,7 +157,22 @@
                 AND b.type = #{type}
             </otherwise>
         </choose>
+    </select>
 
+    <select id="findByBao" resultMap="ResultDataMap">
+        select b.*,SUM(r.transactionRecord) as transactionRecord
+        from basicinformation b
+        LEFT JOIN resultdata r ON b.id = r.basiciformationId
+        where 1=1
+        <choose>
+            <when test="type == -1">
+                AND b.type != 0
+            </when>
+            <otherwise>
+                AND b.type = #{type}
+            </otherwise>
+        </choose>
+        GROUP BY b.id
     </select>
 
     <sql id="SelectAll_Where_Clause">

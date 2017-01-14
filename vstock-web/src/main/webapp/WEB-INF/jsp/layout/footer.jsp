@@ -14,7 +14,7 @@
             <section class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-padding-right-lg" style="border-right: 1px solid #4E4C4D;height: 220px;">
                 <span class="layout-font-size-16">关于V-STOCK</span>
                 <p class="layout-font-size-14" style="line-height: 28px;letter-spacing: 0.4px;">
-                    v－stock是由上海波哥网络科技有限公司倾力打造的股票式球鞋交易平台，网站提供了可供检索运动鞋数据；可对比的球鞋价格走势；可信任的球鞋正规交易场所。我们的宗旨是要让运动鞋的价格能够像在证交所交易的股票价格一样透明，让鞋迷们能像玩股票一样玩转运动鞋二手交易市场。
+                    v－stock是由上海波哥网络科技有限公司倾力打造的股票式球鞋交易平台，网站提供了可供检索运动鞋数据；可对比的球鞋价格走势；可信任的球鞋正规交易场所。我们的宗旨是要让运动鞋的价格能够像在证交所交易的股票价格一样透明，让鞋迷们能像玩股票一样玩转运动鞋交易市场。
                 </p>
             </section>
             <section class="am-u-sm-12 am-u-md-6 am-u-lg-3 am-padding-left-lg" style="border-right: 1px solid #4E4C4D;height: 220px;">

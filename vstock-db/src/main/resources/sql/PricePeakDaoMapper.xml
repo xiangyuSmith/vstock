@@ -13,12 +13,12 @@
         <result column="minimum_selling_id" property="minimumSellingId" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
-        <!--<association property="basicinformation" column="basicinformation"-->
-                     <!--javaType="com.vstock.db.entity.Basicinformation">-->
-            <!--<id column="bid" property="id"/>-->
-            <!--<result column="baname" property="name"/>-->
-            <!--<result column="baartNo" property="artNo"/>-->
-        <!--</association>-->
+        <association property="basicinformation" column="basicinformation"
+                     javaType="com.vstock.db.entity.Basicinformation">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="artNo" property="artNo"/>
+        </association>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">

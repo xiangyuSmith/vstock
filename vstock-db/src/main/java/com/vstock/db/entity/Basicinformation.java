@@ -55,10 +55,10 @@ public class Basicinformation implements Serializable {
     private String smallImgUrl;
     private String createtime;
     private String state;
-    private ResultDataFactory resultDataFactory;
+    private ResultData resultData;
     private Bid bid;
 
-    public Basicinformation(String id, String brand, String name, String artNo, int type, String colores, String csaledate, String esaledate, Double cofferprice, Double cofferprices, String bscofferprice, String eofferprice, String chineselogo, String chineselogos, String imgUrl, String smallImgUrl, String createtime, String state, ResultDataFactory resultDataFactory, Bid bid) {
+    public Basicinformation(String id, String brand, String name, String artNo, int type, String colores, String csaledate, String esaledate, Double cofferprice, Double cofferprices, String bscofferprice, String eofferprice, String chineselogo, String chineselogos, String imgUrl, String smallImgUrl, String createtime, String state, ResultData ResultData, Bid bid) {
         this.id = id;
         this.brand = brand;
         this.name = name;
@@ -77,7 +77,7 @@ public class Basicinformation implements Serializable {
         this.smallImgUrl = smallImgUrl;
         this.createtime = createtime;
         this.state = state;
-        this.resultDataFactory = resultDataFactory;
+        this.resultData = ResultData;
         this.bid = bid;
     }
 
@@ -240,11 +240,11 @@ public class Basicinformation implements Serializable {
         this.bscofferprice = bscofferprice;
     }
 
-    public ResultDataFactory getResultDataFactory() {
-        return resultDataFactory;
+    public ResultData getResultData() {
+        return resultData;
     }
 
-    public void setResultDataFactory(ResultDataFactory resultDataFactory) {
-        this.resultDataFactory = resultDataFactory;
+    public void setResultData(ResultData resultData) {
+        this.resultData = resultData;
     }
 }

@@ -255,6 +255,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public Map<String,Object> saveAdder(){
         Map<String,Object> param = new HashMap<String,Object>();
+        setLastPage(0,1);
         String localArea = request.getParameter("localArea");
         String detailedAddress = request.getParameter("detailedAddress");
         String consigneeName = request.getParameter("consigneeName");
@@ -264,6 +265,13 @@ public class UserController extends BaseController {
         String type = request.getParameter("type");
         String status = request.getParameter("status");
         Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        UserAddress u = new UserAddress();
+        u.setUserId(Integer.parseInt(String.valueOf(suid)));
+        List<UserAddress> list = userAddressService.findAll(u,lagePage);
+        if(list.size() <= 0){
+            //设置默认地址
+            type = "1";
+        }
         UserAddress userAddress = userAddressService.saveAdder(localArea,detailedAddress,consigneeName,phoneNumber,landlineNumber,suid.toString(),type,status,id);
         if(userAddress != null){
             param.put("retCode",1);

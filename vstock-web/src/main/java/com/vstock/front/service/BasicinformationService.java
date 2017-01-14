@@ -35,6 +35,14 @@ public class BasicinformationService {
         return basicinformationDao.findByType(type);
     }
 
+    /**
+     * 首页鞋子分类 - 爆款体检 & 销售量
+     * @return
+     */
+    public List<Basicinformation> findByBao(int type){
+        return basicinformationDao.findByBao(type);
+    }
+
     public Basicinformation findObj(Basicinformation basicinformation){
         return basicinformationDao.find(basicinformation).get(0);
     }

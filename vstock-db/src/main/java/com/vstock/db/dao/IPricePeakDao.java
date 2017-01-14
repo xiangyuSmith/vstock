@@ -16,6 +16,9 @@ public interface IPricePeakDao {
     //按类型查询
     List<PricePeak> findByType(@Param("obj")PricePeak record,@Param(value = "sort") Integer sort, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    //最低售价 & 最高叫价
+    List<PricePeak> findBySellAndBuy(@Param(value = "sort") Integer sort);
+
     //查询所有总数
     int findCount(@Param("obj")PricePeak record);
 

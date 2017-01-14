@@ -122,7 +122,7 @@
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-                <c:forEach items="${bList}" var="b">
+                <c:forEach items="${baolist}" var="b">
                     <c:if test="${b.type==1}">
                         <li>
                             <div class="am-gallery-item am_list_block">
@@ -133,7 +133,7 @@
                                     <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
                                         <div style="font-size: 16px;">最近30天售出</div>
-                                        <div style="font-size: 22px;">68双</div>
+                                        <div style="font-size: 22px;">${b.resultData.transactionRecord}双</div>
                                     </div>
                                 </div>
                             </div>

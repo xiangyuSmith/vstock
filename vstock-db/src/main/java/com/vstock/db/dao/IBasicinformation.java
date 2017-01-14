@@ -40,12 +40,13 @@ public interface IBasicinformation {
 
     List<Basicinformation> findByType(@Param(value = "type") int type);
 
+    List<Basicinformation> findByBao(@Param(value = "type") int type);
+
     Long findCount();
 
     List<Basicinformation> findGirard(@Param(value = "productName")String productName);
 
     List<String> getBrands();
-
     /**
      * 分类页查询
      */

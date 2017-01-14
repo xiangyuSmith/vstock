@@ -21,6 +21,7 @@ public class PricePeak implements Serializable {
     private String minimumSellingId;
     private String createDate;
     private String invalidDate;
+    private Basicinformation basicinformation;
 
     public PricePeak() {
         super();
@@ -104,6 +105,14 @@ public class PricePeak implements Serializable {
 
     public void setInvalidDate(String invalidDate) {
         this.invalidDate = invalidDate;
+    }
+
+    public Basicinformation getBasicinformation() {
+        return basicinformation;
+    }
+
+    public void setBasicinformation(Basicinformation basicinformation) {
+        this.basicinformation = basicinformation;
     }
 
     public PricePeak(Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, int status, String highestBidderId, String minimumSellingId, String createDate) {

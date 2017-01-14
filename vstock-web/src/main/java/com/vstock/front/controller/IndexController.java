@@ -1,9 +1,6 @@
 package com.vstock.front.controller;
 
-import com.vstock.db.entity.Basicinformation;
-import com.vstock.db.entity.BasicinformationRose;
-import com.vstock.db.entity.Bid;
-import com.vstock.db.entity.Point;
+import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
@@ -34,9 +31,10 @@ public class IndexController extends BaseController{
     BidService bidService;
     @Autowired
     BasiciformationRoseService basiciformationRoseService;
-
     @Autowired
     ResultDataService resultDataService;
+    @Autowired
+    PricePeakService pricePeakService;
 
     @RequestMapping
     public String index(ModelMap modelMap){
@@ -48,8 +46,13 @@ public class IndexController extends BaseController{
         bid.setType("1");
         List<Bid> buyBidList = bidService.findNewAll(bid,lagePage);
         List<Basicinformation> bList = basicinformationService.findByType(-1);
+        //爆款推荐
+        List<Basicinformation> baolist = basicinformationService.findByBao(1);
+        //最低卖价 & 最高叫价
+//        List<PricePeak> pricePeakList = pricePeakService.findAll();
         Long bCount = basicinformationService.findCount();
         modelMap.addAttribute("bList",bList);
+        modelMap.addAttribute("baolist",baolist);
         modelMap.addAttribute("sellBidList",sellBidList);
         modelMap.addAttribute("buyBidList",buyBidList);
         modelMap.addAttribute("bCount",bCount);

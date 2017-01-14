@@ -35,7 +35,6 @@
         </a>
     </li>
 </c:forEach>
-<script src="${ctx}/assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(function(){
         var nowPage = $(".sorts-pageStart:last").val();
