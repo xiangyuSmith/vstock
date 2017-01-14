@@ -185,7 +185,7 @@ public class BidService {
     }
 
     //修改状态
-    public int updateBid(String id, String btfId, String status, String size, String endDate, String bidMoney){
+    public int updateBid(String id, String btfId, String status, String size, String endDate, String bidMoney, String bidDate){
         Bid record = new Bid();
         record.setInvalidDate(DateUtils.dateToString(new Date()));
         record.setPaymentId(-1);
@@ -199,6 +199,7 @@ public class BidService {
              BigDecimal bigDecimal = new BigDecimal(bidMoney);
              record.setBidMoney(bigDecimal);
         }
+        record.setBidDate(bidDate);
         if (status != null && !"".equals(status)) {
             record.setStatus(status);
             if (this.isBidSign(Integer.parseInt(id),Integer.parseInt(btfId),size,Double.parseDouble(bidMoney),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY))) {

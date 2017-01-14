@@ -31,6 +31,19 @@
             </ul>
         </div>
         <div class="am-u-sm-9 am-u-md-9 am-margin-top-xl am-margin-bottom-xl" id="tradeforex_tilie"></div>
+
+        <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+            <div class="am-modal-dialog">
+                <div class="am-modal-hd">是否删除</div>
+                <div class="am-modal-bd">
+                    删除后将不再显示出价记录，确定要删除吗？
+                </div>
+                <div class="am-modal-footer">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <%@include file="../../layout/footer.jsp" %>
@@ -86,14 +99,17 @@
 
         $("body").on("click",".offer-btn",function(){
             var url = $(this).attr("data-url");
-//            loadingshow();
+            ajaxContent(url, "", "tradeforex_tilie",1);
+        });
+
+        $("body").on("click",".offer-ref-btn",function(){
+            var url = $(this).attr("data-url");
             ajaxContent(url, "", "tradeforex_tilie",1);
         });
 
         $("body").on("click","#load_more",function(){
             $(this).children().children().attr("style","");
             var url = $(this).attr("data-url");
-//            loadingshow();
             ajaxContent(url, "", "tradeforex_tilie",1);
         });
 
@@ -117,6 +133,8 @@
         $("body").on("click",".sale-sub",function(){
             var $this = $(this);
             var type = $this.attr('data_type');
+            var status = $this.attr('status');
+            var bidDate = $this.attr("bid-date");
             var btf = $this.attr("btf-id");
             var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
             var moeny = $thoes.children().val();
@@ -136,6 +154,7 @@
             sendRequest("/bid/updateBid",{
                 id : id,
                 bidMoney : moeny,
+                bidDate : bidDate,
                 btfId : btf,
                 type : type,
                 size : size
@@ -168,7 +187,7 @@
             $this.parent().prev().children().attr("disabled", true);
             $this.parent().next().children().attr("disabled", false);
             $this.attr("disabled", true);
-            var $thoes = $this.parent().parent().parent().parent().prev().prev().prev().prev();
+            var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
             upMoeny = upMoeny.formatMoney(1,"￥");
             $thoes.html("");
             $thoes.text(upMoeny);
@@ -179,15 +198,34 @@
         $("body").on("click",".sale-del",function(){
             var $this = $(this);
             var id = $this.attr("del_data_id");
-            sendRequest("/bid/updateBid",{
-                id : id,
-                status : '3'
-            },function(res) {
-                if (res.sgin == 1){
-                    alertTips(1,"","删除成功");
-                    $('.offer-btn').click();
-                }else {
-                    alertTips(2,"","删除失败");
+            var type = $this.attr("data-type");
+            var bftId = $this.attr("btf-id");
+            var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
+            var moeny = $thoes.text();
+            moeny = parseFloat(moeny.substring(1,moeny.legend).replace(/[^\d\.-]/g, ""));
+            var size = $thoes.prev().prev().text();
+            $('#my-confirm').modal({
+                relatedTarget: this,
+                onConfirm: function(options) {
+                    sendRequest("/bid/updateBid",{
+                        id : id,
+                        type : type,
+                        btfId : bftId,
+                        bidMoney : moeny,
+                        size : size,
+                        endDate : TimeObjectUtil.formatterDate2(new Date()),
+                        status : '40'
+                    },function(res) {
+                        if (res.sgin == 1){
+                            alertTips(1,"","删除成功");
+                            $('.offer-ref-btn').click();
+                        }else {
+                            alertTips(2,"","删除失败");
+                        }
+                    });
+                },
+                // closeOnConfirm: false,
+                onCancel: function() {
                 }
             });
         });

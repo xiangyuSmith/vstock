@@ -105,11 +105,12 @@ public class BidController extends BaseController{
         String id = request.getParameter("id");
         String type = request.getParameter("type");
         String btfId = request.getParameter("btfId");
+        String bidDate = request.getParameter("bidDate");
         String status = request.getParameter("status");
         String endDate = request.getParameter("endDate");
         String bidMoney = request.getParameter("bidMoney");
         String size = request.getParameter("size");
-        int sgin = bidService.updateBid(id,btfId,status,size,endDate,bidMoney);
+        int sgin = bidService.updateBid(id,btfId,status,size,endDate,bidMoney,bidDate);
         if (sgin > 0){
             Page page = new Page(10,"1");
             pricePeakService.save(page,bidMoney,btfId,size,uid.toString(),type);
