@@ -218,6 +218,24 @@ public class UserController extends BaseController {
         return "/user/userAssets";
     }
 
+    @RequestMapping("userAssetsList")
+    public String userAssetsList(ModelMap model){
+        String pageNow = request.getParameter("pageNow");
+        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
+        if (suid == null || "".equals(suid)){
+            return "/index/index";
+        }
+        UserAssets record = new UserAssets();
+        record.setUserId(Integer.parseInt(String.valueOf(suid)));
+        record.setStatus(0);
+        int totalCount = userAssetsService.findCount(record);
+        Page page = new Page(totalCount,pageNow);
+        List<UserAssets> userAssetsList = userAssetsService.findAll(record,page);
+        model.put("userAssetsList",userAssetsList);
+        model.put("page",page);
+        return "/user/userAssetsList";
+    }
+
     @RequestMapping("addresschoice")
     public String addresschoice(){
         return "/user/comm/addresschoice";
