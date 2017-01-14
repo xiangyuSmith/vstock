@@ -3,22 +3,28 @@
 <form id="userAssets" action="${cxt}/user/userAssets" method="post">
 <div class="am-g">
     <%--<div id="main"style="height:500px;border:1px solid #ccc;padding:10px;"></div>--%>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="border-bottom:1px solid #CACACA;"><span class="layout-font-size-26">资产概览</span></div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-right-0 am-padding-left-0">
         <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-padding-left-0 am-padding-right-0">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="layout-font-size-30">资产概览</span></div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 am-margin-top-lg highcharts-sum">
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-22">数量分布</span></div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 highcharts-with-higth" id="container_number"></div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">数量分布</span></div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_number">
+                        <img src="${cxt}/assets/i/spherical_graph.png" class="am-padding-top" id="spherical_id" style="display:none;">
+                    </div>
                 </div>
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 layout-font-size-20"><span class="am-center am-text-center layout-font-size-22">价值分布</span></div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 highcharts-with-higth" id="container_value"></div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 layout-font-size-20">
+                        <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">价值分布</span>
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_value">
+                        <img src="${cxt}/assets/i/spherical_graph.png" class="am-padding-top" id="sphericals_id" style="display:none;">
+                    </div>
                 </div>
             </div>
 
         </div>
-        <div class="am-u-sm-5 am-u-md-5 am-u-lg-5 am-padding-left-0 am-padding-right-0">
+        <div class="am-u-sm-5 am-u-md-5 am-u-lg-5 am-padding-left-0 am-padding-right-0 am-padding-top">
             <ul class="am-nav" style="border: solid 1px #CDCDCD;background-color: #F5F5F5;">
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm am-padding-left-0">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
@@ -125,66 +131,85 @@
     </div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
         <table class="am-table am-table-striped am-table-hover">
-            <caption><p class="layout-font-size-30 am-fl">资产明细</p></caption>
-            <thead>
-                <tr>
-                    <td style="width: 20%;">球鞋名称</td>
-                    <td>尺码</td>
-                    <td>购买日期</td>
-                    <td>购买金额</td>
-                    <td>当前市场价</td>
-                    <td>涨跌幅度</td>
-                </tr>
-            </thead>
-            <tbody>
+            <caption>
+                <p class="layout-font-size-26 am-fl">资产明细</p>
                 <c:if test="${not empty userAssetsList}">
-                    <c:forEach items="${userAssetsList}" var="userAssets">
+                    <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="javascript:void(0)" data-url="../user/offerlist?type=0&pageNow=1" class="offer-btn layout-font-size-18">更多记录</a></span>
+                </c:if>
+            </caption>
+            <c:choose>
+                <c:when test="${not empty userAssetsList}">
+                    <thead>
                         <tr>
-                            <td>${userAssets.basicinformation.name}</td>
-                            <td>${userAssets.userAssetsSize}</td>
-                            <td>${userAssets.purchaseDate}</td>
-                            <td><fmt:formatNumber value="${userAssets.money}" type="number" pattern="￥0.00"/></td>
-                            <c:choose>
-                                <c:when test="${not empty userAssets.basicinformationRose.current_market_value}">
-                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>--</td>
-                                </c:otherwise>
-                            </c:choose>
-                            <c:choose>
-                                <c:when test="${not empty userAssets.basicinformationRose.change_range}">
+                            <td style="width: 20%;">球鞋名称</td>
+                            <td>尺码</td>
+                            <td>购买日期</td>
+                            <td>购买金额</td>
+                            <td>当前市场价</td>
+                            <td>涨跌幅度</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:if test="${not empty userAssetsList}">
+                            <c:forEach items="${userAssetsList}" var="userAssets">
+                                <tr>
+                                    <td>${userAssets.basicinformation.name}</td>
+                                    <td>${userAssets.userAssetsSize}</td>
+                                    <td>${userAssets.purchaseDate}</td>
+                                    <td><fmt:formatNumber value="${userAssets.money}" type="number" pattern="￥0.00"/></td>
                                     <c:choose>
-                                        <c:when test="${userAssets.basicinformationRose.type == 0}">
-                                            <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="￥0.00"/></td>
+                                        <c:when test="${not empty userAssets.basicinformationRose.current_market_value}">
+                                            <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="￥0.00"/></td>
+                                            <td>--</td>
                                         </c:otherwise>
                                     </c:choose>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>--</td>
-                                </c:otherwise>
-                            </c:choose>
-                            <td style="width: 26%">
-                                <div class="am-fl" style="width: 30%;">
-                                    <a href="${cxt}/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
-                                        <span style="display: block;width: 55px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
-                                        <span class="am-margin-left-sm am-link-muted">出售</span>
-                                    </a>
-                                </div>
-                                <div class="am-fl am-margin-left-sm" style="width: 35%;">
-                                    <a href="javascript:void(0);">
-                                        <span style="display: block;width: 50px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -65px -22px;" class="offer-btn" data-url="../user/userAssets"></span>
-                                        <span class="am-margin-left am-link-muted userAssets-del" btf-id="${userAssets.basicinformationId}" del_data_id="${userAssets.id}">删除</span>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-            </tbody>
+                                    <c:choose>
+                                        <c:when test="${not empty userAssets.basicinformationRose.change_range}">
+                                            <c:choose>
+                                                <c:when test="${userAssets.basicinformationRose.type == 0}">
+                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="￥0.00"/></td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="￥0.00"/></td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td>--</td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <td style="width: 26%">
+                                        <div class="am-fl" style="width: 30%;">
+                                            <a href="${cxt}/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
+                                                <span style="display: block;width: 55px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
+                                                <span class="am-margin-left-sm am-link-muted">出售</span>
+                                            </a>
+                                        </div>
+                                        <div class="am-fl am-margin-left-sm" style="width: 35%;">
+                                            <a href="javascript:void(0);">
+                                                <span style="display: block;width: 50px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -65px -22px;" class="offer-btn" data-url="../user/userAssets"></span>
+                                                <span class="am-margin-left am-link-muted userAssets-del" btf-id="${userAssets.basicinformationId}" del_data_id="${userAssets.id}">删除</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
+                    </tbody>
+                </c:when>
+                <c:otherwise>
+                    <tbody>
+                    <tr style="width: 100%; height: 300px;">
+                        <td style="background-color: #ffffff;">
+                            <img class="am-center" src="${cxt}/assets/i/asset_detail.png">
+                            <a href="/sorts" style="margin-left: 41%;" class="am-btn am-radius am-padding-top-xs am-padding-bottom-xs am-padding-left-lg am-padding-right-lg am-btn-danger am-margin-top-lg">去加入</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </c:otherwise>
+            </c:choose>
         </table>
     </div>
     <input type="hidden" id="userAssets_btf_id"/>
@@ -217,12 +242,14 @@
                 }
                 i++;
             }
-            if (res != null) {
+            if (i > 0) {
                 $('#container_number').highcharts({
                     chart: {
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
-                        plotShadow: false
+                        plotShadow: false,
+                        width: 180,
+                        height: 180
                     },
                     title: {
                         text: false
@@ -262,7 +289,9 @@
                     chart: {
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
-                        plotShadow: false
+                        plotShadow: false,
+                        width: 180,
+                        height: 180
                     },
                     title: {
                         text: false
@@ -297,6 +326,9 @@
                         data: a
                     }]
                 });
+            }else {
+                $('#spherical_id').css('display','block');
+                $('#sphericals_id').css('display','block');
             }
         });
     });
