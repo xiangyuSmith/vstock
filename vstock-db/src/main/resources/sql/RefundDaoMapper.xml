@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IRefundDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.Refund">
+        <id property="id" column="id"/>
+        <result column="tradeNo" property="tradeNo" jdbcType="VARCHAR"/>
+        <result column="payee" property="payee" jdbcType="VARCHAR"/>
+        <result column="btfId" property="btfId" jdbcType="INTEGER"/>
+        <result column="btfName" property="btfName" jdbcType="VARCHAR"/>
+        <result column="refundPrice" property="refundPrice" jdbcType="DECIMAL"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND r.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="tradeNo != null and tradeNo != ''">
+                and r.trade_no = #{tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="payee != null and payee != ''">
+                and r.payee = #{payee,jdbcType=VARCHAR}
+            </if>
+            <if test="btfId != null and btfId != ''">
+                and r.btf_id = #{btfId,jdbcType=INTEGER}
+            </if>
+            <if test="btfName != null and btfName != ''">
+                and r.btf_name = #{btfName,jdbcType=VARCHAR}
+            </if>
+            <if test="refundPrice != null and refundPrice != ''">
+                and r.refund_price = #{refundPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null">
+                and r.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and r.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and r.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and r.remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND r.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeNo != null and obj.tradeNo != ''">
+                and r.trade_no = #{obj.tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.payee != null and obj.payee != ''">
+                and r.payee = #{obj.payee,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.btfId != null and obj.btfId != ''">
+                and r.btf_id = #{obj.btfId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.btfName != null and obj.btfName != ''">
+                and r.btf_name = #{obj.btfName,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.refundPrice != null and obj.refundPrice != ''">
+                and r.refund_price = #{obj.refundPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null">
+                and r.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null">
+                and r.type = #{obj.type,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and r.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.remarks != null and obj.remarks != ''">
+                and r.remarks = #{obj.remarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND r.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="tradeNo != null and tradeNo != ''">
+                and r.trade_no = #{tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="payee != null and payee != ''">
+                and r.payee LIKE CONCAT('%',#{payee,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="btfId != null and btfId != ''">
+                and r.btf_id = #{btfId,jdbcType=INTEGER}
+            </if>
+            <if test="btfName != null and btfName != ''">
+                and r.btf_name LIKE CONCAT('%',#{btfName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="refundPrice != null and refundPrice != ''">
+                and r.refund_price = #{refundPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null">
+                and r.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and r.type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and r.create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and r.remarks LIKE CONCAT('%',#{remarks,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND r.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeNo != null and obj.tradeNo != ''">
+                and r.trade_no = #{obj.tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.payee != null and obj.payee != ''">
+                and r.payee LIKE CONCAT('%',#{obj.payee,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.btfId != null and obj.btfId != ''">
+                and r.btf_id = #{obj.btfId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.btfName != null and obj.btfName != ''">
+                and r.btf_name LIKE CONCAT('%',#{obj.btfName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.refundPrice != null and obj.refundPrice != ''">
+                and r.refund_price = #{obj.refundPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.status != null">
+                and r.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null">
+                and r.type = #{obj.type,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.createDate != null and obj.createDate != ''">
+                and r.create_date = #{obj.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.remarks != null and obj.remarks != ''">
+                and r.remarks LIKE CONCAT('%',#{obj.remarks,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        r.id as id,
+        r.trade_no as tradeNo,
+        r.payee as payee,
+        r.btf_id as btfId,
+        r.btf_name as btfName,
+        r.refund_price as refundPrice,
+        r.status as status,
+        r.type as type,
+        r.create_date as createDate,
+        r.remarks as remarks
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.PricePeak" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="find" parameterType="com.vstock.db.entity.PricePeak" resultType="com.vstock.db.entity.PricePeak">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
+        SELECT COUNT(*) FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `price_peak`
+        (`id`,`trade_no`,`payee`,`btf_id`,`btf_name`,`refund_price`,`status`,`type`,`create_date`,`remarks`)
+        VALUES(null,#{tradeNo},#{payee},#{btfId},#{btfName},#{refundPrice},#{status},#{type},#{createDate},#{remarks})
+    </insert>
+
+    <update id="update" parameterType="com.vstock.db.entity.Refund">
+        UPDATE `refund`
+        <set>
+            <if test="tradeNo != null and tradeNo != ''">
+                trade_no = #{tradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="payee != null and payee != ''">
+                payee = #{payee,jdbcType=VARCHAR},
+            </if>
+            <if test="btfId != null and btfId != ''">
+                btf_id = #{btfId,jdbcType=INTEGER},
+            </if>
+            <if test="btfName != null and btfName != ''">
+                btf_name = #{btfName,jdbcType=VARCHAR},
+            </if>
+            <if test="refundPrice != null and refundPrice != ''">
+                refund_price = #{refundPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null and createDate != ''">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
