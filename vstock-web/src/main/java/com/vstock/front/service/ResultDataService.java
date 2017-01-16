@@ -134,7 +134,7 @@ public class ResultDataService {
      */
     public int insertRose(){
         Basicinformation record = new Basicinformation();
-        DecimalFormat df = new DecimalFormat("######0.00");
+        DecimalFormat df = new DecimalFormat("######0.000000");
         int i = 0;
         List<Basicinformation> basicinformationList = basicinformationDao.findAll(record);
         for (Basicinformation basicinformation : basicinformationList){
