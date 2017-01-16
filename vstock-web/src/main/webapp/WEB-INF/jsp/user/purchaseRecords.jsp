@@ -128,11 +128,23 @@
                             </td>
                             <td class="am-text-sm">${trade.bftSize}</td>
                             <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
+                            <td class="am-text-sm">
                                 <c:forEach items="${statusList}" var="status">
                                     <c:if test="${status.id == trade.status}">
-                                        <td class="am-text-sm">${status.bftName}</td>
+                                        <c:choose>
+                                            <c:when test="${trade.status == 60}">
+                                                退款中
+                                            </c:when>
+                                            <c:when test="${trade.status == 61}">
+                                                退款成功
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${status.bftName}
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:if>
                                 </c:forEach>
+                            </td>
                             <td>
                                 <div class="doc-dropdown-justify-js">
                                     <div class="am-dropdown doc-dropdown-js">
@@ -167,7 +179,7 @@
             <c:otherwise>
                 <tbody>
                 <tr style="width: 100%; height: 300px;">
-                    <td>
+                    <td style="background-color: #ffffff;">
                         <img class="am-center" src="${cxt}/assets/i/purchase_price.png">
                         <a href="/sorts" style="margin-left: 41%;" class="am-btn am-radius am-padding-top-xs am-padding-bottom-xs am-padding-left-lg am-padding-right-lg am-btn-danger am-margin-top-lg">去购买</a>
                     </td>

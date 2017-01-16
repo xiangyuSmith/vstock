@@ -31,6 +31,11 @@
             <result column="bsmallImgUrl" property="smallImgUrl"/>
             <result column="bcsaledate" property="csaledate"/>
         </association>
+        <association property="payment" column="payment"
+                     javaType="com.vstock.db.entity.Payment">
+            <id column="p_id" property="id"/>
+            <result column="payment_status" property="payment_status"/>
+        </association>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -372,9 +377,9 @@
     </sql>
 
     <select id="findAllWeb" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
-        SELECT b.bft_name,b.bft_size, b.bid_bond as bidBond,
+        SELECT b.bft_name,b.bft_size, b.bid_bond as bidBond,p.payment_status,
         <include refid="Base_Column_List"/>
-        FROM trade t LEFT JOIN bid b ON t.bid_id = b.id
+        FROM trade t LEFT JOIN bid b ON t.bid_id = b.id LEFT JOIN payment p ON p.order_record_id = t.id
         <include refid="SearchAllPage_Where_Clause"/>
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
     </select>

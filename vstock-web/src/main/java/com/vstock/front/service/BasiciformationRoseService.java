@@ -77,6 +77,11 @@ public class BasiciformationRoseService {
         return roseDegree;
     }
 
+    /**
+     * 根据品牌查询当天总价格、涨幅、百分比
+     * @param brand
+     * @return
+     */
     public Map<String,Object> reseDegreeN(String brand){
         Map<String, Object> resultModel = new HashMap<String, Object>();
         DecimalFormat df = new DecimalFormat("######0.0000");

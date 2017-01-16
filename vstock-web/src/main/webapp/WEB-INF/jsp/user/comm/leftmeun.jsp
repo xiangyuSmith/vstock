@@ -18,12 +18,52 @@
 <%@include file="../../layout/top-search.jsp"%>
 <div>
     <div class="am-container-content" style="overflow:hidden;">
-        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;min-height: 450px;">
+        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;min-height: 450px; max-width: 200px;">
             <input type="hidden" id="url-type" value="${urlType}"/>
-            <c:if test="${not empty vUser}">
-                <div class="am-padding-top-sm layout-font-size-36 am-text-center am-padding-bottom" style="background-color: #EBE9E7;padding: 25px 20px;">${vUser.nick}</div>
-            </c:if>
-            <ul class="leftmenunInfo am-nav am-margin-top-0">
+            <%--<c:if test="${not empty vUser}">--%>
+                <%--<div class="am-text-center am-padding-bottom" style="background-color: #EBE9E7;padding: 20px 20px; border-bottom: solid 1px #CECAC5;"></div>--%>
+            <%--</c:if>--%>
+            <div class="layout-font-size-26 am-text-center am-padding-bottom" style="background-color: #EBE9E7;padding: 20px 20px; border-bottom: solid 1px #CECAC5;">${vUser.nick}</div>
+            <div class="am-u-md-12 am-text-center am-margin-bottom-xl" style="background-color: #EBE9E7;padding: 10px 20px; border-bottom: solid 1px #CECAC5;">
+                <div class="am-u-md-4 am-padding-left-0">
+                    <c:choose>
+                        <c:when test="${not empty vUser.mobile}">
+                            <span class="am-fl" style="background: url('/assets/i/personal_center_map.png'); background-position: -146px -19px;width: 30px;height: 30px;display: block;"/>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="am-fl" style="background: url('/assets/i/personal_center_map.png'); background-position: -188px -19px;width: 30px;height: 30px;display: block;"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="am-u-md-4 am-padding-left-sm">
+                    <c:choose>
+                        <c:when test="${not empty vUser.uname}">
+                            <span style="background: url('/assets/i/personal_center_map.png'); background-position: -238px -19px;width: 30px;height: 30px;display: block;"/>
+                        </c:when>
+                        <c:otherwise>
+                            <span style="background: url('/assets/i/personal_center_map.png'); background-position: -284px -19px;width: 30px;height: 30px;display: block;"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div class="am-u-md-4 am-padding-right-0">
+                    <c:choose>
+                        <c:when test="${not empty userAccount}">
+                            <c:choose>
+                                <c:when test="${userAccount.status == 1}">
+                                    <span class="am-fr" style="background: url('/assets/i/personal_center_map.png'); background-position: -334px -19px;width: 30px;height: 30px;display: block;"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="am-fr" style="background: url('/assets/i/personal_center_map.png'); background-position: -388px -19px;width: 30px;height: 30px;display: block;"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="am-fr" style="background: url('/assets/i/personal_center_map.png'); background-position: -388px -19px;width: 30px;height: 30px;display: block;"/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <ul class="leftmenunInfo am-nav am-padding-top-xl">
                 <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 60px;height: 30px; background: url('/assets/shoesImg/personal_center.png'); background-position: -264px -24px;"></div><span class="text-color am-text-danger layout-font-size-24 home-frist" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 30px; background: url('/assets/shoesImg/personal_center.png'); background-position: -215px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/sale?type=1" data-type="2">购买记录</span></a></li>
                 <li><a href="javascript:void(0)" class="home-tab"><img class="am-margin-left am-padding-bottom-xs" src="/assets/shoesImg/assets.png"><span class="am-margin-left text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>

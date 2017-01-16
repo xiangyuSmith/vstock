@@ -57,7 +57,10 @@ public class UserController extends BaseController {
 
     @RequestMapping("index")
     public String testIndex(ModelMap model){
+        Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
         String type = request.getParameter("type");
+        UserAccount record = userAccountService.findAccountByUid(suid.toString());
+        model.put("userAccount",record);
         model.put("urlType",type);
         return "/user/comm/leftmeun";
     }
@@ -87,7 +90,7 @@ public class UserController extends BaseController {
         page.setPageSize(5);
         List<Bid> bidList = bidService.findBid(bid,page);
         List<Trade> tradeList = tradeService.findAllWeb(trade,page);
-        List<Trade> statusList = tradeService.status();
+        List<Trade> statusList = StatusUtil.tradeStatus();
         List<Bid> bidStatus = StatusUtil.bidStatus();
         List<Express> expressList = expressService.findAll(express);
         model.addAttribute("expressList",expressList);

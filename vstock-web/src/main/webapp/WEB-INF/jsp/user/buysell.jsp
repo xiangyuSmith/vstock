@@ -45,11 +45,27 @@
                     </c:if>
                     <td class="am-text-sm">${trade.bftSize}</td>
                     <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
-                    <c:forEach items="${statusList}" var="status">
-                        <c:if test="${status.id == trade.status}">
-                            <td class="am-text-sm">${status.bftName}</td>
-                        </c:if>
-                    </c:forEach>
+                    <td class="am-text-sm">
+                        <c:forEach items="${statusList}" var="status">
+
+                            <c:if test="${status.id == trade.status}">
+                                <c:if test="${type == 0}">${status.bftName}</c:if>
+                                <c:if test="${type == 1}">
+                                    <c:choose>
+                                        <c:when test="${trade.status == 60}">
+                                            退款中
+                                        </c:when>
+                                        <c:when test="${trade.status == 61}">
+                                            退款成功
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${status.bftName}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>
+                    </td>
                     <td>
                         <c:if test="${type == 0}">
                             <div class="doc-dropdown-justify-js">

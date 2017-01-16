@@ -2,6 +2,7 @@ package com.vstock.server.util;
 
 import com.vstock.db.entity.BackCommodity;
 import com.vstock.db.entity.Bid;
+import com.vstock.db.entity.Trade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +42,21 @@ public class StatusUtil {
             backStatus.add(backCommodity);
         }
         return backStatus;
+    }
+
+    /**
+     * 获取订单表前台展现状态
+     * @return
+     */
+    public static List<Trade> tradeStatus(){
+        List<Trade> tradeList = new ArrayList<Trade>();
+        for (String str : Trade.tradeStatuses){
+            Trade record = new Trade();
+            String[] status = str.split(":");
+            record.setId(Integer.parseInt(status[0]));
+            record.setBftName(status[1]);
+            tradeList.add(record);
+        }
+        return tradeList;
     }
 }

@@ -15,7 +15,9 @@ public class Trade implements Serializable {
 
     public final static String TRADE_MD5_MARK_NOTIFY = "^|^";
 
-    public final static String[] statuses = {"0:待支付保证金","1:待支付鞋款","2:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭","50:订单删除"};
+    public final static String[] statuses = {"0:待支付保证金","1:待支付鞋款","2:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭","50:订单删除","60:退货中","61:退货成功"};
+
+    public final static String[] tradeStatuses = {"0:待支付","1:待支付","2:待卖家寄出","10:待验货","11:支付失败","20:待验货","21:验货退回","30:待确认收货","40:交易完成","41:交易关闭","50:订单删除","60:退货中","61:退货成功"};
 
     public final static int TRADE_NOTIFIY_PAY_BOND = 0; //待支付保证金
     public final static int TRADE_NOTIFIY_PAY = 1;      //已下单待支付
@@ -44,11 +46,20 @@ public class Trade implements Serializable {
     private String updateDate;
     private String sign;
     private Bid bid;
+    private Payment payment;
     private String bftName;
     private String bftSize;
     private String sellerName;
     private String buyersName;
     private String companyName;
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
     public Bid getBid() {
         return bid;
