@@ -58,9 +58,9 @@
                             </span>
                         </div>
                     </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-lg am-margin-bottom-sm am-text-left">
+                    <div id="sell_money_tips_div" style="display: none;" class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-lg am-margin-bottom-sm am-text-left">
                         <span class="wenxin-tips am-margin-right-sm" style="background: url('/assets/i/detail_icon.png');background-position: -406px -22px;"></span>
-                        <span class="bid-tips layout-font-size-16" style="color: #646464;">卖家出价需大于买家最高叫价</span>
+                        <span id="sell_money_tips" class="bid-tips layout-font-size-16" style="color: #646464;">卖家出价需大于买家最高叫价</span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm">
                         <div class="am-u-md-2 am-fl am-padding-0 am-text-left">
@@ -134,6 +134,7 @@
 </div>
 <script>
     $(function(){
+
         /**
          * 提示文案
          */

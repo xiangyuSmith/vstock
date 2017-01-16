@@ -246,4 +246,13 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
+    <update id="updateX" parameterType="com.vstock.db.entity.PricePeak">
+        UPDATE `price_peak`
+        <set>
+            minimum_selling_price = #{minimumSellingPrice,jdbcType=VARCHAR},
+            minimum_selling_id = #{minimumSellingId,jdbcType=VARCHAR},
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

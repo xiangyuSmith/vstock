@@ -27,4 +27,6 @@ public interface IPricePeakDao {
 
     //修改数据
     int update(PricePeak record);
+
+    int updateX(PricePeak record);
 }

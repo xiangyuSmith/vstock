@@ -69,7 +69,14 @@ public class PricePeakService {
     public int update(PricePeak record){
         return pricePeakDao.update(record);
     }
-
+    /**
+     * 修改
+     * @param record
+     * @return
+     */
+    public int updateX(PricePeak record){
+        return pricePeakDao.updateX(record);
+    }
 
     /**
      * @param sort

@@ -210,4 +210,75 @@ public class BidService {
         }
         return 0;
     }
+
+    public List<Bid> findAllBidOrder(Bid record,Integer sort){
+        return bidDao.findAllBidOrder(record,sort);
+    }
+
+    /**
+     * 校验当前金额
+     * @param money
+     * @param size
+     * @param basicinfortionId
+     * @param type
+     * @return
+     */
+    public int checkMoney(BigDecimal money,String size,Integer basicinfortionId,Integer type){
+        Bid b = new Bid();
+        b.setBftSize(size);
+        b.setBasicinformationId(basicinfortionId);
+        b.setType("0");
+        List<Bid> bidSellList = findAllBidOrder(b,0);
+        b.setType("1");
+        List<Bid> bidBuyList = findAllBidOrder(b,1);
+        return checkSell(bidSellList,bidBuyList,type,money);
+    }
+
+    /**
+     * 当前鞋子信息
+     * @param sellBid 当前鞋子最低卖价
+     * @param buyBid  当前鞋子最高售价
+     * @param type  类型：0 卖家   1：买家
+     * @return
+     */
+    public int checkSell(List<Bid> sellBid,List<Bid> buyBid,Integer type,BigDecimal money){
+        if(sellBid.size() > 0){
+            if(money.compareTo(sellBid.get(0).getBidMoney()) == 1){
+                return 1;
+            }
+            if(money.compareTo(sellBid.get(0).getBidMoney()) == 0){
+                return 2;
+            }
+        }
+        if(type == 0){
+            if(sellBid.size() > 0 && buyBid.size() > 0) {
+                if (money.compareTo(sellBid.get(0).getBidMoney()) == -1 && money.compareTo(buyBid.get(0).getBidMoney()) == 1) {
+                    return 3;
+                }
+            }
+            if(buyBid.size() > 0){
+                if(money.compareTo(buyBid.get(0).getBidMoney()) == 0){
+                    return 4;
+                }
+                if(money.compareTo(buyBid.get(0).getBidMoney()) == -1){
+                    return 5;
+                }
+            }
+        }else{
+            if(sellBid.size() > 0 && buyBid.size() > 0) {
+                if(money.compareTo(sellBid.get(0).getBidMoney()) == -1 && money.compareTo(buyBid.get(0).getBidMoney()) == 1){
+                    return 3;
+                }
+            }
+            if(buyBid.size() > 0){
+                if(money.compareTo(buyBid.get(0).getBidMoney()) == -1){
+                    return 4;
+                }
+                if(money.compareTo(buyBid.get(0).getBidMoney()) == 0){
+                    return 5;
+                }
+            }
+        }
+        return 0;
+    }
 }

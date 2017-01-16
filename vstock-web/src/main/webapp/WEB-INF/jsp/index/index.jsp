@@ -117,7 +117,7 @@
     <div class="am-container-content">
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -50px 6px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">爆款推荐</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
@@ -144,7 +144,7 @@
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -115px 6px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最低叫价</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
@@ -171,7 +171,7 @@
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -180px 6px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最高出价</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
@@ -198,7 +198,7 @@
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -245px 6px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最大涨幅</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
@@ -224,7 +224,7 @@
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png');background-position: -305px 6px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">即将发布</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>

@@ -16,7 +16,7 @@ public class PricePeak implements Serializable {
     private String peakSize;
     private BigDecimal highestBid;
     private BigDecimal minimumSellingPrice;
-    private int status;
+    private Integer status;
     private String highestBidderId;
     private String minimumSellingId;
     private String createDate;
@@ -67,11 +67,11 @@ public class PricePeak implements Serializable {
         this.minimumSellingPrice = minimumSellingPrice;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -115,7 +115,7 @@ public class PricePeak implements Serializable {
         this.basicinformation = basicinformation;
     }
 
-    public PricePeak(Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, int status, String highestBidderId, String minimumSellingId, String createDate) {
+    public PricePeak(Integer basicinformationId, String peakSize, BigDecimal highestBid, BigDecimal minimumSellingPrice, Integer status, String highestBidderId, String minimumSellingId, String createDate) {
         this.basicinformationId = basicinformationId;
         this.peakSize = peakSize;
         this.highestBid = highestBid;

@@ -152,6 +152,62 @@ function alertTips(type,title,msg){
     }
     $.toaster({ priority : msgType, title : title, message : msg});
 }
+
+function moneytips(type,num){
+    var html = "";
+    if(type == 0){
+        switch (num){
+            case 1:
+                html = "您不是出价最低的卖家，优先成交最低的出价；";
+                break;
+            case 2:
+                html = "您的出价和当前卖家最低出价相同。我们将优先成交出价最前的。";
+                break;
+            case 3:
+                html = "您将是出价最低的卖家。";
+                break;
+            case 4:
+                html = "您的出价和买家最高叫价相同，您可以选择直接出售；";
+                break;
+            case 5:
+                html = "您的出价应大于买家最高叫价，您可以选择直接出售；";
+                break;
+            default:
+                $("#sell_money_tips_div").css("display","none");
+                break;
+        }
+        if(num!=0){
+            $("#sell_money_tips_div").css("display","block");
+            $("#sell_money_tips").html(html);
+        }
+    }else{
+        switch (num){
+            case 1:
+                html = "买家叫价需小于最低卖家出价，您可以选择直接购买；";
+                break;
+            case 2:
+                html = "您的叫价和卖家最低出价相同，您可以选择直接购买；";
+                break;
+            case 3:
+                html = "您将是叫价最高的买家；";
+                break;
+            case 4:
+                html = "您不是叫价最高的买家，优先成交最高的叫价；";
+                break;
+            case 5:
+                html = "您的叫价和当前最高叫价相同。我们将优先成交叫价最前的。";
+                break;
+            default:
+                $("#bid_money_tips_div").css("display","none");
+                break;
+        }
+        if(num!=0){
+            $("#bid_money_tips_div").css("display","block");
+            $("#bid_money_tips").html(html);
+        }
+    }
+}
+
 function alertConfirm(title , msg , callback) {
     $("#alert-confirm-title").html(title);
     $("#alert-confirm-content").html(msg);

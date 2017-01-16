@@ -125,8 +125,8 @@ public class TradeController extends BaseController{
         List<Bid> bidList = bidService.findOrderByMoney(bidT);
         if (bidList.size() > 0) {
             if (Integer.parseInt(b.getType()) == 0){
-                p.setMinimumSellingPrice(bidList.get(0).getBidMoney());
-                p.setMinimumSellingId(bidList.get(0).getUserId().toString());
+                p.setMinimumSellingPrice(bidList.get(bidList.size()-1).getBidMoney());
+                p.setMinimumSellingId(bidList.get(bidList.size()-1).getUserId().toString());
             }else {
                 p.setHighestBid(bidList.get(0).getBidMoney());
                 p.setHighestBidderId(bidList.get(0).getUserId().toString());
@@ -134,13 +134,13 @@ public class TradeController extends BaseController{
             pricePeakService.update(p);
         }else {
             if (Integer.parseInt(b.getType()) == 0){
-                p.setMinimumSellingPrice(new BigDecimal(0));
-                p.setMinimumSellingId("0");
+                p.setMinimumSellingPrice(null);
+                p.setMinimumSellingId("");
             }else {
-                p.setHighestBid(new BigDecimal(0));
-                p.setHighestBidderId("0");
+                p.setHighestBid(null);
+                p.setHighestBidderId("");
             }
-            pricePeakService.update(p);
+            pricePeakService.updateX(p);
         }
 
         resultModel.setRetCode(resultModel.RET_OK);

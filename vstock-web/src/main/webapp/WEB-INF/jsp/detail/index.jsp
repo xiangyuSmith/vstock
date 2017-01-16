@@ -99,7 +99,7 @@
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
-                    <span class="str layout-font-size-22">买家最高出价</span><br/>
+                    <span class="str layout-font-size-22">买家最高叫价</span><br/>
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty pricePeak1.highestBid}">
@@ -132,7 +132,7 @@
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
-                    <span class="str layout-font-size-22">卖家最低叫价</span><br/>
+                    <span class="str layout-font-size-22">卖家最低出价</span><br/>
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty pricePeak2.minimumSellingPrice}">
@@ -522,6 +522,44 @@
             "bid":bId,
             "bname" : bname
         });
+
+        $("#seller_bid_amount").blur(function(){
+            var amount = $(this).val();
+            var size = $("#seller_buy_size").val();
+            var type = 0;
+            checkMoneyTips(bId,amount,size,type);
+        });
+        $("#seller_buy_size").change(function(){
+            var amount = $("#seller_bid_amount").val();
+            var size = $(this).val();
+            var type = 0;
+            checkMoneyTips(bId,amount,size,type);
+        });
+        $("#buyer_sell_size").change(function(){
+            var amount = $("#buyer_sell_amount").val();
+            var size = $(this).val();
+            var type = 1;
+            checkMoneyTips(bId,amount,size,type);
+        });
+        $("#buyer_sell_amount").blur(function(){
+            var amount = $(this).val();
+            var size = $("#buyer_sell_size").val();
+            var type = 1;
+            checkMoneyTips(bId,amount,size,type);
+        });
+
+        function checkMoneyTips(bId,amount,size,type){
+            sendRequest("/bid/checkMoneyTips",{
+                "bid" : bId,
+                "amount" : amount,
+                "size" : size,
+                "type": type
+            },function(res){
+                if(res.retCode == 1){
+                    moneytips(type,res.data);
+                }
+            });
+        }
     });
 </script>
 </body>

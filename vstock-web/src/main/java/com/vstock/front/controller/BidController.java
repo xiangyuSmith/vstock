@@ -153,4 +153,19 @@ public class BidController extends BaseController{
         resultModel.setRetCode(i);
         return resultModel;
     }
+
+    @RequestMapping("checkMoneyTips")
+    @ResponseBody
+    public ResultModel checkMoneyTips(){
+        ResultModel resultModel = new ResultModel();
+        Integer type =  getParamToInt("type");
+        Integer bid = getParamToInt("bid");
+        String size = getParam("size","");
+        double amount = Double.valueOf(getParam("amount", "0"));
+        BigDecimal money = new BigDecimal(amount);
+        int tips_number = bidService.checkMoney(money,size,bid,type);
+        resultModel.setData(tips_number);
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
+    }
 }

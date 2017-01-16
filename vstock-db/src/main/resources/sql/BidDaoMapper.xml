@@ -388,6 +388,22 @@
         limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAllBidOrder" resultType="com.vstock.db.entity.Bid">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        AND status = 10
+        <if test="sort != null">
+            <if test="sort == 0">
+                ORDER BY b.bid_money ASC
+            </if>
+            <if test="sort == 1">
+                ORDER BY b.bid_money DESC
+            </if>
+        </if>
+    </select>
+
     <select id="findAndPricePeak" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
         SELECT p.highest_bid, p.minimum_selling_price,
         <include refid="Base_Column_List"/>
