@@ -18,6 +18,9 @@
             <id column="id" property="id"/>
             <result column="name" property="name"/>
             <result column="artNo" property="artNo"/>
+            <result column="type" property="type"/>
+            <result column="smallImgUrl" property="smallImgUrl"/>
+            <result column="csaledate" property="csaledate"/>
         </association>
     </resultMap>
 
@@ -192,6 +195,7 @@
         FROM price_peak p
         <include refid="SelectAllByPage_Where_Clause"/>
         <if test="sort == 1">
+            AND p.highest_bid is not null
             ORDER BY p.highest_bid DESC
         </if>
         <if test="sort == 2">

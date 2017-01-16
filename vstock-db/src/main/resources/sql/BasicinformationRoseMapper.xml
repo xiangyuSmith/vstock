@@ -19,6 +19,13 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
+    <select id="findNewRose" parameterType="com.vstock.db.entity.BasicinformationRose" resultType="com.vstock.db.entity.BasicinformationRose">
+        select * from basicinformation_rose br
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY br.percentage_change DESC
+        limit #{startPos},#{pageSize}
+    </select>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `basicinformation_rose`
         (`id`,`basicinformation_id`,`brand`,`basicinformation_size`,`current_market_value`,`change_range`,`percentage_change`,`type`,`create_date`)

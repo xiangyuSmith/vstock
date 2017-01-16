@@ -47,7 +47,7 @@ public class BidController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         String overdueTime = getParam("overdueTime");
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
-        int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,bidService.getOverDueTime(overdueTime)
+        int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,overdueTime
                 ,type,new BigDecimal(10),String.valueOf(Bid.STATUS_PENDING),DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
         if(resultBid != 0){
             resultModel.setRetCode(resultModel.RET_OK);
@@ -168,4 +168,6 @@ public class BidController extends BaseController{
         resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
     }
+
+
 }

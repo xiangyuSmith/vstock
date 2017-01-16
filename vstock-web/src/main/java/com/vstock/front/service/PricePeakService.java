@@ -48,6 +48,13 @@ public class PricePeakService {
     }
 
     /**
+     * 获取最高/最低
+     */
+//    public List<PricePeak> findAllByhightMin(){
+//        return pricePeakDao.findAllByhightMin(sort);
+//    }
+
+    /**
      * 查询所有总数
      * @param record
      * @return

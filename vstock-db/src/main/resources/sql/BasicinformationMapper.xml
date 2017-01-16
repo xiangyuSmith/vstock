@@ -39,6 +39,8 @@
         <result column="colores" property="colores"/>
         <result column="artNo" property="artNo"/>
         <result column="type" property="type"/>
+        <result column="cofferprice" property="cofferprice"/>
+        <result column="eofferprice" property="eofferprice"/>
         <result column="smallImgUrl" property="smallImgUrl"/>
         <result column="csaledate" property="csaledate"/>
         <association property="resultData" column="resultData"

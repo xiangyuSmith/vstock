@@ -77,6 +77,7 @@ public class BidService {
 
     public int createBid(String bName, int uid, int bId, String size, double amount,String overdueTime,
                          String type,BigDecimal bidBond,String status,String bidDate,String bidMd5Key){
+        String invalidDate = getOverDueTime(overdueTime);
         if(amount <= 0){
             logger.warn("叫价金额为0或小于0");
             return 0;
@@ -88,7 +89,8 @@ public class BidService {
         bid.setBasicinformationId(bId);
         bid.setBftSize(size);
         bid.setBidMoney(new BigDecimal(amount));
-        bid.setInvalidDate(overdueTime);
+        bid.setInvalidDate(invalidDate);
+        bid.setTermValidity(overdueTime);
         bid.setSign(sign);
         bid.setType(type);
         bid.setBidBond(bidBond);

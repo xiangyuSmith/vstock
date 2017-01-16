@@ -15,10 +15,13 @@ public class Bid implements Serializable {
 
 
     public final static int STATUS_PENDING = 0; // 待付款
+    public final static int STATUS_CLEAN = 1; //   已关闭
+    public final static int STATUS_PAY_FAIL = 2; // 支付失败
     public final static int STATUS_INIT = 10; // 叫价中
     public final static int STATUS_OVERDUE = 11; // 已过期
     public final static int STATUS_LOCKING = 20; // 已锁定
     public final static int STATUS_SUCCESS = 30; // 已成交
+    public final static int STATUS_DELETE = 40; // 已删除
 
     public final static String[] statusStr = {"0:待支付","1:已关闭","2:支付失败","10:叫价中","11:已过期","20:已锁定","30:已交易","40:已删除"};
 

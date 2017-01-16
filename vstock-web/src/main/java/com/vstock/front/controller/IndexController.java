@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,42 @@ public class IndexController extends BaseController{
         //爆款推荐
         List<Basicinformation> baolist = basicinformationService.findByBao(1);
         //最低卖价 & 最高叫价
-//        List<PricePeak> pricePeakList = pricePeakService.findAll();
+        List<Basicinformation> miniMoneyList = basicinformationService.findByType(2);
+        List<Basicinformation> heightMoneyList = basicinformationService.findByType(3);
+        List<Basicinformation> bigRoseList = basicinformationService.findByType(4);
+        PricePeak p = new PricePeak();
+        p.setStatus(0);
+        for(int i = 0;i < heightMoneyList.size();i++){
+            p.setBasicinformationId(Integer.parseInt(heightMoneyList.get(i).getId()));
+            List<PricePeak> prHight = pricePeakService.findByType(p,1,lagePage);
+            p.setBasicinformationId(Integer.parseInt(miniMoneyList.get(i).getId()));
+            List<PricePeak> prMini = pricePeakService.findByType(p,2,lagePage);
+            if(prHight.size() > 0){
+                heightMoneyList.get(i).setCofferprice(prHight.get(0).getHighestBid().doubleValue());
+            }
+            if(prMini.size() > 0){
+                miniMoneyList.get(i).setCofferprice(prMini.get(0).getMinimumSellingPrice().doubleValue());
+            }
+        }
+        //最大涨幅
+        BasicinformationRose b = new BasicinformationRose();
+        for(int i = 0;i < bigRoseList.size();i++){
+            b.setBasicinformation_id(Integer.parseInt(bigRoseList.get(i).getId()));
+            b.setCreate_date(ToolDateTime.format(ToolDateTime.getDate(),ToolDateTime.pattern_ymd));
+            List<BasicinformationRose> brose = basiciformationRoseService.findNewRose(b,lagePage);
+            if(brose.size() > 0){
+                bigRoseList.get(i).setCofferprice(brose.get(0).getCurrent_market_value().doubleValue());
+                bigRoseList.get(i).setCofferprices(brose.get(0).getPercentage_change().doubleValue()*100);
+            }
+        }
         Long bCount = basicinformationService.findCount();
         modelMap.addAttribute("bList",bList);
         modelMap.addAttribute("baolist",baolist);
         modelMap.addAttribute("sellBidList",sellBidList);
         modelMap.addAttribute("buyBidList",buyBidList);
+        modelMap.addAttribute("heightMoneyList",heightMoneyList);
+        modelMap.addAttribute("miniMoneyList",miniMoneyList);
+        modelMap.addAttribute("bigRoseList",bigRoseList);
         modelMap.addAttribute("bCount",bCount);
         return "/index/index";
     }

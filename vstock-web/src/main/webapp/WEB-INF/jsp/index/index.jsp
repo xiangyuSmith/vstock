@@ -16,7 +16,7 @@
         .show-lazy { background: url("/assets/i/loading.gif") 50% no-repeat;}
         .am-container-content ul li{ padding: 20px; }
         .m-hd{ position: absolute!important; }
-        .index-icon{ display: inline-block;width: 50px;height: 45px; }
+        .index-icon{ display: inline-block;width: 35px;height: 45px;margin-right: 5px; }
         #sellBid ul li p{ font-size: 14px;}
         #buyBid ul li p{ font-size: 14px;}
         body{font-size:12px}
@@ -46,9 +46,6 @@
                 </form>
             </div>
         </div>
-    </div>
-    <div class="">
-        <span class="layout-font-size-28" style="color: #eee;">股票式球鞋交易平台</span>
     </div>
 </div>
 <article class="am-show-lg-only">
@@ -117,7 +114,7 @@
     <div class="am-container-content">
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -70px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">爆款推荐</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
@@ -144,87 +141,81 @@
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -105px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最低叫价</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-                <c:forEach items="${bList}" var="b">
-                    <c:if test="${b.type==2}">
-                        <li>
-                            <div class="am-gallery-item am_list_block">
-                                <a href="/detail?proName=${b.name}" class="am_img_bg">
-                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
-                                </a>
-                                <div class="am_listimg_info">
-                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
-                                    <div>
-                                        <div style="font-size: 16px;">最低叫价</div>
-                                        <div style="font-size: 22px;">￥600.00</div>
-                                    </div>
+                <c:forEach items="${miniMoneyList}" var="b">
+                    <li>
+                        <div class="am-gallery-item am_list_block">
+                            <a href="/detail?proName=${b.name}" class="am_img_bg">
+                                <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                            </a>
+                            <div class="am_listimg_info">
+                                <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div>
+                                    <div style="font-size: 16px;">最低叫价</div>
+                                    <div class="layout-font-size-24">￥${b.cofferprice}</div>
                                 </div>
                             </div>
-                        </li>
-                    </c:if>
+                        </div>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -140px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最高出价</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-                <c:forEach items="${bList}" var="b">
-                    <c:if test="${b.type==3}">
-                        <li>
-                            <div class="am-gallery-item am_list_block">
-                                <a href="/detail?proName=${b.name}" class="am_img_bg">
-                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
-                                </a>
-                                <div class="am_listimg_info">
-                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
-                                    <div>
-                                        <div style="font-size: 16px;">最高出价</div>
-                                        <div style="font-size: 22px;">￥3564.66</div>
-                                    </div>
+                <c:forEach items="${heightMoneyList}" var="b">
+                    <li>
+                        <div class="am-gallery-item am_list_block">
+                            <a href="/detail?proName=${b.name}" class="am_img_bg">
+                                <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                            </a>
+                            <div class="am_listimg_info">
+                                <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div>
+                                    <div style="font-size: 16px;">最高出价</div>
+                                    <div class="layout-font-size-24">￥${b.cofferprice}</div>
                                 </div>
                             </div>
-                        </li>
-                    </c:if>
+                        </div>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -175px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最大涨幅</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
-                <c:forEach items="${bList}" var="b">
-                    <c:if test="${b.type==4}">
-                        <li>
-                            <div class="am-gallery-item am_list_block">
-                                <a href="/detail?proName=${b.name}" class="am_img_bg">
-                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
-                                </a>
-                                <div class="am_listimg_info">
-                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
-                                    <div>
-                                        <div style="font-size: 22px;">￥800（12%）</div>
-                                    </div>
+                <c:forEach items="${bigRoseList}" var="b">
+                    <li>
+                        <div class="am-gallery-item am_list_block">
+                            <a href="/detail?proName=${b.name}" class="am_img_bg">
+                                <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                            </a>
+                            <div class="am_listimg_info">
+                                <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div>
+                                    <div class="layout-font-size-24">￥${b.cofferprice}（<fmt:formatNumber value="${b.cofferprices}" type="currency" pattern="#,#00" />%）</div>
                                 </div>
                             </div>
-                        </li>
-                    </c:if>
+                        </div>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
-                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -58px 12px;"></span>
+                <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -208px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">即将发布</span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
@@ -239,7 +230,7 @@
                                 <div class="am_listimg_info">
                                     <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
-                                        <div style="font-size: 22px;">官方售价:￥800</div>
+                                        <div class="layout-font-size-22">官方售价:￥${b.cofferprice}</div>
                                     </div>
                                 </div>
                             </div>

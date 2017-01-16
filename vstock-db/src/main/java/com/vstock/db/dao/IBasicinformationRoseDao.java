@@ -12,6 +12,8 @@ public interface IBasicinformationRoseDao {
 
     List<BasicinformationRose> findAllDate(@Param("obj")BasicinformationRose record);
 
+    List<BasicinformationRose> findNewRose(@Param("obj")BasicinformationRose record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
     int insert(BasicinformationRose record);
 
 }

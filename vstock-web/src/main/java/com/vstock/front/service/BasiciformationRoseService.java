@@ -6,6 +6,7 @@ import com.vstock.db.entity.BasicinformationRose;
 import com.vstock.db.entity.Point;
 import com.vstock.db.entity.User;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,10 @@ public class BasiciformationRoseService {
      */
     public List<BasicinformationRose> findAllDate(BasicinformationRose record){
         return basicinformationRoseDao.findAllDate(record);
+    }
+
+    public List<BasicinformationRose> findNewRose(BasicinformationRose record,Page page){
+        return basicinformationRoseDao.findNewRose(record,page.getStartPos(),page.getPageSize());
     }
 
     /**

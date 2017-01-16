@@ -56,13 +56,38 @@ public class QuartzJob implements Job {
         Bid record = new Bid();
         record.setStatus(String.valueOf(record.STATUS_PENDING));
         List<Bid> bidlist = bidService.findAllBid(record);
+        record.setStatus(String.valueOf(record.STATUS_INIT));
+        List<Bid> bidlisting = bidService.findAllBid(record);
+        int result = bidSend(bidlist,60*60*24,record.STATUS_CLEAN);
+        int result2 = bidSend(bidlisting,0,record.STATUS_OVERDUE);
+        return result * result2;
+    }
+
+    private int quartzTrade(){
+        Trade record = new Trade();
+        record.setStatus(record.TRADE_NOTIFIY_PAY);
+        List<Trade> tradeList = tradeService.findAllTrade(record);
+        record.setStatus(record.TRADE_NOTIFIY_PAY_BOND);
+        List<Trade> tradeListNotBond = tradeService.findAllTrade(record);
+        //订单金额计时
+        int result = tradeSend(tradeList,60*60*24,record.TRADE_CLOSE);
+        //保证金计时
+        int result2 = tradeSend(tradeListNotBond,60*15,record.TRADE_CLOSE);
+        return result * result2;
+    }
+
+    private int bidSend( List<Bid> bids,int time,int status){
         Bid b = new Bid();
         int result = 1;
-        for (Bid bid : bidlist) {
-            long difference = isdifference(bid.getBidDate(),60*15);
+        for (Bid bid : bids) {
+            int day = Integer.parseInt(bid.getTermValidity());
+            if(time == 0){
+                time = 60*60*24*day;
+            }
+            long difference = isdifference(bid.getBidDate(),time);
             if(difference <= 0){
                 b.setId(bid.getId());
-                b.setStatus("11");
+                b.setStatus(String.valueOf(status));
                 int x = bidService.update(b);
                 result = result * x;
             }
@@ -70,17 +95,14 @@ public class QuartzJob implements Job {
         return result;
     }
 
-    private int quartzTrade(){
-        Trade record = new Trade();
-        record.setStatus(record.TRADE_NOTIFIY_PAY);
-        List<Trade> tradeList = tradeService.findAllTrade(record);
-        Trade t = new Trade();
+    private int tradeSend( List<Trade> trades,int time,int status){
         int result = 1;
-        for (Trade trade : tradeList) {
-            long difference = isdifference(trade.getTransactionDate(),60*60*24);
+        Trade t = new Trade();
+        for (Trade trade : trades) {
+            long difference = isdifference(trade.getTransactionDate(),time);
             if(difference <= 0){
                 t.setId(trade.getId());
-                t.setStatus(41);
+                t.setStatus(status);
                 int x = tradeService.update(t);
                 result = result * x;
             }
