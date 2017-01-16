@@ -115,7 +115,9 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -70px 12px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">爆款推荐</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">爆款推荐<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                          data-container="body" data-toggle="popover" data-placement="auto right"
+                                                                                          data-content="爆款推荐"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -142,7 +144,9 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -105px 12px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">最低叫价</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最低叫价<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                          data-container="body" data-toggle="popover" data-placement="auto right"
+                                                                                          data-content="最低叫价"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -167,7 +171,9 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -140px 12px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">最高出价</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最高出价<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                          data-container="body" data-toggle="popover" data-placement="auto right"
+                                                                                          data-content="最高出价"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -192,7 +198,9 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -175px 12px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">最大涨幅</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">最大涨幅<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                          data-container="body" data-toggle="popover" data-placement="auto right"
+                                                                                          data-content="最大涨幅"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -216,7 +224,9 @@
         <div class="am-g am-imglist">
             <div class="am-text-center" style="border-bottom: 1px solid #ccc;height: 50px;line-height: 50px;">
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -208px 12px;"></span>
-                <span class="am-fl layout-font-size-28" style="color: #060606;">即将发布</span>
+                <span class="am-fl layout-font-size-28" style="color: #060606;">即将发布<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                          data-container="body" data-toggle="popover" data-placement="auto right"
+                                                                                          data-content="即将发布"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -248,6 +258,9 @@
 <%@include file="../layout/bottom.jsp" %>
 <script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
 <script type="text/javascript">
+    $("[data-toggle='popover']").popover({
+        trigger:'hover focus'
+    });
     window.onload=function(){
         var speed=15;
         var buyBid=document.getElementById("buyBid");
