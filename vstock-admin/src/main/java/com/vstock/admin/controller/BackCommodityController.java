@@ -125,15 +125,15 @@ public class BackCommodityController {
     public Map<String, Object> saveBackCommodity(BackCommodity record, HttpServletRequest request) {
         Map<String, Object> param = new HashMap<String, Object>();
         int i = backCommodityService.save(record);
-        if (record.getStatus() != null && !"".equals(record.getStatus())) {
-            Trade trade = new Trade();
-            trade.setTradeNo(record.getTradeNo());
-            trade = tradeService.findTrade(trade);
-            trade.setStatus(41);
-            if (record.getStatus() == 10) {
-                i = tradeService.save(trade);
-            }
-        }
+//        if (record.getStatus() != null && !"".equals(record.getStatus())) {
+//            Trade trade = new Trade();
+//            trade.setTradeNo(record.getTradeNo());
+//            trade = tradeService.findTrade(trade);
+//            trade.setStatus(41);
+//            if (record.getStatus() == 10) {
+//                i = tradeService.save(trade);
+//            }
+//        }
         param.put("reGode",i);
         return param;
     }
