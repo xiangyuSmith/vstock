@@ -32,6 +32,9 @@ public class GithubRepoPageProcessor implements PageProcessor {
     private static Logger logger = Logger.getLogger(GithubRepoPageProcessor.class);
 
     private static StockxStore stockxStore;
+    CommodityDataService commodityDataService = (CommodityDataService) ToolSpring.getBean("commodityData");
+    StockxStoreService stockxStoreService = (StockxStoreService) ToolSpring.getBean("stockxStore");
+    BasicinformationService basicinformationService = (BasicinformationService) ToolSpring.getBean("basicinformation");
     private static int xnum = 0;
     private String s_name;
     //当前页面url
@@ -64,16 +67,12 @@ public class GithubRepoPageProcessor implements PageProcessor {
     // process是定制爬虫逻辑的核心接口，在这里编写抽取逻辑
     @Override
     public void process(Page page) {
-        CommodityDataService commodityDataService = (CommodityDataService) ToolSpring.getBean("commodityData");
-        StockxStoreService stockxStoreService = (StockxStoreService) ToolSpring.getBean("stockxStore");
-        BasicinformationService basicinformationService = (BasicinformationService) ToolSpring.getBean("basicinformation");
         //实例化bean保存数据
         TaobaoRepo taobaoRepo = new TaobaoRepo();
         //当前 url
         if (i == 1) {
             if (xnum < stockxStoreList.size()) {
                 nowUrl = stockxStoreList.get(xnum).getUrl();
-//                nowUrl="http://item.taobao.com/item.htm?id=4547349024";
                 stockxStore = stockxStoreList.get(xnum);
                 s_name = stockxStoreList.get(xnum).getName();
             } else {
@@ -149,7 +148,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                 logger.info("下载网页界面........");
                 logger.info("=================================================");
             } catch (Exception e) {
-                logger.error("WebDriver Runtime request for nowUrl ~!!!!");
+                logger.error("启动谷歌内核失败!!!!原因："+e.getMessage());
                 xnum--;
             }
             int number = 0;
@@ -164,11 +163,6 @@ public class GithubRepoPageProcessor implements PageProcessor {
                 //隐式等待
                 driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
                 webElementPinglun = driver.findElement(By.xpath("//div[@class='tb-tabbar-inner-wrap']/ul/li[2]/a"));
-            } catch (Exception e) {
-                logger.debug(e.getMessage());
-                System.gc();
-            }
-            try {
                 //隐式等待
                 driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
                 rememberColorList = driver.findElements(By.xpath("//div[@class='tb-skin']/dl[@class='J_Prop tb-prop tb-clear  J_Prop_Color ']/dd/ul/li[not(contains(@class,'tb-out-of-stock'))]/a"));//tb-out-of-stock
@@ -218,7 +212,6 @@ public class GithubRepoPageProcessor implements PageProcessor {
                         }
                         //打印搜索到的页面
                         getHtmlResultColor = webElement.getAttribute("outerHTML");
-
                         sizePriceMap = new HashMap<String, String>();
                         //隐式等待
                         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -316,12 +309,12 @@ public class GithubRepoPageProcessor implements PageProcessor {
                 System.gc();
                 logger.debug(e.getMessage());
             }
-            //获取页面
-            getHtmlResult = webElement.getAttribute("outerHTML");
             //判断鞋码为空，关闭浏览器。添加本地址重新再爬取
             if (number == 0) {
                 JSONObject jsonObject = null;
                 try {
+                    //获取页面
+                    getHtmlResult = webElement.getAttribute("outerHTML");
                     jsonObject = new JSONObject(colorMap);
                     colorSize = jsonObject.toString();
                     //打印搜索到的页面
@@ -365,153 +358,153 @@ public class GithubRepoPageProcessor implements PageProcessor {
                         if (name != null || price != null || sales != null) {
                             int i = 1;
                             int d = 0;
-                            try {
-                                //检查是否存在该数据
-                                CommodityData commodityDataInfo = commodityDataService.findByNames(name, girard);
-                                if (commodityDataInfo == null) {
-                                    //添加商品信息
-                                    record.setStockxName(s_name);
-                                    record.setStockxId(stockxStore.getId());
-                                    record.setCommodityName(name);
-                                    record.setCommodityPrice(price);
-                                    record.setTransactionRecord(sales);
-                                    record.setGirard(girard);
-                                    record.setColorSort(colorSort);
-                                    record.setBrand(brand);
-                                    record.setProductUrl(nowUrl);
-                                    record.setCreateDate(DateUtils.getCurrentTimeAsString());
-                                    i = commodityDataService.insertCommodityData(record);
-                                    //添加详情信息
-                                    detail.setCommodityDataId(record.getId());
-                                } else {
-                                    detail.setCommodityDataId(commodityDataInfo.getId());
-                                }
-                                //i != 1 则首次添加商品数据失败
-                                if (i == 1) {
-                                    detail.setTransactionRecord(sales);
-                                    detail.setColorSize(colorSize);
-                                    detail.setCreateDate(DateUtils.getCurrentTimeAsString());
-                                    d = commodityDataService.insertcommodityDetail(detail);
-                                    if (d == 1) {
-                                        logger.info("insert dataInfo success，dateTime:" + DateUtils.getCurrentTimeAs14String());
-                                    } else {
-                                        logger.info("insert dataInfo error，dateTime:" + DateUtils.getCurrentTimeAs14String());
-                                    }
-                                    //判断审核字典是否存在
-                                    List<Dictionaries> dictionariesList = new ArrayList<Dictionaries>();
-                                    if (commodityDataInfo == null) {
-                                        dictionariesList = commodityDataService.finddictionaries(record.getId());
-                                    } else {
-                                        dictionariesList = commodityDataService.finddictionaries(commodityDataInfo.getId());
-                                    }
-                                    String[] colorNames = null;
-                                    if (colorType != null && !"".equals(colorType)) {
-                                        //分隔当前商品数据 款式/颜色
-                                        colorType = colorType.substring(0, colorType.length() - 1);
-                                        colorNames = colorType.split(",");
-                                    } else {
-                                        colorNames = new String[]{"无"};
-                                    }
-                                    if (dictionariesList.size() == 0) {
-                                        for (String colorly : colorNames) {
-                                            Dictionaries dictionarie = new Dictionaries();
-                                            if (commodityDataInfo == null) {
-                                                dictionarie.setCommodityDataId(record.getId());
-                                                dictionarie.setCommodityData(record);
-                                            } else {
-                                                dictionarie.setCommodityDataId(commodityDataInfo.getId());
-                                                dictionarie.setCommodityData(commodityDataInfo);
-                                            }
-                                            dictionarie.setColorly(colorly);
-                                            dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                            //添加字典数据
-                                            commodityDataService.insertDicInfo(dictionarie);
-                                        }
-                                    } else {
-                                        //校验字段是否匹配，若不匹配则补齐
-                                        String nowColorlys = "";
-                                        for (Dictionaries dic : dictionariesList) {
-                                            //拼接当前字典表中所包含的数据
-                                            nowColorlys += dic.getColorly() + ",";
-                                        }
-                                        nowColorlys = nowColorlys.substring(0, nowColorlys.length() - 1);
-                                        for (String colorly : colorNames) {
-                                            Dictionaries dictionarie = new Dictionaries();
-                                            //判断 nowColorlys 中是否包含 colorly，若不包含则添加字典数据
-                                            if (!nowColorlys.contains(colorly)) {
-                                                if (commodityDataInfo == null) {
-                                                    dictionarie.setCommodityDataId(record.getId());
-                                                    dictionarie.setCommodityData(record);
-                                                } else {
-                                                    dictionarie.setCommodityDataId(commodityDataInfo.getId());
-                                                    dictionarie.setCommodityData(commodityDataInfo);
-                                                }
-                                                dictionarie.setColorly(colorly);
-                                                //添加字典数据
-                                                dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                                commodityDataService.insertDicInfo(dictionarie);
-                                            }
-                                        }
-                                    }
-                                    //查询字典商品标签名     &     验证该店铺下字典表数据是否全部已审核
-                                    List<Dictionaries> dicObjList = new ArrayList<Dictionaries>();
-                                    if (commodityDataInfo == null) {
-                                        dicObjList = commodityDataService.finddictionaries(record.getId());
-                                    } else {
-                                        dicObjList = commodityDataService.finddictionaries(commodityDataInfo.getId());
-                                    }
-                                    for (Dictionaries dic : dicObjList) {
-                                        if (!"".equals(dic.getIdentification()) && dic.getIdentification() != null) {
-                                            //状态是否为已审
-                                            if (!"2".equals(dic.getStatus()) && !"3".equals(dic.getStatus())) {
-                                                //该商品已审核,则添加最终数据
-                                                ResultData resultData = new ResultData();
-                                                dic.getIdentification();
-                                                //组装最终商品数据
-                                                if (commodityDataInfo == null) {
-                                                    resultData.setCommodityDataId(record.getId());
-                                                } else {
-                                                    resultData.setCommodityDataId(commodityDataInfo.getId());
-                                                }
-                                                Iterator keys = jsonObject.keys();
-                                                while (keys.hasNext()) {
-                                                    String keyStr = keys.next().toString();
-                                                    //判断是否和字典匹配
-                                                    if (dic.getColorly().equals(keyStr)) {
-                                                        //从鞋库取数据
-                                                        Basicinformation b = new Basicinformation();
-                                                        b.setName(dic.getIdentification());
-                                                        List<Basicinformation> baciList = basicinformationService.findAll(b);
-                                                        //基于鞋库保存数据
-                                                        if (baciList.size() > 0) {
-                                                            resultData.setBasiciformationId(baciList.get(0).getId());
-                                                            resultData.setStoreId(stockxStore.getId());
-                                                            resultData.setStoreName(stockxStore.getName());
-                                                            resultData.setProductName(dic.getIdentification());
-                                                            resultData.setGirard(dic.getGirard());
-                                                            resultData.setSizePrice(jsonObject.get(keyStr).toString());
-                                                            resultData.setBrand(brand);
-                                                            resultData.setTransactionRecord(sales);
-                                                            resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
-                                                            //保存最终结果
-                                                            int dataReultBool = commodityDataService.saveResultDatas(resultData);
-                                                            if (dataReultBool == 1) {
-                                                                logger.info("save final result data success ! ! ! ");
-                                                            } else {
-                                                                logger.error("save final result data Error ! ! ! ");
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } catch (Exception e) {
-                                logger.error(e.getMessage());
-                                driver.quit();
-                                System.gc();
-                            }
+//                            try {
+//                                //检查是否存在该数据
+//                                CommodityData commodityDataInfo = commodityDataService.findByNames(name, girard);
+//                                if (commodityDataInfo == null) {
+//                                    //添加商品信息
+//                                    record.setStockxName(s_name);
+//                                    record.setStockxId(stockxStore.getId());
+//                                    record.setCommodityName(name);
+//                                    record.setCommodityPrice(price);
+//                                    record.setTransactionRecord(sales);
+//                                    record.setGirard(girard);
+//                                    record.setColorSort(colorSort);
+//                                    record.setBrand(brand);
+//                                    record.setProductUrl(nowUrl);
+//                                    record.setCreateDate(DateUtils.getCurrentTimeAsString());
+//                                    i = commodityDataService.insertCommodityData(record);
+//                                    //添加详情信息
+//                                    detail.setCommodityDataId(record.getId());
+//                                } else {
+//                                    detail.setCommodityDataId(commodityDataInfo.getId());
+//                                }
+//                                //i != 1 则首次添加商品数据失败
+//                                if (i == 1) {
+//                                    detail.setTransactionRecord(sales);
+//                                    detail.setColorSize(colorSize);
+//                                    detail.setCreateDate(DateUtils.getCurrentTimeAsString());
+//                                    d = commodityDataService.insertcommodityDetail(detail);
+//                                    if (d == 1) {
+//                                        logger.info("insert dataInfo success，dateTime:" + DateUtils.getCurrentTimeAs14String());
+//                                    } else {
+//                                        logger.info("insert dataInfo error，dateTime:" + DateUtils.getCurrentTimeAs14String());
+//                                    }
+//                                    //判断审核字典是否存在
+//                                    List<Dictionaries> dictionariesList = new ArrayList<Dictionaries>();
+//                                    if (commodityDataInfo == null) {
+//                                        dictionariesList = commodityDataService.finddictionaries(record.getId());
+//                                    } else {
+//                                        dictionariesList = commodityDataService.finddictionaries(commodityDataInfo.getId());
+//                                    }
+//                                    String[] colorNames = null;
+//                                    if (colorType != null && !"".equals(colorType)) {
+//                                        //分隔当前商品数据 款式/颜色
+//                                        colorType = colorType.substring(0, colorType.length() - 1);
+//                                        colorNames = colorType.split(",");
+//                                    } else {
+//                                        colorNames = new String[]{"无"};
+//                                    }
+//                                    if (dictionariesList.size() == 0) {
+//                                        for (String colorly : colorNames) {
+//                                            Dictionaries dictionarie = new Dictionaries();
+//                                            if (commodityDataInfo == null) {
+//                                                dictionarie.setCommodityDataId(record.getId());
+//                                                dictionarie.setCommodityData(record);
+//                                            } else {
+//                                                dictionarie.setCommodityDataId(commodityDataInfo.getId());
+//                                                dictionarie.setCommodityData(commodityDataInfo);
+//                                            }
+//                                            dictionarie.setColorly(colorly);
+//                                            dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
+//                                            //添加字典数据
+//                                            commodityDataService.insertDicInfo(dictionarie);
+//                                        }
+//                                    } else {
+//                                        //校验字段是否匹配，若不匹配则补齐
+//                                        String nowColorlys = "";
+//                                        for (Dictionaries dic : dictionariesList) {
+//                                            //拼接当前字典表中所包含的数据
+//                                            nowColorlys += dic.getColorly() + ",";
+//                                        }
+//                                        nowColorlys = nowColorlys.substring(0, nowColorlys.length() - 1);
+//                                        for (String colorly : colorNames) {
+//                                            Dictionaries dictionarie = new Dictionaries();
+//                                            //判断 nowColorlys 中是否包含 colorly，若不包含则添加字典数据
+//                                            if (!nowColorlys.contains(colorly)) {
+//                                                if (commodityDataInfo == null) {
+//                                                    dictionarie.setCommodityDataId(record.getId());
+//                                                    dictionarie.setCommodityData(record);
+//                                                } else {
+//                                                    dictionarie.setCommodityDataId(commodityDataInfo.getId());
+//                                                    dictionarie.setCommodityData(commodityDataInfo);
+//                                                }
+//                                                dictionarie.setColorly(colorly);
+//                                                //添加字典数据
+//                                                dictionarie.setCreateTime(DateUtils.getCurrentTimeAsString());
+//                                                commodityDataService.insertDicInfo(dictionarie);
+//                                            }
+//                                        }
+//                                    }
+//                                    //查询字典商品标签名     &     验证该店铺下字典表数据是否全部已审核
+//                                    List<Dictionaries> dicObjList = new ArrayList<Dictionaries>();
+//                                    if (commodityDataInfo == null) {
+//                                        dicObjList = commodityDataService.finddictionaries(record.getId());
+//                                    } else {
+//                                        dicObjList = commodityDataService.finddictionaries(commodityDataInfo.getId());
+//                                    }
+//                                    for (Dictionaries dic : dicObjList) {
+//                                        if (!"".equals(dic.getIdentification()) && dic.getIdentification() != null) {
+//                                            //状态是否为已审
+//                                            if (!"2".equals(dic.getStatus()) && !"3".equals(dic.getStatus())) {
+//                                                //该商品已审核,则添加最终数据
+//                                                ResultData resultData = new ResultData();
+//                                                dic.getIdentification();
+//                                                //组装最终商品数据
+//                                                if (commodityDataInfo == null) {
+//                                                    resultData.setCommodityDataId(record.getId());
+//                                                } else {
+//                                                    resultData.setCommodityDataId(commodityDataInfo.getId());
+//                                                }
+//                                                Iterator keys = jsonObject.keys();
+//                                                while (keys.hasNext()) {
+//                                                    String keyStr = keys.next().toString();
+//                                                    //判断是否和字典匹配
+//                                                    if (dic.getColorly().equals(keyStr)) {
+//                                                        //从鞋库取数据
+//                                                        Basicinformation b = new Basicinformation();
+//                                                        b.setName(dic.getIdentification());
+//                                                        List<Basicinformation> baciList = basicinformationService.findAll(b);
+//                                                        //基于鞋库保存数据
+//                                                        if (baciList.size() > 0) {
+//                                                            resultData.setBasiciformationId(baciList.get(0).getId());
+//                                                            resultData.setStoreId(stockxStore.getId());
+//                                                            resultData.setStoreName(stockxStore.getName());
+//                                                            resultData.setProductName(dic.getIdentification());
+//                                                            resultData.setGirard(dic.getGirard());
+//                                                            resultData.setSizePrice(jsonObject.get(keyStr).toString());
+//                                                            resultData.setBrand(brand);
+//                                                            resultData.setTransactionRecord(sales);
+//                                                            resultData.setCreateTime(DateUtils.getCurrentTimeAsString());
+//                                                            //保存最终结果
+//                                                            int dataReultBool = commodityDataService.saveResultDatas(resultData);
+//                                                            if (dataReultBool == 1) {
+//                                                                logger.info("save final result data success ! ! ! ");
+//                                                            } else {
+//                                                                logger.error("save final result data Error ! ! ! ");
+//                                                            }
+//                                                        }
+//                                                    }
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            } catch (Exception e) {
+//                                logger.error(e.getMessage());
+//                                driver.quit();
+//                                System.gc();
+//                            }
                         }
                     }
                 }
@@ -520,38 +513,44 @@ public class GithubRepoPageProcessor implements PageProcessor {
             name = "";
             price = "";
             sales = "";
-            if (i == 1) {
-                str = new ArrayList<>();
-                List<String> Url = new ArrayList<String>();
-                Url = Html.create(getHtmlResult).regex("(//\\w+.\\w+.com\\/item.htm\\?.*?id=([\\d]+).*?)").all();
-                List<WebElement> pageNextList = driver.findElements(By.xpath("//div[@class='pagination']/a[@class='J_SearchAsync next']"));
-                if (pageNextList.size() != 0) {
-                    //遍历鞋码
-                    for (WebElement webElement1 : rememberSizeMeList) {
-                        webElement1.click();
-                        Url = Html.create(getHtmlResult).regex("(//\\w+.\\w+.com\\/item.htm\\?.*?id=([\\d]+).*?)").all();
+            try {
+                if (i == 1) {
+                    str = new ArrayList<>();
+                    List<String> Url = new ArrayList<String>();
+                    Url = Html.create(getHtmlResult).regex("(//\\w+.\\w+.com\\/item.htm\\?.*?id=([\\d]+).*?)").all();
+                    List<WebElement> pageNextList = driver.findElements(By.xpath("//div[@class='pagination']/a[@class='J_SearchAsync next']"));
+                    if (pageNextList.size() != 0) {
+                        //遍历鞋码
+                        for (WebElement webElement1 : rememberSizeMeList) {
+                            webElement1.click();
+                            Url = Html.create(getHtmlResult).regex("(//\\w+.\\w+.com\\/item.htm\\?.*?id=([\\d]+).*?)").all();
+                        }
                     }
-                }
-                // 获取后续地址
-                String equ = "item.taobao.com/item.htm";
-                HashSet<String> hs = new HashSet<String>(Url);
-                List<String> str2 = new ArrayList<>();
-                if (Url.size() == 0) {
-                    //链接失效，将更新链接为失效链接
-                    stockxStore.setStatus("0");
-                    stockxStoreService.updateStore(stockxStore);
-                }
-                for (String temp : hs) {
-                    if (temp.contains(equ)) {
-                        str.add(temp);
-                        str2.add(temp);
+                    // 获取后续地址
+                    String equ = "item.taobao.com/item.htm";
+                    HashSet<String> hs = new HashSet<String>(Url);
+                    List<String> str2 = new ArrayList<>();
+                    if (Url.size() == 0) {
+                        //链接失效，将更新链接为失效链接
+                        stockxStore.setStatus("0");
+                        stockxStoreService.updateStore(stockxStore);
                     }
+                    for (String temp : hs) {
+                        if (temp.contains(equ)) {
+                            str.add(temp);
+                            str2.add(temp);
+                        }
+                    }
+                    //将百度页面作为过渡页面
+                    str2.add("http://www.baidu.com");
+                    page.addTargetRequests(str2);
                 }
-                //将百度页面作为过渡页面
-                str2.add("http://www.baidu.com");
-                page.addTargetRequests(str2);
+            }catch (Exception e){
+                logger.error("谷歌地址为空，重爬……");
             }
-            driver.quit();
+            if(driver!=null){
+                driver.quit();
+            }
             System.gc();
             // 更新爬取状态为进行中
             i = -1;
@@ -577,7 +576,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
                 //.scheduler(new RedisSc
                 // heduler("localhost"))
                 //设置Pipeline，将结果以json方式保存到文件
-                .addPipeline(new JsonFilePipeline("D:\\data\\webmagic"))
+//                .addPipeline(new JsonFilePipeline("D:\\data\\webmagic"))
                 //使用Selenium做页面动态渲染
                 //.downloader(new SeleniumDownloader("/Program Files (x86)/Google/Chrome/Application"))
                 //开启5个线程抓取
