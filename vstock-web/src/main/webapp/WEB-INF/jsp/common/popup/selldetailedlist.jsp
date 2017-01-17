@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm am-text-left">
-                        <span>卖家出价需大于买家最高叫价</span>
+                        <span>卖家叫价需大于买家最高出价</span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm">
                         <div class="am-u-md-2 am-fl am-padding-0 am-text-left">

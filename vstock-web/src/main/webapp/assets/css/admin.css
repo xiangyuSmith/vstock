@@ -49,9 +49,10 @@ body{
     .layout-font-size-36{ font-size: 32px; }
 }
 /** HEAD **/
-.am-sticky{ box-shadow: rgb(204, 204, 204) 0px 2px 10px 0px; }
+.am-sticky{ box-shadow: rgb(204, 204, 204) 0 2px 10px 0; }
 .v-logo{
     display: block;
+    position: absolute;
     float: left;
     width: 56px;
     height: 50px;
@@ -75,7 +76,6 @@ body{
     position: relative;
     z-index: 2;
     height: 80px;
-    padding: 15px 0 0 0;
 }
 .m-hd .am-sticky {
     /*background: #f2f2f2;*/

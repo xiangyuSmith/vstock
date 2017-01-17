@@ -3,10 +3,10 @@
     .pre-bid input::-webkit-input-placeholder{ font-size: 14px; }
     .pre-bid .select-pom{width: 90%;height: 37px;border: 1px solid #cdcdcd;background-color: #eee;box-shadow: 0px 2px #999;}
     .bgff{ background-color: #fff; }
-    .clickImg-upload{ display: inline-block; position: absolute; margin: 0 auto; margin-top: -60px; margin-left: -28px; color: #fff;}
+    .clickImg-upload{ display: inline-block; position: absolute; margin: 0 auto; margin-top: -75px; margin-left: -28px; color: #fff;}
     .am-gallery-item img{ max-height: 130px; }
-    .bg-uoload{ width: 196px;height: 109px;position: absolute;background-color: #000;opacity: 0;}
-    .bg-uoload-file{ width: 196px;height: 118px;position: absolute; z-index: 99;}
+    .bg-uoload{ width: 196px;height: 130px;position: absolute;background-color: #000;opacity: 0;}
+    .bg-uoload-file{ width: 196px;height: 130px;position: absolute; z-index: 99;}
     .am-gallery-item:HOVER .bg-uoload{ opacity:0.2; }
     .bg-uoload {
         transition: opacity 0.2s linear;
@@ -35,9 +35,9 @@
                     </div>
                 </div>
                 <div class="am-form-group">
-                    <span for="doc-ipt-pwd-2" class="am-u-sm-3 layout-font-size-18 am-text-right am-margin-top-xs">身份证号码：</span>
+                    <span for="identifyNo" class="am-u-sm-3 layout-font-size-18 am-text-right am-margin-top-xs">身份证号码：</span>
                     <div class="am-u-sm-5 am-u-end am-padding-left-0">
-                        <input id="identifyNo" type="text" id="doc-ipt-pwd-2" class="input-text-required" placeholder="请输入您的身份证号码">
+                        <input id="identifyNo" type="text" class="input-text-required" maxlength="18" placeholder="请输入您的身份证号码">
                     </div>
                 </div>
             </form>
@@ -139,6 +139,10 @@
 
         $("#submit_userAccount").click(function(){
             var flag = 0;
+            if($("#identifyNo").val().length != 18 && $("#identifyNo").val().length != 15){
+                flag = 3;
+                $("#identifyNo").css("border","1px solid #ff9335");
+            }
             $(".bg-uoload-file").each(function(){
                 var $this = $(this);
                 if($this.val() == ""){
@@ -154,7 +158,7 @@
             });
             switch(flag){
                 case 0:
-                    loadingshow("正在提交认证信息...");
+                    loadingshow("您的信息已经提交，信息校验过程可能需要等待约30秒钟请稍等...");
                     $.ajaxFileUpload({
                         url:'/user/uploadUserProfile',
                         secureuri: false,
@@ -169,6 +173,7 @@
                             $('#vstock-loading').css("display","none");
                             if(res.retCode == 1){
                                 $("#my-popup-identify").modal('close');
+                                $(".am-dimmer").css("display","none");
                                 alertTips(1,"认证结果","信息已通过审核");
                             }else{
                                 alertTips(3,"认证失败",res.retMsg);
@@ -184,6 +189,9 @@
                     break;
                 case 2:
                     alertTips(3,"信息有误","请上传身份证照片");
+                    break;
+                case 3:
+                    alertTips(3,"信息有误","身份证号码或格式有误");
                     break;
                 default:
                     break;

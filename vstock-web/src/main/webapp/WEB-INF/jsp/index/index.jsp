@@ -117,7 +117,7 @@
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -70px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">爆款推荐<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                                           data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                                          data-content="爆款推荐"></span></span>
+                                                                                          data-content="来自于v－stock网站以及其他销售渠道的交易数据，推荐最热销的球鞋款式。"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -146,7 +146,7 @@
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -105px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最低叫价<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                                           data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                                          data-content="最低叫价"></span></span>
+                                                                                          data-content="从卖家的叫价中，推荐最低叫价的球鞋。"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -173,7 +173,7 @@
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -140px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最高出价<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                                           data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                                          data-content="最高出价"></span></span>
+                                                                                          data-content="从买家的出价中，推荐最高出价的球鞋。"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -200,7 +200,7 @@
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -175px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">最大涨幅<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                                           data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                                          data-content="最大涨幅"></span></span>
+                                                                                          data-content="推荐最近的72小时中涨跌幅最大的球鞋。"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -226,7 +226,7 @@
                 <span class="am-fl index-icon" style="background: url('/assets/i/index_icon.png') no-repeat;background-position: -208px 12px;"></span>
                 <span class="am-fl layout-font-size-28" style="color: #060606;">即将发布<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                                           data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                                          data-content="即将发布"></span></span>
+                                                                                          data-content="显示即将发布的球鞋信息。"></span></span>
                 <a href="/sorts" class="am-fr"><span class="layout-font-size-18" style="color: #060606;">了解更多 ></span></a>
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
@@ -410,9 +410,11 @@
         if (a >= $(window).scrollTop() && a < ($(window).scrollTop() + $(window).height())) {
             $("#index_search").val($(".index_search_top").val());
             $("#am-form-field").fadeOut(200);
+            $(".v-logo").fadeOut(200);
         }else{
             $(".index_search_top").val($("#index_search").val());
             $("#am-form-field").fadeIn(500);
+            $(".v-logo").fadeIn(500);
         }
     });
 </script>

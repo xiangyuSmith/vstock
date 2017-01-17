@@ -32,12 +32,12 @@
         .xy-dimmer-active{ overflow: auto;}
         .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
         .am-selected-btn{ border:1px solid #aeaeae; }
-        .join-assets-icon{ display: inline-block;width: 90px;height: 22px;line-height: 26px;text-align: right;background: url('/assets/i/detail_icon.png');background-position: -610px -21px; }
-
+        .join-assets-icon{ display: inline-block;width: 90px;height: 30px;line-height: 30px;text-align: right;background: url('/assets/i/detail_icon.png');background-position: -606px -18px; }
+        .am-show-md-up{ box-shadow: rgb(204, 204, 204) 0 2px 10px 0; }
     </style>
 </head>
 <body>
-<%@include file="../layout/top.jsp" %>
+<%@include file="../layout/top-search.jsp" %>
 <article>
     <input class="loginType" type="hidden" value="${resultModel.relogin}" />
     <input class="basicinformationName" type="hidden" value="${basicinformation.name}" />
@@ -46,7 +46,7 @@
         <div class="am-g am-u-md-12 am-show-lg-only">
             <span class="str-title-font" style="font-weight: bold;">
                 ${basicinformation.name}
-                <a href="javascript:void(0);" id="join-assets" class="layout-font-size-18 assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border-radius: 3px;width: 138px;padding-left: 0;"><span class="join-assets-icon">加入资产</span></a>
+                <a href="javascript:void(0);" id="join-assets" class="layout-font-size-18 assets_btn_add am-btn am-btn-default am-btn-sm am-margin-bottom-sm am-margin-left-lg" style="border-radius: 3px;width: 110px;height:32px;padding: 0;"><span class="join-assets-icon layout-font-size-18">加入资产</span></a>
                 <a href="javascript:void(0);" id="join-assets-click" style="display: none;" data-am-modal="{target: '#my-popup-assets',width: 440}"></a>
             </span>
             <span class="str-title-font"> </span>
@@ -97,9 +97,9 @@
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
-                    <span class="str layout-font-size-22">买家最高叫价<span class="question-tips question-buy-hight-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                    <span class="str layout-font-size-22">买家最高出价<span class="question-tips question-buy-hight-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                       data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                      data-content="买家最高叫价"></span></span><br/>
+                                                                      data-content="显示买家叫价中最高的价格，如卖家直接出售，则按此价格交易。"></span></span><br/>
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty pricePeak1.highestBid}">
@@ -132,9 +132,9 @@
             </div>
             <div class="am-u-lg-4 am-u-md-5 am-u-sm-12 am-bid-border am-margin-top-xl">
                 <div class="am-fl am-u-md-9 am-u-sm-6 str-sudio am-padding-right-0">
-                    <span class="str layout-font-size-22">卖家最低出价<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                    <span class="str layout-font-size-22">卖家最低叫价<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
                                                                       data-container="body" data-toggle="popover" data-placement="auto right"
-                                                                      data-content="卖家最低出价"></span></span><br/>
+                                                                      data-content="显示卖家叫价中最低的价格，如买家直接购买，则按此价格交易。"></span></span><br/>
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty pricePeak2.minimumSellingPrice}">

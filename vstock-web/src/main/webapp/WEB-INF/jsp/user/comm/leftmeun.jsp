@@ -12,6 +12,7 @@
         .leftmenunInfo li { padding:0 5px; }
         .xy-dimmer-active{ overflow: auto;}
         .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
+        .am-show-md-up{ box-shadow: rgb(204, 204, 204) 0 2px 10px 0; }
     </style>
 </head>
 <body>

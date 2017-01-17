@@ -17,10 +17,11 @@
     .x-ul li ul li a{ color: #000!important; }
 </style>
 <header class="m-hd am-margin-bottom-0">
-    <section data-am-sticky class="am-show-md-up" style="height: 80px;">
+    <section data-am-sticky class="am-show-md-up" style="height: 80px;padding: 15px 0;">
         <div style="line-height: 30px;">
             <div class="am-u-md-12">
                 <div class="am-u-md-6">
+                    <a href="/index" class="v-logo am-fr" style="display: none;"></a>
                     <form id="am-form-field" class="am-topbar-left am-form-inline" role="search" style="width:100%;display: none;">
                         <div class="am-form-group am-form-icon am-fr" style="color: #EB615F;font-size: 16px;width:50%;">
                             <input type="text" class="am-form-field index_search_top" placeholder="搜索颜色、货号......" style="width:100%;margin-top: 8px;" />
