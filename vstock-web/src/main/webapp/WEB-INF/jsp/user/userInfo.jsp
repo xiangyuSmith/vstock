@@ -134,7 +134,7 @@
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 0}">
-                                <a href="javascript:void(0);" user-id="${userAddresses.id}" id="up-type" class="am-btn am-text-danger am-radius am-margin-left-sm am-margin-left-sm am-padding-left-xs am-padding-right-xs" style="font-size:14px; border: solid 1px #F25C58; background-color: #FFFFFF;">设为默认地址</a>
+                                <a href="javascript:void(0);" user-id="${userAddresses.id}" id="up-type" class="am-btn-sm am-text-danger set-default-address">设为默认地址</a>
                             </c:if>
                         </td>
                     </tr>
@@ -143,7 +143,7 @@
         </tbody>
     </table>
     <c:if test="${not empty userAddressesList}">
-        <a href="javascript:void(0);" class="am-center" id="load_more" data-url="../user/userInfo?type=1"><span class="am-center am-text-center layout-font-size-18"><i class="am-icon-spinner am-icon-spin am-margin-right-sm" style="display: none;"></i>点击加载更多</span></a>
+        <div class="am_news_load am_news_load_index" id="load_more" data-url="../user/userInfo?type=1"><span><i class="am-icon-spinner am-icon-spin am-margin-right-sm" style="display: none;"></i>加载更多地址</span></div>
     </c:if>
     <input type="hidden" id="user-lodaType" value="${type}"/>
 </form>
@@ -152,34 +152,4 @@
     if ($('#user-lodaType').val() != ""){
         $('#load_more').css('display','none');
     }
-    $("body").on("click",".adder-stn",function(){
-        var $this = $(this);
-        var shopName = $('#shop-name').val();
-        var phone = "";
-        var phoneNumber = $('#phone-number').val();
-        var areaCode = $('#area-code').val();
-        var phoneCode = $('#phone-code').val();
-        var extensionCode = $('#extension-code').val();
-        if (areaCode){
-            phone = phone + areaCode + "-";
-        }
-        if (phoneCode){
-            phone = phone + phoneCode;
-        }
-        if (extensionCode){
-            phone = phone + extensionCode;
-        }
-        if (phone == "" && phoneNumber == ""){
-            alertTips(3,"编辑地址","请填写手机号或电话");
-            return;
-        }
-        sendAddress({
-            localArea : $('#city-name').val(),
-            detailedAddress : $('#adder-name').val(),
-            consigneeName : shopName,
-            phoneNumber : phoneNumber,
-            landlineNumber : phone,
-            id: $('#adder-id').val()
-        });
-    });
 </script>

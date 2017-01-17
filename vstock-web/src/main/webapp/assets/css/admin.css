@@ -230,6 +230,8 @@ a, a:hover, .m-partner li img, .m-partner li img:hover, .m-contact-infobox, .m-c
 .question-tips{ width: 22px;height: 16px;display: inline-block;position: absolute;cursor: pointer; }
 .wenxin-tips{ width: 22px;height: 22px;display: block;float: left; }
 .question-tips-text{ width: 180px; }
+.set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
+.set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
 .jump{ display: inline-block; }
 .jump-wen{
     color: #7FB114;

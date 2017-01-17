@@ -13,6 +13,12 @@
         .xy-dimmer-active{ overflow: auto;}
         .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
         .am-show-md-up{ box-shadow: rgb(204, 204, 204) 0 2px 10px 0; }
+        .am_news_load { max-width: 810px; margin: 0 auto; color: #3c3c3c; height: 43px; line-height: 43px; background: #fff; text-align: center; margin-top: 20px; cursor: pointer; box-shadow: 0 1px 2px #ccc; }
+        .status-user-set{ width: 50px; background-color: #EA5858;border:none;border-radius: 3px; }
+        .status-user-set span{ color:#AA0503; }
+        .status-user-set:HOVER{ background-color: #FB7f6f; }
+        .am-active .status-user-set{ background-color: #FB7f6f!important; }
+        ul.am-dropdown-content>li>a{ padding: 6px 26px 6px 10px; }
     </style>
 </head>
 <body>
@@ -29,7 +35,7 @@
                 <div class="am-u-md-4 am-padding-left-0">
                     <c:choose>
                         <c:when test="${not empty vUser.mobile}">
-                            <span class="am-fl" style="background: url('/assets/i/personal_center_map.png'); background-position: -146px -19px;width: 30px;height: 30px;display: block;"/>
+                            <span class="am-fl" title="手机号已绑定" style="cursor: pointer;background: url('/assets/i/personal_center_map.png'); background-position: -146px -19px;width: 30px;height: 30px;display: block;"/>
                         </c:when>
                         <c:otherwise>
                             <span class="am-fl" style="background: url('/assets/i/personal_center_map.png'); background-position: -188px -19px;width: 30px;height: 30px;display: block;"/>
@@ -51,7 +57,7 @@
                         <c:when test="${not empty userAccount}">
                             <c:choose>
                                 <c:when test="${userAccount.status == 1}">
-                                    <span class="am-fr" style="background: url('/assets/i/personal_center_map.png'); background-position: -334px -19px;width: 30px;height: 30px;display: block;"/>
+                                    <span class="am-fr" title="实名认证已通过" style="cursor: pointer;background: url('/assets/i/personal_center_map.png'); background-position: -334px -19px;width: 30px;height: 30px;display: block;"/>
                                 </c:when>
                                 <c:otherwise>
                                     <span class="am-fr" style="background: url('/assets/i/personal_center_map.png'); background-position: -388px -19px;width: 30px;height: 30px;display: block;"/>
@@ -71,7 +77,7 @@
                 <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 60px;height: 36px; background: url('/assets/shoesImg/personal_center.png'); background-position: -166px -24px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
         </div>
-        <div class="am-u-sm-9 am-u-md-9 am-margin-top-xl am-margin-bottom-xl" id="tradeforex_tilie"></div>
+        <div class="am-u-sm-9 am-u-md-9 am-padding-top-xl" id="tradeforex_tilie"></div>
 
         <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
             <div class="am-modal-dialog">
@@ -92,8 +98,38 @@
 </body>
 <script type="text/javascript">
     window.onload=function(){
-        document.getElementById("div1").style.height = document.getElementById("tradeforex_tilie").offsetHeight+"px";
+        document.getElementById("div1").style.height = parseInt(document.getElementById("tradeforex_tilie").offsetHeight)+100+"px";
     }
+    $("body").on("click",".adder-stn",function(){
+        var $this = $(this);
+        var shopName = $('#shop-name').val();
+        var phone = "";
+        var phoneNumber = $('#phone-number').val();
+        var areaCode = $('#area-code').val();
+        var phoneCode = $('#phone-code').val();
+        var extensionCode = $('#extension-code').val();
+        if (areaCode){
+            phone = phone + areaCode + "-";
+        }
+        if (phoneCode){
+            phone = phone + phoneCode;
+        }
+        if (extensionCode){
+            phone = phone + extensionCode;
+        }
+        if (phone == "" && phoneNumber == ""){
+            alertTips(3,"编辑地址","请填写手机号或电话");
+            return;
+        }
+        sendAddress({
+            localArea : $('#city-name').val(),
+            detailedAddress : $('#adder-name').val(),
+            consigneeName : shopName,
+            phoneNumber : phoneNumber,
+            landlineNumber : phone,
+            id: $('#adder-id').val()
+        });
+    });
     function sendAddress(data){
         sendRequest("/user/saveAdder",data,function(res) {
             if (res.retCode == 1){
@@ -462,6 +498,7 @@
                             $this.parent().parent().parent().removeClass("am-active");
                             $this.parent().parent().parent().children().first().attr("disabled", true);
                             if (type == 2){
+                                ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
                                 ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
                             }else {
                                 ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);

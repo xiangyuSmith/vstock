@@ -2,8 +2,6 @@
 <style>
     .address-list table tr td{ font-size: 14px; }
     .address-list table tr td input{ margin-top: 7px; margin-left: 10px;  }
-    .set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
-    .set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
 </style>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-detailed">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
@@ -193,7 +191,7 @@
             //计算运费
             jisuan(addressId);
         }
-        $("#new-address").find("tr td input:radio[name='check-address']").click(function(){
+        $("#new-address").on("click","input:radio[name='check-address']",function(){
             jisuan($(this).attr("data-userAddress"));
         });
         function jisuan(addressId){
@@ -247,7 +245,6 @@
         $(".add-adders").click(function(){
             $("#up-address-title").text("添加");
         });
-
 
         $("body").on("click",".adder-stn",function(){
             var $this = $(this);
