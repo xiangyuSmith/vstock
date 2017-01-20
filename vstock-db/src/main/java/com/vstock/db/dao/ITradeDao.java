@@ -42,4 +42,7 @@ public interface ITradeDao {
     int findCountWeb(@Param("obj")Trade record);
 
     List<TradeYunfee> findAllYunFee();
+
+    //后台弹窗用查询，固定查询状态为待发货、检验失败、交易完成订单
+    List<Trade> findModel(@Param("obj")Trade record);
 }

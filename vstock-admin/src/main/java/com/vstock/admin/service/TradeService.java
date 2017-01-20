@@ -88,6 +88,13 @@ public class TradeService {
         return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
     }
 
+    /**
+     * 后台弹窗用查询，固定查询状态为待发货、检验失败、交易完成订单
+     * @param record
+     * @return
+     */
+    public List<Trade> findModel(Trade record){return tradeDao.findModel(record);}
+
     //个人中心出售查询
     public Map<Page,List<Trade>> dateFindAll(Trade record, String startDate, String endDate, String pageNow){
         Map<Page,List<Trade>> param = new HashMap<>();

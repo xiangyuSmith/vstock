@@ -5,7 +5,8 @@
     <resultMap id="BaseResultMap" type="com.vstock.db.entity.Refund">
         <id property="id" column="id"/>
         <result column="tradeNo" property="tradeNo" jdbcType="VARCHAR"/>
-        <result column="payee" property="payee" jdbcType="VARCHAR"/>
+        <result column="refundNo" property="refundNo" jdbcType="VARCHAR"/>
+        <result column="refundObj" property="refundObj" jdbcType="VARCHAR"/>
         <result column="btfId" property="btfId" jdbcType="INTEGER"/>
         <result column="btfName" property="btfName" jdbcType="VARCHAR"/>
         <result column="refundPrice" property="refundPrice" jdbcType="DECIMAL"/>
@@ -24,8 +25,11 @@
             <if test="tradeNo != null and tradeNo != ''">
                 and r.trade_no = #{tradeNo,jdbcType=VARCHAR}
             </if>
-            <if test="payee != null and payee != ''">
-                and r.payee = #{payee,jdbcType=VARCHAR}
+            <if test="refundNo != null and refundNo != ''">
+                and r.refund_no = #{refundNo,jdbcType=VARCHAR}
+            </if>
+            <if test="refundObj != null and refundObj != ''">
+                and r.refund_obj = #{refundObj,jdbcType=VARCHAR}
             </if>
             <if test="btfId != null and btfId != ''">
                 and r.btf_id = #{btfId,jdbcType=INTEGER}
@@ -60,8 +64,11 @@
             <if test="obj.tradeNo != null and obj.tradeNo != ''">
                 and r.trade_no = #{obj.tradeNo,jdbcType=VARCHAR}
             </if>
-            <if test="obj.payee != null and obj.payee != ''">
-                and r.payee = #{obj.payee,jdbcType=VARCHAR}
+            <if test="obj.refundNo != null and obj.refundNo != ''">
+                and r.refund_no = #{obj.refundNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.refundObj != null and obj.refundObj != ''">
+                and r.refund_obj = #{obj.refundObj,jdbcType=VARCHAR}
             </if>
             <if test="obj.btfId != null and obj.btfId != ''">
                 and r.btf_id = #{obj.btfId,jdbcType=INTEGER}
@@ -96,8 +103,11 @@
             <if test="tradeNo != null and tradeNo != ''">
                 and r.trade_no = #{tradeNo,jdbcType=VARCHAR}
             </if>
-            <if test="payee != null and payee != ''">
-                and r.payee LIKE CONCAT('%',#{payee,jdbcType=VARCHAR},'%')
+            <if test="refundNo != null and refundNo != ''">
+                and r.refund_no = #{refundNo,jdbcType=VARCHAR}
+            </if>
+            <if test="refundObj != null and refundObj != ''">
+                and r.refund_obj LIKE CONCAT('%',#{refundObj,jdbcType=VARCHAR},'%')
             </if>
             <if test="btfId != null and btfId != ''">
                 and r.btf_id = #{btfId,jdbcType=INTEGER}
@@ -132,8 +142,11 @@
             <if test="obj.tradeNo != null and obj.tradeNo != ''">
                 and r.trade_no = #{obj.tradeNo,jdbcType=VARCHAR}
             </if>
-            <if test="obj.payee != null and obj.payee != ''">
-                and r.payee LIKE CONCAT('%',#{obj.payee,jdbcType=VARCHAR},'%')
+            <if test="obj.refundNo != null and obj.refundNo != ''">
+                and r.refund_no = #{obj.refundNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.refundObj != null and obj.refundObj != '' and obj.refundObj != '-1'">
+                and r.refund_obj LIKE CONCAT('%',#{obj.refundObj,jdbcType=VARCHAR},'%')
             </if>
             <if test="obj.btfId != null and obj.btfId != ''">
                 and r.btf_id = #{obj.btfId,jdbcType=INTEGER}
@@ -144,10 +157,10 @@
             <if test="obj.refundPrice != null and obj.refundPrice != ''">
                 and r.refund_price = #{obj.refundPrice,jdbcType=DECIMAL}
             </if>
-            <if test="obj.status != null">
+            <if test="obj.status != null and obj.status != '-1'">
                 and r.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.type != null">
+            <if test="obj.type != null and obj.type != '-1'">
                 and r.type = #{obj.type,jdbcType=VARCHAR}
             </if>
             <if test="obj.createDate != null and obj.createDate != ''">
@@ -159,10 +172,20 @@
         </where>
     </sql>
 
+    <sql id="SearchAllByPage_Where_Date">
+        <if test="startTime != null and startTime != ''">
+            and r.create_date &gt;= #{startTime,jdbcType=VARCHAR}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and r.create_date &lt;= #{endTime,jdbcType=VARCHAR}
+        </if>
+    </sql>
+
     <sql id="Base_Column_List">
         r.id as id,
         r.trade_no as tradeNo,
-        r.payee as payee,
+        r.refund_no as refundNo,
+        r.refund_obj as refundObj,
         r.btf_id as btfId,
         r.btf_name as btfName,
         r.refund_price as refundPrice,
@@ -192,20 +215,38 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
+    <select id="findAllDate" parameterType="com.vstock.db.entity.PricePeak" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SearchAllByPage_Where_Date"/>
+        ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCountDate" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
+        SELECT COUNT(*) FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SearchAllByPage_Where_Date"/>
+    </select>
+
     <insert id="insert">
-        INSERT INTO `price_peak`
-        (`id`,`trade_no`,`payee`,`btf_id`,`btf_name`,`refund_price`,`status`,`type`,`create_date`,`remarks`)
-        VALUES(null,#{tradeNo},#{payee},#{btfId},#{btfName},#{refundPrice},#{status},#{type},#{createDate},#{remarks})
+        INSERT INTO `refund`
+        (`id`,`refund_no`,`trade_no`,`refund_obj`,`btf_id`,`btf_name`,`refund_price`,`status`,`type`,`create_date`,`remarks`)
+        VALUES(null,#{refundNo},#{tradeNo},#{refundObj},#{btfId},#{btfName},#{refundPrice},#{status},#{type},#{createDate},#{remarks})
     </insert>
 
     <update id="update" parameterType="com.vstock.db.entity.Refund">
         UPDATE `refund`
         <set>
+            <if test="refundNo != null and refundNo != ''">
+                refund_no = #{refundNo,jdbcType=VARCHAR},
+            </if>
             <if test="tradeNo != null and tradeNo != ''">
                 trade_no = #{tradeNo,jdbcType=VARCHAR},
             </if>
-            <if test="payee != null and payee != ''">
-                payee = #{payee,jdbcType=VARCHAR},
+            <if test="refundObj != null">
+                refund_obj = #{refundObj,jdbcType=VARCHAR},
             </if>
             <if test="btfId != null and btfId != ''">
                 btf_id = #{btfId,jdbcType=INTEGER},

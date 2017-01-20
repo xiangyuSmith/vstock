@@ -23,4 +23,10 @@ public interface IRefundDao {
 
     //修改数据
     int update(Refund record);
+
+    //带时间区间分页查询所有
+    List<Refund> findAllDate(@Param("obj") Refund record,@Param("startTime") String startTime,@Param("endTime") String endTime,@Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
+    //带时间区间查询总数
+    int findCountDate(@Param("obj") Refund record,@Param("startTime") String startTime,@Param("endTime") String endTime);
 }

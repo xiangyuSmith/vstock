@@ -8,7 +8,14 @@
 
     <c:set var="page" scope="session" value="${param.page}"/>
     <%--<font size="2">共 ${page.totalPageCount} 页</font> --%>
-    <font size="2">当前第 <span id="pagenow">${page.pageNow}</span>/<span id="pageCount">${page.totalPageCount}</span> 页</font>
+    <c:choose>
+        <c:when test="${page.totalPageCount == 0}">
+            <font size="2">当前第 <span class="pagenow">${page.pageNow}</span>/<span class="pageCount">${page.pageNow}</span> 页</font>
+        </c:when>
+        <c:otherwise>
+            <font size="2">当前第 <span class="pagenow">${page.pageNow}</span>/<span class="pageCount">${page.totalPageCount}</span> 页</font>
+        </c:otherwise>
+    </c:choose>
         <c:choose>
             <c:when test="${fn:containsIgnoreCase(linkAddress, '?')}">
                 <li><a href="${linkAddress}&pageNow=1">首页</a></li>
@@ -179,13 +186,13 @@
     jQuery(function($){
        $("#pagingList>li>a").each(function(){
            var pageNowList = $(this).text();
-           var pageNow = $("#pagenow").text();
+           var pageNow = $(".pagenow").text();
            if(pageNow == pageNowList){
                $(this).parent().addClass("am-active");
            }
        });
         var optionHtml = "";
-        var pageCount = $("#pageCount").text();
+        var pageCount = $(".pageCount").text();
         for(var i = 1;i < pageCount;i++){
             optionHtml = optionHtml + '<option value="'+i+'">'+i+'</option>';
         }

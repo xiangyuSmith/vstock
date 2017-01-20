@@ -114,7 +114,7 @@ public class TradeController {
             page = pages;
             bidList = param.get(pages);
         }
-        List<Bid> statusList = StatusUtil.bidStatus();
+        List<Bid> statusList = StatusUtil.bidStatusa();
         for (int i = 0; i < Basicinformation.sizes.length; i++){
             sizeList.add(Basicinformation.sizes[i]);
         }

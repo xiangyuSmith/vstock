@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../common/top.jsp"%>
+<style type="text/css">
+    .div_height{height: 32px;}
+</style>
 <div class="admin-content">
     <div class="admin-content-body">
         <div class="am-cf am-padding">
@@ -9,60 +12,91 @@
         <hr>
         <div class="am-g">
             <%--<c:if test="${not empty trade}">--%>
-                <form action="/backCommodity/index" method="post">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
-                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                            <span class="am-text-lg am-text-middle">退货人：</span>
-                            <input type="text" name="backPerson" id="backPersonId" class="am-input-lg am-padding-left-xs" placeholder="退货人"/>
-                        </div>
-                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                            <span class="am-text-lg am-text-middle">收货人：</span>
-                            <input type="text" name="consignee" id="consigneeId" class="am-input-lg am-padding-left-xs" placeholder="收货人"/>
-                        </div>
-                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                            <span class="am-text-lg am-text-middle">订单号：</span>
-                            <input type="text" name="tradeNo" id="tradeNoId" class="am-input-lg am-padding-left-xs" placeholder="订单号"/>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
-                        <div class="am-u-sm-6 am-u-md-6-u-lg-6">
-                            <span class="am-text-lg am-text-middle">商品名称：</span>
-                            <input type="text" name="bftName" id="bftName" class="am-input-lg am-padding-left-xs" placeholder="商品名称"/>
-                        </div>
-                        <div class="am-u-sm-6 am-u-md-6-u-lg-6">
-                            <span class="am-text-lg am-text-middle">状态：</span>
-                            <select class="am-input-lg" name="status" id="status">
-                                <option value="-1">--请选择--</option>
-                                <c:if test="${not empty statusList}">
-                                    <c:forEach items="${statusList}" var="status">
-                                        <option value="${status.status}">${status.btfName}</option>
-                                        <%--<c:choose>--%>
-                                            <%--<c:when test="${trade.status == status.status}">--%>
-                                                <%--<option value="${status.status}" selected = "selected">${status.bftName}</option>--%>
-                                            <%--</c:when>--%>
-                                            <%--<c:otherwise>--%>
-                                                <%--<option value="${status.status}">${status.bftName}</option>--%>
-                                            <%--</c:otherwise>--%>
-                                        <%--</c:choose>--%>
-                                    </c:forEach>
-                                </c:if>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-                            <span class="am-text-lg am-text-middle">创建日期（起）：</span>
-                            <input class="am-input-lg am-padding-left-xs" type="date" id="dt" name="startTime" placeholder="">
+                <form action="/resfund/index" method="post">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-sm">
+                        <div class="am-u-sm-5 am-u-md-5 am-u-lg-5">
+                            <span class="am-text-default am-text-middle">退单日期：</span>
+                            <input type="date" id="dt" name="startTime" placeholder="" value="${startTime}">
                             <%--<div class="dateStartTime"></div>--%>
-                        </div>
-                        <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-                            <span class="am-text-lg am-text-middle">创建日期（止）：</span>
-                            <input class="am-input-lg am-padding-left-xs" type="date" id="dtd" name="endTime" placeholder="">
+                            <span class="am-text-default am-text-middle">至</span>
+                            <input type="date" id="dtd" name="endTime" placeholder="" value="${endTime}">
                             <%--<div class="dateEndTime"></div>--%>
+                        </div>
+                        <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-padding-left-0 am-padding-right-0">
+                            <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-padding-left-0 am-padding-right-0">
+                                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0">
+                                    <span class="am-text-default am-text-middle am-padding-left-sm">状态：</span>
+                                    <select name="status" id="status" class="div_height">
+                                        <option value="-1">--请选择--</option>
+                                        <c:if test="${not empty statusList}">
+                                            <c:forEach items="${statusList}" var="status">
+                                                <c:choose>
+                                                    <c:when test="${record.status == status.status}">
+                                                        <option value="${status.status}" selected>${status.btfName}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${status.status}">${status.btfName}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </c:if>
+                                    </select>
+                                </div>
+                                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0">
+                                    <span class="am-text-default am-text-middle">退款对象：</span>
+                                    <select name="refundObj" id="refundObj" class="div_height">
+                                        <option value="-1">--请选择--</option>
+                                        <c:if test="${not empty objList}">
+                                            <c:forEach items="${objList}" var="obj">
+                                                <c:choose>
+                                                    <c:when test="${record.refundObj == obj.refundObj}">
+                                                        <option value="${obj.refundObj}" selected>${obj.btfName}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${obj.refundObj}">${obj.btfName}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </c:if>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-u-sm-5 am-u-md-5 am-u-lg-5 am-padding-left-0 am-padding-right-0">
+                                <span class="am-text-default am-text-middle am-padding-left">退款类型：</span>
+                                <select name="type" id="type" class="div_height">
+                                    <option value="-1">--请选择--</option>
+                                    <c:if test="${not empty typeList}">
+                                        <c:forEach items="${typeList}" var="type">
+                                            <c:choose>
+                                                <c:when test="${record.type == type.type}">
+                                                    <option value="${type.type}" selected>${type.btfName}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value="${type.type}">${type.btfName}</option>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                    </c:if>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-sm">
+                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                            <span class="am-text-default am-text-middle">商品名称：</span>
+                            <input type="text" class="div_height" value="${record.btfName}" name="bftName" id="bftName" placeholder="商品名称"/>
+                        </div>
+                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                            <span class="am-text-default am-text-middle">订单号：</span>
+                            <input type="text" class="div_height" value="${record.tradeNo}" name="tradeNo" id="tradeNo" placeholder="订单号"/>
+                        </div>
+                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                            <span class="am-text-default am-text-middle">退单号：</span>
+                            <input type="text" class="div_height" value="${record.refundNo}" name="refundNo" id="refundNo" placeholder="退单号"/>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
-                        <a href="../backCommodity/lodejsp?type=0" class="am-btn am-btn-danger am-fl am-btn-sm am-margin-left am-padding-left-sm"><i class="am-icon-plus am-margin-right-xs"></i>新增</a>
+                        <a href="/resfund/insertRefund" class="am-btn am-btn-danger am-fl am-btn-sm am-margin-left am-padding-left-sm"><i class="am-icon-plus am-margin-right-xs"></i>新增</a>
                         <button href="javascript: void(0);" type="submit" class="am-btn am-btn-primary am-fr">查询</button>
                     </div>
                 </form>
@@ -73,45 +107,38 @@
                 <table class="am-table am-table-bd am-table-striped admin-content-table">
                     <thead>
                     <tr>
-                        <th>退货人</th>
-                        <th>收货人</th>
-                        <th>商品名称</th>
+                        <th>退款单号</th>
+                        <th>退款类型</th>
                         <th>订单号</th>
+                        <th>商品名称</th>
+                        <th>退款对象</th>
+                        <th>退款金额</th>
                         <th>状态</th>
-                        <th>创建日期</th>
-                        <th>更新日期</th>
+                        <th>退单时间</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:if test="${not empty backCommodityList}">
-                        <c:forEach items="${backCommodityList}" var="backCommodity">
+                    <c:if test="${not empty refundList}">
+                        <c:forEach items="${refundList}" var="refund">
                             <tr>
-                                <td>${backCommodity.backPerson}</td>
-                                <td>${backCommodity.consignee}</td>
-                                <td>${backCommodity.btfName}</td>
-                                <td>${backCommodity.tradeNo}</td>
-                                <c:if test="${not empty statusList}">
-                                    <c:forEach items="${statusList}" var="status">
-                                        <c:if test="${backCommodity.status == status.status}">
-                                            <td>${status.btfName}</td>
-                                        </c:if>
-                                    </c:forEach>
-                                </c:if>
-                                <td>${backCommodity.createTime}</td>
-                                <td>${backCommodity.updateTime}</td>
+                                <td>${refund.refundNo}</td>
+                                <td><c:forEach items="${typeList}" var="type"><c:if test="${type.type == refund.type}">${type.btfName}</c:if></c:forEach></td>
+                                <td>${refund.tradeNo}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${backCommodity.status == 10}">
-                                            <a href="javascript:void(0);" data-id="${backCommodity.id}" class="sbt-on deliver-btn" data-am-modal="{target: '#deliverDoods-pop', width: 450}">发货</a>
-                                        </c:when>
-                                        <c:when test="${backCommodity.status == 11}">
-                                            <a href="javascript:void(0);" data-id="${backCommodity.id}" class="sbt-on deliver-close">关闭</a>
+                                        <c:when test="${fn:length(refund.btfName) > 12}">
+                                            ${fn:substring(refund.btfName, 0, 12)}
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="javascript:void(0);" class="sbt-on stn-details" data_id="${backCommodity.id}">详情</a>
+                                            ${refund.btfName}
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
+                                <td><c:forEach items="${objList}" var="obj"><c:if test="${obj.refundObj == refund.refundObj}">${obj.btfName}</c:if></c:forEach></td>
+                                <td><fmt:formatNumber value="${refund.refundPrice}" type="currency" pattern="#,##0.0#"/></td>
+                                <td><c:forEach items="${statusList}" var="status"><c:if test="${status.status == refund.status}">${status.btfName}</c:if></c:forEach></td>
+                                <td>${refund.createDate}</td>
+                                <td><a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>确认付款</a></td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -124,72 +151,104 @@
             </div>
         </div>
     </div>
-    <form action="/backCommodity/backList" id="trateList" method="post">
-        <input type="hidden" name="id" id="id"/>
-        <input type="hidden" name="backPerson" id="backPerson"/>
-        <input type="hidden" name="consignee" id="consignee"/>
-        <input type="hidden" name="tradeNo" id="tradeNo"/>
-        <input type="hidden" name="btfName" id="btfName"/>
-        <input type="hidden" name="status" id="statuse"/>
-        <input type="hidden" id="startTime" name="startTime"/>
-        <input type="hidden" id="endTime" name="endTime"/>
-    </form>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">付款信息</div>
+            <div class="am-modal-bd">
+                您确定是否已经付款？
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
 </div>
-<jsp:include page="../common/deliverDoods.jsp" flush="true"/>
 <jsp:include page="../common/bottom.jsp" flush="true"/>
 <script type="text/javascript">
     jQuery(function($){
+        
+        $('.finance-sbt-btn').click(function () {
+            var $this = $(this);
+            var id = $this.attr('data-id');
+            var tradeNo = $this.attr('tradeNo');
+            var type = $this.attr('data-type');
+            var upstatus = "61";
+            if (type == 1){upstatus = "51";}
+            $('#my-confirm').modal({
+                relatedTarget: this,
+                onConfirm: function(options) {
+                    $.post("/resfund/saveRefund",{
+                        'id' : id,
+                        'tradeNo' : tradeNo,
+                        'type': type,
+                        'upstatus':upstatus,
+                        'status' : 1
+                    },function(res){
+                        if (res.reGode > 0){
+                            window.location.reload();
+                            alert("确认收款成功！");
+                        }else {
+                            alert("确认收款失败，请联系管理员！");
+                        }
+                    });
+                },
+                // closeOnConfirm: false,
+                onCancel: function() {
+                }
+            });
+        });
 
 //        var div1 = "#dt";
 //        var div2 = "#dtd";
 //        getDatePic(div1,div2);
 
-        $('.stn-details').click(function () {
-            $('#id').val($(this).attr("data_id"));
-            $('#backPerson').val($('#backPersonId').val());
-            $('#consignee').val($('#consigneeId').val());
-            $('#tradeNo').val($('#tradeNoId').val());
-            $('#btfName').val($('#bftName').val());
-            $('#statuse').val($('#status').val());
-            $('#startTime').val($('#dt').val());
-            $('#endTime').val($('#dtd').val());
-            $('#trateList').submit();
-        });
-
-        var backId = "";
-        $('.deliver-btn').click(function () {backId = $(this).attr('data-id');});
-
-        $('.logistics-btn').click(function () {
-            $.post("/backCommodity/saveBackCommodity",{
-                'id' : backId,
-                'status' : 20,
-                'express': $('#logisticsIn-name').val(),
-                'courierNumber' : $('#logisticsIn-number').val()
-            },function(res){
-                if (res.reGode == 1){
-                    $('.logistics-quit').click();
-                    window.location.reload();
-                    alert("发货成功！");
-                }else {
-                    alert("发货失败，重新发货！");
-                }
-            });
-        });
-
-        $('.deliver-close').click(function () {
-            var id = $(this).attr('data-id');
-            $.post("/backCommodity/saveBackCommodity",{
-                'id' : id,
-                'status' : 40
-            },function(res){
-                if (res.reGode == 1){
-                    window.location.reload();
-                    alert("关闭申请单成功！");
-                }else {
-                    alert("关闭申请单失败，重新操作！");
-                }
-            });
-        });
+//        $('.stn-details').click(function () {
+//            $('#id').val($(this).attr("data_id"));
+//            $('#backPerson').val($('#backPersonId').val());
+//            $('#consignee').val($('#consigneeId').val());
+//            $('#tradeNo').val($('#tradeNoId').val());
+//            $('#btfName').val($('#bftName').val());
+//            $('#statuse').val($('#status').val());
+//            $('#startTime').val($('#dt').val());
+//            $('#endTime').val($('#dtd').val());
+//            $('#trateList').submit();
+//        });
+//
+//        var backId = "";
+//        $('.deliver-btn').click(function () {backId = $(this).attr('data-id');});
+//
+//        $('.logistics-btn').click(function () {
+//            $.post("/backCommodity/saveBackCommodity",{
+//                'id' : backId,
+//                'status' : 20,
+//                'express': $('#logisticsIn-name').val(),
+//                'courierNumber' : $('#logisticsIn-number').val()
+//            },function(res){
+//                if (res.reGode == 1){
+//                    $('.logistics-quit').click();
+//                    window.location.reload();
+//                    alert("发货成功！");
+//                }else {
+//                    alert("发货失败，重新发货！");
+//                }
+//            });
+//        });
+//
+//        $('.deliver-close').click(function () {
+//            var id = $(this).attr('data-id');
+//            $.post("/backCommodity/saveBackCommodity",{
+//                'id' : id,
+//                'status' : 40
+//            },function(res){
+//                if (res.reGode == 1){
+//                    window.location.reload();
+//                    alert("关闭申请单成功！");
+//                }else {
+//                    alert("关闭申请单失败，重新操作！");
+//                }
+//            });
+//        });
 
     });
 </script>

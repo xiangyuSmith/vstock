@@ -272,6 +272,22 @@
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findModel" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
+        SELECT u.nick AS sellerName, a.nick AS buyersName, b.bft_name,b.bft_size, b.bid_bond as bidBond,
+        <include refid="Base_Column_List"/>
+        FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
+        LEFT JOIN `user` a ON t.buyers_id = a.id
+        LEFT JOIN bid b ON t.bid_id = b.id
+        WHERE t.status IN (2,21,40)
+        <if test="obj.bftName != null and obj.bftName != ''">
+            and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.sellerName != null and obj.sellerName != ''">
+            and u.nick LIKE CONCAT('%',#{obj.sellerName,jdbcType=VARCHAR},'%')
+        </if>
+        ORDER BY t.transaction_date DESC
+    </select>
+
     <select id="findCountDate" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
         SELECT COUNT(*) FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
         LEFT JOIN `user` a ON t.buyers_id = a.id LEFT JOIN bid b ON t.bid_id = b.id

@@ -9,10 +9,17 @@ import java.math.BigDecimal;
  * Created by administor on 2016/12/8.
  */
 public class Refund implements Serializable {
+
+    public final static String[] refundType = {"0:验货失败","1:叫价失败","2:交易成功","3:买家叫价，交易达成"};
+    public final static String[] refundstatus = {"0:待退款","1:已退款"};
+    public final static String[] refundO = {"0:卖家","1:买家"};
+    public final static String refNo = "STXRN";
+
     @Id
     private Integer id;
+    private String refundNo;
     private String tradeNo;
-    private String payee;
+    private String refundObj;
     private Integer btfId;
     private String btfName;
     private BigDecimal refundPrice;
@@ -25,10 +32,11 @@ public class Refund implements Serializable {
         super();
     }
 
-    public Refund(Integer id, String tradeNo, String payee, Integer btfId, String btfName, BigDecimal refundPrice, String status, String type, String createDate, String remarks) {
+    public Refund(Integer id, String refundNo, String tradeNo, String refundObj, Integer btfId, String btfName, BigDecimal refundPrice, String status, String type, String createDate, String remarks) {
         this.id = id;
+        this.refundNo = refundNo;
         this.tradeNo = tradeNo;
-        this.payee = payee;
+        this.refundObj = refundObj;
         this.btfId = btfId;
         this.btfName = btfName;
         this.refundPrice = refundPrice;
@@ -46,6 +54,14 @@ public class Refund implements Serializable {
         this.id = id;
     }
 
+    public String getRefundNo() {
+        return refundNo;
+    }
+
+    public void setRefundNo(String refundNo) {
+        this.refundNo = refundNo;
+    }
+
     public String getTradeNo() {
         return tradeNo;
     }
@@ -54,12 +70,12 @@ public class Refund implements Serializable {
         this.tradeNo = tradeNo;
     }
 
-    public String getPayee() {
-        return payee;
+    public String getRefundObj() {
+        return refundObj;
     }
 
-    public void setPayee(String payee) {
-        this.payee = payee;
+    public void setRefundObj(String refundObj) {
+        this.refundObj = refundObj;
     }
 
     public Integer getBtfId() {
