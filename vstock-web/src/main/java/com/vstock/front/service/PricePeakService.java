@@ -4,6 +4,7 @@ import com.vstock.db.dao.IPricePeakDao;
 import com.vstock.db.entity.PricePeak;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.support.interceptor.AccessInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,9 @@ public class PricePeakService {
      * @return
      */
     public List<PricePeak> findByType(PricePeak record,int sort, Page page){
-        return pricePeakDao.findByType(record,sort,page.getStartPos(),page.getPageSize(),null,null);
+        String startTime = ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd) + " 00:00:00";
+        String endTime = ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd) + " 23:59:59";
+        return pricePeakDao.findByType(record,sort,page.getStartPos(),page.getPageSize(),startTime,endTime);
     }
 
     /**

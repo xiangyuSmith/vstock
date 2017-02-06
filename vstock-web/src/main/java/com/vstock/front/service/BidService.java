@@ -1,9 +1,14 @@
 package com.vstock.front.service;
 
+import com.vstock.db.dao.IBasicinformation;
 import com.vstock.db.dao.IBidDao;
+import com.vstock.db.dao.IPricePeakDao;
+import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.Bid;
+import com.vstock.db.entity.PricePeak;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.security.md.ToolMD5;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import org.apache.log4j.Logger;
@@ -26,6 +31,10 @@ public class BidService {
 
     @Autowired
     IBidDao bidDao;
+    @Autowired
+    IBasicinformation basicinformationDao;
+    @Autowired
+    IPricePeakDao pricePeakDao;
 
     /**
      * 分页查询所有记录
@@ -287,5 +296,40 @@ public class BidService {
             }
         }
         return 0;
+    }
+
+    public void peakPriceJobBid(){
+        Basicinformation b = new Basicinformation();
+        List<Basicinformation> basicinformationList = basicinformationDao.findAll(b);
+        Bid bi = new Bid();
+        for (Basicinformation bfm : basicinformationList) {
+            for (String size : Basicinformation.sizes) {
+                bi.setBasicinformationId(Integer.parseInt(bfm.getId()));
+                bi.setBftSize(size);
+                bi.setStatus("10");
+                //买家出价
+                bi.setType("1");
+                Bid buybid = bidDao.findByType(bi,2,0,1);
+                //卖家叫价
+                bi.setType("0");
+                Bid sellbid = bidDao.findByType(bi,1,0,1);
+                PricePeak pricePeak = new PricePeak();
+                pricePeak.setBasicinformationId(Integer.parseInt(bfm.getId()));
+                pricePeak.setPeakSize(size);
+                if(buybid != null){
+                    pricePeak.setHighestBid(buybid.getBidMoney());
+                    pricePeak.setHighestBidderId(String.valueOf(buybid.getUserId()));
+                }
+                if(sellbid != null){
+                    pricePeak.setMinimumSellingPrice(sellbid.getBidMoney());
+                    pricePeak.setMinimumSellingId(String.valueOf(sellbid.getUserId()));
+                }
+                pricePeak.setStatus(0);
+                pricePeak.setCreateDate(ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd_hms));
+                if(buybid != null || sellbid != null){
+                    pricePeakDao.insert(pricePeak);
+                }
+            }
+        }
     }
 }

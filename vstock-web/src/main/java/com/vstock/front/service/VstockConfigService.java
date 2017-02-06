@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class VstockConfigService {
@@ -89,6 +91,16 @@ public class VstockConfigService {
             logger.warn("VstockConfigService 获取市场价值数据失败");
         }
         return roesMap.get(key);
+    }
+
+    public static boolean isChineseChar(String str){
+        boolean temp = false;
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m=p.matcher(str);
+        if(m.find()){
+            temp =  true;
+        }
+        return temp;
     }
 
     class YieldThread extends Thread{

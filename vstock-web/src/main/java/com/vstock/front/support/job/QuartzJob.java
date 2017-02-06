@@ -48,6 +48,7 @@ public class QuartzJob implements Job {
             //每日凌晨一点，调用涨幅表任务
             resultDataService.insertRose();
             resultDataService.getBrandMarket();
+            bidService.peakPriceJobBid();
 //            basiciformationRoseService.getRoseDegree();
         }
     }

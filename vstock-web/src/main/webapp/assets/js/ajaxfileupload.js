@@ -46,7 +46,8 @@ jQuery.extend({
         }
         for (var i = 0; i < fileElementId.length; i ++) {
             var oldElement = jQuery('#' + fileElementId[i]);
-            var newElement = jQuery(oldElement).clone();
+            var newElement = jQuery(oldElement).clone(true);
+            newElement[0].files=oldElement[0].files;
             jQuery(oldElement).attr('id', fileElementId[i]);
             jQuery(oldElement).attr('name', fileElementId[i]);
             jQuery(oldElement).before(newElement);

@@ -115,24 +115,28 @@
 <script src="/assets/js/ajaxfileupload.js"></script>
 <script>
     $(function(){
+        var xnumShow = 1;
+        var objUrl_handheld = "";
+        var objUrl_back = "";
+        var objUrl_front = "";
         $("#identify_img_front").change(function(){
-            var objUrl = getObjectURL(this.files[0]) ;
-            if (objUrl) {
-                $("#identify_front").attr("src", objUrl) ;
+            objUrl_front = getObjectURL(this.files[0]) ;
+            if (objUrl_front) {
+                $("#identify_front").attr("src", objUrl_front) ;
                 $(".clickImg-upload").eq(0).css("display","none");
             }
         });
         $("#identify_img_back").change(function(){
-            var objUrl = getObjectURL(this.files[0]) ;
-            if (objUrl) {
-                $("#identify_back").attr("src", objUrl) ;
+            objUrl_back = getObjectURL(this.files[0]) ;
+            if (objUrl_back) {
+                $("#identify_back").attr("src", objUrl_back) ;
                 $(".clickImg-upload").eq(1).css("display","none");
             }
         });
         $("#identify_img_handheld").change(function(){
-            var objUrl = getObjectURL(this.files[0]) ;
-            if (objUrl) {
-                $("#identify_handheld").attr("src", objUrl) ;
+            objUrl_handheld = getObjectURL(this.files[0]) ;
+            if (objUrl_handheld) {
+                $("#identify_handheld").attr("src", objUrl_handheld) ;
                 $(".clickImg-upload").eq(2).css("display","none");
             }
         });
@@ -158,7 +162,12 @@
             });
             switch(flag){
                 case 0:
-                    loadingshow("您的信息已经提交，信息校验过程可能需要等待约30秒钟请稍等...");
+                    if(xnumShow == 1){
+                        $("#loading-content").html("您的信息已经提交，信息校验过程可能需要等待约30秒钟请稍等...");
+                        $('#vstock-loading').modal();
+                    }else{
+                        $('#vstock-loading').show();
+                    }
                     $.ajaxFileUpload({
                         url:'/user/uploadUserProfile',
                         secureuri: false,
@@ -170,7 +179,8 @@
                         fileElementId:['identify_img_front','identify_img_back','identify_img_handheld'],
                         dataType: 'json',
                         success: function (res) {
-                            $('#vstock-loading').css("display","none");
+                            $('#vstock-loading').fadeOut(200);
+                            xnumShow = 0;
                             if(res.retCode == 1){
                                 $("#my-popup-identify").modal('close');
                                 $(".am-dimmer").css("display","none");
@@ -178,6 +188,9 @@
                             }else{
                                 alertTips(3,"认证失败",res.retMsg);
                             }
+                            $("#identify_img_front").val(objUrl_handheld);
+                            $("#identify_img_back").val(objUrl_back);
+                            $("#identify_img_handheld").val(objUrl_front);
                         },
                         error: function () {
                             alertTips(3,"提交失败","远程服务器正忙");

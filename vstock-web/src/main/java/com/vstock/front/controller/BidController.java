@@ -178,5 +178,11 @@ public class BidController extends BaseController{
         return resultModel;
     }
 
-
+    @RequestMapping("peakPriceJobBid")
+    @ResponseBody
+    public ResultModel peakPriceJobBid(){
+        ResultModel resultModel = new ResultModel();
+        bidService.peakPriceJobBid();
+        return resultModel;
+    }
 }
