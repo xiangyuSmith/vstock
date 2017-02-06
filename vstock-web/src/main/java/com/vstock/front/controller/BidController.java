@@ -51,6 +51,15 @@ public class BidController extends BaseController{
                 ,type,new BigDecimal(10),String.valueOf(Bid.STATUS_PENDING),DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
         if(resultBid != 0){
             resultModel.setRetCode(resultModel.RET_OK);
+//            Bid record = new Bid();
+//            record.setUserId(Integer.parseInt(uid));
+//            record.setBasicinformationId(bId);
+//            record.setBftSize(size);
+//            record.setStatus("11");
+//            List<Bid> bidList = bidService.findAllBid(record);
+//            if (bidList.size() > 0){
+//
+//            }
         }
         resultModel.setData(resultBid);
         return resultModel;

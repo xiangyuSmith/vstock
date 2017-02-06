@@ -151,6 +151,11 @@ public class BidService {
         return bidDao.findAndPricePeak(record,page.getStartPos(),page.getPageSize());
     }
 
+    //出售记录个人中心状态正序查询
+    public List<Bid> findBidStatus(Bid record, Page page){
+        return bidDao.findOrderStatus(record,page.getStartPos(),page.getPageSize());
+    }
+
     /**
      * 最高/最低 叫价/出价 记录
      * @param bid  鞋库编号

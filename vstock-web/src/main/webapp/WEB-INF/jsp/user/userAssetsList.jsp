@@ -22,10 +22,10 @@
                         <td>${userAssets.basicinformation.name}</td>
                         <td>${userAssets.userAssetsSize}</td>
                         <td>${userAssets.purchaseDate}</td>
-                        <td><fmt:formatNumber value="${userAssets.money}" type="number" pattern="￥0.00"/></td>
+                        <td><fmt:formatNumber value="${userAssets.money}" type="currency" pattern="￥#,##0.00"/></td>
                         <c:choose>
                             <c:when test="${not empty userAssets.basicinformationRose.current_market_value}">
-                                <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></td>
+                                <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="currency" pattern="￥#,##0.00"/></td>
                             </c:when>
                             <c:otherwise>
                                 <td>--</td>
@@ -35,10 +35,10 @@
                             <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                 <c:choose>
                                     <c:when test="${userAssets.basicinformationRose.type == 0}">
-                                        <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="percent"/></td>
+                                        <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                     </c:when>
                                     <c:otherwise>
-                                        <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="percent"/></td>
+                                        <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                     </c:otherwise>
                                 </c:choose>
                             </c:when>

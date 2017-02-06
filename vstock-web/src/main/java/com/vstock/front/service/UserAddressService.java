@@ -82,12 +82,12 @@ public class UserAddressService {
         UserAddress userAddress = this.findType(record);
         if (userAddress != null) {
             userAddressList.add(userAddress);
-        }
-        if (adderList.size() > 0){
-            for (int i = 0; i < adderList.size(); i++){
-                if (userAddressList.size() < startPos) {
-                    if (userAddress.getType() != adderList.get(i).getType()) {
-                        userAddressList.add(adderList.get(i));
+            if (adderList.size() > 0){
+                for (int i = 0; i < adderList.size(); i++){
+                    if (userAddressList.size() < startPos) {
+                        if (userAddress.getType() != adderList.get(i).getType()) {
+                            userAddressList.add(adderList.get(i));
+                        }
                     }
                 }
             }
@@ -168,7 +168,7 @@ public class UserAddressService {
                 userAddress.setStatus(0);
                 userAddress = this.findType(userAddress);
                 //查询是否有默认地址
-                if (userAddress.getId() != null && !"".equals(userAddress.getId())){
+                if (userAddress.getId() != null && !"".equals(userAddress.getId()) && !"1".equals(status)){
                     userAddress.setType(0);
                     int i = this.update(userAddress);
                     //有默认地址修改
@@ -183,13 +183,14 @@ public class UserAddressService {
                 }else {
                     //判断是否删除
                     if (status != null && !"".equals(status)) {
-                        UserAddress userAdd = this.findType(record);
                         int i = this.update(record);
                         //判断是否删除的是默认地址
-                        if (userAdd.getType() == 1){
+                        if (record.getType() == 1){
                             if (i > 0){
                                 //是默认地址，修改最近的一条地址为默认地址
                                 UserAddress userAddre = new UserAddress();
+                                userAddre.setUserId(record.getUserId());
+                                userAddre.setStatus(0);
                                 Page page = new Page(10,"1");
                                 List<UserAddress> userAddressList = this.findAll(userAddre,page);
                                 if (userAddressList.size() > 0){

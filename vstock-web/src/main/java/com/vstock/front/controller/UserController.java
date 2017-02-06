@@ -88,7 +88,7 @@ public class UserController extends BaseController {
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,"1");
         page.setPageSize(5);
-        List<Bid> bidList = bidService.findBid(bid,page);
+        List<Bid> bidList = bidService.findBidStatus(bid,page);
         List<Trade> tradeList = tradeService.findAllWeb(trade,page);
         List<Trade> statusList = StatusUtil.tradeStatus();
         List<Bid> bidStatus = StatusUtil.bidStatus();
@@ -123,7 +123,8 @@ public class UserController extends BaseController {
         String pageNow = request.getParameter("pageNow");
         int totalCount = bidService.findCount(bid);
         Page page = new Page(totalCount,pageNow);
-        List<Bid> bidList = bidService.findAndPricePeak(bid,page);List<Bid> bidStatus = StatusUtil.bidStatus();
+        List<Bid> bidList = bidService.findBidStatus(bid,page);
+        List<Bid> bidStatus = StatusUtil.bidStatus();
         model.addAttribute("bidStatus",bidStatus);
         model.addAttribute("page",page);
         model.addAttribute("type",type);
@@ -214,8 +215,12 @@ public class UserController extends BaseController {
         record.setUserId(Integer.parseInt(String.valueOf(suid)));
         record.setStatus(0);
         List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
+        for (int i = 0; i < userAssetsList.size(); i++){
+            userAssetsList.get(i).getBasicinformationRose().
+                    setChange_range(userAssetsList.get(i).getBasicinformationRose().
+                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney()));
+        }
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
-        basicinformationRose.setId(userAssetsList.size());
         model.put("basicinformationRose",basicinformationRose);
         model.put("userAssetsList",userAssetsList);
         return "/user/userAssets";
@@ -234,6 +239,11 @@ public class UserController extends BaseController {
         int totalCount = userAssetsService.findCount(record);
         Page page = new Page(totalCount,pageNow);
         List<UserAssets> userAssetsList = userAssetsService.findAll(record,page);
+        for (int i = 0; i < userAssetsList.size(); i++){
+            userAssetsList.get(i).getBasicinformationRose().
+                    setChange_range(userAssetsList.get(i).getBasicinformationRose().
+                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney()));
+        }
         model.put("userAssetsList",userAssetsList);
         model.put("page",page);
         return "/user/userAssetsList";

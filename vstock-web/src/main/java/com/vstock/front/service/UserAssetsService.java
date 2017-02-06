@@ -71,7 +71,7 @@ public class UserAssetsService {
 
     public List<UserAssets> findUserAssets(UserAssets record){
         Page page = new Page(10,"1");
-        page.setPageSize(2);
+        page.setPageSize(1);
         return this.findAll(record,page);
     }
 
@@ -88,18 +88,20 @@ public class UserAssetsService {
         if (userAssetsList.size() > 0) {
             basicinformationRose.setId(userAssetsList.size());
             for (UserAssets userAssets : userAssetsList){
-                BasicinformationRose basRose = new BasicinformationRose();
-                basRose = userAssets.getBasicinformationRose();
+                BasicinformationRose basRose = userAssets.getBasicinformationRose();
                 if (basRose != null) {
                     money = money.add(basRose.getCurrent_market_value());
                     //判断是涨还是跌
-                    if (userAssets.getBasicinformationRose().getType() == 1) {
-                        changeMoney = changeMoney.add(basRose.getChange_range());
-                    } else {
-                        changeMoney = changeMoney.subtract(basRose.getChange_range());
+                    if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == 1) {
+                        changeMoney = changeMoney.add(basRose.getCurrent_market_value().divide(userAssets.getMoney()));
+                    } else if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == -1){
+                        changeMoney = changeMoney.subtract(basRose.getCurrent_market_value().divide(userAssets.getMoney()));
+                    }else {
+                        changeMoney = changeMoney.add(new BigDecimal(0));
                     }
                 }
             }
+            basicinformationRose.setId(userAssetsList.size());
             basicinformationRose.setCurrent_market_value(money);
             basicinformationRose.setChange_range(changeMoney);
             basicinformationRose.setPercentage_change(money.divide(new BigDecimal(userAssetsList.size())));

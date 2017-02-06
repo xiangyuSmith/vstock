@@ -62,7 +62,7 @@
                                 <c:when test="${not empty basicinformationRose.current_market_value}">
                                     <c:choose>
                                         <c:when test="${basicinformationRose.current_market_value > 0}">
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></span>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.current_market_value}" type="currency" pattern="￥#,##0.0"/></span>
                                         </c:when>
                                         <c:otherwise>
                                             <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -87,7 +87,7 @@
                                 <c:when test="${not empty basicinformationRose.change_range}">
                                     <c:choose>
                                         <c:when test="${basicinformationRose.change_range > 0}">
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="￥0.00"/></span>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="0.00%"/></span>
                                         </c:when>
                                         <c:otherwise>
                                             <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -111,8 +111,8 @@
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.percentage_change}">
                                     <c:choose>
-                                        <c:when test="${basicinformationRose.change_range > 0}">
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.percentage_change}" type="number" pattern="￥0.00"/></span>
+                                        <c:when test="${basicinformationRose.percentage_change > 0}">
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.percentage_change}" type="currency" pattern="￥#,##0.0"/></span>
                                         </c:when>
                                         <c:otherwise>
                                             <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
@@ -156,10 +156,10 @@
                                     <td>${userAssets.basicinformation.name}</td>
                                     <td>${userAssets.userAssetsSize}</td>
                                     <td>${userAssets.purchaseDate}</td>
-                                    <td><fmt:formatNumber value="${userAssets.money}" type="number" pattern="￥0.00"/></td>
+                                    <td><fmt:formatNumber value="${userAssets.money}" type="currency" pattern="￥#,##0.00"/></td>
                                     <c:choose>
                                         <c:when test="${not empty userAssets.basicinformationRose.current_market_value}">
-                                            <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="number" pattern="￥0.00"/></td>
+                                            <td><fmt:formatNumber value="${userAssets.basicinformationRose.current_market_value}" type="currency" pattern="￥#,##0.00"/></td>
                                         </c:when>
                                         <c:otherwise>
                                             <td>--</td>
@@ -169,10 +169,10 @@
                                         <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                             <c:choose>
                                                 <c:when test="${userAssets.basicinformationRose.type == 0}">
-                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="percent"/></td>
+                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="percent"/></td>
+                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:when>

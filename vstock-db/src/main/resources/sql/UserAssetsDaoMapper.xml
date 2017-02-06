@@ -216,13 +216,13 @@
     <select id="findBasicinformationRoseAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
         SELECT br.current_market_value, br.change_range, br.percentage_change, br.type, b.name,
         <include refid="Base_Column_List"/>
-        FROM user_assets ua LEFT JOIN basicinformation_rose br ON br.basicinformation_id = ua.basicinformation_id
+        FROM user_assets ua LEFT JOIN basicinformation_rose br ON br.basicinformation_id = ua.basicinformation_id and ua.user_assets_size = br.basicinformation_size
         LEFT JOIN basicinformation b ON b.id = ua.basicinformation_id
         <include refid="SearchAllByPage_Where_Clause"/>
         <if test="startDate != null and startDate != ''">
             and br.create_date = #{startDate,jdbcType=TIMESTAMP}
         </if>
-        ORDER BY ua.create_date
+        ORDER BY ua.create_date DESC
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.UserAssets" resultType="Integer">

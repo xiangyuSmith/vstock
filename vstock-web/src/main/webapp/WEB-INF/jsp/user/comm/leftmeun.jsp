@@ -540,7 +540,7 @@
             }
         });
 
-        $("body").on("click","#up-type",function(){
+        $("body").on("click",".up-type",function(){
             var $this = $(this);
             sendRequest("/user/saveAdder",{
                 id: $this.attr('user-id'),

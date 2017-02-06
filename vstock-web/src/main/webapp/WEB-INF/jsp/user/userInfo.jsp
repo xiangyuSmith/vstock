@@ -130,11 +130,11 @@
                         </td>
                         <td style="width: 50px;">
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" class="userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">编辑</a>
-                            <a href="javascript:void(0);" user-id="${userAddresses.id}" id="del-status">删除</a>
+                            <a href="javascript:void(0);" user-id="${userAddresses.id}" data-type="${userAddresses.type}" id="del-status">删除</a>
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 0}">
-                                <a href="javascript:void(0);" user-id="${userAddresses.id}" id="up-type" class="am-btn-sm am-text-danger set-default-address">设为默认地址</a>
+                                <a href="javascript:void(0);" user-id="${userAddresses.id}" class="up-type am-btn-sm am-text-danger set-default-address">设为默认地址</a>
                             </c:if>
                         </td>
                     </tr>
