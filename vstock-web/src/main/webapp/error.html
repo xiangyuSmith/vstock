@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>v-stock 404 没有找到页面</title>
+    <link rel="alternate icon" type="image/png" href="/assets/i/favicon.ico">
+    <link rel="stylesheet" href="/assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
+    <style>
+        .bg-error { background:url("/assets/i/error.png") center center no-repeat;width: 705px;height: 305px;margin:0 auto;margin-top:10%; }
+        .btn{ position: absolute;bottom: 3px;margin-left: 287px;height: 60px;cursor: pointer;line-height: 60px;color: #fff;width: 180px;text-align: center;border-radius: 36px; }
+        .bth_hover{ z-index: 2;}
+        .bth_hover:HOVER{ background-color: #000; }
+        .bth_hover{
+            -webkit-filter: none;
+            -webkit-transition: background-color 0.5s ease;
+            -moz-transition: background-color 0.5s ease;
+            -ms-transition: background-color 0.5s ease;
+            -o-transition: background-color 0.5s ease;
+            transition: background-color 0.5s ease;
+        }
+    </style>
 </head>
 <body>
-    <h2>尴尬，没有找到页面 。 。 。</h2>
+    <div class="bg-error">
+        <a href="/index"><div class="layout-font-size-18 btn bth_hover" style="opacity: 0.2;"></div></a>
+        <div class="layout-font-size-18 btn">返回首页</div>
+    </div>
 </body>
 </html>

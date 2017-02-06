@@ -129,7 +129,7 @@
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">
-                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
                                         <div style="font-size: 16px;">最近30天售出</div>
                                         <div style="font-size: 22px;">${b.resultData.transactionRecord}双</div>
@@ -157,7 +157,7 @@
                                 <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                             </a>
                             <div class="am_listimg_info">
-                                <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div style="font-size: 16px;">最低叫价</div>
                                     <div class="layout-font-size-24">￥${b.cofferprice}</div>
@@ -184,7 +184,7 @@
                                 <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                             </a>
                             <div class="am_listimg_info">
-                                <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div style="font-size: 16px;">最高出价</div>
                                     <div class="layout-font-size-24">￥${b.cofferprice}</div>
@@ -211,7 +211,7 @@
                                 <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                             </a>
                             <div class="am_listimg_info">
-                                <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div class="layout-font-size-24">￥${b.cofferprice}（<fmt:formatNumber value="${b.cofferprices}" type="currency" pattern="#,#00" />%）</div>
                                 </div>
@@ -238,7 +238,7 @@
                                     <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
                                 </a>
                                 <div class="am_listimg_info">
-                                    <div class="am-gallery-title"><span style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                    <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
                                         <div class="layout-font-size-22">官方售价:￥${b.cofferprice}</div>
                                     </div>
@@ -262,6 +262,7 @@
         trigger:'hover focus'
     });
     window.onload=function(){
+        return;
         var speed=15;
         var buyBid=document.getElementById("buyBid");
         var buyBid2=document.getElementById("buyBid2");
@@ -281,6 +282,7 @@
                 sendRequest("/index/getNewBid",null,function(res){
                     var buyList = res.data.buyBidList;
                     var sellList = res.data.sellBidList;
+                    alert(buyList);
                     for(var i = 0;i < buyList.length;i++){
                         var mobile = buyList[i].user.nick;
                         var bftName = buyList[i].bftName;
@@ -322,18 +324,19 @@
             },5000);
         }
     };
-    document.onkeydown=keyDownSearch;
 
-    function keyDownSearch(e) {
-        var theEvent = e || window.event;
-        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-        if (code == 13) {
-            location.href = "/sorts?productName="+$("#index_search").val();
-            return false;
-        }
-        return true;
-    }
     $(function(){
+        document.onkeydown=keyDownSearch;
+
+        function keyDownSearch(e) {
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13) {
+                location.href = "/sorts?productName="+$("#index_search").val();
+                return false;
+            }
+            return true;
+        }
         sendRequest("/index/overallIncrease",{
             brand : 'JORDAN'
         },function(res) {

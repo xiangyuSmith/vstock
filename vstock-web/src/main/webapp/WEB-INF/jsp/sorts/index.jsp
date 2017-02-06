@@ -21,6 +21,7 @@
         .box-sorts-list ul li{ padding: 20px; }
         .active{ color: #FF5A5F!important; }
         .popover{ min-width:350px!important; }
+        .not-found-list{ margin: 0 auto;margin-top: 80px;line-height: 60px;color: #fff;width: 275px;height: 222px;text-align: center;border-radius: 36px;background: url('/assets/i/sort_kong.png'); }
     </style>
 </head>
 <body>
@@ -181,6 +182,23 @@
                 "productName":productName
             });
         }
+        document.onkeydown=keyDownSearch;
+
+        function keyDownSearch(e) {
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13) {
+                load({
+                    "size":size,
+                    "price":price,
+                    "year":year,
+                    "brand":brand,
+                    "productName":$(".index_search_top").val()
+                });
+                return false;
+            }
+            return true;
+        }
     });
     function load(data,type){
         if(type == 1){
@@ -189,23 +207,9 @@
             ajaxContent("/sorts/list",data,"box-sorts-list-ul",0);
         }
     }
-    document.onkeydown=keyDownSearch;
 
-    function keyDownSearch(e) {
-        var theEvent = e || window.event;
-        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
-        if (code == 13) {
-            load({
-                "size":size,
-                "price":price,
-                "year":year,
-                "brand":brand,
-                "productName":$(".index_search_top").val()
-            });
-            return false;
-        }
-        return true;
-    }
+
+
 
     $("body").on("keyup",".index_search_top",function(){
         $(".index_search_top").val($(this).val());

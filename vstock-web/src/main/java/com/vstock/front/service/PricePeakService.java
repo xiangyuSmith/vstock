@@ -37,7 +37,7 @@ public class PricePeakService {
      * @return
      */
     public List<PricePeak> findByType(PricePeak record,int sort, Page page){
-        return pricePeakDao.findByType(record,sort,page.getStartPos(),page.getPageSize());
+        return pricePeakDao.findByType(record,sort,page.getStartPos(),page.getPageSize(),null,null);
     }
 
     /**
@@ -95,6 +95,18 @@ public class PricePeakService {
         pricePeak.setPeakSize(size);
         pricePeak.setStatus(0);
         List<PricePeak> pricePeaks = findByType(pricePeak,sort,page);
+        if(pricePeaks.size() != 0){
+            return pricePeaks.get(0);
+        }
+        return null;
+    }
+
+    public PricePeak getHighestAndlowestDate(int bid,String size,int sort, Page page,String startTime,String endTime){
+        PricePeak pricePeak = new PricePeak();
+        pricePeak.setBasicinformationId(bid);
+        pricePeak.setPeakSize(size);
+        pricePeak.setStatus(0);
+        List<PricePeak> pricePeaks = pricePeakDao.findByType(pricePeak,sort,page.getStartPos(),page.getPageSize(),startTime,endTime);
         if(pricePeaks.size() != 0){
             return pricePeaks.get(0);
         }

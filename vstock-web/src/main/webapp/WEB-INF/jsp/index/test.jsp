@@ -277,7 +277,7 @@
             </div>
         </div>
         <div class="am-u-lg-6 am-u-md-6 am-u-sm-12 hope-img hope-img-right first-img-height  am-scrollspy-init am-scrollspy-inview am-animation-slide-right">
-            <img class="am-img-responsive" src="${cxt}/assets/i/img-first.png" alt="" data-am-scrollspy="{animation:'slide-right', repeat: false}" align="right"> </div>
+            <img class="am-img-responsive" src="/assets/i/img-first.png" alt="" data-am-scrollspy="{animation:'slide-right', repeat: false}" align="right"> </div>
     </div>
 </div>
 <div class="detail">

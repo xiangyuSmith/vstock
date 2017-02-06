@@ -5,36 +5,47 @@
 <input id="sorts-year" type="hidden" value="${year}" />
 <input id="sorts-brand" type="hidden" value="${brand}" />
 <input class="sorts-pageStart" type="hidden" value="${pageStart}" />
-<c:forEach items="${bidList}" var="bid">
-    <li>
-        <a class="popover-tips-${pageStart}" href="/detail?proName=${bid.name}&size=${size}" data-name="${bid.name}" data-id="${bid.id}" data-img-url="${configMap._site_url}${bid.smallImgUrl}">
-            <div class="clickZone" aria-describedby="product141637">
-                <div class="img">
-                    <span class="helper"></span>
-                    <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" style="display: inline;">
-                </div>
-                <div class="name" style="padding-left: 5px;height: 70px;">
-                    <div>${bid.name}</div>
-                </div>
-                <div class="price">
-                    <div class="price-line">
-                        <div class="price-label" style="padding-left: 5px;">最后出价</div>
-                        <div style="font-size: 24px;">￥
-                            <c:choose>
-                                <c:when test="${not empty bid.bid.bidMoney}">
-                                    <fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,#00.0#"/>
-                                </c:when>
-                                <c:otherwise>
-                                    -
-                                </c:otherwise>
-                            </c:choose>
+<c:choose>
+    <c:when test="${not empty bidList}">
+        <c:forEach items="${bidList}" var="bid">
+            <li>
+                <a class="popover-tips-${pageStart}" href="/detail?proName=${bid.name}&size=${size}" data-name="${bid.name}" data-id="${bid.id}" data-img-url="${configMap._site_url}${bid.smallImgUrl}">
+                    <div class="clickZone" aria-describedby="product141637">
+                        <div class="img">
+                            <span class="helper"></span>
+                            <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" style="display: inline;">
+                        </div>
+                        <div class="name" style="padding-left: 5px;height: 70px;">
+                            <div>${bid.name}</div>
+                        </div>
+                        <div class="price">
+                            <div class="price-line">
+                                <div class="price-label" style="padding-left: 5px;">最后出价</div>
+                                <div style="font-size: 24px;">￥
+                                    <c:choose>
+                                        <c:when test="${not empty bid.bid.bidMoney}">
+                                            <fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,#00.0#"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            -
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </a>
-    </li>
-</c:forEach>
+                </a>
+            </li>
+        </c:forEach>
+    </c:when>
+    <c:otherwise>
+        <div class="bg-error">
+            <div class="not-found-list"></div>
+        </div>
+    </c:otherwise>
+</c:choose>
+
+
 <script type="text/javascript">
     $(function(){
         var nowPage = $(".sorts-pageStart:last").val();

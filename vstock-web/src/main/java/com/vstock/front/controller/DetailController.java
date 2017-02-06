@@ -2,6 +2,9 @@ package com.vstock.front.controller;
 
 import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
+import com.vstock.ext.base.ResultModel;
+import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,5 +73,23 @@ public class DetailController extends BaseController{
         modelMap.addAttribute("basicinformation",basicinformation);
         modelMap.addAttribute("size",size);
         return "/detail/index";
+    }
+
+    @RequestMapping("getPricePeak")
+    @ResponseBody
+    public ResultModel getPricePeak(){
+        ResultModel resultModel = new ResultModel();
+        Map<String,Object> params = new HashMap<String,Object>();
+        String size = getParam("size");
+        Integer bid = getParamToInt("bid");
+        String startTime = ToolDateTime.format(DateUtils.wantToLose(new Date(),28),ToolDateTime.pattern_ymd);
+        String endTime = ToolDateTime.format(ToolDateTime.getDate(),ToolDateTime.pattern_ymd);
+        PricePeak pricePeak1 = pricePeakService.getHighestAndlowestDate(bid,size,1,lagePage,startTime,endTime);
+        PricePeak pricePeak2 = pricePeakService.getHighestAndlowestDate(bid,size,2,lagePage,startTime,endTime);
+        params.put("pricePeak1",pricePeak1);
+        params.put("pricePeak2",pricePeak2);
+        resultModel.setRetCode(resultModel.RET_OK);
+        resultModel.setData(params);
+        return resultModel;
     }
 }

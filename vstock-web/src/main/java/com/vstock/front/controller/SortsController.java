@@ -80,7 +80,10 @@ public class SortsController extends BaseController{
         Map<String,Object> resultMap = new HashedMap();
         setLastPage(0,1);
         //获取最后成交价
+        Basicinformation b = new Basicinformation();
+        b.setId(String.valueOf(bid));
         Trade trade = tradeService.getLastTrade(bid,size,Trade.TRADE_SUCESS,lagePage);
+        Basicinformation basicinformation = basicinformationService.findObj(b);
         //获取成交价格涨幅
         Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);
         //获取最低售价，最高出价
@@ -89,6 +92,7 @@ public class SortsController extends BaseController{
         resultMap.put("trade",trade);
         resultMap.put("pricePeak1",pricePeak1);
         resultMap.put("pricePeak2",pricePeak2);
+        resultMap.put("basicinformation",basicinformation);
         resultMap.put("difference",resParams.get("difference"));
         resultMap.put("percentag",resParams.get("percentag"));
         resultMap.put("roseType",resParams.get("roseType"));

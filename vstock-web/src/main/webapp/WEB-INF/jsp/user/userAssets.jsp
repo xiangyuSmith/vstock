@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="userAssets" action="${cxt}/user/userAssets" method="post">
+<form id="userAssets" action="/user/userAssets" method="post">
 <div class="am-g">
     <%--<div id="main"style="height:500px;border:1px solid #ccc;padding:10px;"></div>--%>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="border-bottom:1px solid #CACACA;"><span class="layout-font-size-26">资产概览</span></div>
@@ -10,7 +10,7 @@
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">数量分布</span></div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_number">
-                        <img src="${cxt}/assets/i/spherical_graph.png" class="am-padding-top" id="spherical_id" style="display:none;">
+                        <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="spherical_id" style="display:none;">
                     </div>
                 </div>
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
@@ -18,7 +18,7 @@
                         <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">价值分布</span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_value">
-                        <img src="${cxt}/assets/i/spherical_graph.png" class="am-padding-top" id="sphericals_id" style="display:none;">
+                        <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="sphericals_id" style="display:none;">
                     </div>
                 </div>
             </div>
@@ -182,7 +182,7 @@
                                     </c:choose>
                                     <td style="width: 26%">
                                         <div class="am-fl" style="width: 30%;">
-                                            <a href="${cxt}/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
+                                            <a href="/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
                                                 <span style="display: block;width: 55px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
                                                 <span class="am-margin-left-sm am-link-muted">出售</span>
                                             </a>
@@ -203,7 +203,7 @@
                     <tbody>
                     <tr style="width: 100%; height: 300px;">
                         <td style="background-color: #ffffff;">
-                            <img class="am-center" src="${cxt}/assets/i/asset_detail.png">
+                            <img class="am-center" src="/assets/i/asset_detail.png">
                             <a href="/sorts" style="margin-left: 41%;" class="am-btn am-radius am-padding-top-xs am-padding-bottom-xs am-padding-left-lg am-padding-right-lg am-btn-danger am-margin-top-lg">去加入</a>
                         </td>
                     </tr>

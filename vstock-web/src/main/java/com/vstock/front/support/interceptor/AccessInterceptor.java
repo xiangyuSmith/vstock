@@ -6,6 +6,7 @@ import com.vstock.ext.base.ResultModel;
 import com.vstock.front.service.BasicinformationService;
 import com.vstock.front.service.UserService;
 import com.vstock.front.service.VstockConfigService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ import java.util.Map;
 
 @Service
 public class AccessInterceptor extends HandlerInterceptorAdapter {
+
+    private static Logger logger = Logger.getLogger(AccessInterceptor.class);
 
     @Autowired
     UserService userService;
@@ -70,7 +73,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
         }else{
             resultModel.setRelogin(false);
             if(checkNotNeedLogin(uri)){
-                response.sendRedirect(basePath + "/index");
+//                response.sendRedirect(basePath + "/index");
                 return false;
             }
         }

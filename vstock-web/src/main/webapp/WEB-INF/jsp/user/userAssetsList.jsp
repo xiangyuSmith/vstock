@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="buysell" action="${cxt}/user/buysell" method="post">
+<form id="buysell" action="/user/buysell" method="post">
     <table class="am-table am-table-striped am-table-hover">
         <caption>
             <p class="am-fl layout-font-size-30">资产明细</p>
@@ -48,7 +48,7 @@
                         </c:choose>
                         <td style="width: 26%">
                             <div class="am-fl" style="width: 30%;">
-                                <a href="${cxt}/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
+                                <a href="/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
                                     <span style="display: block;width: 55px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
                                     <span class="am-margin-left-sm am-link-muted">出售</span>
                                 </a>

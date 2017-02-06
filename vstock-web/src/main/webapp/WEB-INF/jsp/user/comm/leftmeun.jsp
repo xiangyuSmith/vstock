@@ -141,6 +141,17 @@
     }
     jQuery(function($){
 
+        document.onkeydown=keyDownSearch;
+
+        function keyDownSearch(e) {
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if (code == 13) {
+                location.href = "/sorts?productName="+$(".index_search_top").val();
+                return false;
+            }
+            return true;
+        }
         var upMoeny;
 
         $(".home-tab").click(function () {
@@ -661,7 +672,6 @@
                 }
             })
         }
-
     });
 </script>
 </html>

@@ -9,6 +9,7 @@ import com.vstock.front.service.VstockConfigService;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import com.vstock.server.ihuyi.Sendsms;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -22,6 +23,8 @@ import org.springframework.web.util.WebUtils;
 @Controller
 @RequestMapping("/login")
 public class LoginController extends BaseController {
+
+    private static Logger logger = Logger.getLogger(LoginController.class);
 
     @Autowired
     UserService userService;
@@ -43,6 +46,7 @@ public class LoginController extends BaseController {
         }
         if (user.getMobile().equals(mobile) && user.getPassword().equals(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE))) {
             WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
+//            Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
             resultModel.setRetCode(ResultModel.RET_OK);
             return resultModel;
         }else{

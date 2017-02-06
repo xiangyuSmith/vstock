@@ -20,7 +20,7 @@
                     <a href="/index" class="v-logo am-fr"></a>
                     <form id="am-form-field" class="am-topbar-left am-form-inline" role="search" style="width:100%;">
                         <div class="am-form-group am-form-icon am-fr" style="color: #EB615F;font-size: 16px;width:50%;">
-                            <input type="text" class="am-form-field index_search_top" placeholder="搜索颜色、货号......" style="width:100%;margin-top: 8px;" />
+                            <input type="text" class="am-form-field index_search_top" placeholder="搜索颜色、货号......" style="width:100%;margin-top: 8px;" value="${productName}" />
                             <i class="am-icon-search" style="margin-top:-3px;"></i>
                         </div>
                     </form>

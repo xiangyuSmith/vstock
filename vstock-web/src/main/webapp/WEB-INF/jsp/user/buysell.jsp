@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
-<form id="buysell" action="${cxt}/user/buysell" method="post">
+<form id="buysell" action="/user/buysell" method="post">
     <table class="am-table am-table-striped am-table-hover">
         <caption>
             <c:if test="${type == 0}">
