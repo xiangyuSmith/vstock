@@ -194,6 +194,12 @@
         <include refid="Base_Column_List"/>
         FROM price_peak p
         <include refid="SelectAllByPage_Where_Clause"/>
+        <if test="startTime != null and startTime != ''">
+            and p.create_date &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and p.create_date &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
         <if test="sort == 1">
             AND p.highest_bid is not null
             ORDER BY p.highest_bid DESC
