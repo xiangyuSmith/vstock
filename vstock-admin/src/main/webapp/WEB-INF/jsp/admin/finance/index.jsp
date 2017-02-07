@@ -138,7 +138,7 @@
                                 <td><fmt:formatNumber value="${refund.refundPrice}" type="currency" pattern="#,##0.0#"/></td>
                                 <td><c:forEach items="${statusList}" var="status"><c:if test="${status.status == refund.status}">${status.btfName}</c:if></c:forEach></td>
                                 <td>${refund.createDate}</td>
-                                <td><a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>确认付款</a></td>
+                                <td><a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" btf_id="${refund.btfId}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>确认付款</a></td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -173,6 +173,7 @@
             var id = $this.attr('data-id');
             var tradeNo = $this.attr('tradeNo');
             var type = $this.attr('data-type');
+            var btf_id = $this.attr('btf_id');
             var upstatus = "61";
             if (type == 1){upstatus = "51";}
             $('#my-confirm').modal({
@@ -181,6 +182,7 @@
                     $.post("/resfund/saveRefund",{
                         'id' : id,
                         'tradeNo' : tradeNo,
+                        'btfId' : btf_id,
                         'type': type,
                         'upstatus':upstatus,
                         'status' : 1

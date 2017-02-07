@@ -127,16 +127,25 @@ public class RefundController extends BaseController {
     public Map<String,Object> saveRefund(Refund record, HttpServletRequest request){
         Map<String,Object> param = new HashMap<String,Object>();
         String upstatus = request.getParameter("upstatus");
+        String tradeId = request.getParameter("tradeId");
+        String btfId = request.getParameter("btfId");
         int i = refundService.save(record);
         if (i > 0){
             if (upstatus != null && !"".equals(upstatus) && Integer.parseInt(record.getType()) == 1){
                 Bid bid = new Bid();
-                bid.setId(Integer.parseInt(record.getTradeNo()));
+                bid.setId(Integer.parseInt(btfId));
                 bid.setStatus(upstatus);
                 i = bidService.update(bid);
             }else {
                 Trade trade = new Trade();
-                trade.setTradeNo(record.getTradeNo());
+                if (tradeId == null && "".equals(tradeId)){
+                    Trade trades = new Trade();
+                    trades.setTradeNo(record.getTradeNo());
+                    trades = tradeService.findTrade(trades);
+                    trade.setId(trades.getId());
+                }else {
+                    trade.setId(Integer.parseInt(tradeId));
+                }
                 trade.setStatus(Integer.parseInt(upstatus));
                 i = tradeService.update(trade);
             }

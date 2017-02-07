@@ -41,6 +41,7 @@
                 <span class="am-fr am-text-lg">订单号</span>
             </div>
             <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-u-end">
+                <input type="hidden" id="trade_id"/>
                 <input type="text" id="trade_no" name="tradeNo" class="am-input-lg am-padding-left-xs" placeholder="订单号" data-am-modal="{target: '#trade-modal', width: 700}"/>
             </div>
         </div>
@@ -132,6 +133,7 @@
                 'upstatus':upstatus,
                 'status' : 0,
                 'btfId' : $('#btfId').val(),
+                'tradeId' : $('#trade_id').val(),
                 'btfName' : btfName,
                 'refundPrice' : refundprice,
                 'reasons' : reasons
@@ -150,6 +152,7 @@
             $('#btfId').val($th.children().val());
             $('#btfName').val($th.text());
             $('#trade_no').val($this.text());
+            $('#trade_id').val($this.children().val())
             var id = $this.children().val();
             $.post("/resfund/calculateRefund",{
                 'type' : $('#type').val(),
