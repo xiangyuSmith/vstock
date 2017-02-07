@@ -196,12 +196,14 @@ public class UserController extends BaseController {
         String type = getParam("type","");
         UserAddress record = new UserAddress();
         User user = userService.findById(String.valueOf(suid));
+        UserAccount userAccount = userAccountService.findAccountByUid(String.valueOf(suid));
         record.setUserId(Integer.parseInt(user.getId()));
         int startPos = 5;
         List<UserAddress> userAddressesList = userAddressService.findAllUserAddress(record,startPos,type);
         model.put("userAddressesList",userAddressesList);
         model.put("type",type);
         model.addAttribute("user",user);
+        model.addAttribute("userAccount",userAccount);
         return "/user/userInfo";
     }
 
@@ -438,7 +440,13 @@ public class UserController extends BaseController {
                 resultModel.setRetMsg("身份证照片与本人信息不匹配");
             }
         }else{
-            resultModel.setRetMsg(jsonObject.get("msg").toString());
+            if(result == 2){
+                resultModel.setRetMsg("认证结果:不一致");
+            }else if(result == 3){
+                resultModel.setRetMsg("认证结果:库中无此号，请到户籍所在地进行核实");
+            }else{
+                resultModel.setRetMsg(jsonObject.get("errorMessage").toString());
+            }
         }
         resultModel.setRetCode(0);
         return resultModel;

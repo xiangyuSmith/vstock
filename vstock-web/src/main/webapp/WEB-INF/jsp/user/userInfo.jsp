@@ -49,6 +49,23 @@
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
                 <div class="am-u-sm-2 am-u-md-2">
+                    <span class="am-fr">身份认证：</span>
+                </div>
+                <div class="am-u-sm-3 am-u-md-3 am-margin-left-0 am-padding-left-0 am-u-end">
+                    <c:choose>
+                        <c:when test="${not empty userAccount}">
+                            <c:choose>
+                                <c:when test="${userAccount.status == 1}"><span>已认证</span></c:when>
+                                <c:otherwise><span><a href="javascript:void(0);" class="identify">去认证</a></span></c:otherwise>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise><span><a href="javascript:void(0);" class="identify">去认证</a></span></c:otherwise>
+                    </c:choose>
+                    <input id="identify-click" type="hidden" data-am-modal="{target: '#my-popup-identify',width: 644}" />
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+                <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">登录密码：</span>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-margin-left-0 am-padding-left-0 am-u-end">
@@ -148,8 +165,14 @@
     <input type="hidden" id="user-lodaType" value="${type}"/>
 </form>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
+<%@include file="../common/popup/bindIdentify.jsp" %>
 <script type="text/javascript">
     if ($('#user-lodaType').val() != ""){
         $('#load_more').css('display','none');
     }
+    $(function () {
+        $('.identify').click(function () {
+            $('#identify-click').click();
+        })
+    })
 </script>

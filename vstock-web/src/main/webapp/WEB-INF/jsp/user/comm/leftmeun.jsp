@@ -647,30 +647,34 @@
             sendsms($this,mobile);
         });
 
-
+        var sendStatus = 0;
         function sendsms($this,mobile){
-            $this.text("正在发送...");
-            sendRequest("/login/sendSms",{
-                "mobile":mobile
-            },function(res){
-                if(res.retCode==1){
-                    var wait = 60;
-                    $this.attr("disabled",true);
-                    var int = setInterval(function(){
-                        if (wait == 0) {
-                            $this.text("重新发送");
-                            $this.attr("disabled",false);
-                            clearInterval(int);
-                        } else {
-                            $this.text(wait+"s后重新发送");
-                            wait--;
-                        }
-                    },1000);
-                }else{
-                    alert(res.retMsg);
-                    $this.text("重新发送");
-                }
-            })
+            if(sendStatus == 0){
+                $this.attr("disabled","true");
+                $this.text("正在发送...");
+                sendRequest("/login/sendSms",{
+                    "mobile":mobile
+                },function(res){
+                    if(res.retCode==1){
+                        sendStatus = 1;
+                        var wait = 60;
+                        var int = setInterval(function(){
+                            if (wait == 0) {
+                                sendStatus = 0;
+                                $this.text("重新发送");
+                                $this.removeAttr("disabled");
+                                clearInterval(int);
+                            } else {
+                                $this.text(wait+"s后重新发送");
+                                wait--;
+                            }
+                        },1000);
+                    }else{
+                        $this.attr("disabled",false);
+                        $this.text("重新发送");
+                    }
+                })
+            }
         }
     });
 </script>
