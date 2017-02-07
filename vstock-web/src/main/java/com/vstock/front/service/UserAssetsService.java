@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -93,9 +94,9 @@ public class UserAssetsService {
                     money = money.add(basRose.getCurrent_market_value());
                     //判断是涨还是跌
                     if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == 1) {
-                        changeMoney = changeMoney.add(basRose.getCurrent_market_value().divide(userAssets.getMoney()));
+                        changeMoney = changeMoney.add(basRose.getCurrent_market_value().divide(userAssets.getMoney(),2, RoundingMode.HALF_UP));
                     } else if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == -1){
-                        changeMoney = changeMoney.subtract(basRose.getCurrent_market_value().divide(userAssets.getMoney()));
+                        changeMoney = changeMoney.subtract(basRose.getCurrent_market_value().divide(userAssets.getMoney(),2, RoundingMode.HALF_UP));
                     }else {
                         changeMoney = changeMoney.add(new BigDecimal(0));
                     }
@@ -104,7 +105,7 @@ public class UserAssetsService {
             basicinformationRose.setId(userAssetsList.size());
             basicinformationRose.setCurrent_market_value(money);
             basicinformationRose.setChange_range(changeMoney);
-            basicinformationRose.setPercentage_change(money.divide(new BigDecimal(userAssetsList.size())));
+            basicinformationRose.setPercentage_change(money.divide(new BigDecimal(userAssetsList.size()),2, RoundingMode.HALF_UP));
         }
         return basicinformationRose;
     }

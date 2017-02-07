@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -218,7 +219,7 @@ public class UserController extends BaseController {
         for (int i = 0; i < userAssetsList.size(); i++){
             userAssetsList.get(i).getBasicinformationRose().
                     setChange_range(userAssetsList.get(i).getBasicinformationRose().
-                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney()));
+                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),2, RoundingMode.HALF_UP));
         }
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
         model.put("basicinformationRose",basicinformationRose);
@@ -242,7 +243,7 @@ public class UserController extends BaseController {
         for (int i = 0; i < userAssetsList.size(); i++){
             userAssetsList.get(i).getBasicinformationRose().
                     setChange_range(userAssetsList.get(i).getBasicinformationRose().
-                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney()));
+                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),2, RoundingMode.HALF_UP));
         }
         model.put("userAssetsList",userAssetsList);
         model.put("page",page);
