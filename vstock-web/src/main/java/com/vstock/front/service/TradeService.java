@@ -174,10 +174,28 @@ public class TradeService {
         }
     }
 
+    /**
+     * 修改订单信息
+     * @param record  修改对象
+     * @param tradeMd5Key   加密串
+     * @return
+     */
     public int save(Trade record,String tradeMd5Key){
         int i = 0;
         if (record.getId() != null && !"".equals(record.getId())){
             if (this.verificationSgin(record,tradeMd5Key)) {
+                //判断是买家删除还是买家删除
+                if (record.getStatus() == 51 || record.getStatus() == 52){
+                    Trade trade = new Trade();
+                    trade.setId(record.getId());
+                    List<Trade> tradeList = this.findAllTrade(trade);
+                    if (tradeList.size() > 0){
+                        //判断该订单是否买卖家都删除
+                        if (tradeList.get(0).getStatus() == 51 || tradeList.get(0).getStatus() == 52) {
+                            record.setStatus(50);
+                        }
+                    }
+                }
                 i = this.update(record);
             }
         }else {

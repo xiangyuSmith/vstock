@@ -14,22 +14,23 @@
         <tr>
             <th style="width: 30%;">球鞋名称</th>
             <c:if test="${type == 0}">
-                <th>出售日期</th>
+                <td>出售日期</td>
             </c:if>
             <c:if test="${type == 1}">
-                <th>购买日期</th>
+                <td>购买日期</td>
             </c:if>
             <c:if test="${type == 0}">
-                <th>保证金</th>
+                <td>保证金</td>
             </c:if>
-            <th>尺码</th>
-            <th>金额</th>
-            <th>状态</th>
+            <td>尺码</td>
+            <td>金额</td>
+            <td>状态</td>
         </tr>
         </thead>
         <tbody>
         <c:if test="${not empty tradeList}">
             <c:forEach items="${tradeList}" var="trade">
+                <c:if test="${type == 0 && trade.status != 52 || type == 1 && trade.status != 51}">
                 <tr>
                     <td class="am-text-sm">${trade.bftName}</td>
                     <td class="am-text-sm">${trade.transactionDate}</td>
@@ -71,7 +72,7 @@
                             <div class="doc-dropdown-justify-js">
                                 <div class="am-dropdown doc-dropdown-js">
                                     <c:choose>
-                                        <c:when test="${trade.status == 0 || trade.status == 2}">
+                                        <c:when test="${trade.status == 0 || trade.status == 2 || trade.status == 41 || trade.status == 51}">
                                             <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                                         </c:when>
                                         <c:otherwise>
@@ -86,6 +87,9 @@
                                             <c:when test="${trade.status == 2}">
                                                 <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)" data-am-modal="{target: '#deliverDoods-pop', width: 600}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
                                             </c:when>
+                                            <c:when test="${trade.status == 41 || trade.status == 51}">
+                                                <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="删除" status="52" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a></li>
+                                            </c:when>
                                         </c:choose>
                                     </ul>
                                 </div>
@@ -95,7 +99,7 @@
                             <div class="doc-dropdown-justify-js">
                                 <div class="am-dropdown doc-dropdown-js">
                                     <c:choose>
-                                        <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41}">
+                                        <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52}">
                                             <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                                         </c:when>
                                         <c:otherwise>
@@ -107,10 +111,10 @@
                                             <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
                                         </c:if>
                                         <c:if test="${trade.status == 30}">
-                                            <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
+                                            <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
                                         </c:if>
-                                        <c:if test="${trade.status == 41}">
-                                            <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="删除" status="50" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">删除</span></a></li>
+                                        <c:if test="${trade.status == 41 || trade.status == 52}">
+                                            <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="删除" status="51" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">删除</span></a></li>
                                         </c:if>
                                     </ul>
                                 </div>
@@ -118,6 +122,7 @@
                         </c:if>
                     </td>
                 </tr>
+                </c:if>
             </c:forEach>
         </c:if>
         </tbody>

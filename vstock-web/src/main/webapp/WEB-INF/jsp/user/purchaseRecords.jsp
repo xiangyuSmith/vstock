@@ -120,6 +120,7 @@
                 <tbody>
                 <c:if test="${not empty tradeList}">
                     <c:forEach items="${tradeList}" var="trade">
+                        <c:if test="${trade.status != 51}">
                         <tr>
                             <td class="am-text-sm"><a href="/detail?proName=${trade.bftName}" target="_blank"><span class="popover-tips" data-bftId="${trade.basicinformationId}" data-bftSize="${trade.bftSize}" data-img-url="${configMap._site_url}" style="color: #333;">${trade.bftName}</span></a></td>
                             <td class="am-text-sm">
@@ -148,7 +149,7 @@
                                 <div class="doc-dropdown-justify-js">
                                     <div class="am-dropdown doc-dropdown-js">
                                         <c:choose>
-                                            <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41}">
+                                            <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52}">
                                                 <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                             </c:when>
                                             <c:otherwise>
@@ -160,10 +161,10 @@
                                                 <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}" trade-size="${trade.bftSize}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
                                             </c:if>
                                             <c:if test="${trade.status == 30}">
-                                                <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
+                                                <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
                                             </c:if>
-                                            <c:if test="${trade.status == 41}">
-                                                <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="删除" status="50" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a></li>
+                                            <c:if test="${trade.status == 41 || trade.status == 52}">
+                                                <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="删除" status="51" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a></li>
                                             </c:if>
                                         </ul>
                                     </div>
@@ -171,6 +172,7 @@
 
                             </td>
                         </tr>
+                        </c:if>
                     </c:forEach>
                 </c:if>
                 </tbody>

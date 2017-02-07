@@ -382,6 +382,40 @@
             });
         }
 
+        $("body").on("click",".tradeSave",function(){
+            var $this = $(this);
+            var explain = $this.attr('explain');
+            var type = $this.attr('utype');
+            var status = $this.attr('status');
+            var id = $this.attr('data-id');
+            var bidId = $this.attr('bidId');
+            var tradeNo = $this.attr('trade-no');
+            var amount = $this.parent().parent().parent().parent().parent().prev().prev().text();
+            amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
+            var size = $this.parent().parent().parent().parent().parent().prev().prev().prev().text();
+            sendRequest("/trade/saveTrade",{
+                id : id,
+                bidId : bidId,
+                tradeNo : tradeNo,
+                transactionMoney : amount,
+                bftSize : size,
+                status : status
+            },function(res) {
+                if (res.retCode == 1){
+                    alertTips(1,"",explain+"成功");
+                    $this.parent().parent().parent().removeClass("am-active");
+                    $this.parent().parent().parent().children().first().attr("disabled", true);
+                    if (type == 2){
+                        ajaxContent("../user/sale?type=0", "" ,"tradeforex_tilie",1);
+                    }else {
+                        ajaxContent("../user/sale?type=1", "" ,"tradeforex_tilie",1);
+                    }
+                }else {
+                    alertTips(2,explain+"失败","请重新操作！");
+                }
+            });
+        });
+
         $("body").on("click",".trade-save",function(){
             var $this = $(this);
             var explain = $this.attr('explain');

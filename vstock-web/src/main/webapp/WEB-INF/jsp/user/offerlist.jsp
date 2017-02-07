@@ -12,13 +12,13 @@
         </caption>
         <thead>
         <tr>
-            <th style="width: 30%;">球鞋名称</th>
-            <th>尺码</th>
-            <th>出价日期</th>
-            <th>我的出价</th>
-            <th>最高出价</th>
-            <th>最低售价</th>
-            <th>叫价状态</th>
+            <td style="width: 30%;">球鞋名称</td>
+            <td>尺码</td>
+            <td>出价日期</td>
+            <td>我的出价</td>
+            <td>最高出价</td>
+            <td>最低售价</td>
+            <td>叫价状态</td>
         </tr>
         </thead>
         <tbody>

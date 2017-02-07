@@ -153,7 +153,7 @@ public class UserController extends BaseController {
         int totalCount = tradeService.findCountWeb(trade);
         Page page = new Page(totalCount,pageNow);
         List<Trade> tradeList = tradeService.findAllWeb(trade,page);
-        List<Trade> statusList = tradeService.status();
+        List<Trade> statusList = StatusUtil.tradeStatus();
         List<Express> expressList = expressService.findAll(express);
         model.addAttribute("expressList",expressList);
         model.addAttribute("statusList",statusList);
