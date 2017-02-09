@@ -41,7 +41,7 @@
                                 </div>
                                 <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
                                     <div class="am-panel-bd am-padding-top-sm am-padding-bottom-0">
-                                        <p class="am-margin-sm"><img src="/assets/i/alipay.png" style="width: 26px;"></p>
+                                        <a href="/login/alipay"><p class="am-margin-sm"><img src="/assets/i/alipay.png" style="width: 26px;"></p></a>
                                     </div>
                                 </div>
                             </div>

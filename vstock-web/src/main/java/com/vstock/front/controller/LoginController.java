@@ -8,7 +8,6 @@ import com.vstock.front.service.UserService;
 import com.vstock.front.service.VstockConfigService;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import com.vstock.server.ihuyi.Sendsms;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by xiangyu on 2016/11/28.
@@ -55,6 +57,18 @@ public class LoginController extends BaseController {
         return resultModel;
     }
 
+    //支付宝登录返回接口
+    public ResultModel alipayLogin(){
+        ResultModel resultModel = new ResultModel();
+        String is_success = request.getParameter("is_success");
+        if ("T".equals(is_success)) {
+            resultModel = userService.alipayLogin(request);
+        }else{
+            resultModel.setRetMsg("用户名或密码错误");
+        }
+        return resultModel;
+    }
+
     @RequestMapping("sendSms")
     @ResponseBody
     public ResultModel sendSms() {
@@ -79,5 +93,10 @@ public class LoginController extends BaseController {
         ResultModel resultModel = new ResultModel();
         resultModel.setRelogin(false);
         return resultModel;
+    }
+
+    @RequestMapping("alipay")
+    public String alipay() {
+        return "/common/alipay/login/alipayapi";
     }
 }
