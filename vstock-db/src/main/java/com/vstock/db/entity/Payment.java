@@ -15,6 +15,7 @@ public class Payment {
     public final static int PAY_STATUS_FILE = 11; // 支付失败
 
     private int id;
+    private String payment_alipay_name;
     private long payment_user_id;
     private long order_record_id;
     private String payment_number;
@@ -26,6 +27,14 @@ public class Payment {
     private BigDecimal payment_money;
     private String payment_explain;
     private String sign;
+
+    public String getPayment_alipay_name() {
+        return payment_alipay_name;
+    }
+
+    public void setPayment_alipay_name(String payment_alipay_name) {
+        this.payment_alipay_name = payment_alipay_name;
+    }
 
     public int getId() {
         return id;
@@ -126,8 +135,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int id, long payment_user_id, long order_record_id, String payment_number, int payment_status, int payment_mode, int payment_type, String payment_date, String payment_over_date, BigDecimal payment_money, String payment_explain, String sign) {
+    public Payment(int id, String payment_alipay_name, long payment_user_id, long order_record_id, String payment_number, int payment_status, int payment_mode, int payment_type, String payment_date, String payment_over_date, BigDecimal payment_money, String payment_explain, String sign) {
         this.id = id;
+        this.payment_alipay_name = payment_alipay_name;
         this.payment_user_id = payment_user_id;
         this.order_record_id = order_record_id;
         this.payment_number = payment_number;

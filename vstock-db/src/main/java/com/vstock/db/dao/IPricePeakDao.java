@@ -29,4 +29,6 @@ public interface IPricePeakDao {
     int update(PricePeak record);
 
     int updateX(PricePeak record);
+
+    int updateY(PricePeak record);
 }

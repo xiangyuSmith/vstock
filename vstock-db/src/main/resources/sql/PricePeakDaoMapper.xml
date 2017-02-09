@@ -265,4 +265,13 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
+    <update id="updateY" parameterType="com.vstock.db.entity.PricePeak">
+        UPDATE `price_peak`
+        <set>
+            highest_bid = #{highestBid,jdbcType=VARCHAR},
+            highest_bidder_id = #{highestBidderId,jdbcType=VARCHAR},
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>

@@ -5,11 +5,17 @@
     <select id="findRose" parameterType="com.vstock.db.entity.BasicinformationRose" resultType="com.vstock.db.entity.BasicinformationRose">
       select * from basicinformation_rose br
       where 1=1
-      <if test="obj.basicinformation_id != null and obj.basicinformation_id != ''">
-          AND br.basicinformation_id = #{obj.basicinformation_id}
-      </if>
+        <if test="obj.basicinformation_id != null and obj.basicinformation_id != ''">
+            AND br.basicinformation_id = #{obj.basicinformation_id}
+        </if>
         <if test="obj.basicinformation_size != null and obj.basicinformation_size != ''">
             AND br.basicinformation_size = #{obj.basicinformation_size}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and br.create_date &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and br.create_date &lt;= #{endTime,jdbcType=TIMESTAMP}
         </if>
       ORDER BY br.create_date DESC
     </select>

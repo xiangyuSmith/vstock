@@ -7,6 +7,8 @@ import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
 import com.vstock.front.service.interfaces.IVstockConfigService;
+import com.vstock.server.alipay.config.AlipayConfig;
+import com.vstock.server.alipay.util.AlipayNotify;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.ibatis.annotations.Param;
@@ -18,10 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/trade")
@@ -60,7 +59,7 @@ public class TradeController extends BaseController{
             return resultModel;
         }
         Bid bid = new Bid();
-        bid.setBidMoney(new BigDecimal(amount));
+        bid.setBidMoney(new BigDecimal(amount).setScale(2,   BigDecimal.ROUND_HALF_UP));
         bid.setBftSize(size);
         bid.setType(type);
         bid.setStatus(String.valueOf(Bid.STATUS_INIT));
@@ -83,7 +82,7 @@ public class TradeController extends BaseController{
             bidId = Integer.parseInt(uid);
             userTradeId = bid1.getUserId();
             if(addressId == 0){
-                resultModel.setRetMsg("您还没有设置收货地址哦~");
+                resultModel.setRetMsg("您还没有设置收货地址");
                 return resultModel;
             }
         }else{
@@ -91,10 +90,10 @@ public class TradeController extends BaseController{
             userTradeId = Integer.parseInt(uid);
         }
         //TODO 加入订单，关联买家叫价
-        Date now = new Date();
         int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
+        String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
         Trade trade = new Trade(addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status,
-                new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId, DateFormatUtils.format(now, "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6));
+                new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
         if(tradeId == 0){
             resultModel.setRetCode(0);
@@ -136,11 +135,12 @@ public class TradeController extends BaseController{
             if (Integer.parseInt(b.getType()) == 0){
                 p.setMinimumSellingPrice(null);
                 p.setMinimumSellingId("");
+                pricePeakService.updateX(p);
             }else {
                 p.setHighestBid(null);
                 p.setHighestBidderId("");
+                pricePeakService.updateY(p);
             }
-            pricePeakService.updateX(p);
         }
 
         resultModel.setRetCode(resultModel.RET_OK);
@@ -148,44 +148,85 @@ public class TradeController extends BaseController{
         return resultModel;
     }
 
-    @ResponseBody
-    @RequestMapping("createTradePay")
-    public ResultModel createTradePay() {
-        ResultModel resultModel = new ResultModel();
-        setLastPage(0,1);
+    @RequestMapping("createTradePayAlipay")
+    public String createTradePayAlipay(ModelMap modelMap){
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         int type = getParamToInt("type");
         int tradeId = getParamToInt("tradeId");
         double amount = Double.valueOf(getParam("amount", "0"));
-        Payment payment = new Payment();
-        payment.setPayment_user_id(Long.parseLong(uid));
-        payment.setPayment_status(10);
-        //TODO 默认状态暂定为成功
-        payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
-        payment.setPayment_type(type);
-        payment.setPayment_date(DateUtils.dateToString(new Date()));
-        payment.setPayment_over_date(DateUtils.getNowdateAddmm());
-        payment.setPayment_money(new BigDecimal(amount));
-        payment.setPayment_explain("支付说明");
-        int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
-        if(payResult == 0){
-            resultModel.setRetCode(0);
-            resultModel.setRetMsg("支付失败，请重新发起支付");
-            return resultModel;
+        String bname = getParam("bname");
+        Map<String, String> sParaTemp = new HashMap<String, String>();
+        sParaTemp.put("service", AlipayConfig.service);
+        sParaTemp.put("partner", AlipayConfig.partner);
+        sParaTemp.put("seller_id", AlipayConfig.seller_id);
+        sParaTemp.put("_input_charset", AlipayConfig.input_charset);
+        sParaTemp.put("payment_type", AlipayConfig.payment_type);
+        sParaTemp.put("notify_url", AlipayConfig.notify_trade_url);
+        sParaTemp.put("return_url", AlipayConfig.return_trade_url);
+        sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
+        sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
+        sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amount+"|"+bname);
+        sParaTemp.put("out_trade_no", String.valueOf(tradeId));
+        sParaTemp.put("subject", String.valueOf("购买商品"));
+        sParaTemp.put("total_fee", String.valueOf(amount));
+        sParaTemp.put("body", "描述");
+        modelMap.addAttribute("sParaTemp",sParaTemp);
+        return "/common/alipay/alipayapi";
+    }
+
+    @RequestMapping("createTradePay")
+    public String createTradePay() {
+        //获取支付宝GET过来反馈信息
+        Map<String,String> params = new HashMap<String,String>();
+        Map requestParams = request.getParameterMap();
+        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+            String valueStr = "";
+            String names = (String) iter.next();
+            String[] values = (String[]) requestParams.get(names);
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
+            }
+            params.put(names, valueStr);
         }
-        int tradeStatus = tradeService.checkTradeStatus(tradeId,lagePage);
-        if(tradeStatus == -1){
-            resultModel.setRetCode(0);
-            resultModel.setRetMsg("服务器繁忙，请稍后再试");
-            return resultModel;
+        //计算得出通知验证结果
+        boolean verify_result = AlipayNotify.verify(params);
+        if(verify_result){
+            setLastPage(0,1);
+            String[] extra_common_param = getParam("extra_common_param").split("\\|");
+            String uid = extra_common_param[0];
+            int type = Integer.parseInt(extra_common_param[1]);
+            int tradeId = Integer.parseInt(extra_common_param[2]);
+            double amount = Double.parseDouble(extra_common_param[3]);
+            String bname = extra_common_param[4];
+            Payment payment = new Payment();
+            payment.setPayment_user_id(Long.parseLong(uid));
+            payment.setPayment_status(10);
+            String trade_no = getParam("trade_no");
+            String buyer_email = getParam("buyer_email");
+            String body = getParam("body");
+            //TODO 默认状态暂定为成功
+            payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
+            payment.setPayment_type(type);
+            payment.setPayment_alipay_name(buyer_email);
+            payment.setPayment_number(trade_no);
+            payment.setPayment_date(DateUtils.dateToString(new Date()));
+            payment.setPayment_over_date(DateUtils.getNowdateAddmm());
+            payment.setPayment_money(new BigDecimal(amount));
+            payment.setPayment_explain(body);
+            int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
+            int tradeStatus = tradeService.checkTradeStatus(tradeId,lagePage);
+            Trade trade = new Trade();
+            trade.setId(tradeId);
+            trade.setStatus(tradeStatus);
+            trade.setUpdateDate(DateUtils.dateToString(new Date()));
+            tradeService.update(trade);
+            if("0".equals(bname)){
+                return "redirect:/user/index";
+            }else{
+                return "redirect:/detail?proName="+bname;
+            }
         }
-        Trade trade = new Trade();
-        trade.setId(tradeId);
-        trade.setStatus(tradeStatus);
-        trade.setUpdateDate(DateUtils.dateToString(new Date()));
-        tradeService.update(trade);
-        resultModel.setRetCode(resultModel.RET_OK);
-        return resultModel;
+        return "/error";
     }
 
     @RequestMapping("saleRecord")

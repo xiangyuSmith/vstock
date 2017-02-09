@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IBasicinformationRoseDao {
 
-    BasicinformationRose findRose(@Param("obj")BasicinformationRose basicinformationRose);
+    BasicinformationRose findRose(@Param("obj")BasicinformationRose basicinformationRose,@Param("startTime")String startTime,@Param("endTime")String endTime);
 
     List<BasicinformationRose> findAllDate(@Param("obj")BasicinformationRose record);
 

@@ -248,7 +248,7 @@ public class Trade implements Serializable {
         this.companyName = companyName;
     }
 
-    public Trade(int userAddressId,BigDecimal tradeFreight, String bftSize, String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String trandeNo) {
+    public Trade(int userAddressId,BigDecimal tradeFreight, String bftSize, String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String tradeNo) {
         this.userAddressId = userAddressId;
         this.tradeFreight = tradeFreight;
         this.bftSize = bftSize;

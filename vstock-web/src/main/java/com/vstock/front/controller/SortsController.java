@@ -5,10 +5,7 @@ import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ModelAndView;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.Page;
-import com.vstock.front.service.BasicinformationService;
-import com.vstock.front.service.BidService;
-import com.vstock.front.service.PricePeakService;
-import com.vstock.front.service.TradeService;
+import com.vstock.front.service.*;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +36,10 @@ public class SortsController extends BaseController{
 
     @RequestMapping
     public String index(ModelMap modelMap){
+        String paroductName = getParam("productName");
+        modelMap.addAttribute("productName",paroductName);
         modelMap.addAttribute("brandName",getParam("brandName",""));
         modelMap.addAttribute("sizes",Basicinformation.sizes);
-        modelMap.addAttribute("productName",getParam("productName"));
         modelMap.addAttribute("type",getParamToInt("type"));
         return "/sorts/index";
     }
@@ -52,6 +50,15 @@ public class SortsController extends BaseController{
         String priceEnd = "";
         int pageStart = Integer.parseInt(getParam("pageStart","0"));
         String productName = getParam("productName","");
+        if(VstockConfigService.isChineseChar(productName)){
+            //包含中文，检测是否匹配中文检索
+            LanguageControl language = new LanguageControl();
+            language.setChinese(productName);
+            List<LanguageControl> languageControlList = basicinformationService.findLanguage(language);
+            if(languageControlList.size() > 0){
+                productName = languageControlList.get(0).getEnglish();
+            }
+        }
         Integer type = getParamToInt("type");
         String size = request.getParameter("size");
         String price = request.getParameter("price");

@@ -2,10 +2,13 @@ package com.vstock.front.service;
 
 import com.vstock.db.dao.IBasicinformation;
 import com.vstock.db.dao.IBasicinformationRoseDao;
+import com.vstock.db.dao.ILanguageDao;
 import com.vstock.db.entity.Basicinformation;
 import com.vstock.db.entity.BasicinformationRose;
+import com.vstock.db.entity.LanguageControl;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.ToolDateTime;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +29,8 @@ public class BasicinformationService {
     IBasicinformation basicinformationDao;
     @Autowired
     IBasicinformationRoseDao basicinformationRoseDao;
+    @Autowired
+    ILanguageDao languageDao;
 
     /**
      * 根据分类查询鞋库的基本数据
@@ -76,7 +82,10 @@ public class BasicinformationService {
     }
 
     public BasicinformationRose findRose(BasicinformationRose basicinformationRose){
-        return basicinformationRoseDao.findRose(basicinformationRose);
+        basicinformationRose.setBasicinformation_size("40");
+        String startTime = ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd) + " 00:00:00";
+        String endTime = ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd) + " 23:59:59";
+        return basicinformationRoseDao.findRose(basicinformationRose,startTime,endTime);
     }
 
     public Map<String,Object> getPricesTrend(int bid,String size, Trade trade){
@@ -107,6 +116,13 @@ public class BasicinformationService {
             }
         }
         return resParams;
+    }
+
+    /**
+     * 获取中英文检索关键词
+     */
+    public List<LanguageControl> findLanguage(LanguageControl record){
+        return languageDao.findLanguage(record);
     }
 
 }

@@ -88,6 +88,10 @@ public class PricePeakService {
         return pricePeakDao.updateX(record);
     }
 
+    public int updateY(PricePeak record){
+        return pricePeakDao.updateY(record);
+    }
+
     /**
      * @param sort
      * @return

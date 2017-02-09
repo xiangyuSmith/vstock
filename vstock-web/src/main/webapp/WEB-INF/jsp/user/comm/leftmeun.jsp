@@ -360,7 +360,12 @@
             var type = $this.attr("data-type");
             var bId = $this.attr("bft-id");
             var bid = $this.attr("bid-id");
+
+            location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+bftSize+"&bid="+bid+"&bname=0";
+
+            return;
             sendRequest("/bid/createPay",{
+                payStatus : 0,
                 bid : bid,
                 bId : bId,
                 type : type,
@@ -436,8 +441,7 @@
                     courierNumber : courierNumber
                 },function(res) {
                     if (res.retCode > 0){
-                        $('#logistics-quit').click();
-                        $('#logistics-quit').click();
+                        $(".am-dimmer").fadeOut(500);
                         sendRequest("/trade/saveTrade",{
                             id : id,
                             bidId : bidId,
@@ -532,6 +536,9 @@
                 $("#new-address-tbody").append(html);
                 $("#buyer_submit_trade_S").click(function(){
                     var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
+
+                    location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
+                    return;
                     sendRequest("/trade/createTradePay",{
                         tradeId : tradeId,
                         type : type,

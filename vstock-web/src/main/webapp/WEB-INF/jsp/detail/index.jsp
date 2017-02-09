@@ -341,7 +341,7 @@
             var size = $("#buyer_detailed_size").val();
             var addressId = $("#new-address").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
             var type = 0;
-            box_create_trade(amount,size,type,yunFee,addressId)
+            box_create_trade(amount,size,type,yunFee,addressId);
         });
 
         function box_create_trade(amount,size,type,yunFee,addressId){
@@ -417,6 +417,9 @@
                         alertConfirm("订单已提交","是否去支付保证金?");
                     }
                     $("#createPay").click(function(){
+                        type = type==1?2:3;
+                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data+"&bname="+bname;
+                        return;
                         sendRequest("/trade/createTradePay",{
                             "bname": bname,
                             "bId": bId,
@@ -486,18 +489,7 @@
                                 alertConfirm("出价成功","是否去支付?");
                             }
                             $("#createPay").click(function(){
-                                sendRequest("/bid/createPay",{
-                                    'amount': amount,
-                                    'type': type,
-                                    "bId": bId,
-                                    'size': size,
-                                    'bid' : res.data
-                                },function(res){
-                                    if(res.retCode == 1){
-                                        alertshow("支付成功！！");
-                                        location.reload();
-                                    }
-                                })
+                                location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
                             });
                         }
                     });

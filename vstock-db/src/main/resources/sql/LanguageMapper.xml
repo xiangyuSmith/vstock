@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.ILanguageDao">
+
+    <select id="findLanguage" resultType="com.vstock.db.entity.LanguageControl">
+      SELECT * FROM `language_control` lc
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND lc.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.english != null and obj.english != ''">
+                and lc.english LIKE CONCAT('%',#{obj.english,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.chinese != null and obj.chinese != ''">
+                and lc.chinese LIKE CONCAT('%',#{obj.chinese,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>
