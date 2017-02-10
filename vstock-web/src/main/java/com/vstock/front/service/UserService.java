@@ -83,8 +83,10 @@ public class UserService {
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
                 user.setNick(real_name);
-                if (!email.contains("@")){
-                    user.setMobile(email);
+                if(email != null){
+                    if (!email.contains("@")){
+                        user.setMobile(email);
+                    }
                 }
                 resultModel.setRetCode(this.insertUser(user));
             }else {

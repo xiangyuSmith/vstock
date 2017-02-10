@@ -140,7 +140,8 @@
                             "</div>";
                     break;
                 case "0.0.0.4":
-                    $html = "<div class='question-tips-text'><span>叫价失效时或者订单成交支付全款后，保证金退回；卖家出售但未能在限定时间内支付全款，保证金作为违约金赔偿给卖家。</span>";
+                    $html = "<div class='question-tips-text'><span>1、叫价失效时或者订单成交支付全款后，保证金退回；</span><br/>" +
+                            "<span>2、卖家出售但未能在限定时间内支付全款，保证金作为违约金赔偿给卖家。</span></div>";
                     break;
                 default:
                     break;

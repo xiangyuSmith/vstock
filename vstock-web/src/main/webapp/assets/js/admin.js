@@ -172,6 +172,9 @@ function moneytips(type,num){
             case 5:
                 html = "您的出价应大于买家最高叫价，您可以选择直接出售；";
                 break;
+            case 6:
+                html = "您将是出价最低的卖家。";
+                break;
             default:
                 $("#sell_money_tips_div").css("display","none");
                 break;
@@ -196,6 +199,9 @@ function moneytips(type,num){
                 break;
             case 5:
                 html = "您的叫价和当前最高叫价相同。我们将优先成交叫价最前的。";
+                break;
+            case 6:
+                html = "您将是叫价最高的买家；";
                 break;
             default:
                 $("#bid_money_tips_div").css("display","none");

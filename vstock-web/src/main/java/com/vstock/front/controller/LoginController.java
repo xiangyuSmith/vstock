@@ -57,8 +57,14 @@ public class LoginController extends BaseController {
         return resultModel;
     }
 
-    //支付宝登录返回接口
+    /**
+     * 支付宝回调
+     * @return
+     */
+    @RequestMapping("alipayLogin")
     public ResultModel alipayLogin(){
+        Map<String,String> params = new HashMap<String,String>();
+        Map requestParams = request.getParameterMap();
         ResultModel resultModel = new ResultModel();
         String is_success = request.getParameter("is_success");
         if ("T".equals(is_success)) {
