@@ -10,12 +10,14 @@ import com.vstock.server.alipay.util.AlipayNotify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -78,8 +80,8 @@ public class UserService {
         if (AlipayNotify.verify(param)) {
             User user = new User();
             user.setPassword(MD5Util.getMD5String(user_id + User.REG_MD5_CODE));
-            int i = userDao.findCount(user);
-            if (i < 1){
+            List<User> userList = userDao.findAll(user,1,10);
+            if (userList.size() < 1){
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
                 user.setNick(real_name);
@@ -89,8 +91,11 @@ public class UserService {
                     }
                 }
                 resultModel.setRetCode(this.insertUser(user));
+                userList = userDao.findAll(user,1,10);
+                WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, userList.get(0).getId());
             }else {
                 resultModel.setRetCode(ResultModel.RET_OK);
+                WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, userList.get(0).getId());
             }
         }else {
             resultModel.setRetMsg("登录失败！");

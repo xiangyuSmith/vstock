@@ -62,9 +62,7 @@ public class LoginController extends BaseController {
      * @return
      */
     @RequestMapping("alipayLogin")
-    public ResultModel alipayLogin(){
-        Map<String,String> params = new HashMap<String,String>();
-        Map requestParams = request.getParameterMap();
+    public String alipayLogin(){
         ResultModel resultModel = new ResultModel();
         String is_success = request.getParameter("is_success");
         if ("T".equals(is_success)) {
@@ -72,7 +70,7 @@ public class LoginController extends BaseController {
         }else{
             resultModel.setRetMsg("用户名或密码错误");
         }
-        return resultModel;
+        return "/index/index";
     }
 
     @RequestMapping("sendSms")
