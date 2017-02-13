@@ -235,12 +235,12 @@ public class TradeService {
         page.setPageSize(100000);
         record.setBftSize(size);
         for (int i = 0; i < date; i++) {
-            Point point = new Point();
             String time =  DateUtils.dateToString(DateUtils.wantToLose(DateUtils.getDate(startDate,"yyyy-MM-dd"),-i),"yyyy-MM-dd");
             List<Trade> tradeList = tradeDao.findAllDate(record, page.getStartPos(), page.getPageSize(), time+" 00:00:00", time+" 23:59:59");
             for (Trade trade : tradeList) {
-                point.setX(DateUtils.getDate(trade.getTransactionDate(),"yyyy-").getTime());
-                DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss");
+                Point point = new Point();
+                point.setX(DateUtils.getDate(trade.getTransactionDate(),"yyyy-MM-dd HH:mm:ss").getTime());
+//                DateUtils.getDate(trade.getTransactionDate() , "yyyy-MM-dd HH:mm:ss");
                 point.setY(trade.getTransactionMoney().intValue());
                 pointList.add(point);
             }

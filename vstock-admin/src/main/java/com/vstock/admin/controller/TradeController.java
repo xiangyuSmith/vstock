@@ -103,7 +103,11 @@ public class TradeController {
     public String bidindex(Bid record, HttpServletRequest request, ModelMap model) {
         List<String> sizeList = new ArrayList<String>();
         List<Bid> bidList = new ArrayList<Bid>();
+        Basicinformation basicinformation = new Basicinformation();
         Page page = new Page();
+        String artNo = request.getParameter("artNo");
+        basicinformation.setArtNo(artNo);
+        record.setBasicinformation(basicinformation);
         String pageNow = request.getParameter("pageNow");
         String minimumMoney = request.getParameter("minimumMoney");
         String maximumMoney = request.getParameter("maximumMoney");

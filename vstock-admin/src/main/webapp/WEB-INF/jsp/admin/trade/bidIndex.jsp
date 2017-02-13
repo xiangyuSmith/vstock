@@ -12,26 +12,26 @@
                 <form action="/trade/bidindex" method="post">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-                            <span class="am-text-lg am-text-middle">叫价人：</span>
-                            <input type="text" class="am-input-lg" name="name" id="name" placeholder="叫价人" value="${record.name}"/>
+                            <span class="am-text-lg am-text-middle">货号：</span>
+                            <input type="text" class="am-input-lg" name="artNo" id="artNo" placeholder="货号" value="${record.basicinformation.artNo}"/>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
                             <span class="am-text-lg am-text-middle">球鞋名称：</span>
                             <input type="text" class="am-input-lg" name="bftName" id="bftName" placeholder="球鞋名称" value="${record.bftName}"/>
                         </div>
                     </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">
-                        <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-                            <span class="am-text-lg am-text-middle">最小出价金额：</span>
-                            <input type="number" class="am-input-lg" id="minimumMoney" name="minimumMoney" placeholder="最小出价金额" value="${minimumMoney}">
-                            <%--<div class="dateStartTime"></div>--%>
-                        </div>
-                        <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
-                            <span class="am-text-lg am-text-middle">最大出价金额：</span>
-                            <input type="number" class="am-input-lg" id="maximumMoney" name="maximumMoney" placeholder="最大出价金额" value="${maximumMoney}">
-                            <%--<div class="dateEndTime"></div>--%>
-                        </div>
-                    </div>
+                    <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-sm">--%>
+                        <%--<div class="am-u-sm-6 am-u-md-6 am-u-lg-6">--%>
+                            <%--<span class="am-text-lg am-text-middle">最小出价金额：</span>--%>
+                            <%--<input type="number" class="am-input-lg" id="minimumMoney" name="minimumMoney" placeholder="最小出价金额" value="${minimumMoney}">--%>
+                            <%--&lt;%&ndash;<div class="dateStartTime"></div>&ndash;%&gt;--%>
+                        <%--</div>--%>
+                        <%--<div class="am-u-sm-6 am-u-md-6 am-u-lg-6">--%>
+                            <%--<span class="am-text-lg am-text-middle">最大出价金额：</span>--%>
+                            <%--<input type="number" class="am-input-lg" id="maximumMoney" name="maximumMoney" placeholder="最大出价金额" value="${maximumMoney}">--%>
+                            <%--&lt;%&ndash;<div class="dateEndTime"></div>&ndash;%&gt;--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">尺码：</span>
@@ -76,11 +76,11 @@
                                 <c:choose>
                                     <c:when test="${record.type == 0}">
                                         <option value="0" selected = "selected">出价</option>
-                                        <option value="1">叫价</option>
+                                        <option value="1">卖家</option>
                                     </c:when>
                                     <c:when test="${record.type == 1}">
                                         <option value="1" selected = "selected">叫价</option>
-                                        <option value="0">出价</option>
+                                        <option value="0">买家</option>
                                     </c:when>
                                     <c:otherwise>
                                         <option value="0">出价</option>
@@ -103,6 +103,7 @@
                     <tr>
                         <th>叫价人</th>
                         <th width="20%">球鞋名称</th>
+                        <th>货号</th>
                         <th>尺码</th>
                         <th>叫价金额</th>
                         <th>保证金</th>
@@ -118,7 +119,8 @@
                         <c:forEach items="${bidList}" var="bid">
                             <tr>
                                 <td>${bid.name}</td>
-                                <td>${bid.bftName}</td>
+                                <td>${bid.basicinformation.name}</td>
+                                <td>${bid.basicinformation.artNo}</td>
                                 <td>${bid.bftSize}</td>
                                 <td><fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
                                 <td><fmt:formatNumber value="${bid.bidBond}" type="currency" pattern="#,#00.0#"/></td>
@@ -131,12 +133,13 @@
                                 </c:if>
                                 </td>
                                 <c:if test="${bid.type == 0}">
-                                    <td>出价</td>
+                                    <td>卖家</td>
                                 </c:if>
                                 <c:if test="${bid.type == 1}">
-                                    <td>叫价</td>
+                                    <td>买家</td>
                                 </c:if>
-                                <td>${bid.bidDate}</td>
+                                <c:set var="bidDate" value="${fn:substring(bid.bidDate, 0, 19)}"/>
+                                <td>${bidDate}</td>
                             </tr>
                         </c:forEach>
                     </c:if>

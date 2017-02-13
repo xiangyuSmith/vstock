@@ -154,10 +154,10 @@
             <if test="obj.termValidity != null and obj.termValidity != ''">
                 and b.term_validity = #{obj.termValidity,jdbcType=VARCHAR}
             </if>
-            <if test="obj.status != null and obj.status != ''">
+            <if test="obj.status != null and obj.status != '' and obj.status != '-1'">
                 and b.status = #{obj.status,jdbcType=VARCHAR}
             </if>
-            <if test="obj.type != null and obj.type != ''">
+            <if test="obj.type != null and obj.type != '' and obj.type != '-1'">
                 and b.type = #{obj.type,jdbcType=VARCHAR}
             </if>
             <if test="obj.bidDate != null and obj.bidDate != ''">
@@ -335,12 +335,16 @@
     </select>
 
     <select id="findAndUser" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
-        SELECT u.nick AS name,
+        SELECT u.nick AS name, bft.name AS bname,bft.artNo AS bartNo,
         <include refid="Base_Column_List"/>
-        FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
+        FROM bid b LEFT JOIN `basicinformation` bft ON b.basicinformation_id = bft.id
+        LEFT JOIN `user` u ON b.user_id = u.id
         <include refid="SelectAllByPage_Where_Clause"/>
         <if test="obj.name != null and obj.name != ''">
             and u.nick = #{obj.name,jdbcType=VARCHAR}
+        </if>
+        <if test="obj.basicinformation.artNo != null and obj.basicinformation.artNo != ''">
+            and bft.artNo = #{obj.basicinformation.artNo,jdbcType=VARCHAR}
         </if>
         <if test="minimumMoney != null and minimumMoney != ''">
             and b.bid_money &gt;= #{minimumMoney,jdbcType=DECIMAL}
@@ -429,9 +433,13 @@
 
     <select id="findAndUserCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
         SELECT COUNT(*) FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
+        LEFT JOIN `basicinformation` bft ON b.basicinformation_id = bft.id
         <include refid="SelectAllByPage_Where_Clause"/>
         <if test="obj.name != null and obj.name != ''">
             and u.nick = #{obj.name,jdbcType=VARCHAR}
+        </if>
+        <if test="obj.basicinformation.artNo != null and obj.basicinformation.artNo != ''">
+            and bft.artNo = #{obj.basicinformation.artNo,jdbcType=VARCHAR}
         </if>
         <if test="minimumMoney != null and minimumMoney != ''">
             and b.bid_money &gt;= #{minimumMoney,jdbcType=DECIMAL}
