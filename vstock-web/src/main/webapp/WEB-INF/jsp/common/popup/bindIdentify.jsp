@@ -104,7 +104,7 @@
         </div>
         <div class="bgff am-g am-padding-bottom-lg">
             <div class="am-u-md-6">
-                <button type="button" class="am-btn am-fr" style="width: 150px;" data-am-modal-close>取消</button>
+                <button type="button" id="clean_bindldentify" class="am-btn am-fr" style="width: 150px;" data-am-modal-close>取消</button>
             </div>
             <div class="am-u-md-6">
                 <button id="submit_userAccount" type="button" class="am-btn am-fl" style="width: 150px;background-color: #ea5957;color: #fff;" >确定</button>
@@ -119,6 +119,10 @@
         var objUrl_handheld = "";
         var objUrl_back = "";
         var objUrl_front = "";
+        /** 手动关闭遮障层 **/
+        $("#clean_bindldentify").click(function(){
+           $(".am-dimmer").css("display","none");
+        });
         $("#identify_img_front").change(function(){
             objUrl_front = getObjectURL(this.files[0]) ;
             if (objUrl_front) {

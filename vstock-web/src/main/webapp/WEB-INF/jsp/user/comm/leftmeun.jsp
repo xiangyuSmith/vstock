@@ -147,6 +147,10 @@
             var theEvent = e || window.event;
             var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
             if (code == 13) {
+                if(!$("#my-popup-login").is(":hidden")){
+                    $("#prLogin").click();
+                    return false;
+                }
                 location.href = "/sorts?productName="+$(".index_search_top").val();
                 return false;
             }
@@ -360,10 +364,8 @@
             var type = $this.attr("data-type");
             var bId = $this.attr("bft-id");
             var bid = $this.attr("bid-id");
-
-            location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+bftSize+"&bid="+bid+"&bname=0";
-
-            return;
+//            location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+bftSize+"&bid="+bid+"&bname=0";
+//            return;
             sendRequest("/bid/createPay",{
                 payStatus : 0,
                 bid : bid,
@@ -537,8 +539,8 @@
                 $("#buyer_submit_trade_S").click(function(){
                     var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
 
-                    location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
-                    return;
+//                    location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
+//                    return;
                     sendRequest("/trade/createTradePay",{
                         tradeId : tradeId,
                         type : type,

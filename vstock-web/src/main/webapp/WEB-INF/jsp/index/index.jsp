@@ -332,6 +332,10 @@
             var theEvent = e || window.event;
             var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
             if (code == 13) {
+                if(!$("#my-popup-login").is(":hidden")){
+                    $("#prLogin").click();
+                    return false;
+                }
                 location.href = "/sorts?productName="+$("#index_search").val();
                 return false;
             }

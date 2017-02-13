@@ -231,6 +231,10 @@
             var theEvent = e || window.event;
             var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
             if (code == 13) {
+                if(!$("#my-popup-login").is(":hidden")){
+                    $("#prLogin").click();
+                    return false;
+                }
                 location.href = "/sorts?productName="+$(".index_search_top").val();
                 return false;
             }
@@ -418,8 +422,8 @@
                     }
                     $("#createPay").click(function(){
                         type = type==1?2:3;
-                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data+"&bname="+bname;
-                        return;
+//                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data+"&bname="+bname;
+//                        return;
                         sendRequest("/trade/createTradePay",{
                             "bname": bname,
                             "bId": bId,
@@ -489,7 +493,20 @@
                                 alertConfirm("出价成功","是否去支付?");
                             }
                             $("#createPay").click(function(){
-                                location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
+//                                location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
+//                                return;
+                                sendRequest("/bid/createPay",{
+                                    'amount': amount,
+                                    'type': type,
+                                    "bId": bId,
+                                    'size': size,
+                                    'bid' : res.data
+                                },function(res){
+                                    if(res.retCode == 1){
+                                        alertshow("支付成功！！");
+                                        location.reload();
+                                    }
+                                })
                             });
                         }
                     });
