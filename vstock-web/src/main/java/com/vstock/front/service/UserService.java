@@ -16,6 +16,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,27 +82,65 @@ public class UserService {
         if (AlipayNotify.verify(param)) {
             User user = new User();
             user.setPassword(MD5Util.getMD5String(user_id + User.REG_MD5_CODE));
-            List<User> userList = userDao.findAll(user,1,10);
+            List<User> userList = userDao.findAll(user,0,1);
             if (userList.size() < 1){
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
                 user.setNick(real_name);
+                user.setLast_login_time(DateUtils.getCurrentTimeAsString());
+                user.setLast_login_ip(this.ipadder(request));
                 if(email != null){
                     if (!email.contains("@")){
                         user.setMobile(email);
                     }
                 }
                 resultModel.setRetCode(this.insertUser(user));
-                userList = userDao.findAll(user,1,10);
-                WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, userList.get(0).getId());
+                WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
             }else {
-                resultModel.setRetCode(ResultModel.RET_OK);
-                WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, userList.get(0).getId());
+                user.setLast_login_time(DateUtils.getCurrentTimeAsString());
+                user.setLast_login_ip(this.ipadder(request));
+                user.setId(userList.get(0).getId());
+                if (this.update(user) > 0) {
+                    resultModel.setRetCode(ResultModel.RET_OK);
+                    WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, userList.get(0).getId());
+                }else {
+                    resultModel.setRetMsg("登录失败！请联系管理员");
+                }
             }
         }else {
             resultModel.setRetMsg("登录失败！");
         }
         return resultModel;
+    }
+
+    public String ipadder(HttpServletRequest request){
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+            if(ip.equals("127.0.0.1")){
+                //根据网卡取本机配置的IP
+                InetAddress inet=null;
+                try {
+                    inet = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                ip= inet.getHostAddress();
+            }
+        }
+        // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if(ip != null && ip.length() > 15){
+            if(ip.indexOf(",")>0){
+                ip = ip.substring(0,ip.indexOf(","));
+            }
+        }
+        return ip;
     }
 
 }

@@ -3,6 +3,7 @@ package com.vstock.front.controller;
 import com.vstock.db.entity.User;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.front.service.UserService;
 import com.vstock.front.service.VstockConfigService;
@@ -47,9 +48,17 @@ public class LoginController extends BaseController {
             return resultModel;
         }
         if (user.getMobile().equals(mobile) && user.getPassword().equals(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE))) {
-            WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
+            User users = new User();
+            users.setId(user.getId());
+            users.setLast_login_ip(userService.ipadder(request));
+            users.setLast_login_time(DateUtils.getCurrentTimeAsString());
+            if (userService.update(users) > 0) {
+                WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
 //            Object suid = WebUtils.getSessionAttribute(request, User.SESSION_USER_ID);
-            resultModel.setRetCode(ResultModel.RET_OK);
+                resultModel.setRetCode(ResultModel.RET_OK);
+            }else {
+                resultModel.setRetMsg("登录失败！请联系管理员");
+            }
             return resultModel;
         }else{
             resultModel.setRetMsg("用户名或密码错误");
@@ -70,7 +79,7 @@ public class LoginController extends BaseController {
         }else{
             resultModel.setRetMsg("用户名或密码错误");
         }
-        return "/index/index";
+        return "redirect:/index";
     }
 
     @RequestMapping("sendSms")
