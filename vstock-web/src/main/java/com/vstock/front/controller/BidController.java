@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/bid")
@@ -254,19 +251,33 @@ public class BidController extends BaseController{
 
     @RequestMapping("isbid")
     @ResponseBody
-    public ResultModel isbid(Bid record){
+    public ResultModel isbid(){
         ResultModel resultModel = new ResultModel();
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         String type = getParam("type");
         String size = getParam("bftSize");
         int bfzId = getParamToInt("basicinformationId");
+        Bid record = new Bid();
         record.setStatus("10");
         record.setUserId(Integer.parseInt(uid));
         record.setBftSize(size);
         record.setType(type);
         record.setBasicinformationId(bfzId);
         int i  = bidService.findCount(record);
-        resultModel.setRetCode(i);
+        if(i > 0){
+            resultModel.setRetCode(3);
+            resultModel.setRetMsg("不能重复叫价");
+            return resultModel;
+        }
+        record.setStatus("0");
+        List<Bid> jList  = bidService.findAllBid(record);
+        if(jList.size() > 0){
+            resultModel.setRetCode(2);
+            resultModel.setRetMsg("此款宝贝，您已有一笔未支付的叫价记录，是否需要付款");
+            resultModel.setData(jList.get(0).getId());
+            return resultModel;
+        }
+        resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
     }
 

@@ -163,7 +163,7 @@
             </div>
         </div>
         <div class="am-g am-text-center am-padding-lg">
-            <img src="${configMap._site_url}${basicinformation.imgUrl}" style="width:80%;" />
+            <img src="${configMap._site_url}${basicinformation.imgUrl}" onerror="this.src='/assets/i/default_big.png;this.onerror=null'" style="width:80%;" />
         </div>
         <div class="am-g am-text-center am-hide-sm product-detail" style="margin-top: -20px;margin-bottom: 30px;">
             <div class="am-u-lg-3 am-u-md-12">
@@ -475,9 +475,20 @@
                 'bftSize': size,
                 'type': type
             },function(res){
-                if (res.retCode > 0){
-                    alertTips(2,"叫价失败","不能重复叫价");
+                if (res.retCode == 3){
+                    alertTips(2,"叫价失败",res.retMsg);
                 }else {
+                    if(res.retCode == 2){
+                        $("#alert-confirmBid-title").html("提示");
+                        $("#alert-confirmBid-content").html(res.retMsg);
+                        $('#my-bid-confirm').modal({
+                            onConfirm : function() {
+                                location.href = "/user/index";
+                            },
+                            onCancel:function(){}
+                        });
+                        return false;
+                    }
                     sendRequest("/bid",{
                         "bname": bname,
                         "bId": bId,
@@ -488,31 +499,34 @@
                     },function(res){
                         if(res.retCode == 1){
                             if(type == 0){
-                                alertConfirm("叫价成功","是否去支付?");
+                                $("#alert-confirm-title").html("叫价成功");
                             }else{
-                                alertConfirm("出价成功","是否去支付?");
+                                $("#alert-confirm-title").html("出价成功");
                             }
-                            $("#createPay").click(function(){
-//                                location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
-//                                return;
-                                sendRequest("/bid/createPay",{
-                                    'amount': amount,
-                                    'type': type,
-                                    "bId": bId,
-                                    'size': size,
-                                    'bid' : res.data
-                                },function(res){
-                                    if(res.retCode == 1){
-                                        alertshow("支付成功！！");
-                                        location.reload();
-                                    }
-                                })
+                            $("#alert-confirm-content").html("是否去支付?");
+                            $('#my-confirm').modal({
+                                onConfirm : function() {
+//                                    location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
+//                                    return;
+                                    sendRequest("/bid/createPay",{
+                                        'amount': amount,
+                                        'type': type,
+                                        "bId": bId,
+                                        'size': size,
+                                        'bid' : res.data
+                                    },function(res){
+                                        if(res.retCode == 1){
+                                            alertshow("支付成功！！");
+                                            location.reload();
+                                        }
+                                    })
+                                },
+                                onCancel:function(){}
                             });
                         }
                     });
                 }
             });
-
         }
 
         $('.assets_btn_add').click(function () {

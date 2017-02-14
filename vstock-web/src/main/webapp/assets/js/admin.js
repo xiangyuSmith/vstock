@@ -221,6 +221,13 @@ function alertConfirm(title , msg , callback) {
         onConfirm : function() { if (callback) callback(); $('#my-confirm').off('confirm.modal.amui'); },
     });
 }
+function alertBidConfirm(title , msg , callback) {
+    $("#alert-confirmBid-title").html(title);
+    $("#alert-confirmBid-content").html(msg);
+    $('#my-bid-confirm').modal({
+        onConfirm : function() { if (callback) callback(); $('#my-confirm').off('confirm.modal.amui'); },
+    });
+}
 
 //JS将number数值转化成为货币格式
 Number.prototype.formatMoney = function (places, symbol, thousand, decimal) {

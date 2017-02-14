@@ -85,7 +85,11 @@ public class BasicinformationService {
         basicinformationRose.setBasicinformation_size("40");
         String startTime = ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd) + " 00:00:00";
         String endTime = ToolDateTime.format(new Date(),ToolDateTime.pattern_ymd) + " 23:59:59";
-        return basicinformationRoseDao.findRose(basicinformationRose,startTime,endTime);
+        List<BasicinformationRose> BfRoseList = basicinformationRoseDao.findRose(basicinformationRose,startTime,endTime);
+        if(BfRoseList.size() > 0){
+            return BfRoseList.get(0);
+        }
+        return null;
     }
 
     public Map<String,Object> getPricesTrend(int bid,String size, Trade trade){
@@ -108,8 +112,12 @@ public class BasicinformationService {
                 int roseType = basicinformationRose.getType();
                 //成交价
                 BigDecimal transactionMoney = trade.getTransactionMoney();
-                double difference = BasicinformationRose.getDifference(market,transactionMoney).doubleValue();
-                double percentag = BasicinformationRose.getPercentag(market,transactionMoney).doubleValue();
+                double difference = 0;
+                double percentag = 0;
+                if(market.compareTo(BigDecimal.ZERO)!=0){
+                    difference = BasicinformationRose.getDifference(market,transactionMoney).doubleValue();
+                    percentag = BasicinformationRose.getPercentag(market,transactionMoney).doubleValue();
+                }
                 resParams.put("roseType",roseType);
                 resParams.put("difference",difference);
                 resParams.put("percentag",percentag);

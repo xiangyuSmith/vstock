@@ -13,7 +13,7 @@
                     <div class="clickZone" aria-describedby="product141637">
                         <div class="img">
                             <span class="helper"></span>
-                            <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" style="display: inline;">
+                            <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" onerror="this.src='/assets/i/default.png;this.onerror=null'" style="display: inline;">
                         </div>
                         <div class="name" style="padding-left: 5px;height: 70px;">
                             <div>${bid.name}</div>

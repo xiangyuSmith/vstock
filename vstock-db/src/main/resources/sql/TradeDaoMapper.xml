@@ -68,6 +68,9 @@
             <if test="status != null and status != -1">
                 and t.status = #{status,jdbcType=VARCHAR}
             </if>
+            <if test="bftSize != null and bftSize != ''">
+                and t.bft_size = #{bftSize,jdbcType=VARCHAR}
+            </if>
             <if test="transactionDate != null and transactionDate != ''">
                 and t.transaction_date = #{transactionDate,jdbcType=TIMESTAMP}
             </if>
@@ -109,6 +112,9 @@
             </if>
             <if test="obj.status != null and obj.status != -1">
                 and t.status = #{obj.status,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.bftSize != null and obj.bftSize != ''">
+                and t.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
                 and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}

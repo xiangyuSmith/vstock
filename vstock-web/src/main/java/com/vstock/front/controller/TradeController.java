@@ -274,6 +274,7 @@ public class TradeController extends BaseController{
         setLastPage(0,5);
         Trade trade = new Trade();
         trade.setBasicinformationId(bid);
+        trade.setStatus(40);
         List<Trade> tradeList = tradeService.findAll(trade,lagePage);
         List<Basicinformation> bList = basicinformationService.findByType(6);
         model.put("bList",bList);
