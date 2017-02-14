@@ -9,6 +9,7 @@ import com.vstock.front.service.*;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import com.vstock.server.alipay.config.AlipayConfig;
 import com.vstock.server.alipay.util.AlipayNotify;
+import com.vstock.server.ihuyi.Sendsms;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.ibatis.annotations.Param;
@@ -38,6 +39,8 @@ public class TradeController extends BaseController{
     TradeService tradeService;
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping
     @ResponseBody
@@ -181,6 +184,25 @@ public class TradeController extends BaseController{
         }
         Trade trade = new Trade();
         trade.setId(tradeId);
+        List<Trade> t_pay_list = tradeService.findAll(trade,lagePage);
+        Trade t_pay = t_pay_list.get(0);
+        String mobile = "";
+        String content = "";
+        String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
+        String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
+        Bid b = new Bid();
+        b.setId(t_pay.getBidId());
+        Bid bid = bidService.findByBid(b,lagePage);
+        if(type == 3){
+            User user = userService.findById(String.valueOf(t_pay.getBuyersId()));
+            mobile = user.getMobile();
+            content = "您出价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有卖家出售，请务必在24小时内完成支付，否则本次交易将失效。如有任何疑问，请联系v－stock客服。";
+        }else{
+            User user = userService.findById(String.valueOf(t_pay.getSellerId()));
+            mobile = user.getMobile();
+            content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
+        }
+        Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
         trade.setStatus(tradeStatus);
         trade.setUpdateDate(DateUtils.dateToString(new Date()));
         tradeService.update(trade);

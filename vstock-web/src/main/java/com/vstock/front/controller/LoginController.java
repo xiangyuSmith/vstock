@@ -90,7 +90,8 @@ public class LoginController extends BaseController {
         String mobile = getParam("mobile");
         String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
         String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
-        if(Sendsms.sendHuyi(mobile,account,key,mobile_code)){
+        String content = new String("您的验证码是：" + mobile_code + "。请不要把验证码泄露给其他人。");
+        if(Sendsms.sendHuyi(mobile,account,key,content)){
             WebUtils.setSessionAttribute(request, User.SESSION_USER_SIGN_CODE, mobile_code);
             resultModel.setRetCode(resultModel.RET_OK);
         }else{

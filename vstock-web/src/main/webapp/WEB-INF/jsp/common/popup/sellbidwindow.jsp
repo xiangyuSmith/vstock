@@ -7,7 +7,7 @@
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #00CD61;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
-                <span class="am-fl am-text-lg">最新叫价</span>
+                <span class="am-fl am-text-lg">卖家叫价</span>
             </div>
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
         </div>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="am-u-md-10 am-fr am-padding-0 am-text-left">
                             <span style="color: #646464;font-size: 14px;">
-                                叫价后，请保持手机畅通，当有买家购买时，我们将短信通知您发货至v－stock。发货时运费由卖家承担，我们拒收一切到付件，否则造成的损失由卖家承担。
+                                叫价后，请保持手机畅通，当有买家购买时，我们将短信通知您发货至v－stock。发货时产生的运费由卖家自行承担，我们拒收一切到付件，否则造成的损失由卖家承担。
                             </span>
                         </div>
                     </div>
@@ -146,12 +146,12 @@
                     $html = "<div class='question-tips-text'><span>超出有效期仍未有买家购买,出价将失效</span></div>";
                     break;
                 case "0.0.0.2":
+                    $html = "<div class='question-tips-text'><span>卖家发货至v－stock的运费，卖家承担，拒收到付件；</span></div>";
+                    break;
+                case "0.0.0.3":
                     $html = "<div class='question-tips-text'>" +
                             "<span>鉴定鞋子真假的费用</span>" +
                             "</div>";
-                    break;
-                case "0.0.0.3":
-                    $html = "<div class='question-tips-text'><span>卖家发货至v－stock的运费，卖家承担，拒收到付件；</span></div>";
                     break;
                 case "0.0.0.4":
                     $html = "<div class='question-tips-text'><span>1、叫价失效时或者交易成功后，保证金退回；</span><br/>" +

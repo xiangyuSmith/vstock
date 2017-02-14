@@ -21,15 +21,14 @@ public class Sendsms {
      * @param mobile  电话号码
      * @param account  账号
      * @param key   密钥
-     * @param mobile_code  验证码
+     * @param content  短信内容
      * @return
      */
-    public static boolean sendHuyi(String mobile,String account,String key,int mobile_code){
+    public static boolean sendHuyi(String mobile,String account,String key,String content){
         HttpClient client = new HttpClient();
         PostMethod method = new PostMethod(Url);
         client.getParams().setContentCharset("GBK");
         method.setRequestHeader("ContentType","application/x-www-form-urlencoded;charset=GBK");
-        String content = new String("您的验证码是：" + mobile_code + "。请不要把验证码泄露给其他人。");
         NameValuePair[] data = {
                 //提交短信
                 new NameValuePair("account", account),
