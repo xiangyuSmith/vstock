@@ -86,11 +86,11 @@
                             <c:choose>
                                 <c:when test="${not empty basicinformationRose.change_range}">
                                     <c:choose>
-                                        <c:when test="${basicinformationRose.change_range > 0}">
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="0.00%"/></span>
+                                        <c:when test="${basicinformationRose.change_range == 0}">
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="0.00%"/></span>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>
@@ -153,7 +153,7 @@
                         <c:if test="${not empty userAssetsList}">
                             <c:forEach items="${userAssetsList}" var="userAssets">
                                 <tr>
-                                    <td>${userAssets.basicinformation.name}</td>
+                                    <td><a href="/detail?proName=${userAssets.basicinformation.name}" target="_blank"><span class="popover-tips" data-bftId="${userAssets.basicinformationId}" data-bftSize="${bid.userAssetsSize}" data-img-url="${configMap._site_url}" style="color: #333;">${userAssets.basicinformation.name}</span></a></td>
                                     <td>${userAssets.userAssetsSize}</td>
                                     <td>${userAssets.purchaseDate}</td>
                                     <td><fmt:formatNumber value="${userAssets.money}" type="currency" pattern="￥#,##0.00"/></td>
@@ -168,7 +168,7 @@
                                     <c:choose>
                                         <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                             <c:choose>
-                                                <c:when test="${userAssets.basicinformationRose.type == 0}">
+                                                <c:when test="${userAssets.basicinformationRose.type == 0 && userAssets.basicinformationRose.change_range > 0}">
                                                     <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                                 </c:when>
                                                 <c:otherwise>
@@ -217,17 +217,50 @@
     <input type="hidden" id="userAssets_del_money"/>
     <input type="hidden" id="userAssets_del_size"/>
 </div>
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm-userA">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">我的资产</div>
+            <div class="am-modal-bd">
+                你，确定要删除这条记录吗？
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
 <script type="text/javascript">
     jQuery(function($){
 
-        $(".userAssets-del").click(function(){
-            var $this = $(this);
-            $('#userAssets_btf_id').val($this.attr("btf-id"));
-            $('#userAssets_del_data_id').val($this.attr("del_data_id"));
-            $('#userAssets_del_money').val($this.parent().parent().parent().prev().prev().prev().text());
-            $('#userAssets_del_size').val($this.parent().parent().parent().prev().prev().prev().prev().prev().text());
-            alertConfirm("是否需要删除！","","");
-        });
+//        $(".userAssets-del").click(function(){
+//            var $this = $(this);
+//            var btfId = $('#userAssets_btf_id').val($this.attr("btf-id"));
+//            var id = $('#userAssets_del_data_id').val($this.attr("del_data_id"));
+//            var money = $('#userAssets_del_money').val($this.parent().parent().parent().prev().prev().prev().text());
+//            var size = $('#userAssets_del_size').val($this.parent().parent().parent().prev().prev().prev().prev().prev().text());
+//            $('#my-confirm-userA').modal({
+//                onConfirm: function() {
+//                    sendRequest("/userAssets/saveUserAssets",{
+//                        id: id,
+//                        bId: btfId,
+//                        money: money,
+//                        size: size,
+//                        status : 1
+//                    },function(res) {
+//                        if (res.retCode == 1){
+//                            alertTips(1,"","删除成功");
+//                            ajaxContent("../user/userAssets", "" ,"tradeforex_tilie",1);
+//                        }else {
+//                            alertTips(2,"服务器繁忙","请重新操作");
+//                        }
+//                    });
+//                },
+//                // closeOnConfirm: false,
+//                onCancel: function() {
+//                }
+//            });
+//        });
 
         sendRequest("/user/hchar",null,function(res) {
             var a;

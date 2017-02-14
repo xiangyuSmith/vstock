@@ -20,7 +20,7 @@ public class UserAssetsController extends BaseController {
     @Autowired
     UserAssetsService userAssetsService;
 
-    private static Logger logger = Logger.getLogger(BidController.class);
+    private static Logger logger = Logger.getLogger(UserAssetsController.class);
 
     @RequestMapping("saveUserAssets")
     @ResponseBody

@@ -200,7 +200,7 @@
         });
 
         $("body").on("click","#load_more",function(){
-            $(this).children().children().attr("style","");
+            var a = $(this).children().children().attr("style","");
             var url = $(this).attr("data-url");
             ajaxContent(url, "", "tradeforex_tilie",1);
         });
@@ -602,6 +602,7 @@
             var $this = $(this);
             sendRequest("/user/saveAdder",{
                 id: $this.attr('user-id'),
+                type: $this.attr('data-type'),
                 status : 1
             },function(res) {
                 if (res.retCode == 1){
@@ -676,6 +677,36 @@
                     window.location.reload();
                     sendRequest("/login/logout",null,function(res) {});
                     window.location.href = "/index";
+                }
+            });
+        });
+
+        $("body").on("click",".userAssets-del",function(){
+            var $this = $(this);
+            var btfId = $this.attr("btf-id");
+            var id = $this.attr("del_data_id");
+            var money = $this.parent().parent().parent().prev().prev().prev().text();
+            var size = $this.parent().parent().parent().prev().prev().prev().prev().prev().text();
+            money = parseFloat(money.substring(1,money.length).replace(/[^\d\.-]/g, ""));
+            $('#my-confirm-userA').modal({
+                onConfirm: function() {
+                    sendRequest("/userAssets/saveUserAssets",{
+                        id: id,
+                        bId: btfId,
+                        money: money,
+                        size: size,
+                        status : 1
+                    },function(res) {
+                        if (res.retCode == 1){
+                            alertTips(1,"","删除成功");
+                            ajaxContent("../user/userAssets", "" ,"tradeforex_tilie",1);
+                        }else {
+                            alertTips(2,"服务器繁忙","请重新操作");
+                        }
+                    });
+                },
+                // closeOnConfirm: false,
+                onCancel: function() {
                 }
             });
         });

@@ -146,7 +146,7 @@
                         </c:choose>
                         </td>
                         <td style="width: 50px;">
-                            <a href="javascript:void(0);" user-id="${userAddresses.id}" class="userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 450, height: 420}">编辑</a>
+                            <a href="javascript:void(0);" user-id="${userAddresses.id}" class="userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">编辑</a>
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" data-type="${userAddresses.type}" id="del-status">删除</a>
                         </td>
                         <td>

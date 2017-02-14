@@ -34,7 +34,7 @@
                         <c:choose>
                             <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                 <c:choose>
-                                    <c:when test="${userAssets.basicinformationRose.type == 0}">
+                                    <c:when test="${userAssets.basicinformationRose.type == 0 && userAssets.basicinformationRose.change_range > 0}">
                                         <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                     </c:when>
                                     <c:otherwise>
@@ -84,11 +84,32 @@
         </c:otherwise>
     </c:choose>
 </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm-userA">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">我的资产</div>
+            <div class="am-modal-bd">
+                你，确定要删除这条记录吗？
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
 </form>
 <script>
     $(function(){
         $(".doc-dropdown-js").each(function(index){
             $(this).dropdown({justify: '.doc-dropdown-justify-js:eq('+index+')'});
         });
+
+//        $(".userAssets-del").click(function(){
+//            var $this = $(this);
+//            $('#userAssets_btf_id').val($this.attr("btf-id"));
+//            $('#userAssets_del_data_id').val($this.attr("del_data_id"));
+//            $('#userAssets_del_money').val($this.parent().parent().parent().prev().prev().prev().text());
+//            $('#userAssets_del_size').val($this.parent().parent().parent().prev().prev().prev().prev().prev().text());
+//            alertConfirm("是否需要删除！","","");
+//        });
     });
 </script>

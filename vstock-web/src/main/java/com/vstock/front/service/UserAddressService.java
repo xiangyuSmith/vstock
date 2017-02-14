@@ -156,7 +156,7 @@ public class UserAddressService {
         }else {//为修改
             record.setId(Integer.parseInt(id));
             //判断是否修改默认地址
-            if (type == null || "".equals(type)) {
+            if (type == null || "".equals(type) || "0".equals(type)) {
                 if(update(record) == 0){
                     return null;
                 }

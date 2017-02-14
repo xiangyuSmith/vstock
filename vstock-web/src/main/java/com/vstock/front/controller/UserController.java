@@ -54,7 +54,7 @@ public class UserController extends BaseController {
     @Autowired
     LogisticsInformationService logisticsInformationService;
 
-    private static Logger logger = Logger.getLogger(BidController.class);
+    private static Logger logger = Logger.getLogger(UserController.class);
 
     @RequestMapping("index")
     public String testIndex(ModelMap model){
