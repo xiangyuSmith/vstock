@@ -5,14 +5,13 @@ import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.Refund;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.OddNoUtil;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RefundService {
@@ -24,8 +23,6 @@ public class RefundService {
 
     @Autowired
     TradeService tradeService;
-
-    public static int no = 100;
 
     /**
      * 查询所有记录
@@ -98,22 +95,10 @@ public class RefundService {
                 record.setCreateDate(DateUtils.getCurrentTimeAsString());
             }
             if (record.getRefundNo() == null || "".equals(record.getRefundNo())){
-                record.setRefundNo(this.refundNo());
+                record.setRefundNo(OddNoUtil.refundNo());
             }
             return this.insert(record);
         }
-    }
-
-    /**
-     * 获取退货单单号
-     * @return
-     */
-    public String refundNo(){
-        Long time =  DateUtils.getDate(DateUtils.dateToString(new Date()),"yyyy-MM-dd HH:mm:ss").getTime();
-        String refundNo = String.valueOf(time)+ no;
-        no++;
-        if (no == 999){no=0;}
-        return Refund.refNo + refundNo;
     }
 
     /**

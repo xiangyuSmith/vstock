@@ -77,6 +77,15 @@ public class BidService {
         return null;
     }
 
+    public Bid findbid(Bid record){
+        Page page = new Page(10,"1");
+        List<Bid> bidList = findAll(record,page);
+        if(bidList.size() > 0){
+            return bidList.get(0);
+        }
+        return null;
+    }
+
     /**
      * 新增
      * @param record

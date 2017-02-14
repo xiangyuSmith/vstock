@@ -130,7 +130,7 @@ public class RefundController extends BaseController {
         String tradeId = request.getParameter("tradeId");
         String btfId = request.getParameter("btfId");
         int i = refundService.save(record);
-        if (i > 0){
+        if (i > 0 && !"4".equals(record.getType())){
             if (upstatus != null && !"".equals(upstatus) && Integer.parseInt(record.getType()) == 1){
                 Bid bid = new Bid();
                 bid.setId(Integer.parseInt(btfId));

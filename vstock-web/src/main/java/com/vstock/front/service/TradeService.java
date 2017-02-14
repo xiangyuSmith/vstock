@@ -1,10 +1,10 @@
 package com.vstock.front.service;
 
+import com.vstock.db.dao.IRefundDao;
 import com.vstock.db.dao.ITradeDao;
-import com.vstock.db.entity.Point;
-import com.vstock.db.entity.Trade;
-import com.vstock.db.entity.TradeYunfee;
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.OddNoUtil;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.security.md.ToolMD5;
 import org.apache.log4j.Logger;
@@ -22,6 +22,10 @@ public class TradeService {
 
     @Autowired
     ITradeDao tradeDao;
+    @Autowired
+    IRefundDao refundDao;
+    @Autowired
+    BidService bidService;
 
     /**
      * 分页查询所有记录
@@ -197,6 +201,23 @@ public class TradeService {
                     }
                 }
                 i = this.update(record);
+                //判断确认收款创建卖家退款单
+                if (i > 0 && record.getStatus() == 40){
+                    Bid bid = new Bid();
+                    Refund refund = new Refund();
+                    bid.setId(record.getBidId());
+                    bid = bidService.findbid(bid);
+                    refund.setRefundNo(OddNoUtil.refundNo());
+                    refund.setTradeNo(record.getTradeNo());
+                    refund.setRefundObj("1");
+                    refund.setBtfId(bid.getBasicinformationId());
+                    refund.setBtfName(bid.getBftName());
+                    refund.setRefundPrice(bid.getBidBond());
+                    refund.setStatus("0");
+                    refund.setType("4");
+                    refund.setCreateDate(DateUtils.getCurrentTimeAsString());
+                    refundDao.insert(refund);
+                }
             }
         }else {
             i = this.createTradeOne(record,tradeMd5Key);
