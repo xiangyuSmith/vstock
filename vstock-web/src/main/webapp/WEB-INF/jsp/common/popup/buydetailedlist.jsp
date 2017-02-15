@@ -2,6 +2,7 @@
 <style>
     .address-list table tr td{ font-size: 14px; }
     .address-list table tr td input{ margin-top: 7px; margin-left: 10px;  }
+    .edit-address { float:left; }
 </style>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-detailed">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
@@ -138,7 +139,7 @@
                                         </c:choose>
                                         </span>
                                     </td>
-                                    <td class="do" style="width: 13%;">
+                                    <td class="do" style="width: 16%;">
                                         <c:choose>
                                             <c:when test="${userAddresses.type == 0}">
                                                 <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" style="display: none;" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
@@ -232,11 +233,18 @@
                     $this.parent().parent().siblings().find("input[type='radio']").prop("checked","checked");
                     $(".default-span-tips").css("display","none");
                     $this.parent().parent().siblings().find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
+                    $("#new-address tr:eq(0)").before($this.parent().parent().parent());
                     jisuan($this.attr("data-userAddress"));
                     alertTips(1,"地址设置","默认收货地址已更新");
                 }
             });
         });
+
+//        $("#new-address").find("tr td input:radio[name='check-address']:checked").parent().parent().mouseover(function(){
+//            $(this).find("a[class='edit-address']").show();
+//        }).mouseout(function(){
+//            $(this).find("a[class='edit-address']").hide();
+//        });
 
         $(".edit-address").click(function(){
            $("#up-address-title").text("编辑");
@@ -295,7 +303,7 @@
                                     '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
                                     '<td> '+address.consigneeName+'</td>' +
                                     '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '<td class="do" style="width: 16%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                     '</tr>'+
                                     '</tbody></table>';
                             $("#not-address-tips").css("display","none");
@@ -305,7 +313,7 @@
                                     '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
                                     '<td> '+address.consigneeName+'</td>' +
                                     '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '<td class="do" style="width: 16%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                     '</tr>'
                             $("#new-address tr:eq(0)").after(html);
                         }

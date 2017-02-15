@@ -202,7 +202,7 @@ public class TradeController extends BaseController{
             mobile = user.getMobile();
             content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
         }
-        Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
+//        Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
         trade.setStatus(tradeStatus);
         trade.setUpdateDate(DateUtils.dateToString(new Date()));
         tradeService.update(trade);
