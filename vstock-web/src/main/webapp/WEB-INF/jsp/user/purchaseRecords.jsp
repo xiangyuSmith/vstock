@@ -120,7 +120,7 @@
                 <tbody>
                 <c:if test="${not empty tradeList}">
                     <c:forEach items="${tradeList}" var="trade">
-                        <c:if test="${trade.status != 51}">
+                        <%--<c:if test="${trade.status != 51}">--%>
                         <tr>
                             <td class="am-text-sm"><a href="/detail?proName=${trade.bftName}" target="_blank"><span class="popover-tips" data-bftId="${trade.basicinformationId}" data-bftSize="${trade.bftSize}" data-img-url="${configMap._site_url}" style="color: #333;">${trade.bftName}</span></a></td>
                             <td class="am-text-sm">
@@ -164,7 +164,10 @@
                                                 <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
                                             </c:if>
                                             <c:if test="${trade.status == 41 || trade.status == 52}">
-                                                <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="删除" status="51" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a></li>
+                                                <li>
+                                                    <input type="hidden"class="tradeSave" explain="删除" status="51" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3"/>
+                                                    <a class="am-btn am-btn-xs am-text-left" id="trade_del" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a>
+                                                </li>
                                             </c:if>
                                         </ul>
                                     </div>
@@ -172,7 +175,7 @@
 
                             </td>
                         </tr>
-                        </c:if>
+                        <%--</c:if>--%>
                     </c:forEach>
                 </c:if>
                 </tbody>
@@ -190,12 +193,36 @@
         </c:choose>
     </table>
 </form>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="trade_del_confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"></div>
+        <div class="am-modal-bd">
+            删除后将不再显示出价记录，确定要删除吗？
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
 <%@include file="popup/userBuyAddress.jsp" %>
 <a href="javascript:;" id="now-seller-buy-detailed" style="display: none;" data-am-modal="{target: '#my-popup-buy-userBuyAddress', width: 900, height: 520}">购买</a>
 <script>
     $(function(){
         $(".doc-dropdown-js").each(function(index){
             $(this).dropdown({justify: '.doc-dropdown-justify-js:eq('+index+')'});
+        });
+
+        $('#trade_del').click(function(){
+            $('#trade_del_confirm').modal({
+                onConfirm: function() {
+                    $('.tradeSave').click();
+                },
+                // closeOnConfirm: false,
+                onCancel: function() {
+                }
+            });
         });
 
         $(".popover-tips").each(function(){

@@ -383,6 +383,9 @@
             <if test="obj.status == 50">
                 and t.status NOT IN (0)
             </if>
+            <if test="obj.notStatus != null and obj.notStatus != ''">
+                and t.status NOT IN (#{obj.notStatus,jdbcType=VARCHAR})
+            </if>
             <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
                 and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
             </if>

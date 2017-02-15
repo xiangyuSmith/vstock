@@ -17,7 +17,7 @@ public class Trade implements Serializable {
 
     public final static String[] statuses = {"0:待支付保证金","1:待支付鞋款","2:已支付待发货","10:已发货待检验","20:检验通过","21:检验未通过","30:已发货待签收","40:交易完成","41:交易关闭","50:订单删除","51:买家删除","52:卖家删除","60:退货中","61:退货成功"};
 
-    public final static String[] tradeStatuses = {"0:待支付","1:待支付","2:待卖家寄出","10:待验货","11:支付失败","20:待验货","21:验货退回","30:待确认收货","40:交易完成","41:交易关闭","50:交易关闭","51:交易关闭","52:交易关闭","60:退货中","61:退货成功"};
+    public final static String[] tradeStatuses = {"0:待支付保证金","1:待支付","2:待卖家寄出","10:待验货","11:支付失败","20:待验货","21:验货退回","30:待确认收货","40:交易完成","41:交易关闭","50:交易关闭","51:交易关闭","52:交易关闭","60:退货中","61:退货成功"};
 
     public final static int TRADE_NOTIFIY_PAY_BOND = 0; //待支付保证金
     public final static int TRADE_NOTIFIY_PAY = 1;      //已下单待支付
@@ -42,6 +42,7 @@ public class Trade implements Serializable {
     private BigDecimal tradeFreight;
     private String courierNumber;
     private Integer status;
+    private String notStatus;
     private String transactionDate;
     private String updateDate;
     private String sign;
@@ -52,6 +53,14 @@ public class Trade implements Serializable {
     private String sellerName;
     private String buyersName;
     private String companyName;
+
+    public String getNotStatus() {
+        return notStatus;
+    }
+
+    public void setNotStatus(String notStatus) {
+        this.notStatus = notStatus;
+    }
 
     public Payment getPayment() {
         return payment;

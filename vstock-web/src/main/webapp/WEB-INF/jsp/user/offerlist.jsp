@@ -86,20 +86,20 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
         <c:choose>
             <c:when test="${page.pageNow == 1}">
-                <input type="hidden" data-url="../user/offerlist?type=0&pageNow=1" class="offer-ref-btn"/>
-                <a href="javascript:void(0)" data-url="../user/offerlist?type=0&pageNow=1" class="offer-btn am-btn am-btn-primary am-radius" disabled="disabled ">上一页</a>
+                <input type="hidden" data-url="../user/offerlist?type=${type}&pageNow=1" class="offer-ref-btn"/>
+                <a href="javascript:void(0)" data-url="../user/offerlist?type=${type}&pageNow=1" class="offer-btn am-btn am-btn-primary am-radius" disabled="disabled ">上一页</a>
             </c:when>
             <c:otherwise>
-                <a href="javascript:void(0)" data-url="../user/offerlist?type=0&pageNow=${page.pageNow-1}" class="offer-btn am-btn am-btn-primary am-radius">上一页</a>
+                <a href="javascript:void(0)" data-url="../user/offerlist?type=${type}&pageNow=${page.pageNow-1}" class="offer-btn am-btn am-btn-primary am-radius">上一页</a>
             </c:otherwise>
         </c:choose>
         <span class="am-margin-left-sm am-margin-right-sm layout-font-size-20">当前第${page.pageNow}页/共${page.totalPageCount}页</span>
         <c:choose>
             <c:when test="${page.pageNow == page.totalPageCount}">
-                <a href="javascript:void(0)" data-url="../user/offerlist?type=0&pageNow=1" class="offer-btn am-btn am-btn-primary am-radius" disabled="disabled">下一页</a>
+                <a href="javascript:void(0)" data-url="../user/offerlist?type=${type}&pageNow=1" class="offer-btn am-btn am-btn-primary am-radius" disabled="disabled">下一页</a>
             </c:when>
             <c:otherwise>
-                <a href="javascript:void(0)" data-url="../user/offerlist?type=0&pageNow=${page.pageNow+1}" class="offer-btn am-btn am-btn-primary am-radius">下一页</a>
+                <a href="javascript:void(0)" data-url="../user/offerlist?type=${type}&pageNow=${page.pageNow+1}" class="offer-btn am-btn am-btn-primary am-radius">下一页</a>
             </c:otherwise>
         </c:choose>
     </div>

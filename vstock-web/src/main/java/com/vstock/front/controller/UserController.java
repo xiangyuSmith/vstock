@@ -80,10 +80,12 @@ public class UserController extends BaseController {
         bid.setUserId(Integer.parseInt(String.valueOf(suid)));
         if ("0".equals(type)) {
             bid.setType("0");
+            trade.setNotStatus("52");
             trade.setSellerId(bid.getUserId());
         }else {
             bid.setType("1");
             trade.setStatus(50);
+            trade.setNotStatus("51");
             trade.setBuyersId(bid.getUserId());
         }
         int totalCount = bidService.findCount(bid);
@@ -146,8 +148,10 @@ public class UserController extends BaseController {
         if ("0".equals(type)) {
             trade.setSellerId(Integer.parseInt(String.valueOf(suid)));
             trade.setStatus(50);
+            trade.setNotStatus("52");
         }else {
             trade.setBuyersId(Integer.parseInt(String.valueOf(suid)));
+            trade.setNotStatus("51");
         }
         String pageNow = request.getParameter("pageNow");
         int totalCount = tradeService.findCountWeb(trade);
@@ -220,8 +224,8 @@ public class UserController extends BaseController {
         List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
         for (int i = 0; i < userAssetsList.size(); i++){
             userAssetsList.get(i).getBasicinformationRose().
-                    setChange_range(userAssetsList.get(i).getBasicinformationRose().
-                            getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),2, RoundingMode.HALF_UP));
+                    setChange_range(userAssetsList.get(i).getMoney().subtract(userAssetsList.get(i).getBasicinformationRose().
+                            getCurrent_market_value()));
         }
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
         model.put("basicinformationRose",basicinformationRose);

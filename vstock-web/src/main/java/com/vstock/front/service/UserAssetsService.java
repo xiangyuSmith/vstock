@@ -72,7 +72,7 @@ public class UserAssetsService {
 
     public List<UserAssets> findUserAssets(UserAssets record){
         Page page = new Page(10,"1");
-        page.setPageSize(1);
+//        page.setPageSize(1);
         return this.findAll(record,page);
     }
 
@@ -94,9 +94,9 @@ public class UserAssetsService {
                     money = money.add(basRose.getCurrent_market_value());
                     //判断是涨还是跌
                     if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == 1) {
-                        changeMoney = changeMoney.add(basRose.getCurrent_market_value().divide(userAssets.getMoney(),2, RoundingMode.HALF_UP));
+                        changeMoney = changeMoney.add(userAssets.getMoney().subtract(basRose.getCurrent_market_value()));
                     } else if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == -1){
-                        changeMoney = changeMoney.subtract(basRose.getCurrent_market_value().divide(userAssets.getMoney(),2, RoundingMode.HALF_UP));
+                        changeMoney = changeMoney.add(userAssets.getMoney().subtract(basRose.getCurrent_market_value()));
                     }else {
                         changeMoney = changeMoney.add(new BigDecimal(0));
                     }

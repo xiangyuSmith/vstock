@@ -90,7 +90,7 @@
                                             <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="0.00%"/></span>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="currency" pattern="￥#,##0.0"/></span>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>
@@ -131,7 +131,7 @@
     </div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-lg">
         <table class="am-table am-table-striped am-table-hover">
-            <caption>
+            <caption style="border-bottom:1px solid #CACACA;">
                 <span class="layout-font-size-26 am-fl">资产明细</span>
                 <c:if test="${not empty userAssetsList}">
                     <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="javascript:void(0)" data-url="../user/userAssetsList?pageNow=1" class="offer-btn layout-font-size-16">更多记录</a></span>
@@ -169,10 +169,10 @@
                                         <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                             <c:choose>
                                                 <c:when test="${userAssets.basicinformationRose.type == 0 && userAssets.basicinformationRose.change_range > 0}">
-                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
+                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="currency" pattern="￥#,##0.00"/></td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
+                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="currency" pattern="￥#,##0.00"/></td>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:when>
