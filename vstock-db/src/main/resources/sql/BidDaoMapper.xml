@@ -420,7 +420,7 @@
     <select id="findOrderStatus" parameterType="com.vstock.db.entity.Bid" resultMap="BaseResultMap">
         SELECT p.highest_bid, p.minimum_selling_price,
         <include refid="Base_Column_List"/>
-        FROM bid b LEFT JOIN price_peak p ON b.basicinformation_id = p.basicinformation_id and b.bft_size = p.peak_size
+        FROM bid b LEFT JOIN price_peak p ON b.basicinformation_id = p.basicinformation_id and b.bft_size = p.peak_size and p.create_date LIKE CONCAT('%',curdate(),'%')
         <include refid="SearchAllByPage_Where_Clause"/>
         and b.status not in(40)
         ORDER BY b.status limit #{startPos},#{pageSize}
