@@ -75,11 +75,11 @@
                                 <option value="-1">--请选择--</option>
                                 <c:choose>
                                     <c:when test="${record.type == 0}">
-                                        <option value="0" selected = "selected">出价</option>
+                                        <option value="0" selected = "selected">卖家出价</option>
                                         <option value="1">卖家</option>
                                     </c:when>
                                     <c:when test="${record.type == 1}">
-                                        <option value="1" selected = "selected">叫价</option>
+                                        <option value="1" selected = "selected">买家叫价</option>
                                         <option value="0">买家</option>
                                     </c:when>
                                     <c:otherwise>
