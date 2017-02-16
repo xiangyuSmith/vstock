@@ -6,6 +6,7 @@
 </style>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-detailed">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
+        <input id="bftId" type="hidden" value="${basicinformation.id}" />
         <div class="am-modal-hd" style="background-color: #FF5A60;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-fl am-text-lg">购买清单</span>
@@ -47,20 +48,23 @@
                             <span class="am-fr layout-font-size-18" style="color: #646464;">
                                 卖家最低叫价：
                                 <span style="color: #646464;">￥
-                                    <c:choose>
-                                        <c:when test="${not empty pricePeak2.minimumSellingPrice}">
-                                            <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            -
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <span id="seller_detailed_minimumSellingPrice">
+                                        <c:choose>
+                                            <c:when test="${not empty pricePeak2.minimumSellingPrice}">
+                                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </span>
                                 </span>
                             </span>
                         </div>
                     </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm am-text-left">
-                        <span>卖家叫价需大于买家最高出价</span>
+                    <div id="buyer_detailed_tips_div" style="display: none;" class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-lg am-margin-bottom-sm am-text-left">
+                        <span class="wenxin-tips am-margin-right-sm" style="background: url('/assets/i/detail_icon.png');background-position: -406px -22px;"></span>
+                        <span id="buyer_detailed_tips" class="bid-tips layout-font-size-16" style="color: #646464;"></span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm">
                         <div class="am-u-md-2 am-fl am-padding-0 am-text-left">
@@ -75,16 +79,22 @@
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-margin-top-xs am-margin-bottom-sm am-text-left">
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
-                        <p class="layout-font-size-18 am-margin-bottom-sm">金额：</p>
+                        <p class="layout-font-size-18 am-margin-bottom-sm">卖家最低叫价：</p>
                         <div class="am-form-group am-form-icon">
                             <i class="am-icon-cny layout-font-size-18 am-margin-top-xs" style="margin-top: -7px;color: #585858;"></i>
-                            <input id="buyer_detailed_amount" type="text" class="am-form-field" value="${pricePeak2.minimumSellingPrice}" readonly/>
+                            <input id="buyer_detailed_amount" type="text" class="am-form-field" value="<fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.00#"/>" readonly/>
                         </div>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
                         <div class="am-u-md-12 am-padding-0">
                             <p class="layout-font-size-18 am-margin-bottom-sm">尺码</p>
-                            <input id="buyer_detailed_size" type="text" class="am-form-field" value="${pricePeak2.peakSize}" readonly/>
+                            <%--<input id="buyer_detailed_size" type="text" class="am-form-field" value="${pricePeak2.peakSize}"/>--%>
+                            <select id="buyer_detailed_size" class="select-pom" placeholder="请选择" data-am-selected="{btnWidth: 175,maxHeight: 200}">
+                                <option value="${pricePeak2.peakSize}">${pricePeak2.peakSize}</option>
+                                <c:forEach items="${sizes}" var="s">
+                                    <option value="${s}">${s}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-xs">
@@ -356,5 +366,24 @@
             });
         });
 
+        $("#buyer_detailed_size").change(function(){
+            sendRequest("/detail/getPricePeak",{
+                "size":$(this).val(),
+                "bid":$("#bftId").val()
+            },function(res){
+                if(res.retCode == 1){
+                    if(res.data.pricePeak2 != undefined){
+                        $("#seller_detailed_minimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
+                        $("#buyer_detailed_amount").val(res.data.pricePeak2.minimumSellingPrice.toFixed(2));
+                        $("#buyer_detailed_tips_div").css("display","none");
+                    }else{
+                        $("#buyer_detailed_tips").text("暂时没有卖家叫价，无法下单购买");
+                        $("#buyer_detailed_tips_div").css("display","block");
+                        $("#seller_detailed_minimumSellingPrice").text("-");
+                        $("#buyer_detailed_amount").val(0);
+                    }
+                }
+            });
+        });
     });
 </script>

@@ -106,7 +106,7 @@
                 and p.basicinformation_id = #{basicinformationId,jdbcType=INTEGER}
             </if>
             <if test="peakSize != null and peakSize != ''">
-                and p.peak_size LIKE CONCAT('%',#{peakSize,jdbcType=VARCHAR},'%')
+                and p.peak_size = #{peakSize,jdbcType=VARCHAR}
             </if>
             <if test="highestBid != null and highestBid != ''">
                 and p.highest_bid = #{highestBid,jdbcType=DECIMAL}
@@ -142,7 +142,7 @@
                 and p.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
             </if>
             <if test="obj.peakSize != null and obj.peakSize != ''">
-                and p.peak_size LIKE CONCAT('%',#{obj.peakSize,jdbcType=VARCHAR},'%')
+                and p.peak_size = #{obj.peakSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.highestBid != null and obj.highestBid != ''">
                 and p.highest_bid = #{obj.highestBid,jdbcType=DECIMAL}

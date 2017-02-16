@@ -82,7 +82,8 @@ public class DetailController extends BaseController{
         Map<String,Object> params = new HashMap<String,Object>();
         String size = getParam("size");
         Integer bid = getParamToInt("bid");
-        String startTime = ToolDateTime.format(DateUtils.wantToLose(new Date(),28),ToolDateTime.pattern_ymd);
+//        String startTime = ToolDateTime.format(DateUtils.wantToLose(new Date(),28),ToolDateTime.pattern_ymd);
+        String startTime = ToolDateTime.format(ToolDateTime.getDate(),ToolDateTime.pattern_ymd);
         String endTime = ToolDateTime.format(ToolDateTime.getDate(),ToolDateTime.pattern_ymd);
         PricePeak pricePeak1 = pricePeakService.getHighestAndlowestDate(bid,size,1,lagePage,startTime,endTime);
         PricePeak pricePeak2 = pricePeakService.getHighestAndlowestDate(bid,size,2,lagePage,startTime,endTime);

@@ -113,6 +113,8 @@ public class PricePeakService {
         pricePeak.setBasicinformationId(bid);
         pricePeak.setPeakSize(size);
         pricePeak.setStatus(0);
+        startTime = startTime + " 00:00:00";
+        endTime = endTime + " 23:59:59";
         List<PricePeak> pricePeaks = pricePeakDao.findByType(pricePeak,sort,page.getStartPos(),page.getPageSize(),startTime,endTime);
         if(pricePeaks.size() != 0){
             return pricePeaks.get(0);

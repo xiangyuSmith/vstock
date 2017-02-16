@@ -416,11 +416,23 @@
             },function(res){
                 if(res.retCode == 1){
                     if(type == 0){
-                        alertConfirm("订单已提交","是否去支付鞋款?");
+                        $("#alert-confirm-title").html("订单已提交");
+                        $("#alert-confirm-content").html("是否去支付鞋款?");
                     }else{
-                        alertConfirm("订单已提交","是否去支付保证金?");
+                        $("#alert-confirm-title").html("订单已提交");
+                        $("#alert-confirm-content").html("是否去支付保证金?");
                     }
-                    $("#createPay").click(function(){
+                    $('#my-confirm').modal({
+                        onConfirm : function() {
+                            createPay();
+                        },
+                        onCancel:function(){
+                            $('#my-popup-buy-detailed').modal('close');
+                            $('#my-popup-sell-detailed').modal('close');
+                            location.reload();
+                        }
+                    });
+                    function createPay(){
                         type = type==1?2:3;
 //                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data+"&bname="+bname;
 //                        return;
@@ -437,7 +449,7 @@
                                 location.reload();
                             }
                         });
-                    });
+                    };
                 }else{
                     alertTips(2,"操作失败",res.retMsg);
                 }

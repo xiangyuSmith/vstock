@@ -68,7 +68,7 @@ public class TradeController extends BaseController{
         bid.setStatus(String.valueOf(Bid.STATUS_INIT));
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){
-            resultModel.setRetMsg("未找到叫价记录");
+            resultModel.setRetMsg("未找到叫价记录，无法下单");
             return resultModel;
         }
         if(String.valueOf(bid1.getUserId()).equals(uid)){
