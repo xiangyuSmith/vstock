@@ -262,7 +262,6 @@
         trigger:'hover focus'
     });
     window.onload=function(){
-        return;
         var speed=15;
         var buyBid=document.getElementById("buyBid");
         var buyBid2=document.getElementById("buyBid2");
@@ -282,7 +281,6 @@
                 sendRequest("/index/getNewBid",null,function(res){
                     var buyList = res.data.buyBidList;
                     var sellList = res.data.sellBidList;
-                    alert(buyList);
                     for(var i = 0;i < buyList.length;i++){
                         var mobile = buyList[i].user.nick;
                         var bftName = buyList[i].bftName;
