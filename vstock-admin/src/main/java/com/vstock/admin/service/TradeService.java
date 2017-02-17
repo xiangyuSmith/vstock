@@ -1,7 +1,9 @@
 package com.vstock.admin.service;
 
+import com.vstock.db.dao.IPricePeakDao;
 import com.vstock.db.dao.ITradeDao;
 import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.entity.PricePeak;
 import com.vstock.db.entity.Trade;
 import com.vstock.db.entity.User;
 import com.vstock.ext.util.Page;
@@ -18,6 +20,9 @@ import java.util.*;
 public class TradeService {
     @Autowired
     ITradeDao tradeDao;
+
+    @Autowired
+    IPricePeakDao pricePeakDao;
 
     @Autowired
     BasicinformationService basicinformationService;
@@ -206,5 +211,28 @@ public class TradeService {
 //                .append(Trade.TRADE_MD5_MARK_NOTIFY).append("Md5Sign=").append(VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY))
 //                .toString());
 //    }
+
+    //峰值表关联鞋库信息
+    public List<PricePeak> findAndBft (PricePeak record, Page page){
+        return pricePeakDao.findAndBft(record,page.getStartPos(),page.getPageSize());
+    }
+
+    //峰值表关联鞋库总数
+    public int findBftCount(PricePeak record){return pricePeakDao.findBftCount(record);}
+
+    public String pricelinkAddress(String linkAddress, PricePeak record){
+        if (record.getPeakSize() != null && !"".equals(record.getPeakSize())){
+            linkAddress = linkAddress + "&peakSize=" + record.getPeakSize();
+        }
+        if (record.getBasicinformation() != null && !"".equals(record.getBasicinformation())) {
+            if (record.getBasicinformation().getArtNo() != null && !"".equals(record.getBasicinformation().getArtNo())) {
+                linkAddress = linkAddress + "&artNo=" + record.getBasicinformation().getArtNo();
+            }
+            if (record.getBasicinformation().getName() != null && !"".equals(record.getBasicinformation().getName())) {
+                linkAddress = linkAddress + "&name=" + record.getBasicinformation().getName();
+            }
+        }
+        return linkAddress;
+    }
 
 }

@@ -31,4 +31,10 @@ public interface IPricePeakDao {
     int updateX(PricePeak record);
 
     int updateY(PricePeak record);
+
+    //关联鞋库基本信息查询
+    List<PricePeak> findAndBft(@Param("obj")PricePeak record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
+
+    //关联鞋库基本信息总数
+    int findBftCount(@Param("obj")PricePeak record);
 }

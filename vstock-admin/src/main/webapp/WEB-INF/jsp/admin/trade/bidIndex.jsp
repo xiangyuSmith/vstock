@@ -3,7 +3,7 @@
 <div class="admin-content">
     <div class="admin-content-body">
         <div class="am-cf am-padding">
-            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">出价信息</strong> / <small>出价查询</small></div>
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">出价信息</strong> / <small>叫价流水</small></div>
 
         </div>
         <hr>
@@ -75,16 +75,16 @@
                                 <option value="-1">--请选择--</option>
                                 <c:choose>
                                     <c:when test="${record.type == 0}">
-                                        <option value="0" selected = "selected">卖家出价</option>
-                                        <option value="1">卖家</option>
+                                        <option value="0" selected = "selected">买家叫价</option>
+                                        <option value="1">卖家出价</option>
                                     </c:when>
                                     <c:when test="${record.type == 1}">
-                                        <option value="1" selected = "selected">买家叫价</option>
-                                        <option value="0">买家</option>
+                                        <option value="1" selected = "selected">卖家出价</option>
+                                        <option value="0">买家叫价</option>
                                     </c:when>
                                     <c:otherwise>
-                                        <option value="0">出价</option>
-                                        <option value="1">叫价</option>
+                                        <option value="0">卖家出价</option>
+                                        <option value="1">买家叫价</option>
                                     </c:otherwise>
                                 </c:choose>
                             </select>

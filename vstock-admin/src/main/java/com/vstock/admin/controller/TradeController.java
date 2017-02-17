@@ -155,4 +155,35 @@ public class TradeController {
         return param;
     }
 
+    @RequestMapping("pricepeak")
+    public String pricepeak(PricePeak record, HttpServletRequest request, ModelMap model) {
+        List<String> sizeList = new ArrayList<String>();
+        Basicinformation basicinformation = new Basicinformation();
+        String artNo = request.getParameter("artNo");
+        String pageNow = request.getParameter("pageNow");
+        String name = request.getParameter("name");
+        if (artNo != null && !"".equals(artNo)){
+            basicinformation.setArtNo(artNo);
+            record.setBasicinformation(basicinformation);
+        }
+        if (name != null && !"".equals(name)){
+            basicinformation.setName(name);
+            record.setBasicinformation(basicinformation);
+        }
+        String linkAddress = request.getRequestURI() + "?1=1";
+        linkAddress = tradeService.pricelinkAddress(linkAddress,record);
+        int totalCount = tradeService.findBftCount(record);
+        Page page = new Page(totalCount,pageNow);
+        List<PricePeak> pricePeakList = tradeService.findAndBft(record,page);
+        for (int i = 0; i < Basicinformation.sizes.length; i++){
+            sizeList.add(Basicinformation.sizes[i]);
+        }
+        model.put("record",record);
+        model.put("page",page);
+        model.put("sizeList",sizeList);
+        model.put("pricePeakList",pricePeakList);
+        model.put("linkAddress",linkAddress);
+        return "admin/trade/pricepeak";
+    }
+
 }

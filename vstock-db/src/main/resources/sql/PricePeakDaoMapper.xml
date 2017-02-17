@@ -4,21 +4,22 @@
 
     <resultMap id="BaseResultMap" type="com.vstock.db.entity.PricePeak">
         <id property="id" column="id"/>
-        <result column="basicinformation_id" property="basicinformationId" jdbcType="INTEGER"/>
-        <result column="peak_size" property="peakSize" jdbcType="VARCHAR"/>
-        <result column="highest_bid" property="highestBid" jdbcType="DECIMAL"/>
-        <result column="minimum_selling_price" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="peakSize" property="peakSize" jdbcType="VARCHAR"/>
+        <result column="highestBid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="minimumSellingPrice" property="minimumSellingPrice" jdbcType="DECIMAL"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
-        <result column="highest_bidder_id" property="highestBidderId" jdbcType="VARCHAR"/>
-        <result column="minimum_selling_id" property="minimumSellingId" jdbcType="VARCHAR"/>
-        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
-        <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP"/>
+        <result column="highestBidderId" property="highestBidderId" jdbcType="VARCHAR"/>
+        <result column="minimumSellingId" property="minimumSellingId" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="invalidDate" property="invalidDate" jdbcType="TIMESTAMP"/>
         <association property="basicinformation" column="basicinformation"
                      javaType="com.vstock.db.entity.Basicinformation">
             <id column="id" property="id"/>
             <result column="name" property="name"/>
             <result column="artNo" property="artNo"/>
             <result column="type" property="type"/>
+            <result column="imgUrl" property="imgUrl"/>
             <result column="smallImgUrl" property="smallImgUrl"/>
             <result column="csaledate" property="csaledate"/>
         </association>
@@ -141,7 +142,7 @@
             <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
                 and p.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
             </if>
-            <if test="obj.peakSize != null and obj.peakSize != ''">
+            <if test="obj.peakSize != null and obj.peakSize != '' and obj.peakSize != '-1'">
                 and p.peak_size = #{obj.peakSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.highestBid != null and obj.highestBid != ''">
@@ -273,5 +274,34 @@
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="findAndBft" parameterType="com.vstock.db.entity.PricePeak" resultMap="BaseResultMap">
+        SELECT b.`name`,b.artNo,b.smallImgUrl,b.imgUrl,
+        <include refid="Base_Column_List"/>
+        FROM price_peak p LEFT JOIN basicinformation b ON p.basicinformation_id = b.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="obj.basicinformation != null">
+            <if test="obj.basicinformation.name != null and obj.basicinformation.name != ''">
+                AND b.`name` LIKE CONCAT('%',#{obj.basicinformation.name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.basicinformation.artNo  != null and obj.basicinformation.artNo  != ''">
+                AND b.`artNo` = #{obj.basicinformation.artNo ,jdbcType=VARCHAR}
+            </if>
+        </if>
+        ORDER BY p.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findBftCount" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
+        SELECT COUNT(*) FROM price_peak p LEFT JOIN basicinformation b ON p.basicinformation_id = b.id
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="obj.basicinformation != null">
+            <if test="obj.basicinformation.name != null and obj.basicinformation.name != ''">
+                AND b.`name` LIKE CONCAT('%',#{obj.basicinformation.name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.basicinformation.artNo  != null and obj.basicinformation.artNo  != ''">
+                AND b.`artNo` = #{obj.basicinformation.artNo ,jdbcType=VARCHAR}
+            </if>
+        </if>
+    </select>
 
 </mapper>
