@@ -121,7 +121,7 @@
             <c:if test="${not empty userAddressesList}">
                 <c:forEach items="${userAddressesList}" var="userAddresses">
                     <tr>
-                        <td>${userAddresses.consigneeName}</td>
+                        <td style="max-width: 80px;">${userAddresses.consigneeName}</td>
                         <td style="max-width: 80px;">${userAddresses.localArea}</td>
                         <td style="max-width: 100px;">${userAddresses.detailedAddress}</td>
                         <td>${userAddresses.zipCode}</td>
