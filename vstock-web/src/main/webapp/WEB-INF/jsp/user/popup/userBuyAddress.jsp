@@ -118,7 +118,7 @@
             <div class="am-u-md-4 am-text-left">
                 <div class="am-padding-sm">
                     <div class="am-text-center am-margin-top-xs">
-                        <a href="javascript:;" id="buyer_submit_trade_S" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
+                        <a href="javascript:;" class="buyer_submit_trade_S am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
                     </div>
                 </div>
 

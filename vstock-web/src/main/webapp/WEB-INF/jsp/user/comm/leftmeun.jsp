@@ -477,67 +477,76 @@
             var tradeId = $this.attr("data-id");
             var type = $this.attr("trade-type");
             var size = $this.attr("trade-size");
-            var amount = $this.parent().parent().parent().parent().prev().prev().text();
+            var amount = $this.parent().parent().parent().parent().parent().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             sendRequest("/trade/getBuyInfo",{
                 "tradeId":tradeId,
                 "size" : size
             },function(res){
-                var site_imgUrl = $("#site_url").val();
-                var address = res.data.userAddressesList;
-                amount = res.data.trade.transactionMoney;
-                $("#buyProductImgId").attr("src",site_imgUrl+res.data.basicinformation.smallImgUrl);
-                $(".basicinformationBrand").text(res.data.basicinformation.brand);
-                $(".basicinformationName").text(res.data.basicinformation.name);
-                $(".basicinformationChineselogo").text(res.data.basicinformation.chineselogo);
-                $("#buyer_detailed_amount").val(res.data.trade.transactionMoney);
-                $("#yunFee").text(res.data.trade.tradeFreight);
-                $("#buyer_detailed_size").val(size);
-                var sssresult = parseFloat(amount)+parseFloat(res.data.trade.tradeFreight);
-                $(".countMoney").text(sssresult);
-                if(res.data.pricePeak1 == undefined){
-                    $(".pricePeak1HighestBid").text("-");
-                }else{
-                    $(".pricePeak1HighestBid").text(res.data.pricePeak1.highestBid);
-                }
-                if(res.data.pricePeak2 == undefined){
-                    $(".pricePeak2MinimumSellingPrice").text("-");
-                }else{
-                    $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
-                }
-                $("body").addClass("xy-dimmer-active");
-                var html = "";
-                $("#new-address-tbody").html("");
-                for(var x = 0;x < address.length;x++){
-                    var checkTr = "";
-                    var phoneNumber = "";
-                    if(address[x].type == 1){
-                        checkTr = "checked-tr";
-                    }
-                    if(address[x].phoneNumber != undefined){
-                        phoneNumber = address[x].phoneNumber;
+                if(type == 3){
+                    var site_imgUrl = $("#site_url").val();
+                    var address = res.data.userAddressesList;
+                    amount = res.data.trade.transactionMoney;
+                    $("#buyProductImgId").attr("src",site_imgUrl+res.data.basicinformation.smallImgUrl);
+                    $(".basicinformationBrand").text(res.data.basicinformation.brand);
+                    $(".basicinformationName").text(res.data.basicinformation.name);
+                    $(".basicinformationChineselogo").text(res.data.basicinformation.chineselogo);
+                    $("#buyer_detailed_amount").val(res.data.trade.transactionMoney);
+                    $("#yunFee").text(res.data.trade.tradeFreight);
+                    $("#buyer_detailed_size").val(size);
+                    var sssresult = parseFloat(amount)+parseFloat(res.data.trade.tradeFreight);
+                    $(".countMoney").text(sssresult);
+                    if(res.data.pricePeak1 == undefined){
+                        $(".pricePeak1HighestBid").text("-");
                     }else{
-                        phoneNumber = "--";
+                        $(".pricePeak1HighestBid").text(res.data.pricePeak1.highestBid);
                     }
-                    if(address[x].type==1){
-                        html += '<tr class="show-tr-address '+checkTr+'">' +
-                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
-                                '<td> '+address[x].consigneeName+'</td>' +
-                                '<td> '+phoneNumber+' </td>' +
-                                '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
-                                '</tr>'
+                    if(res.data.pricePeak2 == undefined){
+                        $(".pricePeak2MinimumSellingPrice").text("-");
                     }else{
-                        html += '<tr class="show-tr-address '+checkTr+'">' +
-                                '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'"  /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
-                                '<td> '+address[x].consigneeName+'</td>' +
-                                '<td> '+phoneNumber+' </td>' +
-                                '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
-                                '</tr>'
+                        $(".pricePeak2MinimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
                     }
+                    $("body").addClass("xy-dimmer-active");
+                    var html = "";
+                    $("#new-address-tbody").html("");
+                    for(var x = 0;x < address.length;x++){
+                        var checkTr = "";
+                        var phoneNumber = "";
+                        if(address[x].type == 1){
+                            checkTr = "checked-tr";
+                        }
+                        if(address[x].phoneNumber != undefined){
+                            phoneNumber = address[x].phoneNumber;
+                        }else{
+                            phoneNumber = "--";
+                        }
+                        if(address[x].type==1){
+                            html += '<tr class="show-tr-address '+checkTr+'">' +
+                                    '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                    '<td> '+address[x].consigneeName+'</td>' +
+                                    '<td> '+phoneNumber+' </td>' +
+                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '</tr>'
+                        }else{
+                            html += '<tr class="show-tr-address '+checkTr+'">' +
+                                    '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'"  /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                    '<td> '+address[x].consigneeName+'</td>' +
+                                    '<td> '+phoneNumber+' </td>' +
+                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '</tr>'
+                        }
+                    }
+                    $("#new-address-tbody").append(html);
+                }else {
+                    apliytrade();
                 }
-                $("#new-address-tbody").append(html);
-                $("#buyer_submit_trade_S").click(function(){
-                    var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
+                $(".buyer_submit_trade_S").click(function(){
+                    apliytrade();
+                });
+                function apliytrade(){
+                    if (type == 3){
+                        var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
+                    }
 
 //                    location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
 //                    return;
@@ -566,7 +575,7 @@
                             alertTips(2,"支付失败","请重新支付");
                         }
                     });
-                });
+                }
             });
             $("#now-seller-buy-detailed").click();
         });

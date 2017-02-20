@@ -154,7 +154,7 @@
                             <ul class="am-dropdown-content">
                                 <c:choose>
                                     <c:when test="${trade.status == 0}">
-                                        <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                        <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}" trade-size="${trade.bftSize}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
                                     </c:when>
                                     <c:when test="${trade.status == 2}">
                                         <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)" data-am-modal="{target: '#deliverDoods-pop', width: 600}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
@@ -187,6 +187,7 @@
         </c:otherwise>
     </c:choose>
 </table>
+    <input class="buyer_submit_trade_S" type="hidden"/>
 </form>
 
 <div class="am-modal am-modal-confirm" tabindex="-1" id="trade_del_confirm">
