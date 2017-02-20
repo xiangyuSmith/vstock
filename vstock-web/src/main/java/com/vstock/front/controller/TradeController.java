@@ -407,6 +407,13 @@ public class TradeController extends BaseController{
         Basicinformation basicinformation = basicinformationService.findObj(b);
         PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bidId,size,1,lagePage);
         PricePeak pricePeak2 = pricePeakService.getHighestAndlowest(bidId,size,2,lagePage);
+        int sort = 0;
+        if(trade.getStatus() == 0){
+            sort = 1;
+        }else{
+            sort = 2;
+        }
+        PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),size,sort,lagePage);
         if( WebUtils.getSessionAttribute(request, User.SESSION_USER_ID) != null){
             int uuid = Integer.parseInt(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID)));
             UserAddress r = new UserAddress();
@@ -420,6 +427,7 @@ public class TradeController extends BaseController{
         params.put("pricePeak2",pricePeak2);
         params.put("basicinformation",basicinformation);
         params.put("trade",trade);
+        params.put("pricePeakId",pricePeak.getId());
         resultModel.setData(params);
         return resultModel;
     }

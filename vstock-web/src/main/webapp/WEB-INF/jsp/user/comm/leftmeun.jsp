@@ -545,7 +545,11 @@
                         tradeId : tradeId,
                         type : type,
                         amount : amount,
-                        addressId: addressId
+                        addressId: addressId,
+                        size: size,
+                        bidId: res.data.trade.bidId,
+                        yunFee: res.data.trade.tradeFreight,
+                        pricePeakId: res.data.pricePeakId
                     },function(res) {
                         if (res.retCode == 1){
                             alertTips(1,"","支付成功");

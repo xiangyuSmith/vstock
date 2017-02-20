@@ -5,7 +5,7 @@
     .set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
     .set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
 </style>
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 200px;">
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 260px;">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #FF5A60;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
@@ -100,7 +100,7 @@
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
-                <div style=" height: 136px;overflow-y: scroll;">
+                <div style="overflow-y: scroll;">
                     <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
                         <tbody id="new-address-tbody">
 
