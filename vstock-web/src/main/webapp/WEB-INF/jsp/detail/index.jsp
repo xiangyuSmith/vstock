@@ -405,53 +405,74 @@
         }
 
         function paybox_create_trade(amount,size,type,yunFee,addressId) {
-            sendRequest("/trade",{
-                'bname': bname,
-                'bId': bId,
-                'amount': amount,
-                'yunFee' : yunFee,
-                'size' : size,
+            sendRequest("/trade/istrade",{
+                'basicinformationId': bId,
+                'bftSize' : size,
                 'type': type,
-                'addressId' : addressId
             },function(res){
-                if(res.retCode == 1){
-                    if(type == 0){
-                        $("#alert-confirm-title").html("订单已提交");
-                        $("#alert-confirm-content").html("是否去支付鞋款?");
-                    }else{
-                        $("#alert-confirm-title").html("订单已提交");
-                        $("#alert-confirm-content").html("是否去支付保证金?");
-                    }
-                    $('#my-confirm').modal({
+                if(res.retCode == 2){
+                    $("#alert-confirmBid-title").html("提示");
+                    $("#alert-confirmBid-content").html(res.retMsg);
+                    $('#my-bid-confirm').modal({
                         onConfirm : function() {
-                            createPay();
+                            location.href = "/user/index";
                         },
-                        onCancel:function(){
-                            $('#my-popup-buy-detailed').modal('close');
-                            $('#my-popup-sell-detailed').modal('close');
-                            location.reload();
-                        }
+                        onCancel:function(){}
                     });
-                    function createPay(){
-                        type = type==1?2:3;
+                    return false;
+                }else{
+                    sendRequest("/trade",{
+                        'bname': bname,
+                        'bId': bId,
+                        'amount': amount,
+                        'yunFee' : yunFee,
+                        'size' : size,
+                        'type': type,
+                        'addressId' : addressId
+                    },function(res){
+                        if(res.retCode == 1){
+                            if(type == 0){
+                                $("#alert-confirm-title").html("订单已提交");
+                                $("#alert-confirm-content").html("是否去支付鞋款?");
+                            }else{
+                                $("#alert-confirm-title").html("订单已提交");
+                                $("#alert-confirm-content").html("是否去支付保证金?");
+                            }
+                            $('#my-confirm').modal({
+                                onConfirm : function() {
+                                    createPay();
+                                },
+                                onCancel:function(){
+                                    $('#my-popup-buy-detailed').modal('close');
+                                    $('#my-popup-sell-detailed').modal('close');
+                                    location.reload();
+                                }
+                            });
+                            function createPay(){
+                                type = type==1?2:3;
 //                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data+"&bname="+bname;
 //                        return;
-                        sendRequest("/trade/createTradePay",{
-                            "bname": bname,
-                            "bId": bId,
-                            'amount': amount,
-                            'size' : size,
-                            'type': type==1?2:3,
-                            'tradeId':res.data
-                        },function(res){
-                            if(res.retCode == 1){
-                                alertshow("支付成功！！");
-                                location.reload();
-                            }
-                        });
-                    };
-                }else{
-                    alertTips(2,"操作失败",res.retMsg);
+                                sendRequest("/trade/createTradePay",{
+                                    "bname": bname,
+                                    "bId": bId,
+                                    'amount': amount,
+                                    'size' : size,
+                                    'type': type==1?2:3,
+                                    'yunFee' : yunFee,
+                                    'tradeId': res.data.tradeId,
+                                    'bidId': res.data.bidId,
+                                    'pricePeakId': res.data.pricePeakId
+                                },function(res){
+                                    if(res.retCode == 1){
+                                        alertshow("支付成功！！");
+                                        location.reload();
+                                    }
+                                });
+                            };
+                        }else{
+                            alertTips(2,"操作失败",res.retMsg);
+                        }
+                    });
                 }
             });
         }

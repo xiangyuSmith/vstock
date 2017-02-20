@@ -110,13 +110,24 @@ public class TradeController extends BaseController{
             sort = 1;
         }
         PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),size,sort,lagePage);
-        PricePeak p = new PricePeak();
-        p.setId(pricePeak.getId());
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("tradeId",tradeId);
+        params.put("bidId",bid1.getId());
+        params.put("pricePeakId",pricePeak.getId());
+        resultModel.setData(params);
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
+    }
+
+    public void updateTradeInfo(int bidId,BigDecimal yunFee,int pricePeakId,int type){
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        //修改叫价状态
         Bid b = new Bid();
-        b.setId(bid1.getId());
+        b.setId(bidId);
         b.setBidFreight(yunFee);
         b.setStatus(String.valueOf(b.STATUS_SUCCESS));
         bidService.update(b);
+        //修改峰值信息
         Page page = new Page(1,"1");
         b.setBidFreight(new BigDecimal(0));
         b = bidService.findByBid(b,page);
@@ -125,41 +136,43 @@ public class TradeController extends BaseController{
         bidT.setBftSize(b.getBftSize());
         bidT.setStatus("10");
         List<Bid> bidList = bidService.findOrderByMoney(bidT);
-        if (bidList.size() > 0) {
-            if (Integer.parseInt(b.getType()) == 0){
-                p.setMinimumSellingPrice(bidList.get(bidList.size()-1).getBidMoney());
-                p.setMinimumSellingId(bidList.get(bidList.size()-1).getUserId().toString());
-            }else {
-                p.setHighestBid(bidList.get(0).getBidMoney());
-                p.setHighestBidderId(bidList.get(0).getUserId().toString());
-            }
-            pricePeakService.update(p);
-        }else {
-            if (Integer.parseInt(b.getType()) == 0){
-                p.setMinimumSellingPrice(null);
-                p.setMinimumSellingId("");
-                pricePeakService.updateX(p);
-            }else {
-                p.setHighestBid(null);
-                p.setHighestBidderId("");
-                pricePeakService.updateY(p);
+        pricePeakService.updatePeak(b,bidList,pricePeakId);
+        //修改
+        Trade td = new Trade();
+        Trade t = new Trade();
+        t.setBidId(bidId);
+        List<Trade> tradeList = tradeService.findAllTrade(t);
+        for (Trade trade : tradeList) {
+            if(type == 2){
+                if(!uid.equals(trade.getSellerId())){
+                    td.setId(trade.getId());
+                    td.setStatus(Trade.TRADE_CLOSE);
+                    tradeService.update(td);
+                }
+            }else if(type == 3){
+                if(!uid.equals(trade.getSellerId())){
+                    td.setId(trade.getId());
+                    td.setStatus(Trade.TRADE_CLOSE);
+                    tradeService.update(td);
+                }
             }
         }
-
-        resultModel.setRetCode(resultModel.RET_OK);
-        resultModel.setData(tradeId);
-        return resultModel;
     }
 
     @ResponseBody
     @RequestMapping("createTradePay")
     public ResultModel createTradePay() {
+        int bidId = getParamToInt("bidId");
+        int pricePeakId = getParamToInt("pricePeakId");
+        BigDecimal yunFee = new BigDecimal(getParam("yunFee"));
         ResultModel resultModel = new ResultModel();
         setLastPage(0,1);
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         int type = getParamToInt("type");
         int tradeId = getParamToInt("tradeId");
         double amount = Double.valueOf(getParam("amount", "0"));
+        //更新叫价 & 峰值
+        updateTradeInfo(bidId,yunFee,pricePeakId,type);
         Payment payment = new Payment();
         payment.setPayment_user_id(Long.parseLong(uid));
         payment.setPayment_status(10);
@@ -184,28 +197,57 @@ public class TradeController extends BaseController{
         }
         Trade trade = new Trade();
         trade.setId(tradeId);
-        List<Trade> t_pay_list = tradeService.findAll(trade,lagePage);
-        Trade t_pay = t_pay_list.get(0);
-        String mobile = "";
-        String content = "";
-        String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
-        String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
-        Bid b = new Bid();
-        b.setId(t_pay.getBidId());
-        Bid bid = bidService.findByBid(b,lagePage);
-        if(type == 3){
-            User user = userService.findById(String.valueOf(t_pay.getBuyersId()));
-            mobile = user.getMobile();
-            content = "您出价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有卖家出售，请务必在24小时内完成支付，否则本次交易将失效。如有任何疑问，请联系v－stock客服。";
-        }else{
-            User user = userService.findById(String.valueOf(t_pay.getSellerId()));
-            mobile = user.getMobile();
-            content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
-        }
+//        List<Trade> t_pay_list = tradeService.findAll(trade,lagePage);
+//        Trade t_pay = t_pay_list.get(0);
+//        String mobile = "";
+//        String content = "";
+//        String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
+//        String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
+//        Bid b = new Bid();
+//        b.setId(t_pay.getBidId());
+//        Bid bid = bidService.findByBid(b,lagePage);
+//        if(type == 3){
+//            User user = userService.findById(String.valueOf(t_pay.getBuyersId()));
+//            mobile = user.getMobile();
+//            content = "您出价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有卖家出售，请务必在24小时内完成支付，否则本次交易将失效。如有任何疑问，请联系v－stock客服。";
+//        }else{
+//            User user = userService.findById(String.valueOf(t_pay.getSellerId()));
+//            mobile = user.getMobile();
+//            content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
+//        }
 //        Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
         trade.setStatus(tradeStatus);
         trade.setUpdateDate(DateUtils.dateToString(new Date()));
         tradeService.update(trade);
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
+    }
+
+    @RequestMapping("istrade")
+    @ResponseBody
+    public ResultModel istrade(){
+        ResultModel resultModel = new ResultModel();
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        String type = getParam("type");
+        String size = getParam("bftSize");
+        int bfzId = getParamToInt("basicinformationId");
+        Trade record = new Trade();
+        record.setBftSize(size);
+        record.setBasicinformationId(bfzId);
+        if("1".equals(type)){
+            record.setStatus(0);
+            record.setSellerId(Integer.parseInt(uid));
+        }else{
+            record.setStatus(1);
+            record.setBuyersId(Integer.parseInt(uid));
+        }
+        List<Trade> tradeList  = tradeService.findAllTrade(record);
+        if(tradeList.size() > 0){
+            resultModel.setRetCode(2);
+            resultModel.setRetMsg("此款宝贝，您已有一笔未支付的订单，是否需要付款");
+            resultModel.setData(tradeList.get(0).getId());
+            return resultModel;
+        }
         resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
     }

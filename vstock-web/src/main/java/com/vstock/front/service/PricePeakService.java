@@ -1,6 +1,7 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.IPricePeakDao;
+import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.PricePeak;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
@@ -90,6 +91,34 @@ public class PricePeakService {
 
     public int updateY(PricePeak record){
         return pricePeakDao.updateY(record);
+    }
+
+    /**
+     * 更新峰值
+     */
+    public void updatePeak(Bid b,List<Bid> bidList,int pricePeakId){
+        PricePeak p = new PricePeak();
+        p.setId(pricePeakId);
+        if (bidList.size() > 0) {
+            if (Integer.parseInt(b.getType()) == 0){
+                p.setMinimumSellingPrice(bidList.get(bidList.size()-1).getBidMoney());
+                p.setMinimumSellingId(bidList.get(bidList.size()-1).getUserId().toString());
+            }else {
+                p.setHighestBid(bidList.get(0).getBidMoney());
+                p.setHighestBidderId(bidList.get(0).getUserId().toString());
+            }
+            update(p);
+        }else {
+            if (Integer.parseInt(b.getType()) == 0){
+                p.setMinimumSellingPrice(null);
+                p.setMinimumSellingId("");
+                updateX(p);
+            }else {
+                p.setHighestBid(null);
+                p.setHighestBidderId("");
+                updateY(p);
+            }
+        }
     }
 
     /**
