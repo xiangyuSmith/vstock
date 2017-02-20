@@ -73,10 +73,10 @@
                                 <div class="am-dropdown doc-dropdown-js">
                                     <c:choose>
                                         <c:when test="${trade.status == 0 || trade.status == 2 || trade.status == 41 || trade.status == 51}">
-                                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                                         </c:otherwise>
                                     </c:choose>
                                     <ul class="am-dropdown-content">

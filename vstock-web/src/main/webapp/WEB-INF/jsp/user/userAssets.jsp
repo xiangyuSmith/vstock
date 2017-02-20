@@ -3,7 +3,7 @@
 <form id="userAssets" action="/user/userAssets" method="post">
 <div class="am-g">
     <%--<div id="main"style="height:500px;border:1px solid #ccc;padding:10px;"></div>--%>
-    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="border-bottom:1px solid #CACACA;"><span class="layout-font-size-26">资产概览</span></div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0" style="border-bottom:1px solid #CACACA;"><div style="float: left; display: block;width: 37px;height: 35px; background: url('/assets/i/personal_center_map.png'); background-position: -1097px -15px;"></div><span class="layout-font-size-26">资产概览</span></div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-right-0 am-padding-left-0">
         <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-padding-left-0 am-padding-right-0">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 am-margin-top-lg highcharts-sum">
@@ -29,7 +29,7 @@
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm am-padding-left-0">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -721px -21px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/i/personal_center_map.png'); background-position: -1214px -12px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">球鞋数量</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
@@ -54,7 +54,7 @@
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -606px -16px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/i/personal_center_map.png'); background-position: -1286px -16px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">市场价值</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
@@ -79,7 +79,7 @@
                 <li style="border-bottom: solid 1px #CDCDCD; height: 80px;" class="am-padding-top-sm">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -492px -22px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/i/personal_center_map.png'); background-position: -1365px -19px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">涨跌幅度</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
@@ -104,7 +104,7 @@
                 <li style="height: 80px;" class="am-padding-top-sm">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0">
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
-                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/shoesImg/personal_center.png'); background-position: -307px -18px;"></span>
+                            <span class="am-margin-right-xs" style="float: left; display: block;width: 60px;height: 60px; background: url('/assets/i/personal_center_map.png'); background-position: -1445px -14px;"></span>
                             <span class="am-center meun-font-size am-text-middle am-padding-top-sm" style="color: #646464; font-weight: initial">平均价格</span>
                         </div>
                         <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-margin-left-0 am-padding-left-0 am-margin-right-0 am-padding-right-0">
@@ -132,9 +132,10 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-lg">
         <table class="am-table am-table-striped am-table-hover">
             <caption style="border-bottom:1px solid #CACACA;">
+                <div style="float: left; display: block;width: 37px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -1152px -18px;"></div>
                 <span class="layout-font-size-26 am-fl">资产明细</span>
                 <c:if test="${not empty userAssetsList}">
-                    <span class="am-fr" style="color: #249bd3;line-height: 50px;"><a href="javascript:void(0)" data-url="../user/userAssetsList?pageNow=1" class="offer-btn layout-font-size-16">更多记录</a></span>
+                    <span class="am-fr" style="color: #249bd3;line-height: 38px;"><a href="javascript:void(0)" data-url="../user/userAssetsList?pageNow=1" class="offer-btn layout-font-size-16">更多记录</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -18px;"></div></span>
                 </c:if>
             </caption>
             <c:choose>

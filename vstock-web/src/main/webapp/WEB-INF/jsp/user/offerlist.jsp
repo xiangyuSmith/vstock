@@ -55,7 +55,7 @@
                         <td>
                             <div class="doc-dropdown-justify-js">
                                 <div class="am-dropdown doc-dropdown-js">
-                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
                                     <ul class="am-dropdown-content">
                                         <c:if test="${bid.status == 0}">
                                             <li><a class="am-btn am-btn-xs am-text-left deliver-bid-goods" bid-id="${bid.id}" bft-id="${bid.basicinformationId}" data-type="${bid.type}" bid_type="0" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
