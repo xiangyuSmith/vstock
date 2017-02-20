@@ -685,8 +685,8 @@
             var $this = $(this);
             var btfId = $this.attr("btf-id");
             var id = $this.attr("del_data_id");
-            var money = $this.parent().parent().parent().prev().prev().prev().text();
-            var size = $this.parent().parent().parent().prev().prev().prev().prev().prev().text();
+            var money = $this.parent().parent().parent().parent().parent().parent().prev().prev().prev().text();
+            var size = $this.parent().parent().parent().parent().parent().parent().prev().prev().prev().prev().prev().text();
             money = parseFloat(money.substring(1,money.length).replace(/[^\d\.-]/g, ""));
             $('#my-confirm-userA').modal({
                 onConfirm: function() {

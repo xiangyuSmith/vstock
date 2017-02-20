@@ -46,18 +46,25 @@
                                 <td>--</td>
                             </c:otherwise>
                         </c:choose>
-                        <td style="width: 26%">
-                            <div class="am-fl" style="width: 30%;">
-                                <a href="/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}">
-                                    <span style="display: block;width: 55px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -125px -25px;"></span>
-                                    <span class="am-margin-left-sm am-link-muted">出售</span>
-                                </a>
-                            </div>
-                            <div class="am-fl am-margin-left-sm" style="width: 35%;">
-                                <a href="javascript:void(0);">
-                                    <span style="display: block;width: 50px;height: 45px; background: url('/assets/shoesImg/personal_center.png'); background-position: -65px -22px;" class="offer-btn" data-url="../user/userAssets"></span>
-                                    <span class="am-margin-left am-link-muted userAssets-del" btf-id="${userAssets.basicinformationId}" del_data_id="${userAssets.id}">删除</span>
-                                </a>
+                        <td>
+                            <div class="doc-dropdown-justify-js">
+                                <div class="am-dropdown doc-dropdown-js">
+                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
+                                    <ul class="am-dropdown-content">
+                                        <li>
+                                            <a href="/detail?proName=${userAssets.basicinformation.name}&size=${userAssets.userAssetsSize}" style="min-width: 100px;">
+                                                <span class="am-fl" style="display: block;width: 30px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -1539px -17px;"></span>
+                                                <span class="am-margin-left-sm am-link-muted" style="line-height: 39px;">出售</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" style="min-width: 100px;">
+                                                <span class="am-fl" style="display: block;width: 30px;height: 34px; background: url('/assets/i/personal_center_map.png'); background-position: -794px -22px;" class="offer-btn" data-url="../user/userAssets"></span>
+                                                <span class="am-margin-left-sm am-link-muted userAssets-del" btf-id="${userAssets.basicinformationId}" del_data_id="${userAssets.id}">删除</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </td>
                     </tr>
