@@ -9,6 +9,7 @@
         <result column="bidId" property="bidId" jdbcType="INTEGER"/>
         <result column="tradeNo" property="tradeNo" jdbcType="VARCHAR"/>
         <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
+        <result column="userAddressId" property="userAddressId" jdbcType="INTEGER"/>
         <result column="transactionMoney" property="transactionMoney" jdbcType="DECIMAL"/>
         <result column="tradeFreight" property="tradeFreight" jdbcType="DECIMAL"/>
         <result column="courierNumber" property="courierNumber" jdbcType="VARCHAR"/>
@@ -228,6 +229,7 @@
         t.trade_no as tradeNo,
         t.bid_id as bidId,
         t.basicinformation_id as basicinformationId,
+        t.user_address_id as userAddressId,
         t.transaction_money as transactionMoney,
         t.trade_freight  as tradeFreight,
         t.bft_size as bftSize,

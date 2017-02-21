@@ -268,7 +268,11 @@ public class BidService {
      */
     public int checkSell(List<Bid> sellBid,List<Bid> buyBid,Integer type,BigDecimal money){
         if(sellBid.size() == 0 && buyBid.size() == 0){
-            return 6;
+            if (money.equals(new BigDecimal(0))) {
+                return 0;
+            }else {
+                return 6;
+            }
         }
         if(sellBid.size() > 0){
             if(money.compareTo(sellBid.get(0).getBidMoney()) == 1){

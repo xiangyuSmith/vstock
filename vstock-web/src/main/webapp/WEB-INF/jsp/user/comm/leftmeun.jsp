@@ -475,6 +475,7 @@
         $("body").on("click",".trade-pament",function(){
             var $this = $(this);
             var tradeId = $this.attr("data-id");
+            var addId = $this.attr("add-id")
             var type = $this.attr("trade-type");
             var size = $this.attr("trade-size");
             var amount = $this.parent().parent().parent().parent().parent().prev().prev().text();
@@ -520,20 +521,54 @@
                         }else{
                             phoneNumber = "--";
                         }
-                        if(address[x].type==1){
-                            html += '<tr class="show-tr-address '+checkTr+'">' +
-                                    '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
-                                    '<td> '+address[x].consigneeName+'</td>' +
-                                    '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
-                                    '</tr>'
-                        }else{
-                            html += '<tr class="show-tr-address '+checkTr+'">' +
-                                    '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'"  /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
-                                    '<td> '+address[x].consigneeName+'</td>' +
-                                    '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
-                                    '</tr>'
+                        if (addId && addId != 0){
+                            if (addId == address[x].id){
+                                if (address[x].type==1){
+                                    html += '<tr class="show-tr-address '+checkTr+'">' +
+                                            '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                            '<td> '+address[x].consigneeName+'</td>' +
+                                            '<td> '+phoneNumber+' </td>' +
+                                            '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                            '</tr>'
+                                }else {
+                                    html += '<tr class="show-tr-address '+checkTr+'">' +
+                                            '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                            '<td> '+address[x].consigneeName+'</td>' +
+                                            '<td> '+phoneNumber+' </td>' +
+                                            '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                            '</tr>'
+                                }
+                            }else if (address[x].type==1){
+                                html += '<tr class="show-tr-address '+checkTr+'">' +
+                                        '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" disabled="disabled" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                        '<td> '+address[x].consigneeName+'</td>' +
+                                        '<td> '+phoneNumber+' </td>' +
+                                        '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                        '</tr>'
+                            }else {
+                                html += '<tr class="show-tr-address '+checkTr+'">' +
+                                        '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" disabled="disabled" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                        '<td> '+address[x].consigneeName+'</td>' +
+                                        '<td> '+phoneNumber+' </td>' +
+                                        '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                        '</tr>'
+                            }
+                        }else {
+                            if(address[x].type==1){
+                                html += '<tr class="show-tr-address '+checkTr+'">' +
+                                        '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                        '<td> '+address[x].consigneeName+'</td>' +
+                                        '<td> '+phoneNumber+' </td>' +
+                                        '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div style="display: none;"><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                        '</tr>'
+                            }else{
+                                html += '<tr class="show-tr-address '+checkTr+'">' +
+                                        '<td><input id="doc-ipt-o-'+address[x].id+'" type="radio" name="check-address" data-userAddress="'+address[x].id+'"  /></td><td><label for="doc-ipt-o-'+address[x].id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address[x].localArea+address[x].detailedAddress+'</label></td>' +
+                                        '<td> '+address[x].consigneeName+'</td>' +
+                                        '<td> '+phoneNumber+' </td>' +
+                                        '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address[x].id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                        '</tr>'
+                            }
                         }
                     }
                     $("#new-address-tbody").append(html);
