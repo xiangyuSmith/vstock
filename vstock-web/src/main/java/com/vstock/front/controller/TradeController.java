@@ -53,6 +53,7 @@ public class TradeController extends BaseController{
         String size = getParam("size");
         String type = getParam("type");
         int addressId = Integer.valueOf(getParam("addressId", "0"));
+        int bftId = getParamToInt("bId");
         UserAddress u = new UserAddress();
         u.setId(addressId);
         UserAddress userAddress = userAddressService.findAddressById(u);
@@ -65,6 +66,7 @@ public class TradeController extends BaseController{
         bid.setBidMoney(new BigDecimal(amount).setScale(2,   BigDecimal.ROUND_HALF_UP));
         bid.setBftSize(size);
         bid.setType(type);
+        bid.setBasicinformationId(bftId);
         bid.setStatus(String.valueOf(Bid.STATUS_INIT));
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){

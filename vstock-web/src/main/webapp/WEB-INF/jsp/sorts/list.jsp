@@ -78,7 +78,7 @@
                 }
                 var html = '<div id="tips-model" style="height: 453px;display: block;">'
                         +'<div class="am-u-md-12 am-text-center am-padding-left-lg am-padding-right-lg" style="border-bottom: 1px solid #ccc;">'
-                        +'<img id="show-img" style="width: 100%;" src="'+$this.attr("data-img-url")+'">'
+                        +'<img id="show-img" style="width: 100%;" src="'+$this.attr("data-img-url")+'" onerror="this.src=\'/assets/i/default.png;this.onerror=null\'" >'
                         +'<div class="am-margin-bottom-xs"><span class="layout-font-size-24" style="color: #434343;" id="product-name">'+$this.attr("data-name")+'</span></div>'
                         +'</div>'
                         +'<div class="am-u-md-12 am-text-center am-margin-top-xs">'

@@ -273,31 +273,33 @@
         sellBid2.innerHTML=sellBid1.innerHTML
         function Marquee(){
             if(buyBid.scrollTop>=buyBid1.offsetHeight){
-                buyBid.scrollTop=0;
-                sellBid.scrollTop=0;
-                speedNum = 0;
-                var bidhtml = "";
-                var sellhtml = "";
-                sendRequest("/index/getNewBid",null,function(res){
-                    var buyList = res.data.buyBidList;
-                    var sellList = res.data.sellBidList;
-                    for(var i = 0;i < buyList.length;i++){
-                        var mobile = buyList[i].user.nick;
-                        var bftName = buyList[i].bftName;
-                        var bidMoney = buyList[i].bidMoney;
-                        bidhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
-                    }
-                    for(var i = 0;i < sellList.length;i++){
-                        var mobile = sellList[i].user.nick;
-                        var bftName = sellList[i].bftName;
-                        var bidMoney = sellList[i].bidMoney;
-                        sellhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
-                    }
-                    buyBid1.innerHTML=bidhtml;
-                    buyBid2.innerHTML=bidhtml;
-                    sellBid1.innerHTML=sellhtml;
-                    sellBid2.innerHTML=sellhtml;
-                });
+                setTimeout(function(){
+                    buyBid.scrollTop=0;
+                    sellBid.scrollTop=0;
+                    speedNum = 0;
+                    var bidhtml = "";
+                    var sellhtml = "";
+                    sendRequest("/index/getNewBid",null,function(res){
+                        var buyList = res.data.buyBidList;
+                        var sellList = res.data.sellBidList;
+                        for(var i = 0;i < buyList.length;i++){
+                            var mobile = buyList[i].user.nick;
+                            var bftName = buyList[i].bftName;
+                            var bidMoney = buyList[i].bidMoney;
+                            bidhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
+                        }
+                        for(var i = 0;i < sellList.length;i++){
+                            var mobile = sellList[i].user.nick;
+                            var bftName = sellList[i].bftName;
+                            var bidMoney = sellList[i].bidMoney;
+                            sellhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
+                        }
+                        buyBid1.innerHTML=bidhtml;
+                        buyBid2.innerHTML=bidhtml;
+                        sellBid1.innerHTML=sellhtml;
+                        sellBid2.innerHTML=sellhtml;
+                    });
+                },1000);
             }else{
                 if(buyBid.scrollTop==0){
                     buyBid.scrollTop=buyBid.scrollTop+1;
@@ -319,7 +321,7 @@
                 buyBid.scrollTop=buyBid.scrollTop+1;
                 sellBid.scrollTop=sellBid.scrollTop+1;
                 MyMar=setInterval(Marquee,speed);
-            },5000);
+            },1000);
         }
     };
 

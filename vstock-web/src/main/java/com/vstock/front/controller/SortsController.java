@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,7 @@ public class SortsController extends BaseController{
         String priceEnd = "";
         int pageStart = Integer.parseInt(getParam("pageStart","0"));
         String productName = getParam("productName","");
+        setLastPage(0,1);
         if(VstockConfigService.isChineseChar(productName)){
             //包含中文，检测是否匹配中文检索
             LanguageControl language = new LanguageControl();
@@ -69,6 +71,21 @@ public class SortsController extends BaseController{
             priceEnd = price.split("-")[1];
         }
         List<Basicinformation> bidList = basicinformationService.findBasicinForSorts(productName,type,size,year,brand,priceStart,priceEnd,pageStart,20);
+        List<BigDecimal> bidMoneyList = new ArrayList<BigDecimal>();
+        Bid b = new Bid();
+        for(int i = 0;i < bidList.size();i++){
+            Basicinformation bft = bidList.get(i);
+            String bftId = bft.getId();
+            b.setBasicinformationId(Integer.parseInt(bftId));
+            b.setStatus(String.valueOf(Bid.STATUS_INIT));
+            List<Bid> bList = bidService.findAll(b,lagePage);
+            if(bList.size() != 0){
+                bidList.get(i).getBid().setBidMoney(bList.get(0).getBidMoney());
+            }else{
+                bidList.get(i).getBid().setBidMoney(null);
+            }
+        }
+        modelMap.addAttribute("bidMoneyList",bidMoneyList);
         modelMap.addAttribute("bidList",bidList);
         modelMap.addAttribute("size",size);
         modelMap.addAttribute("price",price);

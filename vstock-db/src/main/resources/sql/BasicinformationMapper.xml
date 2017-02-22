@@ -71,7 +71,7 @@
     </update>
 
     <select id="findBasicinForSorts"  parameterType="map" resultMap="BaseResultMap">
-        SELECT * FROM (SELECT bi.id,bi.basicinformation_id as basicinformationId,bi.bft_name as bftName,bi.bft_size as bftSize,bi.bid_bond as bidBond,bi.bid_date as bidDate,bi.bid_money as bidMoney,bf.id as bid,bf.brand,bf.colores as colores,bf.`name` as bname,bf.type as type,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo,bf.csaledate as bcsaledate
+        SELECT * FROM (SELECT bi.status,bi.id,bi.basicinformation_id as basicinformationId,bi.bft_name as bftName,bi.bft_size as bftSize,bi.bid_bond as bidBond,bi.bid_date as bidDate,bi.bid_money as bidMoney,bf.id as bid,bf.brand,bf.colores as colores,bf.`name` as bname,bf.type as type,bf.smallImgUrl as bsmallImgUrl,bf.type as btype,bf.artNo as bartNo,bf.csaledate as bcsaledate
         FROM basicinformation bf
         LEFT JOIN bid bi ON bi.basicinformation_id = bf.id
         ORDER BY bidDate DESC) as basicinformation
