@@ -591,9 +591,7 @@
                         amount : amount,
                         addressId: addressId,
                         size: size,
-                        bidId: res.data.trade.bidId,
-                        yunFee: res.data.trade.tradeFreight,
-                        pricePeakId: res.data.pricePeakId
+                        ischeck:1
                     },function(res) {
                         if (res.retCode == 1){
                             alertTips(1,"","支付成功");

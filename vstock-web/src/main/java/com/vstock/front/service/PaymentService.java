@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-@Service
+@Service("payment")
 public class PaymentService {
 
     final static Logger logger = Logger.getLogger(PaymentService.class);
@@ -23,6 +23,13 @@ public class PaymentService {
      * @return
      */
     public int insert(Payment record){return paymentDao.insert(record);}
+
+    /**
+     * 根据订单号查询
+     */
+    public Payment findByTrade(Payment record){
+        return paymentDao.findByTrade(record);
+    }
 
     /**
      * 创建支付

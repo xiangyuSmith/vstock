@@ -2,14 +2,12 @@ package com.vstock.front.support.job;
 
 import com.vstock.db.entity.Bid;
 import com.vstock.db.entity.CustomJob;
+import com.vstock.db.entity.Payment;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.ToolSpring;
-import com.vstock.front.service.BasiciformationRoseService;
-import com.vstock.front.service.BidService;
-import com.vstock.front.service.ResultDataService;
-import com.vstock.front.service.TradeService;
+import com.vstock.front.service.*;
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -26,6 +24,8 @@ public class QuartzJob implements Job {
     TradeService tradeService = (TradeService) ToolSpring.getBean("trade");
 
     ResultDataService resultDataService = (ResultDataService) ToolSpring.getBean("resultData");
+
+    PaymentService paymentService = (PaymentService) ToolSpring.getBean("payment");
 
     BasiciformationRoseService basiciformationRoseService = (BasiciformationRoseService) ToolSpring.getBean("basiciformationRose");
 
@@ -71,9 +71,9 @@ public class QuartzJob implements Job {
         record.setStatus(record.TRADE_NOTIFIY_PAY_BOND);
         List<Trade> tradeListNotBond = tradeService.findAllTrade(record);
         //订单金额计时
-        int result = tradeSend(tradeList,60*60*24,record.TRADE_CLOSE);
+        int result = tradeSend(tradeList,60*60*24,record.TRADE_CLOSE,1);
         //保证金计时
-        int result2 = tradeSend(tradeListNotBond,60*15,record.TRADE_CLOSE);
+        int result2 = tradeSend(tradeListNotBond,60*15,record.TRADE_CLOSE,2);
         return result * result2;
     }
 
@@ -96,11 +96,22 @@ public class QuartzJob implements Job {
         return result;
     }
 
-    private int tradeSend( List<Trade> trades,int time,int status){
+    private int tradeSend( List<Trade> trades,int time,int status,int type){
         int result = 1;
+        long difference = 0;
         Trade t = new Trade();
+        Payment p = new Payment();
         for (Trade trade : trades) {
-            long difference = isdifference(trade.getTransactionDate(),time);
+            if(type == 1){
+                p.setOrder_record_id(trade.getId());
+                p.setPayment_type(3);
+                Payment payment = paymentService.findByTrade(p);
+                if(payment != null){
+                    difference= isdifference(trade.getTransactionDate(),60*15);
+                }
+            }else{
+                difference = isdifference(trade.getTransactionDate(),time);
+            }
             if(difference <= 0){
                 t.setId(trade.getId());
                 t.setStatus(status);

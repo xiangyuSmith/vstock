@@ -168,21 +168,24 @@ public class TradeController extends BaseController{
     @ResponseBody
     @RequestMapping("createTradePay")
     public ResultModel createTradePay() {
-        int bidId = getParamToInt("bidId");
-        int pricePeakId = getParamToInt("pricePeakId");
-        BigDecimal yunFee = new BigDecimal(getParam("yunFee"));
         ResultModel resultModel = new ResultModel();
         setLastPage(0,1);
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         int type = getParamToInt("type");
         int tradeId = getParamToInt("tradeId");
         double amount = Double.valueOf(getParam("amount", "0"));
-        //更新叫价 & 峰值
-        updateTradeInfo(bidId,yunFee,pricePeakId,type,tradeId);
+        int ischeck = getParamToInt("ischeck");
+        if(ischeck != 1){
+            int bidId = getParamToInt("bidId");
+            int pricePeakId = getParamToInt("pricePeakId");
+            BigDecimal yunFee = new BigDecimal(getParam("yunFee"));
+            //更新叫价 & 峰值
+            updateTradeInfo(bidId,yunFee,pricePeakId,type,tradeId);
+        }
         Payment payment = new Payment();
         payment.setPayment_user_id(Long.parseLong(uid));
+        payment.setOrder_record_id(tradeId);
         payment.setPayment_status(10);
-        //TODO 默认状态暂定为成功
         payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
         payment.setPayment_type(type);
         payment.setPayment_date(DateUtils.dateToString(new Date()));
@@ -413,13 +416,6 @@ public class TradeController extends BaseController{
         Basicinformation basicinformation = basicinformationService.findObj(b);
         PricePeak pricePeak1 = pricePeakService.getHighestAndlowest(bidId,size,1,lagePage);
         PricePeak pricePeak2 = pricePeakService.getHighestAndlowest(bidId,size,2,lagePage);
-        int sort = 0;
-        if(trade.getStatus() == 0){
-            sort = 1;
-        }else{
-            sort = 2;
-        }
-        PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),size,sort,lagePage);
         if( WebUtils.getSessionAttribute(request, User.SESSION_USER_ID) != null){
             int uuid = Integer.parseInt(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID)));
             UserAddress r = new UserAddress();
@@ -433,7 +429,6 @@ public class TradeController extends BaseController{
         params.put("pricePeak2",pricePeak2);
         params.put("basicinformation",basicinformation);
         params.put("trade",trade);
-        params.put("pricePeakId",pricePeak.getId());
         resultModel.setData(params);
         return resultModel;
     }

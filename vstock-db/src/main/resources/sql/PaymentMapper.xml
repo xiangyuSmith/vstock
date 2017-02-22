@@ -83,8 +83,8 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `payment`
-        (`id`,`payment_user_id`,`payment_alipay_name`,`order_record_id`,`payment_number`,`payment_status`,`payment_mode`,`payment_type`,`payment_date`,`payment_over_date`,`payment_money`,`payment_explain`,`sign`)
-        VALUES(null,#{payment_user_id},#{payment_alipay_name},#{order_record_id},#{payment_number},#{payment_status},#{payment_mode},#{payment_type},#{payment_date},#{payment_over_date},#{payment_money},#{payment_explain},#{sign})
+        (`id`,`payment_user_id`,`order_record_id`,``payment_alipay_name`,`order_record_id`,`payment_number`,`payment_status`,`payment_mode`,`payment_type`,`payment_date`,`payment_over_date`,`payment_money`,`payment_explain`,`sign`)
+        VALUES(null,#{payment_user_id},#{order_record_id},#{payment_alipay_name},#{order_record_id},#{payment_number},#{payment_status},#{payment_mode},#{payment_type},#{payment_date},#{payment_over_date},#{payment_money},#{payment_explain},#{sign})
     </insert>
 
     <update id="update">
