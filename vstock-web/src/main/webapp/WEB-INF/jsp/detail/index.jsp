@@ -29,6 +29,8 @@
         @media ( max-width: 1440px ){
             .str-title-font{ font-size: 30px; }
         }
+        .noFunction{ background-color: #ccc!important; border-color: #ccc!important; }
+        .noFunction:HOVER{ background-color: #ccc; border-color: #ccc; }
         .xy-dimmer-active{ overflow: auto;}
         .xy-dimmer-detailed{ position: absolute !important;top:15% !important; }
         .am-selected-btn{ border:1px solid #aeaeae; }
@@ -334,12 +336,18 @@
             loadingPurchaseclose();
         });
         $("#seller_submit_trade_").click(function(){
+            if($(this).hasClass("noFunction")){
+                return false;
+            }
             var amount = $("#seller_detailed_amount").val();
             var size = $("#seller_detailed_size").val();
             var type = 1;
             box_create_trade(amount,size,type,null,null);
         });
         $("#buyer_submit_trade_").click(function(){
+            if($(this).hasClass("noFunction")){
+                return false;
+            }
             var amount = $("#buyer_detailed_amount").val();
             var yunFee = $.trim($("#yunFee").text());
             var size = $("#buyer_detailed_size").val();

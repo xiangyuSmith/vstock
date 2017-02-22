@@ -376,11 +376,13 @@
                         $("#seller_detailed_minimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
                         $("#buyer_detailed_amount").val(res.data.pricePeak2.minimumSellingPrice.toFixed(2));
                         $("#buyer_detailed_tips_div").css("display","none");
+                        $("#buyer_submit_trade_").removeClass("noFunction");
                     }else{
                         $("#buyer_detailed_tips").text("暂时没有卖家叫价，无法下单购买");
                         $("#buyer_detailed_tips_div").css("display","block");
                         $("#seller_detailed_minimumSellingPrice").text("-");
                         $("#buyer_detailed_amount").val(0);
+                        $("#buyer_submit_trade_").addClass("noFunction");
                     }
                 }
             });

@@ -134,11 +134,13 @@
                         $("#buyer_detailed_highestBid").text(res.data.pricePeak1.highestBid);
                         $("#seller_detailed_amount").val(res.data.pricePeak1.highestBid.toFixed(2));
                         $("#seller_detailed_tips_div").css("display","none");
+                        $("#seller_submit_trade_").removeClass("noFunction");
                     }else{
                         $("#seller_detailed_tips").text("暂时没有买家出价，无法下单出售");
                         $("#seller_detailed_tips_div").css("display","block");
                         $("#buyer_detailed_highestBid").text("-");
                         $("#seller_detailed_amount").val(0);
+                        $("#seller_submit_trade_").addClass("noFunction");
                     }
                 }
             });
