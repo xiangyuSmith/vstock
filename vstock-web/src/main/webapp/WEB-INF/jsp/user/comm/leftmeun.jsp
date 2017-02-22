@@ -19,6 +19,8 @@
         .status-user-set:HOVER{ background-color: #FB7f6f; }
         .am-active .status-user-set{ background-color: #FB7f6f!important; }
         ul.am-dropdown-content>li>a{ padding: 6px 26px 6px 10px; }
+        .set-default-address{ opacity : 0; }
+        .show-tr-address:HOVER .set-default-address{ opacity : 1; }
     </style>
 </head>
 <body>
