@@ -76,6 +76,12 @@
         ORDER BY p.payment_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findByTrade">
+        SELECT <include refid="Base_Column_List"/>
+        FROM payment p
+        <include refid="SearchAllByPage_Where_Clause"/>
+    </select>
+
     <select id="findCount" parameterType="com.vstock.db.entity.Payment" resultType="Integer">
         SELECT COUNT(*) FROM payment p
         <include refid="SearchAllByPage_Where_Clause"/>
