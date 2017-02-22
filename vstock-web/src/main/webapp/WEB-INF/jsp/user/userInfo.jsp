@@ -7,7 +7,7 @@
             <div class="am-margin-bottom-sm"><span class="layout-font-size-26 am-padding-left-sm">个人信息</span></div>
         </div>
         <div class="am-form-group am-text-sm" style="font-weight: normal;">
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">昵称：</span>
                 </div>
@@ -17,7 +17,7 @@
                     </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">尺码：</span>
                 </div>
@@ -27,7 +27,7 @@
                     </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">手机号码：</span>
                 </div>
@@ -37,7 +37,7 @@
                     </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">用户名：</span>
                 </div>
@@ -47,7 +47,7 @@
                     </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">身份认证：</span>
                 </div>
@@ -64,7 +64,7 @@
                     <input id="identify-click" type="hidden" data-am-modal="{target: '#my-popup-identify',width: 644}" />
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0 am-margin-top-sm">
+            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">登录密码：</span>
                 </div>
@@ -115,8 +115,17 @@
         <caption style="border-bottom: 1px solid #CACACA;">
             <div style="float: left; display: block;width: 25px;height: 50px; background: url('/assets/i/personal_center_map.png'); background-position: -1680px -18px;"></div>
             <span class="layout-font-size-26 am-fl am-margin-left-sm">收货信息</span>
-            <span class="am-fr"><a href="javascript:void(0);" class="add-adders am-fl am-text-danger layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">添加新地址</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -11px;"></div></span>
+            <span class="am-fr"><a href="javascript:void(0);" class="add-adders am-fl layout-font-size-20 am-margin-left am-margin-top-sm" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">添加新地址</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -11px;"></div></span>
         </caption>
+        <thead>
+        <tr>
+            <td>收货人</td>
+            <td>所在地区</td>
+            <td>详细地址</td>
+            <td>邮编</td>
+            <td>手机号码</td>
+        </tr>
+        </thead>
         <tbody>
             <c:if test="${not empty userAddressesList}">
                 <c:forEach items="${userAddressesList}" var="userAddresses">
@@ -131,27 +140,22 @@
                                 ${userAddresses.phoneNumber}
                             </c:when>
                             <c:otherwise>
-                                --
+                                <c:when test="${not empty userAddresses.landlineNumber}">
+                                    ${userAddresses.landlineNumber}
+                                </c:when>
+                                <c:otherwise>
+                                    --
+                                </c:otherwise>
                             </c:otherwise>
                         </c:choose>
                         </td>
                         <td>
-                        <c:choose>
-                            <c:when test="${not empty userAddresses.landlineNumber}">
-                                ${userAddresses.landlineNumber}
-                            </c:when>
-                            <c:otherwise>
-                                --
-                            </c:otherwise>
-                        </c:choose>
-                        </td>
-                        <td style="width: 50px;">
-                            <a href="javascript:void(0);" user-id="${userAddresses.id}" class="userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">编辑</a>
+                            <a href="javascript:void(0);" user-id="${userAddresses.id}" class="am-fl userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">编辑</a>&nbsp;|
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" data-type="${userAddresses.type}" id="del-status">删除</a>
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 0}">
-                                <a href="javascript:void(0);" user-id="${userAddresses.id}" class="up-type am-btn-sm am-text-danger set-default-address">设为默认地址</a>
+                                <a href="javascript:void(0);" user-id="${userAddresses.id}" class="up-type am-btn-sm am-text-danger set-default-address">设为默认</a>
                             </c:if>
                         </td>
                     </tr>
@@ -174,5 +178,14 @@
         $('.identify').click(function () {
             $('#identify-click').click();
         })
+
+//        var $this;
+//        $(".mark-hover").hover(function(){
+//            $this = $(this).find("td[hover-btn='sbt']");
+//            alert($this.attr("user-id"));
+//            $this.show();
+//        },function(){
+//            $this.hide();
+//        })
     })
 </script>

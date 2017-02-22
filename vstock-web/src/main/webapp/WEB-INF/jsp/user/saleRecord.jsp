@@ -120,56 +120,57 @@
             </thead>
             <tbody>
             <c:forEach items="${tradeList}" var="trade">
+                <tr>
                 <%--<c:if test="${trade.status != 52}">--%>
-                <td class="am-text-sm"><a href="/detail?proName=${trade.bftName}" target="_blank"><span  class="popover-tips" data-bftId="${trade.basicinformationId}" data-bftSize="${trade.bftSize}" data-img-url="${configMap._site_url}"  style="color: #333;">${trade.bftName}</span></a></td>
-                <td class="am-text-sm">
-                    <c:out value="${fn:substring(trade.transactionDate, 0, 10)}" />
-                </td>
-                <c:choose>
-                    <c:when test="${not empty trade.bid.bidBond}">
-                        <td class="am-text-sm"><fmt:formatNumber value="${trade.bid.bidBond}" type="number" pattern="￥0.00"/></td>
-                    </c:when>
-                    <c:otherwise>
-                        <td class="am-text-sm">--</td>
-                    </c:otherwise>
-                </c:choose>
-                <td class="am-text-sm">${trade.bftSize}</td>
-                <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
-                <c:forEach items="${statusList}" var="status">
-                    <c:if test="${status.id == trade.status}">
-                        <td class="am-text-sm">${status.bftName}</td>
-                    </c:if>
-                </c:forEach>
-                <td>
-                    <div class="doc-dropdown-justify-js">
-                        <div class="am-dropdown doc-dropdown-js">
-                            <c:choose>
-                                <c:when test="${trade.status == 0 || trade.status == 2 || trade.status == 41 || trade.status == 51}">
-                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" disabled="true"><span class="am-icon-caret-down"></span></a>
-                                </c:otherwise>
-                            </c:choose>
-                            <ul class="am-dropdown-content">
+                    <td class="am-text-sm"><a href="/detail?proName=${trade.bftName}" target="_blank"><span  class="popover-tips" data-bftId="${trade.basicinformationId}" data-bftSize="${trade.bftSize}" data-img-url="${configMap._site_url}"  style="color: #333;">${trade.bftName}</span></a></td>
+                    <td class="am-text-sm">
+                        <c:out value="${fn:substring(trade.transactionDate, 0, 10)}" />
+                    </td>
+                    <c:choose>
+                        <c:when test="${not empty trade.bid.bidBond}">
+                            <td class="am-text-sm"><fmt:formatNumber value="${trade.bid.bidBond}" type="number" pattern="￥0.00"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td class="am-text-sm">--</td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td class="am-text-sm">${trade.bftSize}</td>
+                    <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
+                    <c:forEach items="${statusList}" var="status">
+                        <c:if test="${status.id == trade.status}">
+                            <td class="am-text-sm">${status.bftName}</td>
+                        </c:if>
+                    </c:forEach>
+                    <td>
+                        <div class="doc-dropdown-justify-js">
+                            <div class="am-dropdown doc-dropdown-js">
                                 <c:choose>
-                                    <c:when test="${trade.status == 0}">
-                                        <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}" trade-size="${trade.bftSize}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                    <c:when test="${trade.status == 0 || trade.status == 2 || trade.status == 41 || trade.status == 51}">
+                                        <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                     </c:when>
-                                    <c:when test="${trade.status == 2}">
-                                        <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)" data-am-modal="{target: '#deliverDoods-pop', width: 600}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
-                                    </c:when>
-                                    <c:when test="${trade.status == 41 || trade.status == 51}">
-                                        <li>
-                                            <input type="hidden" class="tradeSave" explain="删除" status="52" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3"/>
-                                            <a class="am-btn am-btn-xs am-text-left" id="trade_del" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a>
-                                        </li>
-                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" disabled="true"><span class="am-icon-caret-down"></span></a>
+                                    </c:otherwise>
                                 </c:choose>
-                            </ul>
+                                <ul class="am-dropdown-content">
+                                    <c:choose>
+                                        <c:when test="${trade.status == 0}">
+                                            <li><a class="am-btn am-btn-xs am-text-left trade-pament" data-id="${trade.id}" trade-size="${trade.bftSize}"  trade-type="2" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去支付</span></a></li>
+                                        </c:when>
+                                        <c:when test="${trade.status == 2}">
+                                            <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)" data-am-modal="{target: '#deliverDoods-pop', width: 600}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
+                                        </c:when>
+                                        <c:when test="${trade.status == 41 || trade.status == 51}">
+                                            <li>
+                                                <input type="hidden" class="tradeSave" explain="删除" status="52" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3"/>
+                                                <a class="am-btn am-btn-xs am-text-left" id="trade_del" href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a>
+                                            </li>
+                                        </c:when>
+                                    </c:choose>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </td>
+                    </td>
                 </tr>
                 <%--</c:if>--%>
             </c:forEach>

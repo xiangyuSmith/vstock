@@ -342,7 +342,7 @@
             var amount = $("#seller_detailed_amount").val();
             var size = $("#seller_detailed_size").val();
             var type = 1;
-            box_create_trade(amount,size,type,null,null);
+            box_create_trade(amount,size,type,0,null);
         });
         $("#buyer_submit_trade_").click(function(){
             if($(this).hasClass("noFunction")){
