@@ -119,7 +119,7 @@ public class TradeController extends BaseController{
         return resultModel;
     }
 
-    public void updateTradeInfo(int bidId,BigDecimal yunFee,int pricePeakId,int type){
+    public void updateTradeInfo(int bidId,BigDecimal yunFee,int pricePeakId,int type,int tradeId){
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         //修改叫价状态
         Bid b = new Bid();
@@ -142,18 +142,22 @@ public class TradeController extends BaseController{
         Trade t = new Trade();
         t.setBidId(bidId);
         List<Trade> tradeList = tradeService.findAllTrade(t);
-        for (Trade trade : tradeList) {
-            if(type == 2){
-                if(!uid.equals(trade.getSellerId())){
-                    td.setId(trade.getId());
-                    td.setStatus(Trade.TRADE_CLOSE);
-                    tradeService.update(td);
-                }
-            }else if(type == 3){
-                if(!uid.equals(trade.getSellerId())){
-                    td.setId(trade.getId());
-                    td.setStatus(Trade.TRADE_CLOSE);
-                    tradeService.update(td);
+        if (tradeList.size() > 1) {
+            for (Trade trade : tradeList) {
+                if (trade.getId() != tradeId) {
+                    if (type == 2) {
+                        if (!uid.equals(trade.getSellerId())) {
+                            td.setId(trade.getId());
+                            td.setStatus(Trade.TRADE_CLOSE);
+                            tradeService.update(td);
+                        }
+                    } else if (type == 3) {
+                        if (!uid.equals(trade.getSellerId())) {
+                            td.setId(trade.getId());
+                            td.setStatus(Trade.TRADE_CLOSE);
+                            tradeService.update(td);
+                        }
+                    }
                 }
             }
         }
@@ -172,7 +176,7 @@ public class TradeController extends BaseController{
         int tradeId = getParamToInt("tradeId");
         double amount = Double.valueOf(getParam("amount", "0"));
         //更新叫价 & 峰值
-        updateTradeInfo(bidId,yunFee,pricePeakId,type);
+        updateTradeInfo(bidId,yunFee,pricePeakId,type,tradeId);
         Payment payment = new Payment();
         payment.setPayment_user_id(Long.parseLong(uid));
         payment.setPayment_status(10);
