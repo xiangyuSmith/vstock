@@ -14,7 +14,7 @@
         <result column="payment_over_date" property="payment_over_date" jdbcType="TIMESTAMP"/>
         <result column="payment_money" property="payment_money" jdbcType="DECIMAL"/>
         <result column="payment_explain" property="payment_explain" jdbcType="VARCHAR"/>
-        <result column="sgin" property="sgin" jdbcType="VARCHAR"/>
+        <result column="sign" property="sign" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="SelectAll_Where_Clause">
@@ -65,7 +65,7 @@
         p.payment_over_date as payment_over_date,
         p.payment_money as payment_money,
         p.payment_explain as payment_explain,
-        p.sgin as sgin,
+        p.sign as sign
     </sql>
 
     <select id="findAll" parameterType="com.vstock.db.entity.Payment" resultType="com.vstock.db.entity.Payment">
@@ -77,7 +77,8 @@
     </select>
 
     <select id="findByTrade">
-        SELECT <include refid="Base_Column_List"/>
+        SELECT
+        <include refid="Base_Column_List"/>
         FROM payment p
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
