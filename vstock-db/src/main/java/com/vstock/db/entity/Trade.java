@@ -42,6 +42,7 @@ public class Trade implements Serializable {
     private BigDecimal tradeFreight;
     private String courierNumber;
     private Integer status;
+    private Integer isBond;
     private String notStatus;
     private String transactionDate;
     private String updateDate;
@@ -146,6 +147,14 @@ public class Trade implements Serializable {
         this.courierNumber = courierNumber;
     }
 
+    public Integer getIsBond() {
+        return isBond;
+    }
+
+    public void setIsBond(Integer isBond) {
+        this.isBond = isBond;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -234,7 +243,7 @@ public class Trade implements Serializable {
         this.userAddressId = userAddressId;
     }
 
-    public Trade(Integer id, String tradeNo, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, Integer userAddressId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, Integer status, String transactionDate, String updateDate, String sign, Bid bid, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
+    public Trade(Integer id, String tradeNo, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, Integer userAddressId, BigDecimal transactionMoney, BigDecimal tradeFreight, String courierNumber, Integer status, Integer isBond, String notStatus, String transactionDate, String updateDate, String sign, Bid bid, Payment payment, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
         this.id = id;
         this.tradeNo = tradeNo;
         this.sellerId = sellerId;
@@ -246,10 +255,13 @@ public class Trade implements Serializable {
         this.tradeFreight = tradeFreight;
         this.courierNumber = courierNumber;
         this.status = status;
+        this.isBond = isBond;
+        this.notStatus = notStatus;
         this.transactionDate = transactionDate;
         this.updateDate = updateDate;
         this.sign = sign;
         this.bid = bid;
+        this.payment = payment;
         this.bftName = bftName;
         this.bftSize = bftSize;
         this.sellerName = sellerName;
@@ -257,7 +269,8 @@ public class Trade implements Serializable {
         this.companyName = companyName;
     }
 
-    public Trade(int userAddressId,BigDecimal tradeFreight, String bftSize, String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String tradeNo) {
+    public Trade(int isBond,int userAddressId, BigDecimal tradeFreight, String bftSize, String updateDate, String transactionDate, Integer status, BigDecimal transactionMoney, Integer basicinformationId, Integer bidId, Integer buyersId, Integer sellerId, String tradeNo) {
+        this.isBond = isBond;
         this.userAddressId = userAddressId;
         this.tradeFreight = tradeFreight;
         this.bftSize = bftSize;

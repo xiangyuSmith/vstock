@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-isbidcheck-tips">
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-isbidcheck-tips" style="box-shadow: 0 0 1px 1px #ccc;">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #1E89C1;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">

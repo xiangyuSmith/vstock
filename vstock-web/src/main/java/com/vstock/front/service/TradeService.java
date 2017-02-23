@@ -1,5 +1,6 @@
 package com.vstock.front.service;
 
+import com.vstock.db.dao.IPaymentDao;
 import com.vstock.db.dao.IRefundDao;
 import com.vstock.db.dao.ITradeDao;
 import com.vstock.db.entity.*;
@@ -26,6 +27,8 @@ public class TradeService {
     IRefundDao refundDao;
     @Autowired
     BidService bidService;
+    @Autowired
+    IPaymentDao paymentDao;
 
     /**
      * 分页查询所有记录
