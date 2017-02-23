@@ -431,6 +431,12 @@
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
+    <select id="findWebCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
+        SELECT COUNT(*) FROM bid b
+        <include refid="SearchAllByPage_Where_Clause"/>
+        and b.status not in(40)
+    </select>
+
     <select id="findAndUserCount" parameterType="com.vstock.db.entity.Bid" resultType="Integer">
         SELECT COUNT(*) FROM bid b LEFT JOIN `user` u ON b.user_id = u.id
         LEFT JOIN `basicinformation` bft ON b.basicinformation_id = bft.id

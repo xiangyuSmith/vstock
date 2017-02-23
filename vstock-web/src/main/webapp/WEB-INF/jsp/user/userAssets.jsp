@@ -90,7 +90,7 @@
                                             <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;">--</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="currency" pattern="￥#,##0.0"/></span>
+                                            <span class="am-center layout-font-size-26 am-text-center am-padding-top-xs" style="color: #1FC52C;"><fmt:formatNumber value="${basicinformationRose.change_range}" type="number" pattern="0.00%"/></span>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:when>
@@ -170,10 +170,10 @@
                                         <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                             <c:choose>
                                                 <c:when test="${userAssets.basicinformationRose.type == 0 && userAssets.basicinformationRose.change_range > 0}">
-                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="currency" pattern="￥#,##0.00"/></td>
+                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.percentage_change}" type="currency" pattern="￥#,##0.00"/>(<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/>)</td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="currency" pattern="￥#,##0.00"/></td>
+                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.percentage_change}" type="currency" pattern="￥#,##0.00"/>(<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/>)</td>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:when>

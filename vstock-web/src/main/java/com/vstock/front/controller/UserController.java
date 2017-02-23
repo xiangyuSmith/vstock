@@ -88,7 +88,7 @@ public class UserController extends BaseController {
             trade.setNotStatus("51");
             trade.setBuyersId(bid.getUserId());
         }
-        int totalCount = bidService.findCount(bid);
+        int totalCount = bidService.findWebCount(bid);
         Page page = new Page(totalCount,"1");
         page.setPageSize(5);
         List<Bid> bidList = bidService.findBidStatus(bid,page);
@@ -124,7 +124,7 @@ public class UserController extends BaseController {
             bid.setType("1");
         }
         String pageNow = request.getParameter("pageNow");
-        int totalCount = bidService.findCount(bid);
+        int totalCount = bidService.findWebCount(bid);
         Page page = new Page(totalCount,pageNow);
         List<Bid> bidList = bidService.findBidStatus(bid,page);
         List<Bid> bidStatus = StatusUtil.bidStatus();
@@ -223,9 +223,17 @@ public class UserController extends BaseController {
         record.setStatus(0);
         List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
         for (int i = 0; i < userAssetsList.size(); i++){
-            userAssetsList.get(i).getBasicinformationRose().
-                    setChange_range(userAssetsList.get(i).getMoney().subtract(userAssetsList.get(i).getBasicinformationRose().
-                            getCurrent_market_value()));
+            if(userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value().compareTo(userAssetsList.get(i).getMoney()) == 1){
+                userAssetsList.get(i).getBasicinformationRose().setType(1);
+            }else if (userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value().compareTo(userAssetsList.get(i).getMoney()) == -1){
+                userAssetsList.get(i).getBasicinformationRose().setType(0);
+            }else {
+                userAssetsList.get(i).getBasicinformationRose().setType(1);
+            }
+            userAssetsList.get(i).getBasicinformationRose().setPercentage_change(userAssetsList.get(i).getBasicinformationRose()
+                    .getCurrent_market_value().subtract(userAssetsList.get(i).getMoney()));
+            userAssetsList.get(i).getBasicinformationRose().setChange_range(userAssetsList.get(i).getBasicinformationRose()
+                    .getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),2, RoundingMode.HALF_UP));
         }
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
         model.put("basicinformationRose",basicinformationRose);

@@ -27,6 +27,9 @@ public interface IBidDao {
     //查询所有总数
     int findCount(@Param("obj")Bid record);
 
+    //前台去掉删除查询总数
+    int findWebCount(@Param("obj")Bid record);
+
     //添加数据
     int insert(Bid record);
 

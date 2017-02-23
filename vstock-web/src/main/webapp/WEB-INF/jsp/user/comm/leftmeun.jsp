@@ -738,6 +738,7 @@
             money = parseFloat(money.substring(1,money.length).replace(/[^\d\.-]/g, ""));
             $('#my-confirm-userA').modal({
                 onConfirm: function() {
+                    loadingshow("正在删除...");
                     sendRequest("/userAssets/saveUserAssets",{
                         id: id,
                         bId: btfId,
@@ -745,6 +746,7 @@
                         size: size,
                         status : 1
                     },function(res) {
+                        loadingclose();
                         if (res.retCode == 1){
                             alertTips(1,"","删除成功");
                             ajaxContent("../user/userAssets", "" ,"tradeforex_tilie",1);

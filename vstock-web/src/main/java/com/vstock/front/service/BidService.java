@@ -62,6 +62,13 @@ public class BidService {
     public int findCount(Bid record){return bidDao.findCount(record);}
 
     /**
+     * 去掉已删除状态的查询总数
+     * @param record
+     * @return
+     */
+    public int findWebCount(Bid record){return bidDao.findWebCount(record);}
+
+    /**
      * 关联峰值表查询
      * @param record
      * @param page

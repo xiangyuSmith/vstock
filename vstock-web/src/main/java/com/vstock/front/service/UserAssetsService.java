@@ -92,19 +92,18 @@ public class UserAssetsService {
                 BasicinformationRose basRose = userAssets.getBasicinformationRose();
                 if (basRose != null) {
                     money = money.add(basRose.getCurrent_market_value());
-                    //判断是涨还是跌
-                    if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == 1) {
-                        changeMoney = changeMoney.add(userAssets.getMoney().subtract(basRose.getCurrent_market_value()));
-                    } else if (basRose.getCurrent_market_value().compareTo(userAssets.getMoney()) == -1){
-                        changeMoney = changeMoney.add(userAssets.getMoney().subtract(basRose.getCurrent_market_value()));
-                    }else {
-                        changeMoney = changeMoney.add(new BigDecimal(0));
-                    }
+                    changeMoney = changeMoney.add(userAssets.getMoney());
                 }
+            }
+            if (money.compareTo(changeMoney) == 1) {
+                basicinformationRose.setChange_range(money.divide(changeMoney,2, RoundingMode.HALF_UP));
+            } else if (money.compareTo(changeMoney) == -1){
+                basicinformationRose.setChange_range(new BigDecimal("-"+money.divide(changeMoney,2, RoundingMode.HALF_UP)));
+            }else {
+                basicinformationRose.setChange_range(money.divide(changeMoney,2, RoundingMode.HALF_UP));
             }
             basicinformationRose.setId(userAssetsList.size());
             basicinformationRose.setCurrent_market_value(money);
-            basicinformationRose.setChange_range(changeMoney);
             basicinformationRose.setPercentage_change(money.divide(new BigDecimal(userAssetsList.size()),2, RoundingMode.HALF_UP));
         }
         return basicinformationRose;
