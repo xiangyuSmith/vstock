@@ -135,7 +135,7 @@
     function sendAddress(data){
         sendRequest("/user/saveAdder",data,function(res) {
             if (res.retCode == 1){
-                window.location.reload();
+                ajaxContent("/user/userInfo", "", "tradeforex_tilie",1);
             }else {
                 alertTips(2,"服务器繁忙","请重新操作");
             }
@@ -617,10 +617,10 @@
 
         $("body").on("click",".userInfo-upsbt",function(){
             var $this = $(this);
-            $('#city-name').val($this.parent().prev().prev().prev().prev().prev().text());
-            $('#adder-name').val($this.parent().prev().prev().prev().prev().text());
-            $('#shop-name').val($this.parent().prev().prev().prev().prev().prev().prev().text().replace(/(^\s*)|(\s*$)/g, ""));
-            $('#phone-number').val($this.parent().prev().prev().text().replace(/(^\s*)|(\s*$)/g, ""));
+            $('#city-name').val($this.parent().prev().prev().prev().prev().text());
+            $('#adder-name').val($this.parent().prev().prev().prev().text());
+            $('#shop-name').val($this.parent().prev().prev().prev().prev().prev().text().replace(/(^\s*)|(\s*$)/g, ""));
+            $('#phone-number').val($this.parent().prev().text().replace(/(^\s*)|(\s*$)/g, ""));
             $('#adder-id').val($this.attr('user-id'));
             var landlineNumber = $this.parent().prev().text().replace(/(^\s*)|(\s*$)/g, "");
             if (landlineNumber.indexOf("-")>=0){
