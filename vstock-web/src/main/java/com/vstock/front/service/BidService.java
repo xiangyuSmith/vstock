@@ -288,6 +288,9 @@ public class BidService {
             if(money.compareTo(sellBid.get(0).getBidMoney()) == 0){
                 return 2;
             }
+            if(money.compareTo(sellBid.get(0).getBidMoney()) == -1){
+                return 6;
+            }
         }
         if(type == 0){
             if(sellBid.size() > 0 && buyBid.size() > 0) {
@@ -315,6 +318,9 @@ public class BidService {
                 }
                 if(money.compareTo(buyBid.get(0).getBidMoney()) == 0){
                     return 5;
+                }
+                if(money.compareTo(buyBid.get(0).getBidMoney()) == 1){
+                    return 6;
                 }
             }
         }

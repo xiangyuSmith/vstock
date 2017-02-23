@@ -45,7 +45,7 @@
                 </c:when>
                 <c:otherwise>
                     <div class="am-text-center">
-                        <img src="/assets/i/sort_kong.png" />
+                        <img src="/assets/i/no-sale-big.png" />
                     </div>
                 </c:otherwise>
             </c:choose>
