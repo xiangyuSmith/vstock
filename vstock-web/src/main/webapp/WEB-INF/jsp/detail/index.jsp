@@ -564,7 +564,10 @@
                                         }
                                     })
                                 },
-                                onCancel:function(){}
+                                onCancel:function(){
+                                    $('#my-popup-sell-bid').modal('close');
+                                    $('#my-popup-buyer-bid').modal('close');
+                                }
                             });
                         }
                     });
