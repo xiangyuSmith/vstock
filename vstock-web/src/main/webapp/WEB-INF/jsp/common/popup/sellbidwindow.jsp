@@ -5,6 +5,7 @@
 </style>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-sell-bid">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
+        <input id="bftId" type="hidden" value="${basicinformation.id}" />
         <div class="am-modal-hd" style="background-color: #00CD61;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-fl am-text-lg">卖家叫价</span>
@@ -31,14 +32,16 @@
                             <span class="am-fl" style="color: #646464;font-size: 16px;">
                                 买家最高出价：
                                 <span style="color: #646464;">￥
-                                    <c:choose>
-                                        <c:when test="${not empty pricePeak1.highestBid}">
-                                            <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,#00.0#"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            -
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <span id="buyer_bid_highestBid">
+                                        <c:choose>
+                                            <c:when test="${not empty pricePeak1.highestBid}">
+                                                <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,#00.0#"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </span>
                                 </span>
                             </span>
                         </div>
@@ -132,3 +135,21 @@
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        $("#seller_buy_size").change(function(){
+            sendRequest("/detail/getPricePeak",{
+                "size":$(this).val(),
+                "bid":$("#bftId").val()
+            },function(res){
+                if(res.retCode == 1){
+                    if(res.data.pricePeak1 != undefined){
+                        $("#buyer_bid_highestBid").text(res.data.pricePeak1.highestBid);
+                    }else{
+                        $("#buyer_bid_highestBid").text("-");
+                    }
+                }
+            });
+        });
+    });
+</script>

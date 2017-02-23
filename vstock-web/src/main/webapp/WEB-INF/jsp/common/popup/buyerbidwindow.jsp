@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buyer-bid">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
+        <input id="bftId" type="hidden" value="${basicinformation.id}" />
         <div class="am-modal-hd" style="background-color: #FF5A60;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-fl am-text-lg">买家出价</span>
@@ -42,14 +43,16 @@
                             <span class="am-fr" style="color: #646464;font-size: 16px;">
                                 卖家最低叫价：
                                 <span style="color: #646464;">￥
-                                    <c:choose>
-                                        <c:when test="${not empty pricePeak2.minimumSellingPrice}">
-                                            <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            -
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <span id="seller_bid_minimumSellingPrice">
+                                        <c:choose>
+                                            <c:when test="${not empty pricePeak2.minimumSellingPrice}">
+                                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </span>
                                 </span>
                             </span>
                         </div>
@@ -124,6 +127,20 @@
 </div>
 <script>
     $(function(){
+        $("#buyer_sell_size").change(function(){
+            sendRequest("/detail/getPricePeak",{
+                "size":$(this).val(),
+                "bid":$("#bftId").val()
+            },function(res){
+                if(res.retCode == 1){
+                    if(res.data.pricePeak1 != undefined){
+                        $("#seller_bid_minimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
+                    }else{
+                        $("#seller_bid_minimumSellingPrice").text("-");
+                    }
+                }
+            });
+        });
         /**
          * 提示文案
          */
