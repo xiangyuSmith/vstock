@@ -230,10 +230,8 @@ public class UserController extends BaseController {
             }else {
                 userAssetsList.get(i).getBasicinformationRose().setType(1);
             }
-            userAssetsList.get(i).getBasicinformationRose().setPercentage_change(userAssetsList.get(i).getBasicinformationRose()
-                    .getCurrent_market_value().subtract(userAssetsList.get(i).getMoney()));
             userAssetsList.get(i).getBasicinformationRose().setChange_range(userAssetsList.get(i).getBasicinformationRose()
-                    .getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),2, RoundingMode.HALF_UP));
+                    .getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),4, RoundingMode.HALF_UP));
         }
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
         model.put("basicinformationRose",basicinformationRose);

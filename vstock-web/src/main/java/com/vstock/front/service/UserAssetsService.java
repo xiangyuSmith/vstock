@@ -96,11 +96,11 @@ public class UserAssetsService {
                 }
             }
             if (money.compareTo(changeMoney) == 1) {
-                basicinformationRose.setChange_range(money.divide(changeMoney,2, RoundingMode.HALF_UP));
+                basicinformationRose.setChange_range(money.divide(changeMoney,4, RoundingMode.HALF_UP));
             } else if (money.compareTo(changeMoney) == -1){
-                basicinformationRose.setChange_range(new BigDecimal("-"+money.divide(changeMoney,2, RoundingMode.HALF_UP)));
+                basicinformationRose.setChange_range(new BigDecimal("-"+money.divide(changeMoney,4, RoundingMode.HALF_UP)));
             }else {
-                basicinformationRose.setChange_range(money.divide(changeMoney,2, RoundingMode.HALF_UP));
+                basicinformationRose.setChange_range(money.divide(changeMoney,4, RoundingMode.HALF_UP));
             }
             basicinformationRose.setId(userAssetsList.size());
             basicinformationRose.setCurrent_market_value(money);

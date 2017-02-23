@@ -170,10 +170,10 @@
                                         <c:when test="${not empty userAssets.basicinformationRose.change_range}">
                                             <c:choose>
                                                 <c:when test="${userAssets.basicinformationRose.type == 0 && userAssets.basicinformationRose.change_range > 0}">
-                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.percentage_change}" type="currency" pattern="￥#,##0.00"/>(<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/>)</td>
+                                                    <td>-<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.percentage_change}" type="currency" pattern="￥#,##0.00"/>(<fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/>)</td>
+                                                    <td><fmt:formatNumber value="${userAssets.basicinformationRose.change_range}" type="number" pattern="0.00%"/></td>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:when>

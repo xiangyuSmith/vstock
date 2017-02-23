@@ -167,6 +167,8 @@
     </div>
 </div>
 <%@include file="../user/popup/deliverDoods.jsp"%>
+<%@include file="popup/userBuyAddress.jsp" %>
+<a href="javascript:;" id="now-seller-buy-detailed" style="display: none;" data-am-modal="{target: '#my-popup-buy-userBuyAddress', width: 900, height: 520}">购买</a>
 <%--<script src="${ctx}/assets/js/amazeui.min.js"></script>--%>
 <script>
     $(function(){
