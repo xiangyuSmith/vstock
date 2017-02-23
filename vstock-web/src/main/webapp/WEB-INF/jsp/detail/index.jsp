@@ -36,6 +36,8 @@
         .am-selected-btn{ border:1px solid #aeaeae; }
         .join-assets-icon{ display: inline-block;width: 90px;height: 30px;line-height: 30px;text-align: right;background: url('/assets/i/detail_icon.png');background-position: -606px -18px; }
         .am-show-md-up{ box-shadow: rgb(204, 204, 204) 0 2px 10px 0; }
+        .set-default-address{ opacity : 0; }
+        .show-tr-address:HOVER .set-default-address{ opacity : 1; }
     </style>
 </head>
 <body>
@@ -676,6 +678,43 @@
                     { show: 10, hide: 10 }
                 }
         );
+
+        /**
+         * 提示文案
+         */
+        $(".question-tips-sell").each(function(){
+            var $this = $(this);
+            var $html = "";
+            switch ($this.attr("data-type")){
+                case "0.0.0.1":
+                    $html = "<div class='question-tips-text'><span>超出有效期仍未有买家购买,出价将失效</span></div>";
+                    break;
+                case "0.0.0.2":
+                    $html = "<div class='question-tips-text'><span>卖家发货至v－stock的运费，卖家承担，拒收到付件；</span></div>";
+                    break;
+                case "0.0.0.3":
+                    $html = "<div class='question-tips-text'>" +
+                            "<span>鉴定鞋子真假的费用</span>" +
+                            "</div>";
+                    break;
+                case "0.0.0.4":
+                    $html = "<div class='question-tips-text'><span>1、叫价失效时或者交易成功后，保证金退回；</span><br/>" +
+                            "<span>2、如鉴定不合格，保证金将作为违约金赔偿给买家。</span></div>";
+                    break;
+                default:
+                    break;
+            }
+            $this.popover(
+                    {
+                        trigger:'hover focus',
+                        html: true,
+                        placement:'auto right',
+                        content:$html,
+                        animation:true,
+                        delay:
+                        { show: 300, hide: 100 }
+                    });
+        });
     });
 </script>
 </body>

@@ -248,6 +248,15 @@
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAllSale" parameterType="com.vstock.db.entity.Trade" resultType="com.vstock.db.entity.Trade">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM trade t
+        <include refid="SelectAllByPage_Where_Clause"/>
+        and (t.status = 40 or t.status = 1)
+        ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findAllTrade" parameterType="com.vstock.db.entity.Trade" resultType="com.vstock.db.entity.Trade">
         SELECT
         <include refid="Base_Column_List"/>

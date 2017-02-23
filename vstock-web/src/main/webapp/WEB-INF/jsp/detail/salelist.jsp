@@ -41,15 +41,16 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <%@include file="../detail/salehchar.jsp" %>
                 </c:when>
                 <c:otherwise>
                     <div class="am-text-center">
-                        <span>还没有销售记录哦，赶紧叫价交易吧！</span>
+                        <img src="/assets/i/sort_kong.png" />
                     </div>
                 </c:otherwise>
             </c:choose>
         </div>
-        <%@include file="../detail/salehchar.jsp" %>
+
     </div>
 </article>
 <article class="am-g am-margin-top-xl">

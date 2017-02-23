@@ -50,6 +50,15 @@
             <if test="obj.id != null and obj.id != ''">
                 AND p.id = #{obj.id,jdbcType=INTEGER}
             </if>
+            <if test="obj.payment_type != null and obj.payment_type != ''">
+                AND p.payment_type = #{obj.payment_type,jdbcType=INTEGER}
+            </if>
+            <if test="obj.payment_status != null and obj.payment_status != ''">
+                AND p.payment_status = #{obj.payment_status,jdbcType=INTEGER}
+            </if>
+            <if test="obj.order_record_id != null and obj.order_record_id != ''">
+                AND p.order_record_id = #{obj.order_record_id,jdbcType=INTEGER}
+            </if>
         </where>
     </sql>
 
@@ -76,7 +85,7 @@
         ORDER BY p.payment_date DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="findByTrade">
+    <select id="findByTrade" parameterType="com.vstock.db.entity.Payment" resultType="com.vstock.db.entity.Payment">
         SELECT
         <include refid="Base_Column_List"/>
         FROM payment p
@@ -90,8 +99,8 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `payment`
-        (`id`,`payment_user_id`,`order_record_id`,``payment_alipay_name`,`order_record_id`,`payment_number`,`payment_status`,`payment_mode`,`payment_type`,`payment_date`,`payment_over_date`,`payment_money`,`payment_explain`,`sign`)
-        VALUES(null,#{payment_user_id},#{order_record_id},#{payment_alipay_name},#{order_record_id},#{payment_number},#{payment_status},#{payment_mode},#{payment_type},#{payment_date},#{payment_over_date},#{payment_money},#{payment_explain},#{sign})
+        (`id`,`payment_user_id`,`payment_alipay_name`,`order_record_id`,`payment_number`,`payment_status`,`payment_mode`,`payment_type`,`payment_date`,`payment_over_date`,`payment_money`,`payment_explain`,`sign`)
+        VALUES(null,#{payment_user_id},#{payment_alipay_name},#{order_record_id},#{payment_number},#{payment_status},#{payment_mode},#{payment_type},#{payment_date},#{payment_over_date},#{payment_money},#{payment_explain},#{sign})
     </insert>
 
     <update id="update">

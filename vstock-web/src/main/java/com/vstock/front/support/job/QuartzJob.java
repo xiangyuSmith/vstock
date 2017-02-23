@@ -102,15 +102,15 @@ public class QuartzJob implements Job {
         Trade t = new Trade();
         Payment p = new Payment();
         for (Trade trade : trades) {
+            difference = isdifference(trade.getTransactionDate(),time);
             if(type == 1){
                 p.setOrder_record_id(trade.getId());
                 p.setPayment_type(3);
+                p.setPayment_status(Payment.PAY_STATUS_SUCCESS);
                 Payment payment = paymentService.findByTrade(p);
                 if(payment != null){
                     difference= isdifference(trade.getTransactionDate(),60*15);
                 }
-            }else{
-                difference = isdifference(trade.getTransactionDate(),time);
             }
             if(difference <= 0){
                 t.setId(trade.getId());
@@ -130,7 +130,6 @@ public class QuartzJob implements Job {
     private long isdifference(String objDate,int second){
         long bid_time = Long.parseLong(DateUtils.date2TimeStamp(objDate , ToolDateTime.pattern_ymd_hms));
         long now_time = ToolDateTime.getDateByTime()/1000L;
-        long difference = (bid_time+second)-now_time;
-        return difference;
+        return (bid_time+second)-now_time;
     }
 }

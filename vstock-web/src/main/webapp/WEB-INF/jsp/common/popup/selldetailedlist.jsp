@@ -98,11 +98,11 @@
                         </div>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
-                        <span class="am-u-md-6 am-padding-0 layout-font-size-18">运费：</span>
+                        <span class="am-u-md-6 am-padding-0 layout-font-size-18">运费：<span class="question-tips question-tips-sell" data-type="0.0.0.2" style="background: url('/assets/i/detail_icon.png');background-position: -538px -28px"></span></span>
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right">卖家承担</span>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
-                        <span class="am-u-md-6 am-padding-0 layout-font-size-18">鉴定费：</span>
+                        <span class="am-u-md-6 am-padding-0 layout-font-size-18">鉴定费：<span class="question-tips question-tips-sell" data-type="0.0.0.3" style="background: url('/assets/i/detail_icon.png');background-position: -538px -28px"></span></span>
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right">免费</span>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
             <div class="am-u-md-8"></div>
             <div class="am-u-md-4 am-text-left">
                 <div class="am-padding-sm">
-                    <span class="am-u-md-6 am-padding-0 layout-font-size-16">保证金：</span><span class="am-u-md-6 am-padding-0 layout-font-size-20 am-text-right">￥10.00</span><br/>
+                    <span class="am-u-md-6 am-padding-0 layout-font-size-16">保证金：<span class="question-tips question-tips-sell" data-type="0.0.0.4" style="background: url('/assets/i/detail_icon.png');background-position: -538px -28px"></span></span><span class="am-u-md-6 am-padding-0 layout-font-size-20 am-text-right">￥10.00</span><br/>
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16" style="height: 38px;line-height: 38px;">支付金额：</span><span class="am-u-md-6 am-padding-0 layout-font-size-22 am-text-right" style="color: #E75C58;font-weight: bold;">10.00元</span><br/>
                     <div class="am-text-center am-margin-top-xl">
                         <a href="javascript:;" id="seller_submit_trade_" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>

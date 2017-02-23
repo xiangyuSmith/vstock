@@ -37,6 +37,11 @@ public class TradeService {
         return tradeDao.findAll(record,page.getStartPos(),page.getPageSize());
     }
 
+    public List<Trade> findAllSale(Trade record, Page page){
+        return tradeDao.findAllSale(record,page.getStartPos(),page.getPageSize());
+    }
+
+
     public List<Trade> findAllTrade(Trade record){
         return tradeDao.findAllTrade(record);
     }
@@ -60,12 +65,11 @@ public class TradeService {
      * 获取最后成交价
      * @return
      */
-    public Trade getLastTrade(int bid,String size,int status, Page page){
+    public Trade getLastTrade(int bid,String size, Page page){
         Trade trade = new Trade();
         trade.setBasicinformationId(bid);
         trade.setBftSize(size);
-        trade.setStatus(status);
-        List<Trade> tradelist = findAll(trade,page);
+        List<Trade> tradelist = findAllSale(trade,page);
         if(tradelist.size() != 0){
             return tradelist.get(0);
         }

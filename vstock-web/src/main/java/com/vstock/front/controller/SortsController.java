@@ -106,7 +106,7 @@ public class SortsController extends BaseController{
         //获取最后成交价
         Basicinformation b = new Basicinformation();
         b.setId(String.valueOf(bid));
-        Trade trade = tradeService.getLastTrade(bid,size,Trade.TRADE_SUCESS,lagePage);
+        Trade trade = tradeService.getLastTrade(bid,size,lagePage);
         Basicinformation basicinformation = basicinformationService.findObj(b);
         //获取成交价格涨幅
         Map<String,Object> resParams = basicinformationService.getPricesTrend(bid,size,trade);

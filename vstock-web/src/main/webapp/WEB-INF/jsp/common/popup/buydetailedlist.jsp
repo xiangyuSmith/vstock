@@ -149,7 +149,7 @@
                                         </c:choose>
                                         </span>
                                     </td>
-                                    <td class="do" style="width: 16%;">
+                                    <td class="do" style="width: 20%;">
                                         <c:choose>
                                             <c:when test="${userAddresses.type == 0}">
                                                 <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" style="display: none;" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
@@ -165,7 +165,7 @@
                             </c:forEach>
                     </table>
                     <div>
-                        <a id="loading-address" href="javascript:;">其他收货地址</a>
+                        <a id="loading-address" href="javascript:;">其他收货地址</a>。
                         <div id="loading-img" class="am-text-center" style="display: none;">
                             <img src="/assets/i/loading.gif" />
                         </div>

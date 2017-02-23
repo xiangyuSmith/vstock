@@ -147,13 +147,7 @@ public class TradeController extends BaseController{
         if (tradeList.size() > 1) {
             for (Trade trade : tradeList) {
                 if (trade.getId() != tradeId) {
-                    if (type == 2) {
-                        if (!uid.equals(trade.getSellerId())) {
-                            td.setId(trade.getId());
-                            td.setStatus(Trade.TRADE_CLOSE);
-                            tradeService.update(td);
-                        }
-                    } else if (type == 3) {
+                    if (type == 3) {
                         if (!uid.equals(trade.getSellerId())) {
                             td.setId(trade.getId());
                             td.setStatus(Trade.TRADE_CLOSE);
@@ -174,11 +168,11 @@ public class TradeController extends BaseController{
         int type = getParamToInt("type");
         int tradeId = getParamToInt("tradeId");
         double amount = Double.valueOf(getParam("amount", "0"));
-        int ischeck = getParamToInt("ischeck");
-        if(ischeck != 1){
+        String ischeck = getParam("ischeck","0");
+        if(!"1".equals(ischeck)){
             int bidId = getParamToInt("bidId");
             int pricePeakId = getParamToInt("pricePeakId");
-            BigDecimal yunFee = new BigDecimal(getParam("yunFee"));
+            BigDecimal yunFee = new BigDecimal(getParam("yunFee","0"));
             //更新叫价 & 峰值
             updateTradeInfo(bidId,yunFee,pricePeakId,type,tradeId);
         }
@@ -347,8 +341,7 @@ public class TradeController extends BaseController{
         setLastPage(0,5);
         Trade trade = new Trade();
         trade.setBasicinformationId(bid);
-        trade.setStatus(40);
-        List<Trade> tradeList = tradeService.findAll(trade,lagePage);
+        List<Trade> tradeList = tradeService.findAllSale(trade,lagePage);
         List<Basicinformation> bList = basicinformationService.findByType(6);
         model.put("bList",bList);
         model.put("tradeList",tradeList);
