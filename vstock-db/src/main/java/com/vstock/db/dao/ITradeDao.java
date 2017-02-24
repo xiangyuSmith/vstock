@@ -18,6 +18,8 @@ public interface ITradeDao {
 
     List<Trade> findAllTrade(@Param("obj")Trade record);
 
+    List<Trade> findInStatus(@Param("obj")Trade record);
+
     //带时间区间分页查询
     List<Trade> findAllDate(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize,
                             @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);

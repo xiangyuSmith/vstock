@@ -50,6 +50,15 @@ public class TradeService {
     }
 
     /**
+     * 查询正在进行中的订单
+     * @param record
+     * @return
+     */
+    public List<Trade> findInStatus(Trade record){
+        return tradeDao.findInStatus(record);
+    }
+
+    /**
      * 链表查询所有记录
      * @param record
      * @param page

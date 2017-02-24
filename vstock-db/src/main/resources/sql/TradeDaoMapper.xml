@@ -264,6 +264,14 @@
         <include refid="SelectAllByPage_Where_Clause"/>
     </select>
 
+    <select id="findInStatus" parameterType="com.vstock.db.entity.Trade" resultType="com.vstock.db.entity.Trade">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM trade t
+        <include refid="SelectAllByPage_Where_Clause"/>
+        AND t.status IN (2,10,20,30)
+    </select>
+
     <select id="findAllDate" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
         SELECT u.nick AS sellerName, a.nick AS buyersName, b.bft_name,b.bft_size, b.bid_bond as bidBond,
         <include refid="Base_Column_List"/>

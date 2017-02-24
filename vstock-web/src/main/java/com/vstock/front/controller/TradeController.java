@@ -251,6 +251,19 @@ public class TradeController extends BaseController{
             resultModel.setRetMsg("此款宝贝，您已有一笔未支付的订单，是否需要付款");
             resultModel.setData(tradeList.get(0).getId());
             return resultModel;
+        }else {
+            Trade trade = new Trade();
+            trade.setBftSize(record.getBftSize());
+            trade.setBasicinformationId(record.getBasicinformationId());
+            trade.setBuyersId(record.getBuyersId());
+            trade.setSellerId(record.getSellerId());
+            tradeList = tradeService.findInStatus(trade);
+            if (tradeList.size() > 0){
+                resultModel.setRetCode(3);
+                resultModel.setRetMsg("您当前购买鞋款已有正在进行中的订单，您确定需要再购买一双吗？");
+                resultModel.setData(tradeList.get(0).getId());
+                return resultModel;
+            }
         }
         resultModel.setRetCode(resultModel.RET_OK);
         return resultModel;
