@@ -4,8 +4,9 @@
     .address-list table tr td input{ margin-top: 7px; margin-left: 10px;  }
     .set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
     .set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
+    .lg-dimmer-detailed{ position: absolute !important;margin-left: -72% !important; }
 </style>
-<div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 260px;">
+<div class="am-modal am-modal-no-btn lg-dimmer-detailed" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 260px;">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <div class="am-modal-hd" style="background-color: #FF5A60;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
@@ -47,9 +48,9 @@
                             </span>
                         </div>
                     </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm am-text-left">
-                        <span>卖家叫价需大于买家最高出价</span>
-                    </div>
+                    <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm am-text-left">--%>
+                        <%--&lt;%&ndash;<span>卖家叫价需大于买家最高出价</span>&ndash;%&gt;--%>
+                    <%--</div>--%>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-fl am-margin-top-sm">
                         <div class="am-u-md-2 am-fl am-padding-0 am-text-left">
                             <span style="color:#FD9192;font-size: 14px;">温馨提示：</span>
@@ -100,7 +101,7 @@
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>
                     </span>
                 </div>
-                <div style="overflow-y: scroll;">
+                <div id="new-address-div-content" style="max-height: 136px;overflow-y: scroll;">
                     <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
                         <tbody id="new-address-tbody">
 
@@ -132,32 +133,13 @@
         var $editAddress = "";
         var countMoney = 0;
         var amount = $("#buyer_detailed_amount").val();
-        var addressId = $("#new-address").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
-        if(addressId == undefined){
-            $("#yunFee").text("-");
-        }else{
-            //计算运费
-            jisuan(addressId);
-        }
-        $("#new-address").find("tr td input:radio[name='check-address']").click(function(){
-            jisuan($(this).attr("data-userAddress"));
-        });
-        function jisuan(addressId){
-            sendRequest("/trade/getYunfee",{
-                "addressId": addressId
-            },function(res){
-                if(res.retCode == 1){
-                    $("#yunFee").text(res.data);
-                    var yunFee = $.trim($("#yunFee").text());
-                    if(yunFee != "-" && yunFee != 0 && yunFee != ""){
-                        countMoney = parseFloat(yunFee) + parseFloat(amount);
-                    }
-                    $(".countMoney").text(countMoney.toFixed(2));
-                }else{
-                    alertTips(2,"提示",res.retMsg);
-                }
-            });
-        }
+        var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
+//        if(addressId == undefined){
+//            $("#yunFee").text("-");
+//        }else{
+//            //计算运费
+//            jisuan(addressId);
+//        }
 
         $("#loading-address").click(function(){
             $(this).css("display","none");
@@ -168,23 +150,6 @@
             },500);
         });
 
-        $("body").on("click",".set-default-address",function(){
-            var $this =  $(this);
-            sendRequest("/user/saveAdder",{
-                 "id":$this.attr("data-userAddress"),
-                 "type":1
-            },function(res){
-                if(res.retCode == 1){
-                    $(".edit-address").css("display","none").siblings().css("display","inline-block");
-                    $this.parent().css("display","none").siblings().css("display","inline-block");
-                    $this.parent().parent().siblings().find("input[type='radio']").prop("checked","checked");
-                    $(".default-span-tips").css("display","none");
-                    $this.parent().parent().siblings().find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
-                    jisuan($this.attr("data-userAddress"));
-                    alertTips(1,"地址设置","默认收货地址已更新");
-                }
-            });
-        });
         $(".edit-address").click(function(){
            $("#up-address-title").text("编辑");
         });
