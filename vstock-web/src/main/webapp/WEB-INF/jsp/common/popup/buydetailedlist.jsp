@@ -2,7 +2,6 @@
 <style>
     .address-list table tr td{ font-size: 14px; }
     .address-list table tr td input{ margin-top: 7px; margin-left: 10px;  }
-    .edit-address { float:left; }
 </style>
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-detailed">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
@@ -149,15 +148,18 @@
                                         </c:choose>
                                         </span>
                                     </td>
-                                    <td class="do" style="width: 20%;">
+                                    <td class="do" style="width: 24%;">
+                                        <div style="float:left;margin-right: 20px;">
+                                            <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
+                                            |
+                                            <a href="javascript:;" class="del-address" data-userAddress="${userAddresses.id}" data-type="${userAddresses.type}">删除</a>
+                                        </div>
                                         <c:choose>
                                             <c:when test="${userAddresses.type == 0}">
-                                                <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" style="display: none;" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
                                                 <div><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="javascript:;" class="edit-address" data-userAddress="${userAddresses.id}" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>
-                                                <div style="display: none;"><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
+                                                <div><a href="javascript:void(0);" data-userAddress="${userAddresses.id}" style="opacity: 0;" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
@@ -165,7 +167,7 @@
                             </c:forEach>
                     </table>
                     <div>
-                        <a id="loading-address" href="javascript:;">其他收货地址</a>。
+                        <a id="loading-address" href="javascript:;">其他收货地址</a>
                         <div id="loading-img" class="am-text-center" style="display: none;">
                             <img src="/assets/i/loading.gif" />
                         </div>
@@ -202,6 +204,16 @@
             //计算运费
             jisuan(addressId);
         }
+
+
+        $(".show-tr-address").on({mouseenter: function(e) {
+//            var is  = $(this).parent().parent().parent().hasClass("checked-tr");
+            if(!$(this).hasClass("checked-tr")){
+                $(this).find(".set-default-address").css("opacity", "1");
+            }
+        },mouseleave: function(e) {
+            $(".set-default-address").css("opacity", "0");
+        }});
         $("#new-address").on("click","input:radio[name='check-address']",function(){
             jisuan($(this).attr("data-userAddress"));
         });
@@ -238,9 +250,9 @@
                  "type":1
             },function(res){
                 if(res.retCode == 1){
-                    $(".edit-address").css("display","none").siblings().css("display","inline-block");
-                    $this.parent().css("display","none").siblings().css("display","inline-block");
                     $this.parent().parent().siblings().find("input[type='radio']").prop("checked","checked");
+                    $(".checked-tr").removeClass("checked-tr");
+                    $this.parent().parent().parent().addClass("checked-tr");
                     $(".default-span-tips").css("display","none");
                     $this.parent().parent().siblings().find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
                     $("#new-address tr:eq(0)").before($this.parent().parent().parent());
@@ -249,12 +261,6 @@
                 }
             });
         });
-
-//        $("#new-address").find("tr td input:radio[name='check-address']:checked").parent().parent().mouseover(function(){
-//            $(this).find("a[class='edit-address']").show();
-//        }).mouseout(function(){
-//            $(this).find("a[class='edit-address']").hide();
-//        });
 
         $(".edit-address").click(function(){
            $("#up-address-title").text("编辑");
@@ -341,12 +347,35 @@
             });
         });
 
+        $("body").on("click",".del-address",function(){
+            var $this = $(this);
+            var userAddressId = $this.attr("data-userAddress");
+            var type = $this.attr('data-type');
+            sendRequest("/user/saveAdder",{
+                id: userAddressId,
+                type: type,
+                status : 1
+            },function(res) {
+                if (res.retCode == 1){
+                    alertTips(1,"","删除成功");
+                    if(type == 1){
+                        $(".show-tr-address ").eq(1).find("input[type='radio']").prop("checked","checked");
+                        $(".show-tr-address ").eq(1).addClass("checked-tr");
+                        $(".show-tr-address ").eq(1).find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
+                    }
+                    $this.parent().parent().parent().remove();
+                }else {
+                    alertTips(2,"服务器繁忙","请重新操作");
+                }
+            });
+        });
+
         $(".edit-address").click(function(){
             clearAddress();
             var $this = $(this);
             $editAddress = $this;
             var userAddressId = $this.attr("data-userAddress");
-            sendRequest("/user/getFindByAddress",{
+            sendRequest("/user/getAddress",{
                 "userAddressId":userAddressId
             },function(res){
                 var data = res.data;

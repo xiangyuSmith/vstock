@@ -348,6 +348,25 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    @RequestMapping("getAddress")
+    @ResponseBody
+    public ResultModel getAddress(){
+        ResultModel resultModel = new ResultModel();
+        Integer userAddressId = getParamToInt("userAddressId");
+        if(userAddressId == null){
+            return resultModel;
+        }
+        UserAddress record = new UserAddress();
+        record.setId(userAddressId);
+        UserAddress userAddresses = userAddressService.findType(record);
+        if(userAddresses == null){
+            return resultModel;
+        }
+        resultModel.setData(userAddresses);
+        resultModel.setRetCode(resultModel.RET_OK);
+        return resultModel;
+    }
+
     @RequestMapping("updatePassword")
     @ResponseBody
     public Map<String,Object> updatePassword(){

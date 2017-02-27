@@ -37,7 +37,8 @@
         .join-assets-icon{ display: inline-block;width: 90px;height: 30px;line-height: 30px;text-align: right;background: url('/assets/i/detail_icon.png');background-position: -606px -18px; }
         .am-show-md-up{ box-shadow: rgb(204, 204, 204) 0 2px 10px 0; }
         .set-default-address{ opacity : 0; }
-        .show-tr-address:HOVER .set-default-address{ opacity : 1; }
+        /*.show-tr-address:HOVER .set-default-address{ opacity : 1; }*/
+        /*.show-tr-address:HOVER .edit-address{ display:block; }*/
     </style>
 </head>
 <body>
