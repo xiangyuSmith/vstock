@@ -168,7 +168,7 @@ public class UserAddressService {
                 userAddress.setStatus(0);
                 userAddress = this.findType(userAddress);
                 //查询是否有默认地址
-                if (userAddress.getId() != null && !"".equals(userAddress.getId()) && !"1".equals(status)){
+                if (userAddress != null && !"1".equals(status)){
                     userAddress.setType(0);
                     int i = this.update(userAddress);
                     //有默认地址修改

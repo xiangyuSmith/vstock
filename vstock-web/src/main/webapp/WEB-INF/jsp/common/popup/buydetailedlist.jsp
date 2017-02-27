@@ -175,7 +175,7 @@
                     </c:when>
                     <c:otherwise>
                         <div id="not-address-tips" class="am-text-center">
-                            <span style="color:#8D8D8D;">亲，您还没有添加收货地址哦 ~</span>
+                            <span style="color:#8D8D8D;">为了方便您进行交易，请先设置收货地址</span>
                         </div>
                     </c:otherwise>
                 </c:choose>
@@ -316,20 +316,20 @@
                         if(undefined == $("#new-address tr:eq(0)").attr("class")){
                             html = '<table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs"><tbody id="new-address-tbody">' +
                                     '<tr class="show-tr-address '+checkTr+'">' +
-                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
+                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
                                     '<td> '+address.consigneeName+'</td>' +
                                     '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 16%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                     '</tr>'+
                                     '</tbody></table>';
                             $("#not-address-tips").css("display","none");
                             $("#new-address-div-content").append(html);
                         }else{
-                            html = '<tr class="show-tr-address '+checkTr+'">' +
+                            html = '<tr class="show-tr-address">' +
                                     '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
                                     '<td> '+address.consigneeName+'</td>' +
                                     '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 16%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                     '</tr>'
                             $("#new-address tr:eq(0)").after(html);
                         }
