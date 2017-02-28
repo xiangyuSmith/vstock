@@ -22,8 +22,7 @@ function saleHcharGet(Url) {
                 gridLineColor: '#ADF29F',
                 lineColor: '#ADF29F',
                 type: 'datetime',
-                minTickInterval: Number,
-                tickWidth: 0,
+                // tickWidth: 0,
                 dateTimeLabelFormats: {
                     millisecond: '%H:%M:%S.%L',
                     second: '%H:%M:%S',
@@ -55,6 +54,7 @@ function saleHcharGet(Url) {
                 // allowDecimals: false,
                 // tickInterval: 10000,
                 // min:0,
+                floor: 0,
                 title: {
                     text: ''
                 }
@@ -97,7 +97,7 @@ function saleHcharGet(Url) {
             series: [{
                 color: '#ADF29F',
                 type: 'area',
-                name: '订单金额',
+                name: '订单总额',
                 data: data
             }]
         });

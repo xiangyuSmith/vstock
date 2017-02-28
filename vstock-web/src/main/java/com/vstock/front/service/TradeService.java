@@ -271,16 +271,20 @@ public class TradeService {
         page.setStartPos(0);
         page.setPageSize(100000);
         record.setBftSize(size);
-        for (int i = 0; i < date; i++) {
+        for (int i = 1; i <= date; i++) {
+            Point point = new Point();
+            BigDecimal money = new BigDecimal("0");
             String time =  DateUtils.dateToString(DateUtils.wantToLose(DateUtils.getDate(startDate,"yyyy-MM-dd"),-i),"yyyy-MM-dd");
             List<Trade> tradeList = tradeDao.findAllDate(record, page.getStartPos(), page.getPageSize(), time+" 00:00:00", time+" 23:59:59");
-            for (Trade trade : tradeList) {
-                Point point = new Point();
-                point.setX(DateUtils.getDate(trade.getTransactionDate(),"yyyy-MM-dd HH:mm:ss").getTime());
+//            if (tradeList.size() > 0) {
+                for (Trade trade : tradeList) {
+                    money = money.add(trade.getTransactionMoney());
+                }
+                point.setX(DateUtils.getDate(time + " 08:00:00", "yyyy-MM-dd HH:mm:ss").getTime());
 //                DateUtils.getDate(trade.getTransactionDate() , "yyyy-MM-dd HH:mm:ss");
-                point.setY(trade.getTransactionMoney().intValue());
+                point.setY(money.intValue());
                 pointList.add(point);
-            }
+//            }
         }
         return pointList;
     }
