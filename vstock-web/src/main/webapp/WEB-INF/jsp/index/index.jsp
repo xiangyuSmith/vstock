@@ -26,6 +26,8 @@
             width:280px;
             position:relative;
         }
+        .sellBid,.buyBid{ height: 108px!important; }
+        .panel-body{ display:none; }
         ul li{ list-style-type:none; }
     </style>
 </head>
@@ -54,13 +56,22 @@
             <div class="am-u-md-12" style="background-color: #eefdf2;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #3fcd65;">买家</span></div>
                 <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
-                    <div id="buyBid">
-                        <ul id="buyBid1">
-                            <c:forEach items="${buyBidList}" var="buybid">
-                                <li><p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
-                            </c:forEach>
-                        </ul>
-                        <ul id="buyBid2"></ul>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="buyBid">
+                                <c:forEach items="${buyBidList}" var="buybid">
+                                    <li class="news-item">
+                                        <table cellpadding="4">
+                                            <tr>
+                                                <td>
+                                                    <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,18 +80,28 @@
             <div class="am-u-md-12" style="background-color: #ffeef0;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #E26472;">卖家</span></div>
                 <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
-                    <div id="sellBid">
-                        <ul id="sellBid1">
-                            <c:forEach items="${sellBidList}" var="sellbid">
-                                <li><p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></li>
-                            </c:forEach>
-                        </ul>
-                        <ul id="sellBid2"></ul>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="sellBid">
+                                <c:forEach items="${sellBidList}" var="sellbid">
+                                    <li class="news-item">
+                                        <table cellpadding="4">
+                                            <tr>
+                                                <td>
+                                                    <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </article>
 <article class="am-show-lg-only am-text-center">
     <div style="margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center am-container-content" >
@@ -257,72 +278,56 @@
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
+<script src="${ctx}/assets/js/jquery.bootstrap.newsbox.min.js"></script>
 <script type="text/javascript">
     $("[data-toggle='popover']").popover({
         trigger:'hover focus'
     });
+
     window.onload=function(){
-        var speed=15;
-        var buyBid=document.getElementById("buyBid");
-        var buyBid2=document.getElementById("buyBid2");
-        var buyBid1=document.getElementById("buyBid1");
-        var sellBid=document.getElementById("sellBid");
-        var sellBid2=document.getElementById("sellBid2");
-        var sellBid1=document.getElementById("sellBid1");
-        buyBid2.innerHTML=buyBid1.innerHTML
-        sellBid2.innerHTML=sellBid1.innerHTML
+        $(".panel-body").fadeIn(100);
+        var speed= 60000;
+        $(".sellBid").bootstrapNews({
+            newsPerPage: 1,
+            autoplay: true,
+            pauseOnHover:true,
+            direction: 'up',
+            newsTickerInterval: 5000,
+            onToDo: function () { }
+        });
+        $(".buyBid").bootstrapNews({
+            newsPerPage: 1,
+            autoplay: true,
+            pauseOnHover:true,
+            direction: 'up',
+            newsTickerInterval: 5000,
+            onToDo: function () { }
+        });
         function Marquee(){
-            if(buyBid.scrollTop>=buyBid1.offsetHeight){
-                setTimeout(function(){
-                    buyBid.scrollTop=0;
-                    sellBid.scrollTop=0;
-                    speedNum = 0;
-                    var bidhtml = "";
-                    var sellhtml = "";
-                    sendRequest("/index/getNewBid",null,function(res){
-                        var buyList = res.data.buyBidList;
-                        var sellList = res.data.sellBidList;
-                        for(var i = 0;i < buyList.length;i++){
-                            var mobile = buyList[i].user.nick;
-                            var bftName = buyList[i].bftName;
-                            var bidMoney = buyList[i].bidMoney;
-                            bidhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
-                        }
-                        for(var i = 0;i < sellList.length;i++){
-                            var mobile = sellList[i].user.nick;
-                            var bftName = sellList[i].bftName;
-                            var bidMoney = sellList[i].bidMoney;
-                            sellhtml += '<li><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></li>';
-                        }
-                        buyBid1.innerHTML=bidhtml;
-                        buyBid2.innerHTML=bidhtml;
-                        sellBid1.innerHTML=sellhtml;
-                        sellBid2.innerHTML=sellhtml;
-                    });
-                },1000);
-            }else{
-                if(buyBid.scrollTop==0){
-                    buyBid.scrollTop=buyBid.scrollTop+1;
-                    sellBid.scrollTop=sellBid.scrollTop+1
-                }else{
-                    if(buyBid.scrollTop%124==0){
-                        outInterval();
-                    }else{
-                        buyBid.scrollTop=buyBid.scrollTop+1;
-                        sellBid.scrollTop=sellBid.scrollTop+1;
-                    }
+            var buyBid = $(".buyBid");
+            var sellBid = $(".sellBid");
+            var bidhtml = "";
+            var sellhtml = "";
+            sendRequest("/index/getNewBid",null,function(res){
+                var buyList = res.data.buyBidList;
+                var sellList = res.data.sellBidList;
+                for(var i = 0;i < buyList.length;i++){
+                    var mobile = buyList[i].user.nick;
+                    var bftName = buyList[i].bftName;
+                    var bidMoney = buyList[i].bidMoney;
+                    bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
                 }
-            }
+                for(var i = 0;i < sellList.length;i++){
+                    var mobile = sellList[i].user.nick;
+                    var bftName = sellList[i].bftName;
+                    var bidMoney = sellList[i].bidMoney;
+                    sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                }
+                buyBid.html(bidhtml);
+                sellBid.html(sellhtml);
+            });
         }
         var MyMar = setInterval(Marquee,speed)
-        function outInterval(){
-            clearInterval(MyMar);
-            setTimeout(function(){
-                buyBid.scrollTop=buyBid.scrollTop+1;
-                sellBid.scrollTop=sellBid.scrollTop+1;
-                MyMar=setInterval(Marquee,speed);
-            },1000);
-        }
     };
 
     $(function(){
