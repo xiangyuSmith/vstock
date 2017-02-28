@@ -5,6 +5,7 @@
     .set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
     .set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
     .lg-dimmer-detailed{ position: absolute !important;margin-left: -72% !important; }
+    .lg-default-none{display: none;}
 </style>
 <div class="am-modal am-modal-no-btn lg-dimmer-detailed" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 260px;">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
@@ -102,17 +103,7 @@
                     </span>
                 </div>
                 <div id="new-address-div-content" style="max-height: 136px;overflow-y: scroll;">
-                    <table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">
-                        <tbody id="new-address-tbody">
 
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <a id="loading-address" href="javascript:;">其他收货地址</a>
-                    <div id="loading-img" class="am-text-center" style="display: none;">
-                        <img src="/assets/i/loading.gif" />
-                    </div>
                 </div>
             </div>
             <div class="am-u-md-8"></div>
@@ -134,14 +125,105 @@
         var countMoney = 0;
         var amount = $("#buyer_detailed_amount").val();
         var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
-//        if(addressId == undefined){
-//            $("#yunFee").text("-");
-//        }else{
-//            //计算运费
-//            jisuan(addressId);
-//        }
+        if(addressId == undefined){
+            $("#yunFee").text("-");
+        }else{
+            //计算运费
+            jisuan(addressId);
+        }
 
-        $("#loading-address").click(function(){
+
+        $("body").on("click",".show-tr-address","input:radio[name='check-address']",function(){
+            jisuan($(this).children(":first").children(":first").attr("data-userAddress"));
+        });
+
+        function jisuan(addressId){
+            sendRequest("/trade/getYunfee",{
+                "addressId": addressId
+            },function(res){
+                if(res.retCode == 1){
+                    $("#yunFee").text(res.data);
+                    var yunFee = $.trim($("#yunFee").text());
+                    if(yunFee != "-" && yunFee != 0 && yunFee != ""){
+                        countMoney = parseFloat(yunFee) + parseFloat($("#buyer_detailed_amount").val());
+                    }
+                    $(".countMoney").text(countMoney.toFixed(2));
+                }else{
+                    alertTips(2,"提示",res.retMsg);
+                }
+            });
+        }
+
+        $("body").on("click",".set-default-address",function(){
+            var $this =  $(this);
+            sendRequest("/user/saveAdder",{
+                "id":$this.attr("data-userAddress"),
+                "type":1
+            },function(res){
+                if(res.retCode == 1){
+                    $this.parent().parent().siblings().find("input[type='radio']").prop("checked","checked");
+                    $(".lg-default-none").removeClass("lg-default-none");
+                    $(".checked-tr").removeClass("checked-tr");
+                    $this.parent().addClass("lg-default-none");
+                    $this.parent().parent().parent().addClass("checked-tr");
+                    $(".default-span-tips").css("display","none");
+                    $this.parent().parent().siblings().find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
+                    $("#new-address tr:eq(0)").before($this.parent().parent().parent());
+                    jisuan($this.attr("data-userAddress"));
+                    alertTips(1,"地址设置","默认收货地址已更新");
+                }
+            });
+        });
+
+        $("body").on("click",".del-address",function(){
+            var $this = $(this);
+            var userAddressId = $this.attr("data-userAddress");
+            var type = $this.attr('data-type');
+            sendRequest("/user/saveAdder",{
+                id: userAddressId,
+                type: type,
+                status : 1
+            },function(res) {
+                if (res.retCode == 1){
+                    alertTips(1,"","删除成功");
+                    if(type == 1){
+                        $(".show-tr-address ").eq(1).find("input[type='radio']").prop("checked","checked");
+                        $(".show-tr-address ").eq(1).addClass("checked-tr");
+                        $(".show-tr-address ").eq(1).find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
+                    }
+                    $this.parent().parent().parent().remove();
+                }else {
+                    alertTips(2,"服务器繁忙","请重新操作");
+                }
+            });
+        });
+
+        $("body").on("click",".edit-address",function(){
+            clearAddress();
+            var $this = $(this);
+            $editAddress = $this;
+            var userAddressId = $this.attr("data-userAddress");
+            sendRequest("/user/getAddress",{
+                "userAddressId":userAddressId
+            },function(res){
+                var data = res.data;
+                $('#city-name').val(data.localArea);
+                $('#adder-name').val(data.detailedAddress);
+                $('#shop-name').val(data.consigneeName);
+                $('#phone-number').val(data.phoneNumber);
+                $("#adder-id").val(data.id);
+                if(data.landlineNumber != undefined){
+                    if (data.landlineNumber.indexOf("-")>=0){
+                        var areaCode = data.landlineNumber.split("-");
+                        $('#area-code').val(areaCode[0]);
+                        $('#phone-code').val(areaCode[1].substr(0,3));
+                        $('#extension-code').val(areaCode[1].substr(4,areaCode[1].length));
+                    }
+                }
+            });
+        });
+
+        $("body").on("click","#loading-address",function(){
             $(this).css("display","none");
             $("#loading-img").fadeIn(200);
             setTimeout(function(){
@@ -151,15 +233,41 @@
         });
 
         $(".edit-address").click(function(){
-           $("#up-address-title").text("编辑");
+//           $("#up-address-title").text("编辑");
         });
 
         $(".add-adders").click(function(){
-            $("#up-address-title").text("添加");
+//            $("#up-address-title").text("添加");
+            clearAddress();
+            $("#adder-id").val("");
         });
 
+        $(".edit-address").click(function(){
+            clearAddress();
+            var $this = $(this);
+            $editAddress = $this;
+            var userAddressId = $this.attr("data-userAddress");
+            sendRequest("/user/getFindByAddress",{
+                "userAddressId":userAddressId
+            },function(res){
+                var data = res.data;
+                $('#city-name').val(data.localArea);
+                $('#adder-name').val(data.detailedAddress);
+                $('#shop-name').val(data.consigneeName);
+                $('#phone-number').val(data.phoneNumber);
+                $("#adder-id").val(data.id);
+                if(data.landlineNumber != undefined){
+                    if (data.landlineNumber.indexOf("-")>=0){
+                        var areaCode = data.landlineNumber.split("-");
+                        $('#area-code').val(areaCode[0]);
+                        $('#phone-code').val(areaCode[1].substr(0,3));
+                        $('#extension-code').val(areaCode[1].substr(4,areaCode[1].length));
+                    }
+                }
+            });
+        });
 
-        $("body").on("click","#address-btn",function(){
+        $("body").on("click",".adder-stn",function(){
             var $this = $(this);
             var shopName = $('#shop-name').val();
             var phone = "";
@@ -201,51 +309,53 @@
                         }else{
                             phoneNumber = "--";
                         }
-                        var html = '<tr class="show-tr-address '+checkTr+'">' +
-                                '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
-                                '<td> '+address.consigneeName+'</td>' +
-                                '<td> '+phoneNumber+' </td>' +
-                                '<td class="do" style="width: 13%;"><a href="javascript:;" class="edit-address" style="display: none;" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
-                                '</tr>'
-                        $("#new-address tr:eq(0)").after(html);
+                        var html = "";
+                        if("show-tr-address" != $("#new-address-tbody tr:eq(0)").attr("class")){
+                            html = '<tr class="show-tr-address '+checkTr+'">' +
+                                    '<td><input id="doc-ipt-o-'+address.id+'" type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address.id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
+                                    '<td> '+address.consigneeName+'</td>' +
+                                    '<td> '+phoneNumber+' </td>' +
+                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" data-userAddress="'+address.id+'" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>' +
+                                    '| <a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div>'+
+                                    '<div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '</tr>';
+//                            $("#not-address-tips").css("display","none");
+                            $(".checked-tr").after(html);
+                        }else{
+                            html = '<table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">'+
+                                    '<tbody id="new-address-tbody"><tr class="show-tr-address '+checkTr+'">' +
+                                    '<td><input id="doc-ipt-o-'+address.id+'" type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address.id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
+                                    '<td> '+address.consigneeName+'</td>' +
+                                    '<td> '+phoneNumber+' </td>' +
+                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" data-userAddress="'+address.id+'" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>' +
+                                    '| <a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div>'+
+                                    '<div class="lg-default-none"><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '</tr></tbody> </table>'+
+                                    '<div>'+
+                                    '<a id="loading-address" href="javascript:;">其他收货地址</a>'+
+                                    '<div id="loading-img" class="am-text-center" style="display: none;">'+
+                                    '<img src="/assets/i/loading.gif" />'+
+                                    '</div>'+
+                                    '</div>';
+                            $("#new-address-div-content").append(html);
+                        }
+                        jisuan(address.id);
                         alertTips(1,"","添加地址成功");
                     }else{
-                        $editAddress.parent().siblings().eq(1).find("label .addressInfo").text(address.localArea+address.detailedAddress);
-                        $editAddress.parent().siblings().eq(2).find("span").text(address.consigneeName);
-                        $editAddress.parent().siblings().eq(3).find("span").text(address.phoneNumber);
+                        $editAddress.parent().parent().siblings().eq(1).find("label").text(address.localArea+address.detailedAddress);
+                        $editAddress.parent().parent().siblings().eq(2).text(address.consigneeName);
+                        $editAddress.parent().parent().siblings().eq(3).text(address.phoneNumber);
                         alertTips(1,"","修改地址成功");
                     }
-                    $("#adders-id").modal('close');
                 }else {
                     alertTips(2,"服务器繁忙","请重新操作");
                 }
             });
         });
 
-        $(".edit-address").click(function(){
-            clearAddress();
-            var $this = $(this);
-            $editAddress = $this;
-            var userAddressId = $this.attr("data-userAddress");
-            sendRequest("/user/getFindByAddress",{
-                "userAddressId":userAddressId
-            },function(res){
-                var data = res.data;
-                $('#city-name').val(data.localArea);
-                $('#adder-name').val(data.detailedAddress);
-                $('#shop-name').val(data.consigneeName);
-                $('#phone-number').val(data.phoneNumber);
-                $("#adder-id").val(data.id);
-                if(data.landlineNumber != undefined){
-                    if (data.landlineNumber.indexOf("-")>=0){
-                        var areaCode = data.landlineNumber.split("-");
-                        $('#area-code').val(areaCode[0]);
-                        $('#phone-code').val(areaCode[1].substr(0,3));
-                        $('#extension-code').val(areaCode[1].substr(4,areaCode[1].length));
-                    }
-                }
-            });
-        });
+        $(".buyer_submit_trade_S").click(function () {
+            $(".am-close").click();
+        })
 
     });
 </script>
