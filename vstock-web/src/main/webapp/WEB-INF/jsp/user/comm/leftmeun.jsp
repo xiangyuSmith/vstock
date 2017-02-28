@@ -634,11 +634,10 @@
             });
         });
 
-        $("body").on("click","#del-status",function(){
-            var $this = $(this);
+        $("body").on("click",".is-delete-content",function(){
             sendRequest("/user/saveAdder",{
-                id: $this.attr('user-id'),
-                type: $this.attr('data-type'),
+                id:  $("#user-address-id").val(),
+                type: $("#user-address-type").val(),
                 status : 1
             },function(res) {
                 if (res.retCode == 1){
@@ -648,6 +647,11 @@
                     alertTips(2,"服务器繁忙","请重新操作");
                 }
             });
+        });
+        $("body").on("click",".del-status",function(){
+            var $this = $(this);
+            $("#user-address-id").val($this.attr('user-id'));
+            $("#user-address-type").val($this.attr('data-type'));
         });
 
         $('#verification').bind('input propertychange', function() {

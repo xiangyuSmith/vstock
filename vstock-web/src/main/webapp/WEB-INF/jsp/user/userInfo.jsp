@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../layout/inc.jsp" %>
+<style>
+    .delete-content{ text-align: center; width: 180px; height: 88px; padding: 20px 5px 15px 5px; }
+    .delete-btn{ display: block;cursor: pointer; margin: 10px 15px; background-color: #D0CCC6; width: 50px; height: 25px; text-align: center; line-height: 25px; float: left; }
+    .delete-btn:HOVER{ background-color: #ddd; }
+</style>
 <form id="userInfo" action="/user/userInfo" method="post">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-xl">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-sm" style="border-bottom: 1px solid #CACACA;">
@@ -151,7 +156,7 @@
                         </td>
                         <td>
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" class="am-fl userInfo-upsbt" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 480, height: 420}">编辑</a>&nbsp;|
-                            <a href="javascript:void(0);" user-id="${userAddresses.id}" data-type="${userAddresses.type}" id="del-status">删除</a>
+                            <a href="javascript:void(0);" user-id="${userAddresses.id}" data-type="${userAddresses.type}" class="del-status">删除</a>
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 0}">
@@ -167,6 +172,8 @@
         <div class="am_news_load am_news_load_index" id="load_more" data-url="../user/userInfo?type=1"><span><i class="am-icon-spinner am-icon-spin am-margin-right-sm" style="display: none;"></i>加载更多地址</span></div>
     </c:if>
     <input type="hidden" id="user-lodaType" value="${type}"/>
+    <input type="hidden" id="user-address-id" />
+    <input type="hidden" id="user-address-type" />
 </form>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
 <%@include file="../common/popup/bindIdentify.jsp" %>
@@ -177,7 +184,24 @@
     $(function () {
         $('.identify').click(function () {
             $('#identify-click').click();
-        })
+        });
+
+        $(".del-status").each(function(){
+            var $html = '<div class="delete-content"><span>确定删除收货地址吗？</span><br/><span class="delete-btn is-delete-content">确定</span><span class="delete-btn clean-delete-content">取消</span></div>';
+            $(this).popover(
+                    {
+                        trigger:'popover',
+                        html: true,
+                        placement:'bottom',
+                        content:$html
+                    }
+            );
+        });
+
+        $("body").on("click",".clean-delete-content",function(){
+            $(this).parent().popover('hide');
+        });
+
 
 //        var $this;
 //        $(".mark-hover").hover(function(){
