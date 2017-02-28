@@ -123,6 +123,9 @@ public class BidService {
         if (record.getBasicinformation().getArtNo() != null && !"".equals(record.getBasicinformation().getArtNo())){
             linkAddress = linkAddress + "&artNo=" + record.getBasicinformation().getArtNo();
         }
+        if (record.getBasicinformationId() != null && !"".equals(record.getBasicinformationId())){
+            linkAddress = linkAddress + "&basicinformationId=" + record.getBasicinformationId();
+        }
         if (record.getBftSize() != null && !"".equals(record.getBftSize())){
             linkAddress = linkAddress + "&bftSize=" + record.getBftSize();
         }

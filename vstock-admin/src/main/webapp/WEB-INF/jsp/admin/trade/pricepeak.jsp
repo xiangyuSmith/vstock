@@ -73,7 +73,7 @@
                                 <td><fmt:formatNumber value="${record.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
                                 <td><fmt:formatNumber value="${record.highestBid}" type="currency" pattern="#,#00.0#"/></td>
                                 <td>${record.createDate}</td>
-                                <td><a href="/trade/bidindex?basicinformationId=${record.basicinformationId}&bft_size=${record.peakSize}" style="color: blue;">全部价格</a></td>
+                                <td><a href="/trade/bidindex?basicinformationId=${record.basicinformationId}&bftSize=${record.peakSize}" style="color: blue;">全部价格</a></td>
                             </tr>
                         </c:forEach>
                     </c:if>
