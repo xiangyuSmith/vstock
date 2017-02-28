@@ -132,8 +132,12 @@ public class BidService {
         if (record.getBftName() != null && !"".equals(record.getBftName())){
             linkAddress = linkAddress + "&bftName=" + record.getBftName();
         }
-        linkAddress = linkAddress + "&type=" + record.getType();
-        linkAddress = linkAddress + "&status=" + record.getStatus();
+        if (record.getType() != null && !"".equals(record.getType())) {
+            linkAddress = linkAddress + "&type=" + record.getType();
+        }
+        if (record.getStatus() != null && !"".equals(record.getStatus())) {
+            linkAddress = linkAddress + "&status=" + record.getStatus();
+        }
         return linkAddress;
     }
 }
