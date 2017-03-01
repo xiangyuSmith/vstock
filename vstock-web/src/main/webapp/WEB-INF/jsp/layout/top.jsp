@@ -14,7 +14,13 @@
                         </ul>
                     </li>
                     <li class="am-hide-sm am-hide-md"><a href="/sorts?type=5" rel="nofollow">即将发布</a></li>
-                    <li class="am-hide-sm am-hide-md"><a href="/index/problem" rel="nofollow">常见问题</a></li>
+                    <li class="am-dropdown" data-am-dropdown="">
+                        <a href="#" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle="">帮助中心 <i class="am-icon-caret-down"></i></a>
+                        <ul class="am-dropdown-content">
+                            <li><a href="#" rel="nofollow">新手指引</a></li>
+                            <li><a href="/index/problem" rel="nofollow">常见问题</a></li>
+                        </ul>
+                    </li>
                     <li class="am-dropdown" data-am-dropdown="">
                         <c:choose>
                             <c:when test="${not empty vUser}">

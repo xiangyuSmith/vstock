@@ -10,7 +10,6 @@
         .a-content-bg{ background-color: #fff9f8; }
         .am-panel{ border:none;margin-bottom: 20px!important; }
         ul { margin: 5px 0; }
-        ul li { list-style: none;margin: 5px 0; }
         ul li span { color: #616161; font-size: 18px; }
         @media (max-width: 1450px){ ul li span { color: #616161;font-size: 16px; } }
     </style>
