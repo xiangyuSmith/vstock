@@ -75,10 +75,13 @@ public class SortsController extends BaseController{
         Bid b = new Bid();
         for(int i = 0;i < bidList.size();i++){
             Basicinformation bft = bidList.get(i);
+            if("1549".equals(bft.getId())){
+                System.out.print("1549");
+            }
             String bftId = bft.getId();
             b.setBasicinformationId(Integer.parseInt(bftId));
             b.setStatus(String.valueOf(Bid.STATUS_INIT));
-            List<Bid> bList = bidService.findAll(b,lagePage);
+            List<Bid> bList = bidService.findNewAll(b,lagePage);
             if(bList.size() != 0){
                 bidList.get(i).getBid().setBidMoney(bList.get(0).getBidMoney());
             }else{

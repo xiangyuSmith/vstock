@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by administor on 2016/12/8.
  */
-@Service
+@Service("pricePeak")
 public class PricePeakService {
     @Autowired
     IPricePeakDao pricePeakDao;

@@ -1,10 +1,8 @@
 package com.vstock.front.support.job;
 
-import com.vstock.db.entity.Bid;
-import com.vstock.db.entity.CustomJob;
-import com.vstock.db.entity.Payment;
-import com.vstock.db.entity.Trade;
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.Page;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.ext.util.ToolSpring;
 import com.vstock.front.service.*;
@@ -13,6 +11,8 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public class QuartzJob implements Job {
@@ -26,6 +26,8 @@ public class QuartzJob implements Job {
     ResultDataService resultDataService = (ResultDataService) ToolSpring.getBean("resultData");
 
     PaymentService paymentService = (PaymentService) ToolSpring.getBean("payment");
+
+    PricePeakService pricePeakService = (PricePeakService) ToolSpring.getBean("pricePeak");
 
     BasiciformationRoseService basiciformationRoseService = (BasiciformationRoseService) ToolSpring.getBean("basiciformationRose");
 
@@ -79,10 +81,15 @@ public class QuartzJob implements Job {
 
     private int bidSend( List<Bid> bids,int time,int status){
         Bid b = new Bid();
+        Bid bwhere = new Bid();
+        PricePeak p = new PricePeak();
+        Page lagePage = new Page();
+        lagePage.setStartPos(0);
+        lagePage.setPageSize(1);
         int result = 1;
         for (Bid bid : bids) {
-            int day = Integer.parseInt(bid.getTermValidity());
-            if(time == 0){
+            if(status == 11){
+                int day = Integer.parseInt(bid.getTermValidity());
                 time = 60*60*24*day;
             }
             long difference = isdifference(bid.getBidDate(),time);
@@ -90,6 +97,43 @@ public class QuartzJob implements Job {
                 b.setId(bid.getId());
                 b.setStatus(String.valueOf(status));
                 int x = bidService.update(b);
+                if(status == 11){
+                    //如果为过期状态，则更新峰值表
+                    PricePeak pricePeak = pricePeakService.getHighestAndlowest(bid.getBasicinformationId(),bid.getBftSize(), DateUtils.dateToString(new Date()),lagePage);
+                    if(pricePeak != null){
+                        if("0".equals(bid.getType())){
+                            bwhere.setType("0");
+                            bwhere.setBasicinformationId(bid.getBasicinformationId());
+                            bwhere.setBftSize(bid.getBftSize());
+                            bwhere.setStatus(String.valueOf(Bid.STATUS_INIT));
+                            List<Bid> bidList = bidService.findAllBid(bwhere);
+                            p.setId(pricePeak.getId());
+                            if(bidList.size() == 0){
+                                p.setMinimumSellingPrice(null);
+                                p.setMinimumSellingId(null);
+                            }else{
+                                p.setMinimumSellingPrice(bidList.get(0).getBidMoney());
+                                p.setMinimumSellingId(String.valueOf(bidList.get(0).getUserId()));
+                            }
+                            result = pricePeakService.updateX(p);
+                        }else{
+                            bwhere.setType("1");
+                            bwhere.setBasicinformationId(bid.getBasicinformationId());
+                            bwhere.setBftSize(bid.getBftSize());
+                            bwhere.setStatus(String.valueOf(Bid.STATUS_INIT));
+                            List<Bid> bidList = bidService.findAllBid(bwhere);
+                            p.setId(pricePeak.getId());
+                            if(bidList.size() == 0){
+                                p.setHighestBid(null);
+                                p.setHighestBidderId(null);
+                            }else{
+                                p.setHighestBid(bidList.get(0).getBidMoney());
+                                p.setHighestBidderId(String.valueOf(bidList.get(0).getUserId()));
+                            }
+                            result = pricePeakService.updateY(p);
+                        }
+                    }
+                }
                 result = result * x;
             }
         }

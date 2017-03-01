@@ -133,7 +133,7 @@
                 "bid":$("#bftId").val()
             },function(res){
                 if(res.retCode == 1){
-                    if(res.data.pricePeak1 != undefined){
+                    if(res.data.pricePeak2 != undefined){
                         $("#seller_bid_minimumSellingPrice").text(res.data.pricePeak2.minimumSellingPrice);
                     }else{
                         $("#seller_bid_minimumSellingPrice").text("-");
