@@ -159,6 +159,9 @@
                             <a href="javascript:void(0);" user-id="${userAddresses.id}" data-type="${userAddresses.type}" class="del-status">删除</a>
                         </td>
                         <td>
+                            <c:if test="${userAddresses.type == 1}">
+                                <a href="javascript:void(0);" style="background-color: #FFFFFF;color: #dd514c;" user-id="${userAddresses.id}" class="am-btn am-btn-danger am-radius">默认地址</a>
+                            </c:if>
                             <c:if test="${userAddresses.type == 0}">
                                 <a href="javascript:void(0);" user-id="${userAddresses.id}" class="up-type am-btn-sm am-text-danger set-default-address">设为默认</a>
                             </c:if>
@@ -202,6 +205,9 @@
             $(this).parent().popover('hide');
         });
 
+        $("body").on("click","#address-btn",function(){
+            $(".am-close").click();
+        });
 
 //        var $this;
 //        $(".mark-hover").hover(function(){
