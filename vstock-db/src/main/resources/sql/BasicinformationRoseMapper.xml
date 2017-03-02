@@ -35,8 +35,12 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `basicinformation_rose`
         (`id`,`basicinformation_id`,`brand`,`basicinformation_size`,`current_market_value`,`change_range`,`percentage_change`,`type`,`create_date`)
-        VALUES(null,#{basicinformation_id},#{brand},#{basicinformation_size},#{current_market_value},#{change_range},#{percentage_change},#{type},#{create_date})
+        VALUES(NULL ,#{basicinformation_id},#{brand},#{basicinformation_size},#{current_market_value},#{change_range},#{percentage_change},#{type},#{create_date})
     </insert>
+
+    <delete id="del">
+        DELETE FROM `basicinformation_rose`
+    </delete>
 
     <sql id="SearchAllByPage_Where_Clause">
         <where>
@@ -70,5 +74,10 @@
             </if>
         </where>
     </sql>
+
+    <insert id="insertLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT into basicinformation_rose_log(`basicinformation_id`,`brand`,`basicinformation_size`,`current_market_value`,`change_range`,`percentage_change`,`type`,`create_date`)
+        select `basicinformation_id`,`brand`,`basicinformation_size`,`current_market_value`,`change_range`,`percentage_change`,`type`,`create_date`from basicinformation_rose
+    </insert>
 
 </mapper>
