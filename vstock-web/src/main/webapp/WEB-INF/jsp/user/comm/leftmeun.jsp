@@ -641,7 +641,6 @@
                 status : 1
             },function(res) {
                 if (res.retCode == 1){
-                    alertTips(1,"","删除成功");
                     ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
                 }else {
                     alertTips(2,"服务器繁忙","请重新操作");
