@@ -200,7 +200,7 @@ public class UserAddressService {
                                     }
                                     return userAddressList.get(0);
                                 }else {
-                                    return null;
+                                    return record;
                                 }
                             }else {
                                 return null;
