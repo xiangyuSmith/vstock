@@ -108,7 +108,7 @@
     <!-- 修改 -->
     <update id="update">
         UPDATE `dictionaries`
-        SET `identification`=#{identification},`girard`=#{girard},`status`=#{status}
+        SET `identification`=#{identification},`girard`=#{girard},`updatetime`=#{updatetime},`status`=#{status}
         WHERE `id` = #{id}
     </update>
 

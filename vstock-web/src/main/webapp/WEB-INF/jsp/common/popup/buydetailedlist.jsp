@@ -205,15 +205,14 @@
             jisuan(addressId);
         }
 
-
-        $(".show-tr-address").on({mouseenter: function(e) {
-//            var is  = $(this).parent().parent().parent().hasClass("checked-tr");
+        $("body").on("mouseenter",".show-tr-address",function(){
             if(!$(this).hasClass("checked-tr")){
                 $(this).find(".set-default-address").css("opacity", "1");
             }
-        },mouseleave: function(e) {
+        }).on("mouseleave",".show-tr-address",function(){
             $(".set-default-address").css("opacity", "0");
-        }});
+        });
+
         $("#new-address").on("click","input:radio[name='check-address']",function(){
             jisuan($(this).attr("data-userAddress"));
         });
@@ -262,18 +261,19 @@
             });
         });
 
-        $(".edit-address").click(function(){
+        $("body").on("click",".edit-address",function(){
            $("#up-address-title").text("编辑");
         });
 
-        $(".add-adders").click(function(){
+        $("body").on("click",".add-adders",function(){
+            $("#adder-id").val("");
             $("#up-address-title").text("添加");
         });
 
         $("body").on("click",".adder-stn",function(){
             var $this = $(this);
-            var shopName = $('#shop-name').val();
             var phone = "";
+            var shopName = $('#shop-name').val();
             var phoneNumber = $('#phone-number').val();
             var areaCode = $('#area-code').val();
             var phoneCode = $('#phone-code').val();
@@ -316,31 +316,30 @@
                         if(undefined == $("#new-address tr:eq(0)").attr("class")){
                             html = '<table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs"><tbody id="new-address-tbody">' +
                                     '<tr class="show-tr-address '+checkTr+'">' +
-                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
-                                    '<td> '+address.consigneeName+'</td>' +
-                                    '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span><span class="addressInfo"> '+address.localArea+address.detailedAddress+'</span></label></td>' +
+                                    '<td><span> '+address.consigneeName+'</span></td>' +
+                                    '<td><span> '+phoneNumber+' </span></td>' +
+                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-userAddress="'+address.id+'" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                     '</tr>'+
                                     '</tbody></table>';
                             $("#not-address-tips").css("display","none");
                             $("#new-address-div-content").append(html);
                         }else{
                             html = '<tr class="show-tr-address">' +
-                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
-                                    '<td> '+address.consigneeName+'</td>' +
-                                    '<td> '+phoneNumber+' </td>' +
-                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
+                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span><span class="addressInfo"> '+address.localArea+address.detailedAddress+'</span></label></td>' +
+                                    '<td><span class="addressInfo"> '+address.consigneeName+'</span></td>' +
+                                    '<td><span> '+phoneNumber+' </span></td>' +
+                                    '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-userAddress="'+address.id+'" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
                                     '</tr>'
                             $("#new-address tr:eq(0)").after(html);
                         }
                         alertTips(1,"","添加地址成功");
                     }else{
-                        $editAddress.parent().siblings().eq(1).find("label .addressInfo").text(address.localArea+address.detailedAddress);
-                        $editAddress.parent().siblings().eq(2).find("span").text(address.consigneeName);
-                        $editAddress.parent().siblings().eq(3).find("span").text(address.phoneNumber);
+                        $editAddress.parent().parent().siblings().eq(1).find("label .addressInfo").text(address.localArea+address.detailedAddress);
+                        $editAddress.parent().parent().siblings().eq(2).find("span").text(address.consigneeName);
+                        $editAddress.parent().parent().siblings().eq(3).find("span").text(address.phoneNumber);
                         alertTips(1,"","修改地址成功");
                     }
-                    $("#adders-id").modal('close');
                 }else {
                     alertTips(2,"服务器繁忙","请重新操作");
                 }
@@ -364,13 +363,16 @@
                         $(".show-tr-address ").eq(1).find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
                     }
                     $this.parent().parent().parent().remove();
+                    if($("#new-address tr").length == 0){
+                        $("#new-address-div-content").html('<div id="not-address-tips" class="am-text-center"><span style="color:#8D8D8D;">为了方便您进行交易，请先设置收货地址</span></div>');
+                    }
                 }else {
                     alertTips(2,"服务器繁忙","请重新操作");
                 }
             });
         });
 
-        $(".edit-address").click(function(){
+        $("body").on("click",".edit-address",function(){
             clearAddress();
             var $this = $(this);
             $editAddress = $this;
