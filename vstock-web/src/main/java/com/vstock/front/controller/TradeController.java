@@ -171,11 +171,19 @@ public class TradeController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         String ischeck = getParam("ischeck","0");
         if(!"1".equals(ischeck)){
-            int bidId = getParamToInt("bidId");
-            int pricePeakId = getParamToInt("pricePeakId");
-            BigDecimal yunFee = new BigDecimal(getParam("yunFee","0"));
             //更新叫价 & 峰值
-            updateTradeInfo(bidId,yunFee,pricePeakId,type,tradeId);
+            Trade t = new Trade();
+            t.setId(tradeId);
+            List<Trade> tradeList = tradeService.findTrade(t,lagePage);
+            Trade trade = tradeList.get(0);
+            int sort = 0;
+            if(trade.getStatus() == 0){
+                sort = 1;
+            }else{
+                sort = 2;
+            }
+            PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),trade.getBftSize(),sort,lagePage);
+            updateTradeInfo(trade.getBidId(),trade.getTradeFreight(),pricePeak.getId(),type,tradeId);
         }
         Payment payment = new Payment();
         payment.setPayment_user_id(Long.parseLong(uid));

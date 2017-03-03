@@ -72,9 +72,9 @@ public class QuartzJob implements Job {
         List<Trade> tradeList = tradeService.findAllTrade(record);
         record.setStatus(record.TRADE_NOTIFIY_PAY_BOND);
         List<Trade> tradeListNotBond = tradeService.findAllTrade(record);
-        //订单金额计时
+        //订单支付金额倒计时
         int result = tradeSend(tradeList,60*60*24,record.TRADE_CLOSE,1);
-        //保证金计时
+        //保证金支付倒计时
         int result2 = tradeSend(tradeListNotBond,60*15,record.TRADE_CLOSE,2);
         return result * result2;
     }
@@ -145,16 +145,27 @@ public class QuartzJob implements Job {
         long difference = 0;
         Trade t = new Trade();
         Payment p = new Payment();
+        Bid b = new Bid();
         for (Trade trade : trades) {
             difference = isdifference(trade.getTransactionDate(),time);
             if(type == 1){
-                p.setOrder_record_id(trade.getId());
-                p.setPayment_type(3);
-                p.setPayment_status(Payment.PAY_STATUS_SUCCESS);
-                Payment payment = paymentService.findByTrade(p);
-                if(payment != null){
-                    difference= isdifference(trade.getTransactionDate(),60*15);
+                //判断是卖家出售-买家付款（24小时），还是买家直接购买付款（15分钟）
+                b.setId(trade.getBidId());
+                Bid bid = bidService.findbid(b);
+                if(bid.getUserId() == trade.getSellerId()){
+                    //该订单为买家直接购买
+                    time = 60*15;
+                }else{
+                    time = 60*60*24;
                 }
+                difference= isdifference(trade.getTransactionDate(),time);
+//                p.setOrder_record_id(trade.getId());
+//                p.setPayment_type(3);
+//                p.setPayment_status(Payment.PAY_STATUS_SUCCESS);
+//                Payment payment = paymentService.findByTrade(p);
+//                if(payment != null){
+//                    difference= isdifference(trade.getTransactionDate(),60*15);
+//                }
             }
             if(difference <= 0){
                 t.setId(trade.getId());

@@ -580,8 +580,7 @@
                         type : type,
                         amount : amount,
                         addressId: addressId,
-                        size: size,
-                        ischeck:1
+                        size: size
                     },function(res) {
                         if (res.retCode == 1){
                             alertTips(1,"","支付成功");
