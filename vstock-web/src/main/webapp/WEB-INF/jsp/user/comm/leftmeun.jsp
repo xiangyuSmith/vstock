@@ -21,6 +21,7 @@
         ul.am-dropdown-content>li>a{ padding: 6px 26px 6px 10px; }
         .set-default-address{ opacity : 0; }
         .show-tr-address:HOVER .set-default-address{ opacity : 1; }
+        .lg-rect-css{font-size: 12px;border-radius: 50%;display: block; width: 18px;height: 18px;float: left;}
     </style>
 </head>
 <body>
@@ -73,10 +74,10 @@
                 </div>
             </div>
             <ul class="leftmenunInfo am-nav am-padding-top-xl">
-                <li><a href="javascript:void(0)" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 45px;height: 30px; background: url('/assets/i/personal_center_map.png'); background-position: -450px -17px;"></div><span class="text-color am-text-danger layout-font-size-24 home-frist" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 45px;height: 30px; background: url('/assets/i/personal_center_map.png'); background-position: -515px -13px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/sale?type=1" data-type="2">购买记录</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 45px;height: 40px; background: url('/assets/i/personal_center_map.png'); background-position: -576px -13px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
-                <li><a href="javascript:void(0)" class="home-tab"><div style="float: left; display: block;width: 45px;height: 36px; background: url('/assets/i/personal_center_map.png'); background-position: -639px -16px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
+                <li><a href="javascript:void(0);" class="home-tab am-margin-top-lg"><div style="float: left; display: block;width: 45px;height: 30px; background: url('/assets/i/personal_center_map.png'); background-position: -450px -17px;"></div><span class="text-color am-text-danger layout-font-size-24 home-frist" data-url="../user/sale?type=0" data-type="1" >出售记录</span></a></li>
+                <li><a href="javascript:void(0);" class="home-tab"><div style="float: left; display: block;width: 45px;height: 30px; background: url('/assets/i/personal_center_map.png'); background-position: -515px -13px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/sale?type=1" data-type="2">购买记录</span></a></li>
+                <li><a href="javascript:void(0);" class="home-tab"><div style="float: left; display: block;width: 45px;height: 40px; background: url('/assets/i/personal_center_map.png'); background-position: -576px -13px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24" data-url="../user/userAssets" data-type="3">我的资产</span></a></li>
+                <li><a href="javascript:void(0);" class="home-tab"><div style="float: left; display: block;width: 45px;height: 36px; background: url('/assets/i/personal_center_map.png'); background-position: -639px -16px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
         </div>
         <div class="am-u-sm-9 am-u-md-9 am-padding-top-xl" id="tradeforex_tilie"></div>
