@@ -16,4 +16,8 @@ public interface IBasicinformationRoseDao {
 
     int insert(BasicinformationRose record);
 
+    int insertLog();
+
+    int del();
+
 }
