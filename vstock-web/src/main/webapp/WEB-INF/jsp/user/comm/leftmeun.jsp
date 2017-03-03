@@ -447,7 +447,7 @@
                 "tradeId":tradeId,
                 "size" : size
             },function(res){
-                if(type == 3){
+                if(type == 3 && addId == 0){
                     var site_imgUrl = $("#site_url").val();
                     var address = res.data.userAddressesList;
                     amount = res.data.trade.transactionMoney;
@@ -472,7 +472,7 @@
                     }
                     $("body").addClass("xy-dimmer-active");
                     var html = "";
-                    $("#new-address-tbody").html("");
+                    $("#new-address-div-content").html("");
                     for(var x = 0;x < address.length;x++){
                         var checkTr = "";
                         var phoneNumber = "";
@@ -599,7 +599,9 @@
                     });
                 }
             });
-            $("#now-seller-buy-detailed").click();
+            if (addId == 0){
+                $("#now-seller-buy-detailed").click();
+            }
         });
 
         $("body").on("click",".userInfo-upsbt",function(){
