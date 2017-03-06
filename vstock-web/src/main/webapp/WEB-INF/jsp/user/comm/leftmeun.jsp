@@ -655,24 +655,6 @@
             $("#user-address-type").val($this.attr('data-type'));
         });
 
-        $('#verification').bind('input propertychange', function() {
-            var verification = $('#verification').val();
-            sendRequest("/user/verification",{
-                sendSmsCode: verification
-            },function(res) {
-                if (res.retCode == 1){
-                    $('#prompt').html("");
-                    $('#prompt').removeClass("inline-block");
-                    $('#prompt').addClass("none");
-                }else {
-                    $('#prompt').html("");
-                    $('#prompt').text("验证码错误，请重新输入！");
-                    $('#prompt').removeClass("none");
-                    $('#prompt').addClass("inline-block");
-                }
-            });
-        });
-
         $("body").on("click","#userpass-sbt",function(){
             var $this = $(this);
             var passOne = $.md5($('#passOne').val());
@@ -684,6 +666,22 @@
                 $('#prompt').removeClass("none");
                 $('#prompt').addClass("inline-block");
                 return;
+            }else {
+                var verification = $('#verification').val();
+                sendRequest("/user/verification",{
+                    sendSmsCode: verification
+                },function(res) {
+                    if (res.retCode == 1){
+                        $('#prompt').html("");
+                        $('#prompt').removeClass("inline-block");
+                        $('#prompt').addClass("none");
+                    }else {
+                        $('#prompt').html("");
+                        $('#prompt').text("验证码错误，请重新输入！");
+                        $('#prompt').removeClass("none");
+                        $('#prompt').addClass("inline-block");
+                    }
+                });
             }
             if (passOne == null || passOne == ""){
                 $('#prompt').html("");
