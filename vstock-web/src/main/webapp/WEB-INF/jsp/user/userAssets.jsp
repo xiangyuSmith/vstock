@@ -10,7 +10,7 @@
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-lg">数量分布</span></div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_number">
-                        <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="spherical_id" style="display:none;">
+                        <img src="/assets/i/spherical_graph.png" class="am-padding-top am-padding-left" id="spherical_id" style="display:none;">
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="display: none;">
@@ -32,7 +32,7 @@
                         <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-lg">价值分布</span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_value">
-                        <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="sphericals_id" style="display:none;">
+                        <img src="/assets/i/spherical_graph.png" class="am-padding-top am-padding-left" id="sphericals_id" style="display:none;">
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="display: none;">
