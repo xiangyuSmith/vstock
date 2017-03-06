@@ -91,7 +91,7 @@
                                         <span>需要填写您手机号码${user.mobile}收到的验证码</span>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
-                                        <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" id="verification" type="text" placeholder="验证码" required/>
+                                        <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" id="verification" type="text" maxlength="6" placeholder="验证码" required/>
                                         <span class="am-input-group-label"><a href="javascript:void(0);" id="sendSms">发送验证码</a></span>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">

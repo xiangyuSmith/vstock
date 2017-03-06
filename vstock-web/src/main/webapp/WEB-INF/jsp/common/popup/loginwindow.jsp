@@ -28,7 +28,7 @@
                         <input id="password" class="am-form-field" type="password" placeholder="密码" required/>
                     </div>
                     <div class="am-u-md-12 am-padding-left-0 am-margin-top-sm am-margin-left-lg">
-                        <p><a href="#" class="am-text-left am-fl layout-font-size-14" style="color: #646464;">忘记密码？</a></p>
+                        <p><a href="javascript:;" class="am-text-left am-fl layout-font-size-14" style="color: #646464;" data-am-modal="{target: '#find-login-pwd', closeViaDimmer: 0, width: 350, height: 380}">忘记密码？</a></p>
                     </div>
                     <div class="am-u-md-12" style="padding: 15px 30px 20px 30px;">
                         <a id="prLogin" href="javascript:void(0)" class="am-btn am-btn-danger am-btn-block" style="height: 35px;line-height: 15px;">登录</a>
@@ -113,6 +113,7 @@
     </div>
 </div>
 <%@include file="../register/agreement.jsp" %>
+<%@include file="findPwd.jsp" %>
 <script>
     $(function(){
         $(".login-out").click(function(){
@@ -227,7 +228,7 @@
                 "mobile":mobile
             },function(res){
                 if(res.retCode==1){
-                    var wait = 10;
+                    var wait = 60;
                     $this.attr("disabled",true);
                     var int = setInterval(function(){
                         if (wait == 0) {
@@ -240,7 +241,7 @@
                         }
                     },1000);
                 }else{
-                    alert(res.retMsg);
+                    alertTips(2,"提示",res.retMsg);
                 }
             })
         }

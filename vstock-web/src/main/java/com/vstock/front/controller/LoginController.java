@@ -29,6 +29,7 @@ public class LoginController extends BaseController {
 
     private static Logger logger = Logger.getLogger(LoginController.class);
 
+
     @Autowired
     UserService userService;
 
@@ -93,6 +94,7 @@ public class LoginController extends BaseController {
         String content = new String("您的验证码是：" + mobile_code + "。请不要把验证码泄露给其他人。");
         if(Sendsms.sendHuyi(mobile,account,key,content)){
             WebUtils.setSessionAttribute(request, User.SESSION_USER_SIGN_CODE, mobile_code);
+            WebUtils.setSessionAttribute(request, User.SESSION_USER_SIGN_MOBILE, mobile);
             resultModel.setRetCode(resultModel.RET_OK);
         }else{
             resultModel.setRetMsg("服务器繁忙，请稍后再试");

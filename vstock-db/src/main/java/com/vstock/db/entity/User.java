@@ -11,6 +11,8 @@ public class User {
 
     public static final String SESSION_USER_SIGN_CODE = "VSTOCK-UCODE";
 
+    public static final String SESSION_USER_SIGN_MOBILE = "VSTOCK-MOBILE";
+
     public static final String REG_MD5_CODE = "vstock.user.register.md5.code";
 
     private String id;

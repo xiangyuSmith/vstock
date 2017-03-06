@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.*;
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -36,6 +38,8 @@ public class IndexController extends BaseController{
     ResultDataService resultDataService;
     @Autowired
     PricePeakService pricePeakService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping
     public String index(ModelMap modelMap){
@@ -126,6 +130,38 @@ public class IndexController extends BaseController{
     public Map<String, Object> overallIncrease(){
         String brand = getParam("brand","");
         Map<String, Object> resultModel = VstockConfigService.getRoes(brand);
+        return resultModel;
+    }
+
+    @RequestMapping("updatePassword")
+    @ResponseBody
+    public ResultModel updatePassword(){
+        ResultModel resultModel = new ResultModel();
+        User record = new User();
+        String password = getParam("password","");
+        String sendSmsCode = getParam("sendSmsCode","");
+        String mobile = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_MOBILE));
+        if(sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
+            if(!"".equals(mobile) && mobile != null && !"".equals(password) && !"".equals(sendSmsCode)){
+                User user = userService.findUser(mobile);
+                if(user != null){
+                    record.setId(user.getId());
+                    record.setPassword(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE));
+                    int i = userService.update(record);
+                    if(i == 1){
+                        resultModel.setRetCode(resultModel.RET_OK);
+                    }else{
+                        resultModel.setRetMsg("请求超时");
+                    }
+                }else{
+                    resultModel.setRetMsg("手机号码不存在");
+                }
+            }else{
+                resultModel.setRetMsg("请求超时");
+            }
+        }else{
+            resultModel.setRetMsg("验证码错误，请重新输入");
+        }
         return resultModel;
     }
 

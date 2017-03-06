@@ -666,22 +666,6 @@
                 $('#prompt').removeClass("none");
                 $('#prompt').addClass("inline-block");
                 return;
-            }else {
-                var verification = $('#verification').val();
-                sendRequest("/index/verification",{
-                    sendSmsCode: verification
-                },function(res) {
-                    if (res.retCode == 1){
-                        $('#prompt').html("");
-                        $('#prompt').removeClass("inline-block");
-                        $('#prompt').addClass("none");
-                    }else {
-                        $('#prompt').html("");
-                        $('#prompt').text("验证码错误，请重新输入！");
-                        $('#prompt').removeClass("none");
-                        $('#prompt').addClass("inline-block");
-                    }
-                });
             }
             if (passOne == null || passOne == ""){
                 $('#prompt').html("");
@@ -704,18 +688,22 @@
                 $('#prompt').addClass("inline-block");
                 return;
             }
-
-            $('#prompt').html("");
-            $('#prompt').removeClass("inline-block");
-            $('#prompt').addClass("none");
-            sendRequest("/user/updatePassword",{
-                mobile: $("#mobile_reg").text(),
+            sendRequest("/index/updatePassword",{
+                sendSmsCode: $('#verification').val(),
                 password: passOne
             },function(res) {
+                $('#prompt').html("");
+                $('#prompt').removeClass("inline-block");
+                $('#prompt').addClass("none");
                 if (res.retCode == 1){
                     window.location.reload();
                     sendRequest("/login/logout",null,function(res) {});
                     window.location.href = "/index";
+                }else{
+                    $('#prompt').html("");
+                    $('#prompt').text(res.retMsg);
+                    $('#prompt').removeClass("none");
+                    $('#prompt').addClass("inline-block");
                 }
             });
         });
