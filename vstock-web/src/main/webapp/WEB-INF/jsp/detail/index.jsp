@@ -210,8 +210,8 @@
     <div class="am-container-content am-text-center">
         <span> 4周 </span>
         <span> 最高/最低 ：</span>
-        <span> <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -259px -23px;"></span> <span id="best-hight"></span> </span>
-        <span> <span class="index-icon am-margin-right-sm" style="background: url('/assets/i/detail_icon.png');background-position: -311px -23px;"></span><span id="best-minimum"></span> </span>
+        <span> <span class="index-icon" style="background: url('/assets/i/detail_icon.png');background-position: -259px -23px;"></span> <span id="best-hight">-</span> </span>
+        <span> <span class="index-icon am-margin-right-sm" style="background: url('/assets/i/detail_icon.png');background-position: -311px -23px;"></span><span id="best-minimum">-</span> </span>
     </div>
 </article>
 <div id="sale_record"></div>
@@ -277,15 +277,13 @@
             "bid":bId
         },function(res){
             if(res.retCode == 1){
-                if(res.data.pricePeak1 != undefined){
-                    $("#best-hight").text(fmoney(res.data.pricePeak1.highestBid,0));
-                }else{
-                    $("#best-hight").text("-");
+                if(res.data.basicinformationRose != undefined){
+                    $("#best-hight").text("");
+                    $("#best-hight").text(fmoney(res.data.basicinformationRose.current_market_value,0));
                 }
-                if(res.data.pricePeak2 != undefined){
-                    $("#best-minimum").text(fmoney(res.data.pricePeak2.minimumSellingPrice),0);
-                }else{
-                    $("#best-minimum").text("-");
+                if(res.data.basicinformationRoseLog != undefined){
+                    $("#best-minimum").text("");
+                    $("#best-minimum").text(fmoney(res.data.basicinformationRoseLog.current_market_value),0);
                 }
             }
         });

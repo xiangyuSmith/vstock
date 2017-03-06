@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("basiciformationRose")
 public class BasiciformationRoseService {
@@ -114,6 +111,25 @@ public class BasiciformationRoseService {
         resultModel.put("Current_market_value",totalAmount);
         resultModel.put("Percentage_change",percentageTotal);
         return resultModel;
+    }
+
+    /**
+     * 获取四周最高最低值
+     * @param record  商品ID和鞋码
+     * @param startDate  开始时间
+     * @param endDate  结束时间
+     * @return
+     */
+    public List<BasicinformationRose> getHighestAndlowestDate(BasicinformationRose record, String startDate, String endDate){
+        List<BasicinformationRose> basicinformationRoseLog = new ArrayList<BasicinformationRose>();
+        List<BasicinformationRose> basicinformationRoseList = basicinformationRoseDao.findRoseLog(record,startDate,endDate);
+        if (basicinformationRoseList.size() > 1) {
+            basicinformationRoseLog.add(basicinformationRoseList.get(0));
+            basicinformationRoseLog.add(basicinformationRoseList.get(basicinformationRoseList.size()-1));
+            return basicinformationRoseLog;
+        }else {
+            return basicinformationRoseLog;
+        }
     }
 
 }

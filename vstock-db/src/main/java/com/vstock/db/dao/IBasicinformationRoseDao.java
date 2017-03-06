@@ -20,4 +20,7 @@ public interface IBasicinformationRoseDao {
 
     int del();
 
+    //查询四周最高最低
+    List<BasicinformationRose> findRoseLog(@Param("obj")BasicinformationRose record, @Param(value = "startDate") String startDate, @Param("endDate") String endDate);
+
 }
