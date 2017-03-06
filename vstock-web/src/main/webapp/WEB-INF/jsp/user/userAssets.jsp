@@ -8,7 +8,7 @@
         <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-padding-left-0 am-padding-right-0">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 am-margin-top-lg highcharts-sum">
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">数量分布</span></div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-lg">数量分布</span></div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_number">
                         <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="spherical_id" style="display:none;">
                     </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 layout-font-size-20">
-                        <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">价值分布</span>
+                        <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-lg">价值分布</span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_value">
                         <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="sphericals_id" style="display:none;">
@@ -312,19 +312,23 @@
                 value = res[key];
                 if (i == 0){
                     a = eval('('+value+')');
-                    for (var c = 0; c < 3; c++ ){
-                        var d = a[c];
-                        if (d[1] > 0){
-                            $("#"+conId[c]+"").text(d[0]);
-                            $("#"+conId[c]+"").parent().css("display","block");
+                    for (var c = 0; c < a.length; c++ ){
+                        if (c < 3) {
+                            var d = a[c];
+                            if (d[1] > 0) {
+                                $("#" + conId[c] + "").text(d[0]);
+                                $("#" + conId[c] + "").parent().css("display", "block");
+                            }
                         }
                     }
                 }else {
                     b = eval('('+value+')');
-                    for (var c = 0; c < 3; c++ ){
-                        var d = b[c];
-                        $("#"+vuId[c]+"").text(d[0]);
-                        $("#"+vuId[c]+"").parent().css("display","block");
+                    for (var c = 0; c < b.length; c++ ){
+                        if (c < 3){
+                            var d = b[c];
+                            $("#"+vuId[c]+"").text(d[0]);
+                            $("#"+vuId[c]+"").parent().css("display","block");
+                        }
                     }
                 }
                 i++;
