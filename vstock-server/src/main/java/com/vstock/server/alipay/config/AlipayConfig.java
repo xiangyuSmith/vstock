@@ -71,7 +71,7 @@ public class AlipayConfig {
 	//支付宝登录需要授权执行的目标服务地址
 	public static String target_service = "user.auth.quick.login";
 
-	public static String login_return_url = "http://116.228.89.158:1235/login/alipayLogin";
+	public static String login_return_url = "http://www.v-stock.com/login/alipayLogin";
 
 
 //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
