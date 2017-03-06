@@ -668,7 +668,7 @@
                 return;
             }else {
                 var verification = $('#verification').val();
-                sendRequest("/user/verification",{
+                sendRequest("/index/verification",{
                     sendSmsCode: verification
                 },function(res) {
                     if (res.retCode == 1){
