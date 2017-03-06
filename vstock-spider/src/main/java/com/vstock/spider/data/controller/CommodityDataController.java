@@ -70,8 +70,7 @@ public class CommodityDataController {
         //获取stockx鞋子链接
         List<StockxInfo> stockxInfoList = stockxStoreService.findStockxInfo();
         for (StockxInfo stockxInfo : stockxInfoList) {
-            if ("7".equals(stockxInfo.getBrandId()) || "8".equals(stockxInfo.getBrandId()) || "9".equals(stockxInfo.getBrandId()) || "10".equals(stockxInfo.getBrandId())
-                    || "11".equals(stockxInfo.getBrandId())) {
+            if (!"12".equals(stockxInfo.getBrandId()) && !"13".equals(stockxInfo.getBrandId()) && !"-1".equals(stockxInfo.getBrandId())) {
                 //拼接URL
                 String toUrl = "";
                 for (int i = 1; i <= stockxInfo.getPageNum(); i++) {

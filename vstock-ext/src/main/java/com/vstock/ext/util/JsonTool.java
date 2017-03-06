@@ -84,13 +84,13 @@ public class JsonTool {
 
         Map result = new HashMap();
         Iterator iterator = jsonObject.keys();
-        String key = null;
-        String value = null;
+        String key = "";
+        String value = "";
 
         while (iterator.hasNext()) {
 
-            key = (String) iterator.next();
-            value = jsonObject.getString(key);
+            key = iterator.next().toString();
+            value = jsonObject.get(key).toString();
             result.put(key, value);
 
         }

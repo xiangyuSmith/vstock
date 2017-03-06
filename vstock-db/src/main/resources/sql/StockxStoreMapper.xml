@@ -16,7 +16,7 @@
 
     <!-- 获取stockx数据 -->
     <select id="findStockxInfo" resultType="com.vstock.db.entity.StockxInfo">
-        SELECT * FROM `stockxInfo` si
+        SELECT * FROM `stockxinfo` si
     </select>
 
     <insert id="insertstockxStore" parameterType="com.vstock.db.entity.StockxStore" useGeneratedKeys="true"

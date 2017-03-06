@@ -28,10 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by xiangyu on 2016/5/5.
@@ -68,13 +65,13 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                 //获取每一个JsonObject对象
                 JSONObject myjObject = myJsonArray.getJSONObject(i);
                 //获取每一个对象中的值
-                String urlKey = myjObject.getString("urlKey");
-                JSONObject imgUrlObject = new JSONObject(myjObject.getString("media").toString());
+                String urlKey = myjObject.get("urlKey").toString();
+                JSONObject imgUrlObject = new JSONObject(myjObject.get("media").toString());
                 //获取图片链接
-                String smallImageUrl = imgUrlObject.getString("smallImageUrl");
+                String smallImageUrl = imgUrlObject.get("smallImageUrl").toString();
                 //String thumbUrl = imgUrlObject.getString("thumbUrl");
                 //创建 ChromeDriver 环境，建立chrome内核模拟浏览器
-                String chromeDriver = ConstUtil.getProperties().getProperty("chromeDriver");
+                String chromeDriver = getPropertiesInfo().getProperty("chromeDriver");
                 System.getProperties().setProperty("webdriver.chrome.driver", chromeDriver);
                 WebDriver driver = new ChromeDriver();
                 try {
@@ -83,10 +80,10 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                     //打印搜索到的页面 System.out.println(webElement.getAttribute("outerHTML"));
                     //获取页面
                     getHtmlResult = webElement.getAttribute("outerHTML");
-                    String productName = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.0.0.0.0.0.0']/text()").toString();
-                    String style = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.0.1.1']/text()").toString();
-                    String colorWay = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.1.0.1.1']/text()").toString();
-                    String releaseDate = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.2.1.1']/text()").toString();
+                    String productName = Html.create(getHtmlResult).xpath("//h1[@data-reactid='.4.6.0.0.0.0.0.0']/text()").toString();
+                    String style = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.6.2.0.0.0.1.1']/text()").toString();
+                    String colorWay = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.6.2.0.0.1.0.1.1']/text()").toString();
+                    String releaseDate = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.6.2.0.0.2.1.1']/text()").toString();
                     String[] rels = releaseDate.split("\\.");
                     releaseDate = rels[2] + "/" + rels[0] + "/" + rels[1];
                     Calendar now = Calendar.getInstance();
@@ -99,8 +96,11 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
                     } else {
                         releaseDate = "20" + releaseDate;
                     }
-                    String originalRetailPrice = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.5.3.0.0.3.1.1']/text()").toString();
+                    String originalRetailPrice = Html.create(getHtmlResult).xpath("//span[@data-reactid='.4.6.2.0.0.3.1.1']/text()").toString();
                     String img1 = Html.create(getHtmlResult).xpath("//meta[@name='image']/@content").toString();
+                    if(!"".equals(originalRetailPrice)){
+                        originalRetailPrice = originalRetailPrice.substring(1,originalRetailPrice.length());
+                    }
                     //保存数据
                     if (productName != null && style != null) {
                         Basicinformation basicinformation = new Basicinformation();
@@ -208,7 +208,7 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
             bis = new BufferedInputStream(
                     httpurlConnection.getInputStream());
             bfimg = ImageIO.read(inputStream);
-            String ursl = ConstUtil.getProperties().getProperty("projectPath");
+            String ursl = getPropertiesInfo().getProperty("projectPath");
             if (type == 1) {
                 //缩略图
                 saveUrl = "/assets/shoesImg/small/";
@@ -246,5 +246,16 @@ public class StockxInfoRepoPageProcessor implements PageProcessor {
             System.out.print(e.getMessage());
         }
         return saveUrl;
+    }
+
+    public static Properties getPropertiesInfo() {
+        Properties prop = new Properties();
+        try {
+            InputStream in = ConstUtil.class.getResourceAsStream("/spider.properties");
+            prop.load(in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return prop;
     }
 }
