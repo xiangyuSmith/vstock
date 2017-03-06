@@ -8,17 +8,45 @@
         <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-padding-left-0 am-padding-right-0">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0 am-margin-top-lg highcharts-sum">
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">数量分布</span></div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"><span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-lg">数量分布</span></div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_number">
                         <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="spherical_id" style="display:none;">
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="display: none;">
+                            <span class="lg-rect-css" style="background-color: #E17575;"></span>
+                            <text style="color: #E17575;" class="am-margin-left-xs" id="spher_fis"></text>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm" style="display: none;">
+                            <span class="lg-rect-css" style="background-color: #8DC327;"></span>
+                            <text style="color: #8DC327;" class="am-margin-left-xs" id="spher_sub"></text>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm" style="display: none;">
+                            <span class="lg-rect-css" style="background-color: #046FB7;"></span>
+                            <text style="color: #046FB7;" class="am-margin-left-xs" id="spher_sen"></text>
+                        </div>
                     </div>
                 </div>
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6 am-padding-left-0 am-padding-right-0 highcharts-with-higth">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 layout-font-size-20">
-                        <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-sm">价值分布</span>
+                        <span class="am-center am-text-center layout-font-size-20 am-fl am-padding-left-lg">价值分布</span>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-padding-right-0" id="container_value">
                         <img src="/assets/i/spherical_graph.png" class="am-padding-top" id="sphericals_id" style="display:none;">
+                    </div>
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="display: none;">
+                            <span class="lg-rect-css" style="background-color: #E17575;"></span>
+                            <text style="color: #E17575;" class="am-margin-left-xs" id="container_fis"></text>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm" style="display: none;">
+                            <span class="lg-rect-css" style="background-color: #8DC327;"></span>
+                            <text style="color: #8DC327;" class="am-margin-left-xs" id="container_sub"></text>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm" style="display: none;">
+                            <span class="lg-rect-css" style="background-color: #046FB7;"></span>
+                            <text style="color: #046FB7;" class="am-margin-left-xs" id="container_sen"></text>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -275,6 +303,8 @@
 //        });
 
         sendRequest("/user/hchar",null,function(res) {
+            var vuId = ["spher_fis","spher_sub","spher_sen"];
+            var conId = ["container_fis","container_sub","container_sen"];
             var a;
             var b;
             var i = 0;
@@ -282,8 +312,24 @@
                 value = res[key];
                 if (i == 0){
                     a = eval('('+value+')');
+                    for (var c = 0; c < a.length; c++ ){
+                        if (c < 3) {
+                            var d = a[c];
+                            if (d[1] > 0) {
+                                $("#" + conId[c] + "").text(d[0]);
+                                $("#" + conId[c] + "").parent().css("display", "block");
+                            }
+                        }
+                    }
                 }else {
                     b = eval('('+value+')');
+                    for (var c = 0; c < b.length; c++ ){
+                        if (c < 3){
+                            var d = b[c];
+                            $("#"+vuId[c]+"").text(d[0]);
+                            $("#"+vuId[c]+"").parent().css("display","block");
+                        }
+                    }
                 }
                 i++;
             }

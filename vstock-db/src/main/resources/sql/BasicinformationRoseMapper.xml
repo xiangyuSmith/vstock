@@ -80,4 +80,17 @@
         select `basicinformation_id`,`brand`,`basicinformation_size`,`current_market_value`,`change_range`,`percentage_change`,`type`,`create_date`from basicinformation_rose
     </insert>
 
+    <select id="findRoseLog" parameterType="com.vstock.db.entity.BasicinformationRose" resultType="com.vstock.db.entity.BasicinformationRose">
+        select * from basicinformation_rose_log br
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <if test="startDate != null and startDate != ''">
+            and br.create_date &gt;= #{startDate,jdbcType=VARCHAR}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and br.create_date &lt;= #{endDate,jdbcType=VARCHAR}
+        </if>
+        AND current_market_value NOT IN(0)
+        ORDER BY current_market_value DESC
+    </select>
+
 </mapper>
