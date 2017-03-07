@@ -40,8 +40,8 @@ public class TradeService {
         return tradeDao.findAll(record,page.getStartPos(),page.getPageSize());
     }
 
-    public List<Trade> findAllSale(Trade record, Page page){
-        return tradeDao.findAllSale(record,page.getStartPos(),page.getPageSize());
+    public List<Trade> findAllSale(Trade record, Page page, String startDateTime, String endDateTime){
+        return tradeDao.findAllSale(record,page.getStartPos(),page.getPageSize(),startDateTime,endDateTime);
     }
 
 
@@ -81,7 +81,7 @@ public class TradeService {
         Trade trade = new Trade();
         trade.setBasicinformationId(bid);
         trade.setBftSize(size);
-        List<Trade> tradelist = findAllSale(trade,page);
+        List<Trade> tradelist = findAllSale(trade,page,null,null);
         if(tradelist.size() != 0){
             return tradelist.get(0);
         }
@@ -275,7 +275,7 @@ public class TradeService {
             Point point = new Point();
             BigDecimal money = new BigDecimal("0");
             String time =  DateUtils.dateToString(DateUtils.wantToLose(DateUtils.getDate(startDate,"yyyy-MM-dd"),-i),"yyyy-MM-dd");
-            List<Trade> tradeList = tradeDao.findAllDate(record, page.getStartPos(), page.getPageSize(), time+" 00:00:00", time+" 23:59:59");
+            List<Trade> tradeList = this.findAllSale(record, page, time+" 00:00:00", time+" 23:59:59");
 //            if (tradeList.size() > 0) {
                 for (Trade trade : tradeList) {
                     money = money.add(trade.getTransactionMoney());

@@ -363,7 +363,7 @@ public class TradeController extends BaseController{
         setLastPage(0,5);
         Trade trade = new Trade();
         trade.setBasicinformationId(bid);
-        List<Trade> tradeList = tradeService.findAllSale(trade,lagePage);
+        List<Trade> tradeList = tradeService.findAllSale(trade,lagePage,null,null);
         List<Basicinformation> bList = basicinformationService.findByType(6);
         model.put("bList",bList);
         model.put("tradeList",tradeList);
