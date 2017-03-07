@@ -62,7 +62,7 @@
                                         <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                         <ul class="am-dropdown-content">
                                             <c:if test="${bid.status == 10}">
-                                                <li><a class="am-btn am-btn-xs am-text-left sale-up" data_type="1" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
+                                                <li><a class="am-btn am-btn-xs am-text-left sale-up" data_type="1" href="javascript:void(0)"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/i/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">修改</span></a></li>
                                                 <li><a class="am-btn am-btn-xs am-text-left sale-sub" data_type="1" data_id="${bid.id}" btf-id="${bid.basicinformationId}" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
                                                 <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
                                             </c:if>
@@ -73,7 +73,7 @@
                                                 <li><a class="am-btn am-btn-xs am-text-left deliver-bid-goods" bid-id="${bid.id}" bft-id="${bid.basicinformationId}" data-type="${bid.type}" bid_type="0" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">重新支付</span></a></li>
                                             </c:if>
                                             <c:if test="${bid.status == 11}">
-                                                <li><a class="am-btn am-btn-xs am-text-left" data_type="0" href="${cxt}/detail?proName=${bid.bftName}&size=${bid.bftSize}"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/shoesImg/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">重新叫价</span></a></li>
+                                                <li><a class="am-btn am-btn-xs am-text-left" data_type="0" href="${cxt}/detail?proName=${bid.bftName}&size=${bid.bftSize}"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/i/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">重新叫价</span></a></li>
                                             </c:if>
                                             <c:if test="${bid.status == 1 || bid.status == 11 || bid.status == 30}">
                                                 <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" data-type="${bid.type}" del_data_id="${bid.id}" btf-id="${bid.basicinformationId}"  href="javascript:void(0)"><i class="am-icon-trash am-margin-right-xs"></i><span class="am-text-left am-text-sm">删除</span></a></li>
