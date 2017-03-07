@@ -272,7 +272,7 @@
             }
         });
         //获取4周最高最低
-        sendRequest("/detail/getPricePeak",{
+        sendRequest("/detail/getHighestAndlowestDate",{
             "size":$("#choose_size").val(),
             "bid":bId
         },function(res){

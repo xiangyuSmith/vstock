@@ -85,17 +85,33 @@ public class DetailController extends BaseController{
         Map<String,Object> params = new HashMap<String,Object>();
         String size = getParam("size");
         Integer bid = getParamToInt("bid");
+        String startTime = ToolDateTime.format(ToolDateTime.getDate(),ToolDateTime.pattern_ymd);
+        String endTime = ToolDateTime.format(ToolDateTime.getDate(),ToolDateTime.pattern_ymd);
+        PricePeak pricePeak1 = pricePeakService.getHighestAndlowestDate(bid,size,1,lagePage,startTime,endTime);
+        PricePeak pricePeak2 = pricePeakService.getHighestAndlowestDate(bid,size,2,lagePage,startTime,endTime);
+        params.put("pricePeak1", pricePeak1);
+        params.put("pricePeak2", pricePeak2);
+        resultModel.setRetCode(resultModel.RET_OK);
+        resultModel.setData(params);
+        return resultModel;
+    }
+
+    @RequestMapping("getHighestAndlowestDate")
+    @ResponseBody
+    public ResultModel getHighestAndlowestDate(){
+        ResultModel resultModel = new ResultModel();
+        BasicinformationRose record = new BasicinformationRose();
+        Map<String,Object> params = new HashMap<String,Object>();
+        String size = getParam("size");
+        Integer bid = getParamToInt("bid");
         if (size != null && !"".equals(size)){
             record.setBasicinformation_size(size);
         }
         if (bid != null && !"".equals(bid)){
             record.setBasicinformation_id(bid);
         }
-//        String startTime = ToolDateTime.format(DateUtils.wantToLose(new Date(),28),ToolDateTime.pattern_ymd);
         String startTime = ToolDateTime.format(DateUtils.wantToLose(ToolDateTime.getDate(),29),ToolDateTime.pattern_ymd);
         String endTime = ToolDateTime.format(DateUtils.wantToLose(ToolDateTime.getDate(),1),ToolDateTime.pattern_ymd);
-//        PricePeak pricePeak1 = pricePeakService.getHighestAndlowestDate(bid,size,1,lagePage,startTime,endTime);
-//        PricePeak pricePeak2 = pricePeakService.getHighestAndlowestDate(bid,size,2,lagePage,startTime,endTime);
         List<BasicinformationRose> basicinformationRoseList = basiciformationRoseService.getHighestAndlowestDate(record,startTime,endTime);
         if (basicinformationRoseList.size() > 0) {
             params.put("basicinformationRose", basicinformationRoseList.get(0));
