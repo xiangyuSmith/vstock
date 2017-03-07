@@ -163,6 +163,8 @@
                     maxlength: 12
                 },
                 mobile_reg:{
+                    minlength : 11,
+                    isMobile : true,
                     required: true
                 },
                 sendSmsCode : {
@@ -176,6 +178,13 @@
                     required: true,
                     rangelength: [6, 16],
                     equalTo: "#password_reg"
+                }
+            },
+            messages : {
+                mobile_find : {
+                    required : "手机号不能为空",
+                    minlength : "手机号格式不正确",
+                    isMobile : "手机号格式不正确"
                 }
             },
             submitHandler: function(form) {  //通过之后回调
@@ -206,14 +215,17 @@
                     }
                 });
             },
-            invalidHandler: function(form, validator) {
-//                alert("a");
-            }
+            invalidHandler: function(form, validator) { }
         })
 
         $("#sendSms").click(function(){
             var $this = $(this);
             var mobile = $("#mobile_reg").val();
+            var geshi = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+            if(mobile.length != 11 || !geshi.test(mobile)){
+                tipshow("手机号格式不正确");
+                return;
+            }
             if(mobile == ""){
                 tipshow("请填写手机号");
                 return;

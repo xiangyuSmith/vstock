@@ -4,6 +4,7 @@
     .delete-content{ text-align: center; width: 180px; height: 88px; padding: 20px 5px 15px 5px; }
     .delete-btn{ display: block;cursor: pointer; margin: 10px 15px; background-color: #D0CCC6; width: 50px; height: 25px; text-align: center; line-height: 25px; float: left; }
     .delete-btn:HOVER{ background-color: #ddd; }
+    #login-pas .am-form-field:focus{outline:none;box-shadow: none;border: 1px solid #ccc;}
 </style>
 <form id="userInfo" action="/user/userInfo" method="post">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-padding-left-0 am-margin-bottom-xl">
@@ -74,7 +75,7 @@
                     <span class="am-fr">登录密码：</span>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-margin-left-0 am-padding-left-0 am-u-end">
-                    <a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 360}">
+                    <a href="javascript:void(0);" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 370}">
                         修改密码
                     </a>
 
@@ -88,11 +89,11 @@
                             <div class="am-modal-bd am-g">
                                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
-                                        <span>需要填写您手机号码${user.mobile}收到的验证码</span>
+                                        <span style="display: inline-block;width: 24px;height: 28px;float: left;margin-top: -5px;margin-right:5px;background: url('/assets/i/personal_center_map.png');background-position: -1747px -23px;" ></span><span>点击“发送验证码”至您的手机<c:out value="${fn:substring(user.mobile,0,3)}****${fn:substring(user.mobile,7,11)}"></c:out></span>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
                                         <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" id="verification" type="text" maxlength="6" placeholder="验证码" required/>
-                                        <span class="am-input-group-label"><a href="javascript:void(0);" id="sendSms">发送验证码</a></span>
+                                        <span class="am-input-group-label" style="border-bottom: none;"><a href="javascript:void(0);" id="sendSms">发送验证码</a></span>
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
                                         <input class="am-form-field" style="min-height: 50px; border-bottom: solid 0px;" id="passOne" type="password" placeholder="请输入新密码" required/>
@@ -100,7 +101,9 @@
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom-sm">
                                         <input class="am-form-field" style="min-height: 50px;" type="password" id="passTow" placeholder="请再次输入新密码" required/>
                                     </div>
-                                    <span id="prompt" disabled="none" class="am-text-danger"></span>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom-sm">
+                                        <span id="prompt" style="display:none" class="am-fl"><span style="display: inline-block;width: 25px; height: 20px;float: left;margin: 0 5px;background: url('/assets/i/detail_icon.png');background-position: -405px -23px;" ></span><span id="prompt-tips" class="am-text-danger"></span></span>
+                                    </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
                                         <a href="javascript:void(0);" id="userpass-sbt" class="am-btn am-btn-danger am-center">确定</a>
                                     </div>

@@ -657,53 +657,47 @@
 
         $("body").on("click","#userpass-sbt",function(){
             var $this = $(this);
-            var passOne = $.md5($('#passOne').val());
-            var passTow = $.md5($('#passTow').val());
+            var passOne = $('#passOne').val();
+            var passTow = $('#passTow').val();
             var verification = $('#verification').val();
             if (verification == null || verification == ""){
-                $('#prompt').html("");
-                $('#prompt').text("验证码不能为空！");
-                $('#prompt').removeClass("none");
-                $('#prompt').addClass("inline-block");
+                $('#prompt-tips').html("");
+                $('#prompt-tips').text("验证码不能为空！");
+                $('#prompt').css("display","inline-block");
                 return;
             }
             if (passOne == null || passOne == ""){
-                $('#prompt').html("");
-                $('#prompt').text("请输入密码！");
-                $('#prompt').removeClass("none");
-                $('#prompt').addClass("inline-block");
+                $('#prompt-tips').html("");
+                $('#prompt-tips').text("请输入密码！");
+                $('#prompt').css("display","inline-block");
                 return;
             }
             if (passTow == null || passTow == ""){
-                $('#prompt').html("");
-                $('#prompt').text("请再次输入密码！");
-                $('#prompt').removeClass("none");
-                $('#prompt').addClass("inline-block");
+                $('#prompt-tips').html("");
+                $('#prompt-tips').text("请再次输入密码！");
+                $('#prompt').css("display","inline-block");
                 return;
             }
             if (passOne != passTow){
-                $('#prompt').html("");
-                $('#prompt').text("两次密码不同，请重新输入！");
-                $('#prompt').removeClass("none");
-                $('#prompt').addClass("inline-block");
+                $('#prompt-tips').html("");
+                $('#prompt-tips').text("两次密码不同，请重新输入！");
+                $('#prompt').css("display","inline-block");
                 return;
             }
             sendRequest("/index/updatePassword",{
                 sendSmsCode: $('#verification').val(),
-                password: passOne
+                password: $.md5(passOne)
             },function(res) {
-                $('#prompt').html("");
-                $('#prompt').removeClass("inline-block");
-                $('#prompt').addClass("none");
+                $('#prompt-tips').html("");
+                $('#prompt').css("display","none");
                 if (res.retCode == 1){
                     window.location.reload();
                     sendRequest("/login/logout",null,function(res) {});
                     window.location.href = "/index";
                 }else{
-                    $('#prompt').html("");
-                    $('#prompt').text(res.retMsg);
-                    $('#prompt').removeClass("none");
-                    $('#prompt').addClass("inline-block");
+                    $('#prompt-tips').html("");
+                    $('#prompt-tips').text(res.retMsg);
+                    $('#prompt').css("display","inline-block");
                 }
             });
         });
