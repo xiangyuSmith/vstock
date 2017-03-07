@@ -124,11 +124,17 @@
 </div>
 <script>
     $(function(){
+        var loadNum = 0;
         $("#seller_detailed_size").change(function(){
+            alert($(this).val() + "," + $("#bftId").val());
             sendRequest("/detail/getPricePeak",{
                 "size":$(this).val(),
                 "bid":$("#bftId").val()
             },function(res){
+                if(loadNum == 0){
+                    loadNum++;
+                    return false;
+                }
                 if(res.retCode == 1){
                     if(res.data.pricePeak1 != undefined){
                         $("#buyer_detailed_highestBid").text(res.data.pricePeak1.highestBid);

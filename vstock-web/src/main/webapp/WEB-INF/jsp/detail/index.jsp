@@ -475,24 +475,24 @@
                     });
                     function createPay(){
                         type = type==1?2:3;
-//                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data+"&bname="+bname;
-//                        return;
-                        sendRequest("/trade/createTradePay",{
-                            "bname": bname,
-                            "bId": bId,
-                            'amount': amount,
-                            'size' : size,
-                            'type': type==1?2:3,
-                            'yunFee' : yunFee,
-                            'tradeId': res.data.tradeId,
-                            'bidId': res.data.bidId,
-                            'pricePeakId': res.data.pricePeakId
-                        },function(res){
-                            if(res.retCode == 1){
-                                alertshow("支付成功！！");
-                                location.reload();
-                            }
-                        });
+                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname;
+                        return;
+//                        sendRequest("/trade/createTradePay",{
+//                            "bname": bname,
+//                            "bId": bId,
+//                            'amount': amount,
+//                            'size' : size,
+//                            'type': type==1?2:3,
+//                            'yunFee' : yunFee,
+//                            'tradeId': res.data.tradeId,
+//                            'bidId': res.data.bidId,
+//                            'pricePeakId': res.data.pricePeakId
+//                        },function(res){
+//                            if(res.retCode == 1){
+//                                alertshow("支付成功！！");
+//                                location.reload();
+//                            }
+//                        });
                     };
                 }else{
                     alertTips(2,"操作失败",res.retMsg);
@@ -562,20 +562,20 @@
                             $("#alert-confirm-content").html("是否去支付?");
                             $('#my-confirm').modal({
                                 onConfirm : function() {
-//                                    location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
-//                                    return;
-                                    sendRequest("/bid/createPay",{
-                                        'amount': amount,
-                                        'type': type,
-                                        "bId": bId,
-                                        'size': size,
-                                        'bid' : res.data
-                                    },function(res){
-                                        if(res.retCode == 1){
-                                            alertshow("支付成功！！");
-                                            location.reload();
-                                        }
-                                    })
+                                    location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
+                                    return;
+//                                    sendRequest("/bid/createPay",{
+//                                        'amount': amount,
+//                                        'type': type,
+//                                        "bId": bId,
+//                                        'size': size,
+//                                        'bid' : res.data
+//                                    },function(res){
+//                                        if(res.retCode == 1){
+//                                            alertshow("支付成功！！");
+//                                            location.reload();
+//                                        }
+//                                    })
                                 },
                                 onCancel:function(){
                                     $('#my-popup-sell-bid').modal('close');
