@@ -252,17 +252,17 @@
         });
 
         $("body").on("click",".sale-del",function(){
-            var $this = $(this);
-            var id = $this.attr("del_data_id");
-            var type = $this.attr("data-type");
-            var bftId = $this.attr("btf-id");
-            var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
-            var moeny = $thoes.text();
-            moeny = parseFloat(moeny.substring(1,moeny.legend).replace(/[^\d\.-]/g, ""));
-            var size = $thoes.prev().prev().text();
             $('#my-confirm').modal({
                 relatedTarget: this,
                 onConfirm: function(options) {
+                    var $this = $(this.relatedTarget);
+                    var id = $this.attr("del_data_id");
+                    var type = $this.attr("data-type");
+                    var bftId = $this.attr("btf-id");
+                    var $thoes = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev();
+                    var moeny = $thoes.text();
+                    moeny = parseFloat(moeny.substring(1,moeny.legend).replace(/[^\d\.-]/g, ""));
+                    var size = $thoes.prev().prev().text();
                     sendRequest("/bid/updateBid",{
                         id : id,
                         type : type,
