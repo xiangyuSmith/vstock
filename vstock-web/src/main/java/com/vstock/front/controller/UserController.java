@@ -86,6 +86,7 @@ public class UserController extends BaseController {
             bid.setType("1");
             trade.setStatus(50);
             trade.setNotStatus("51");
+            trade.setBuysaleType("1");
             trade.setBuyersId(bid.getUserId());
         }
         int totalCount = bidService.findWebCount(bid);
@@ -152,6 +153,7 @@ public class UserController extends BaseController {
         }else {
             trade.setBuyersId(Integer.parseInt(String.valueOf(suid)));
             trade.setNotStatus("51");
+            trade.setBuysaleType("1");
         }
         String pageNow = request.getParameter("pageNow");
         int totalCount = tradeService.findCountWeb(trade);

@@ -98,7 +98,7 @@ public class TradeController extends BaseController{
         int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
         int isBond = status==0?1:0;
         String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
-        Trade trade = new Trade(isBond,addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status,
+        Trade trade = new Trade(isBond,addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, null,
                 new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
         if(tradeId == 0){

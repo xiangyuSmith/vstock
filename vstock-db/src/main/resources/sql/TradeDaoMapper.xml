@@ -14,6 +14,7 @@
         <result column="tradeFreight" property="tradeFreight" jdbcType="DECIMAL"/>
         <result column="courierNumber" property="courierNumber" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="buysaleType" property="buysaleType" jdbcType="VARCHAR"/>
         <result column="transactionDate" property="transactionDate" jdbcType="TIMESTAMP"/>
         <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="sign" property="sign" jdbcType="VARCHAR"/>
@@ -235,6 +236,7 @@
         t.bft_size as bftSize,
         t.courier_number as courierNumber,
         t.status as status,
+        t.buysale_type as buysaleType,
         t.transaction_date as transactionDate,
         t.update_date as updateDate,
         t.sign as sign
@@ -352,8 +354,8 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `trade`
-        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`transaction_date`,`update_date`,`sign`,`user_address_id`,`trade_no`,`is_bond`)
-        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{transactionDate},#{updateDate},#{sign},#{userAddressId},#{tradeNo},#{isBond})
+        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`buysale_type``transaction_date`,`update_date`,`sign`,`user_address_id`,`trade_no`,`is_bond`)
+        VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{buysaleType},#{transactionDate},#{updateDate},#{sign},#{userAddressId},#{tradeNo},#{isBond})
     </insert>
 
     <update id="update">
@@ -364,6 +366,9 @@
             </if>
             <if test="status != null and status != ''">
                 status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="buysaleType != null and buysaleType != ''">
+                buysale_type = #{buysaleType,jdbcType=VARCHAR},
             </if>
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
@@ -404,6 +409,9 @@
             </if>
             <if test="obj.notStatus != null and obj.notStatus != ''">
                 and t.status NOT IN (#{obj.notStatus,jdbcType=VARCHAR})
+            </if>
+            <if test="obj.buysaleType != null and obj.buysaleType != ''">
+                and t.buysale_type NOT IN (#{obj.buysaleType,jdbcType=VARCHAR})
             </if>
             <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
                 and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
@@ -473,6 +481,9 @@
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
+            </if>buysaleType
+            <if test="buysaleType != null and buysaleType != ''">
+                buysale_type = #{buysaleType,jdbcType=VARCHAR},
             </if>
         </set>
         WHERE id = #{id,jdbcType=INTEGER}
