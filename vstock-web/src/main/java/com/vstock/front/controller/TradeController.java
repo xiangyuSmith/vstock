@@ -223,18 +223,8 @@ public class TradeController extends BaseController{
 
     @RequestMapping("createTradePay")
     public String createTradePay() {
-        //获取支付宝GET过来反馈信息
-        Map<String,String> params = new HashMap<String,String>();
         Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-            String valueStr = "";
-            String names = (String) iter.next();
-            String[] values = (String[]) requestParams.get(names);
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i] : valueStr + values[i] + ",";
-            }
-            params.put(names, valueStr);
-        }
+        Map<String,String> params = bidService.eachMap(requestParams);
         //计算得出通知验证结果
         boolean verify_result = AlipayNotify.verify(params);
         if(verify_result){
@@ -259,7 +249,9 @@ public class TradeController extends BaseController{
                     sort = 2;
                 }
                 PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),trade.getBftSize(),sort,lagePage);
-                updateTradeInfo(trade.getBidId(),trade.getTradeFreight(),pricePeak.getId(),type,tradeId);
+                if(pricePeak == null){
+                    updateTradeInfo(trade.getBidId(),trade.getTradeFreight(),pricePeak.getId(),type,tradeId);
+                }
             }
             Payment payment = new Payment();
             payment.setPayment_user_id(Long.parseLong(uid));
@@ -309,6 +301,21 @@ public class TradeController extends BaseController{
         return "/error";
     }
 
+    @RequestMapping("returnTradePay")
+    @ResponseBody
+    public String returnTradePay(){
+        //获取支付宝GET过来反馈信息
+        Map requestParams = request.getParameterMap();
+        Map<String,String> params = bidService.eachMap(requestParams);
+        //计算得出通知验证结果
+        boolean verify_result = AlipayNotify.verify(params);
+        if(verify_result){
+            return "success";
+        }else{
+            return "fail";
+        }
+    }
+
     @RequestMapping("createTradePayAlipay")
     public String createTradePayAlipay(ModelMap modelMap){
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
@@ -329,7 +336,7 @@ public class TradeController extends BaseController{
         sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amount+"|"+ischeck+"|"+bname);
         sParaTemp.put("out_trade_no", String.valueOf(tradeId));
-        sParaTemp.put("subject", String.valueOf("购买商品"));
+        sParaTemp.put("subject", String.valueOf("购买商品") + bname);
         sParaTemp.put("total_fee", String.valueOf(0.01));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);

@@ -60,20 +60,8 @@ public class BidController extends BaseController{
     @RequestMapping("createPay")
     public String createPay() throws Exception {
         //获取支付宝GET过来反馈信息
-        Map<String,String> params = new HashMap<String,String>();
         Map requestParams = request.getParameterMap();
-        for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
-            String name = (String) iter.next();
-            String[] values = (String[]) requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < values.length; i++) {
-                valueStr = (i == values.length - 1) ? valueStr + values[i]
-                        : valueStr + values[i] + ",";
-            }
-            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-//            valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
-            params.put(name, valueStr);
-        }
+        Map<String,String> params = bidService.eachMap(requestParams);
         //计算得出通知验证结果
         boolean verify_result = AlipayNotify.verify(params);
         if(verify_result){
@@ -145,7 +133,7 @@ public class BidController extends BaseController{
         sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname);
         sParaTemp.put("out_trade_no", String.valueOf(bid));
-        sParaTemp.put("subject", String.valueOf("商品叫价"));
+        sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
         sParaTemp.put("total_fee", String.valueOf(0.01));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
@@ -172,6 +160,21 @@ public class BidController extends BaseController{
         }
         param.put("sgin",sgin);
         return param;
+    }
+
+    @RequestMapping("returnBid")
+    @ResponseBody
+    public String returnBid(){
+        //获取支付宝GET过来反馈信息
+        Map requestParams = request.getParameterMap();
+        Map<String,String> params = bidService.eachMap(requestParams);
+        //计算得出通知验证结果
+        boolean verify_result = AlipayNotify.verify(params);
+        if(verify_result){
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 
     @RequestMapping("ischeck")

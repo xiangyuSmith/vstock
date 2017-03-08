@@ -146,6 +146,7 @@ public class QuartzJob implements Job {
         Trade t = new Trade();
         Payment p = new Payment();
         Bid b = new Bid();
+        String buySaleType = "0";
         for (Trade trade : trades) {
             difference = isdifference(trade.getTransactionDate(),time);
             if(type == 1){
@@ -166,6 +167,8 @@ public class QuartzJob implements Job {
 //                if(payment != null){
 //                    difference= isdifference(trade.getTransactionDate(),60*15);
 //                }
+            }else{
+                buySaleType = "1";
             }
             if(difference <= 0){
                 t.setId(trade.getId());
