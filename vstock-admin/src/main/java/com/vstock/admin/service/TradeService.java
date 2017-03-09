@@ -90,7 +90,11 @@ public class TradeService {
      * @return
      */
     public int update(Trade record){
-        return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
+        Trade t = new Trade();
+        t.setId(record.getId());
+        t.setStatus(record.getStatus());
+        t.setUpdateDate(record.getUpdateDate());
+        return tradeDao.update(t);
     }
 
     /**
