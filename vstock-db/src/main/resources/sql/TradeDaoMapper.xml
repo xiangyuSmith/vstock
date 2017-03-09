@@ -481,7 +481,7 @@
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
-            </if>buysaleType
+            </if>
             <if test="buysaleType != null and buysaleType != ''">
                 buysale_type = #{buysaleType,jdbcType=VARCHAR},
             </if>
