@@ -34,7 +34,7 @@ public interface ITradeDao {
     int insert(Trade record);
 
     //修改数据
-    int update(@Param("status")int status, @Param("updateDate")String updateDate, @Param("id")Integer id);
+    int update(@Param("obj")Trade record);
 
     //修改所有
     int updateAll(Trade record);

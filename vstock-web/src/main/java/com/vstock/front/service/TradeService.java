@@ -121,7 +121,12 @@ public class TradeService {
      * @return
      */
     public int update(Trade record){
-        return tradeDao.update(record.getStatus(),record.getUpdateDate(),record.getId());
+        Trade t = new Trade();
+        t.setId(record.getId());
+        t.setStatus(record.getStatus());
+        t.setUpdateDate(record.getUpdateDate());
+        t.setBuysaleType(record.getBuysaleType());
+        return tradeDao.update(t);
     }
 
     public int updateAll(Trade record){return tradeDao.updateAll(record);}

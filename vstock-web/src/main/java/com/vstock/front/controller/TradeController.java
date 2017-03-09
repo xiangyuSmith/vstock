@@ -249,7 +249,7 @@ public class TradeController extends BaseController{
                     sort = 2;
                 }
                 PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),trade.getBftSize(),sort,lagePage);
-                if(pricePeak == null){
+                if(pricePeak != null){
                     updateTradeInfo(trade.getBidId(),trade.getTradeFreight(),pricePeak.getId(),type,tradeId);
                 }
             }

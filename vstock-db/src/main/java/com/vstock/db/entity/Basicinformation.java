@@ -57,6 +57,8 @@ public class Basicinformation implements Serializable {
     private String state;
     private ResultData resultData;
     private Bid bid;
+    private Double highestBid;
+    private Double minimumBid;
 
     public Basicinformation(String id, String brand, String name, String artNo, int type, String colores, String csaledate, String esaledate, Double cofferprice, Double cofferprices, String bscofferprice, String eofferprice, String chineselogo, String chineselogos, String imgUrl, String smallImgUrl, String createtime, String state, ResultData ResultData, Bid bid) {
         this.id = id;
@@ -79,6 +81,22 @@ public class Basicinformation implements Serializable {
         this.state = state;
         this.resultData = ResultData;
         this.bid = bid;
+    }
+
+    public Double getMinimumBid() {
+        return minimumBid;
+    }
+
+    public void setMinimumBid(Double minimumBid) {
+        this.minimumBid = minimumBid;
+    }
+
+    public Double getHighestBid() {
+        return highestBid;
+    }
+
+    public void setHighestBid(Double highestBid) {
+        this.highestBid = highestBid;
     }
 
     public static long getSerialVersionUID() {

@@ -181,7 +181,7 @@
                                 <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div style="font-size: 16px;">最低叫价</div>
-                                    <div class="layout-font-size-24">￥${b.cofferprice}</div>
+                                    <div class="layout-font-size-24">￥${b.minimumBid}</div>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                                 <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div style="font-size: 16px;">最高出价</div>
-                                    <div class="layout-font-size-24">￥${b.cofferprice}</div>
+                                    <div class="layout-font-size-24">￥${b.highestBid}</div>
                                 </div>
                             </div>
                         </div>
@@ -252,21 +252,19 @@
             </div>
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default am_index_addimglist am-no-layout">
                 <c:forEach items="${bList}" var="b">
-                    <c:if test="${b.type==5}">
-                        <li>
-                            <div class="am-gallery-item am_list_block">
-                                <a href="/detail?proName=${b.name}" class="am_img_bg">
-                                    <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
-                                </a>
-                                <div class="am_listimg_info">
-                                    <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
-                                    <div>
-                                        <div class="layout-font-size-22">官方售价:￥${b.cofferprice}</div>
-                                    </div>
+                    <li>
+                        <div class="am-gallery-item am_list_block">
+                            <a href="/detail?proName=${b.name}" class="am_img_bg">
+                                <img class="show-lazy lazy" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${b.smallImgUrl}" style="display: inline;">
+                            </a>
+                            <div class="am_listimg_info">
+                                <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
+                                <div>
+                                    <div class="layout-font-size-22">官方售价:￥${b.cofferprice}</div>
                                 </div>
                             </div>
-                        </li>
-                    </c:if>
+                        </div>
+                    </li>
                 </c:forEach>
             </ul>
         </div>

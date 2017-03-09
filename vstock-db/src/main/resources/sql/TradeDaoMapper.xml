@@ -354,24 +354,24 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `trade`
-        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`buysale_type``transaction_date`,`update_date`,`sign`,`user_address_id`,`trade_no`,`is_bond`)
+        (`id`,`seller_id`,`buyers_id`,`bid_id`,`basicinformation_id`,`transaction_money`,`trade_freight`,`bft_size`,`courier_number`,`status`,`buysale_type`,`transaction_date`,`update_date`,`sign`,`user_address_id`,`trade_no`,`is_bond`)
         VALUES(null,#{sellerId},#{buyersId},#{bidId},#{basicinformationId},#{transactionMoney},#{tradeFreight},#{bftSize},#{courierNumber},#{status},#{buysaleType},#{transactionDate},#{updateDate},#{sign},#{userAddressId},#{tradeNo},#{isBond})
     </insert>
 
     <update id="update">
         UPDATE `trade`
         <set>
-            <if test="updateDate != null and updateDate != ''">
-                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            <if test="obj.updateDate != null and obj.updateDate != ''">
+                update_date = #{obj.updateDate,jdbcType=TIMESTAMP},
             </if>
-            <if test="status != null and status != ''">
-                status = #{status,jdbcType=VARCHAR},
+            <if test="obj.status != null and obj.status != ''">
+                status = #{obj.status,jdbcType=VARCHAR},
             </if>
-            <if test="buysaleType != null and buysaleType != ''">
-                buysale_type = #{buysaleType,jdbcType=VARCHAR},
+            <if test="obj.buysaleType != null and obj.buysaleType != ''">
+                buysale_type = #{obj.buysaleType,jdbcType=VARCHAR},
             </if>
         </set>
-        WHERE id = #{id,jdbcType=INTEGER}
+        WHERE id = #{obj.id,jdbcType=INTEGER}
     </update>
 
     <sql id="SearchAllPage_Where_Clause">

@@ -46,25 +46,19 @@ public class IndexController extends BaseController {
         List<Bid> sellBidList = bidService.findNewAll(bid, lagePage);
         bid.setType("1");
         List<Bid> buyBidList = bidService.findNewAll(bid, lagePage);
-        List<Basicinformation> bList = basicinformationService.findByType(-1);
-        //爆款推荐
         List<Basicinformation> baolist = basicinformationService.findByBao(1);
-        //最低卖价 & 最高叫价
         List<Basicinformation> miniMoneyList = basicinformationService.findByType(2);
         List<Basicinformation> heightMoneyList = basicinformationService.findByType(3);
         List<Basicinformation> bigRoseList = basicinformationService.findByType(4);
-        PricePeak p = new PricePeak();
-        p.setStatus(0);
+        List<Basicinformation> bList = basicinformationService.findByType(5);
         for (int i = 0; i < heightMoneyList.size(); i++) {
-            p.setBasicinformationId(Integer.parseInt(heightMoneyList.get(i).getId()));
-            List<PricePeak> prHight = pricePeakService.findByType(p, 1, lagePage);
-            p.setBasicinformationId(Integer.parseInt(miniMoneyList.get(i).getId()));
-            List<PricePeak> prMini = pricePeakService.findByType(p, 2, lagePage);
-            if (prHight.size() > 0) {
-                heightMoneyList.get(i).setCofferprice(prHight.get(0).getHighestBid().doubleValue());
+            PricePeak prHight = pricePeakService.getHighestAndlowest(Integer.parseInt(heightMoneyList.get(i).getId()),"", 1, lagePage);
+            PricePeak prMini = pricePeakService.getHighestAndlowest(Integer.parseInt(miniMoneyList.get(i).getId()),"", 2, lagePage);
+            if (prHight != null) {
+                heightMoneyList.get(i).setHighestBid(prHight.getHighestBid().doubleValue());
             }
-            if (prMini.size() > 0) {
-                miniMoneyList.get(i).setCofferprice(prMini.get(0).getMinimumSellingPrice().doubleValue());
+            if (prMini != null) {
+                miniMoneyList.get(i).setMinimumBid(prMini.getMinimumSellingPrice().doubleValue());
             }
         }
         //最大涨幅
@@ -78,7 +72,7 @@ public class IndexController extends BaseController {
                 bigRoseList.get(i).setCofferprices(brose.get(0).getPercentage_change().doubleValue() * 100);
             }
         }
-        Long bCount = basicinformationService.findCount();
+//        Long bCount = basicinformationService.findCount();
         modelMap.addAttribute("bList", bList);
         modelMap.addAttribute("baolist", baolist);
         modelMap.addAttribute("sellBidList", sellBidList);
@@ -86,7 +80,7 @@ public class IndexController extends BaseController {
         modelMap.addAttribute("heightMoneyList", heightMoneyList);
         modelMap.addAttribute("miniMoneyList", miniMoneyList);
         modelMap.addAttribute("bigRoseList", bigRoseList);
-        modelMap.addAttribute("bCount", bCount);
+//        modelMap.addAttribute("bCount", bCount);
         return "/index/index";
     }
 
