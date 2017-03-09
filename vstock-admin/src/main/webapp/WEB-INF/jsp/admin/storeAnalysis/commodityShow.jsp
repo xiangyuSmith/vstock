@@ -81,10 +81,10 @@
                                     <td>${basicinformation.id}</td>
                                     <td>${basicinformation.name}</td>
                                     <td>${basicinformation.artNo}</td>
-                                    <td>${basicinformation.resultDataFactory.transactionRecord}</td>
-                                    <td>${basicinformation.resultDataFactory.createTime}</td>
-                                    <input type="hidden" name="id" value="${basicinformation.resultDataFactory.id}"/>
-                                    <td><a href="javascript:void(0)" class="adetails" data-comid="${basicinformation.resultDataFactory.id}" data-commoName="${basicinformation.name}">详情</a></td>
+                                    <td>${basicinformation.resultData.transactionRecord}</td>
+                                    <td>${basicinformation.resultData.createTime}</td>
+                                    <input type="hidden" name="id" value="${basicinformation.resultData.id}"/>
+                                    <td><a href="javascript:void(0)" class="adetails" data-comid="${basicinformation.resultData.id}" data-commoName="${basicinformation.name}">详情</a></td>
 
                                 <%--<td>${commodityData.basicinformation.id}</td>--%>
                                 <%--<td>${commodityData.basicinformation.name}</td>--%>
