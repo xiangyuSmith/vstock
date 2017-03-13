@@ -2,15 +2,12 @@ package com.vstock.admin.service;
 
 import com.vstock.db.dao.IPricePeakDao;
 import com.vstock.db.dao.ITradeDao;
-import com.vstock.db.entity.Basicinformation;
-import com.vstock.db.entity.PricePeak;
-import com.vstock.db.entity.Trade;
-import com.vstock.db.entity.User;
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.Page;
-import com.vstock.ext.util.security.md.ToolMD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -29,6 +26,8 @@ public class TradeService {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RefundService refundService;
 
     /**
      * 分页查询所有记录
@@ -202,7 +201,23 @@ public class TradeService {
         if (record.getId() == null && "".equals(record.getId())){
             return this.insert(record);
         }else {
-            return this.updateAll(record);
+            int i = this.updateAll(record);
+            if (21 == record.getStatus()){
+                Trade trade = new Trade();
+                trade.setId(record.getId());
+                record = this.findTrade(trade);
+                BigDecimal amount = refundService.refundLiquidated(record);
+                Refund refund = new Refund();
+                refund.setTradeNo(record.getTradeNo());
+                refund.setRefundObj("1");
+                refund.setBtfId(record.getBasicinformationId());
+                refund.setBtfName(record.getBftName());
+                refund.setRefundPrice(amount);
+                refund.setStatus("0");
+                refund.setType("0");
+                i = refundService.save(refund);
+            }
+            return i;
         }
     }
 

@@ -230,7 +230,7 @@ public class TradeService {
                     bid = bidService.findbid(bid);
                     refund.setRefundNo(OddNoUtil.refundNo());
                     refund.setTradeNo(record.getTradeNo());
-                    refund.setRefundObj("1");
+                    refund.setRefundObj("0");
                     refund.setBtfId(bid.getBasicinformationId());
                     refund.setBtfName(bid.getBftName());
                     refund.setRefundPrice(bid.getBidBond());

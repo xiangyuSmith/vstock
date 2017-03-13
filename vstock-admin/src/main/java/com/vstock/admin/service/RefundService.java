@@ -111,7 +111,7 @@ public class RefundService {
         Page page = new Page(10,"1");
         bid.setId(record.getBidId());
         List<Bid> bidList = bidService.findAll(bid,page);
-        return record.getTransactionMoney().add(bidList.get(0).getBidBond());
+        return record.getTransactionMoney().add(bidList.get(0).getBidBond().add(record.getTradeFreight()));
     }
 
     /**
