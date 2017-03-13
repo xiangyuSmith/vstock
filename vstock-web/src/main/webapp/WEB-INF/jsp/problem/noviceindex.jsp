@@ -16,7 +16,7 @@
 </head>
 <body>
 <%@include file="../layout/top-search.jsp" %>
-<article style="margin-top: 50px;">
+<article>
     <div class="am-g">
         <div class="am-u-md-12" style="width: 100%;height: 706px;border: inherit; background: url('/assets/i/novice_guidef.png') center;"></div>
         <div class="am-u-md-12" style="width: 100%;height: 862px;border: inherit; background: url('/assets/i/novice_guidet.png') center;"></div>
