@@ -307,7 +307,7 @@ public class TradeController extends BaseController{
                 refund.setRefundObj(bid.getType());
                 refund.setBtfId(bid.getBasicinformationId());
                 refund.setBtfName(bid.getBftName());
-                refund.setRefundPrice(bid.getBidBond());
+                refund.setRefundPrice(tCheck.getTransactionMoney());
                 refund.setStatus(Refund.REFUND_NOTIFIY);
                 refund.setRemarks("买家已付鞋款");
                 refund.setCreateDate(DateUtils.getCurrentTimeAsString());
@@ -358,11 +358,11 @@ public class TradeController extends BaseController{
             amountFinal = new BigDecimal(0.01);
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|10|"+ischeck+"|"+bname);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
-            sParaTemp.put("out_trade_no", String.valueOf(tradeList.get(0).getTradeNo()));
+            sParaTemp.put("out_trade_no", String.valueOf(tradeId)+"01100");
         }else {
 //        BigDecimal amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
-            amountFinal = tradeList.get(0).getTransactionMoney();
-//            amountFinal = new BigDecimal(0.02);
+//            amountFinal = tradeList.get(0).getTransactionMoney();
+            amountFinal = new BigDecimal(0.02);
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amount+"|"+ischeck+"|"+bname);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", String.valueOf(tradeId));

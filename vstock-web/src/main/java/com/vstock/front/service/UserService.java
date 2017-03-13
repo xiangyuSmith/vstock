@@ -1,7 +1,9 @@
 package com.vstock.front.service;
 
 import com.vstock.db.dao.IUserDao;
+import com.vstock.db.dao.IUserInvitationDao;
 import com.vstock.db.entity.User;
+import com.vstock.db.entity.UserInvitation;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.DateUtils;
@@ -27,6 +29,8 @@ public class UserService {
 
     @Autowired
     IUserDao userDao;
+    @Autowired
+    IUserInvitationDao userInvitationDao;
 
     public int insertUser(User user){
         return userDao.insertUser(user);
@@ -36,6 +40,16 @@ public class UserService {
         User u = new User();
         u.setId(suid);
         return userDao.findUser(u);
+    }
+
+    public UserInvitation findInvitation(String yaoqingCode){
+        UserInvitation record = new UserInvitation();
+        record.setCode(yaoqingCode);
+        return userInvitationDao.findByCode(record);
+    }
+
+    public int updateInvitation(UserInvitation record){
+        return userInvitationDao.update(record);
     }
 
     public User findUser(String mobile){

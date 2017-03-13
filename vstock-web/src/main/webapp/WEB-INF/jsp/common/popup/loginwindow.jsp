@@ -84,6 +84,11 @@
                         </div>
                         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <div class="am-input-group am-input-group-lg am-center">
+                                <input id="yaoqingCode" name="yaoqingCode" class="am-form-field" type="text" placeholder="邀请码" maxlength="6" required/>
+                            </div>
+                        </div>
+                        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-input-group am-input-group-lg am-center">
                                 <input id="password_reg" class="am-form-field" name="password" type="password" placeholder="密码" required/>
                             </div>
                         </div>
@@ -170,6 +175,10 @@
                 sendSmsCode : {
                     required: true
                 },
+                yaoqingCode : {
+                    rangelength: [6, 6],
+                    required: true
+                },
                 password: {
                     required: true,
                     rangelength: [6, 16]
@@ -181,7 +190,7 @@
                 }
             },
             messages : {
-                mobile_find : {
+                mobile_reg : {
                     required : "手机号不能为空",
                     minlength : "手机号格式不正确",
                     isMobile : "手机号格式不正确"
@@ -203,7 +212,8 @@
                     'password':$.md5($("#password_reg").val()),
                     'size':$("#size_reg").val(),
                     'nick':$("#nick_reg").val(),
-                    'sendSmsCode' : $("#sendSmsCode").val()
+                    'sendSmsCode' : $("#sendSmsCode").val(),
+                    'yaoqingCode' : $("#yaoqingCode").val()
                 },function(data){
                     if(data.retCode == 1){
                         alertTips(1,"注册成功",data.retMsg);
