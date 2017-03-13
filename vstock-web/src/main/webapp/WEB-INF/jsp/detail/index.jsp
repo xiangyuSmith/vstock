@@ -81,7 +81,7 @@
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty trade}">
-                                <fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/>
+                                <fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,##0.0#"/>
                             </c:when>
                             <c:otherwise>
                                 -
@@ -108,7 +108,7 @@
                     <span class="str layout-font-size-20">￥
                         <c:choose>
                             <c:when test="${not empty pricePeak1.highestBid}">
-                                <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,#00.0#"/>
+                                <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,##0.0#"/>
                             </c:when>
                             <c:otherwise>
                                 -
