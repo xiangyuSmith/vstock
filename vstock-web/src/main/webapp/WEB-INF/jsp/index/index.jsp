@@ -309,17 +309,21 @@
             sendRequest("/index/getNewBid",null,function(res){
                 var buyList = res.data.buyBidList;
                 var sellList = res.data.sellBidList;
-                for(var i = 0;i < buyList.length;i++){
-                    var mobile = buyList[i].user.nick;
-                    var bftName = buyList[i].bftName;
-                    var bidMoney = buyList[i].bidMoney;
-                    bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                if(buyList != undefined){
+                    for(var i = 0;i < buyList.length;i++){
+                        var mobile = buyList[i].user.nick;
+                        var bftName = buyList[i].bftName;
+                        var bidMoney = buyList[i].bidMoney;
+                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                    }
                 }
-                for(var i = 0;i < sellList.length;i++){
-                    var mobile = sellList[i].user.nick;
-                    var bftName = sellList[i].bftName;
-                    var bidMoney = sellList[i].bidMoney;
-                    sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                if(sellList != undefined){
+                    for(var i = 0;i < sellList.length;i++){
+                        var mobile = sellList[i].user.nick;
+                        var bftName = sellList[i].bftName;
+                        var bidMoney = sellList[i].bidMoney;
+                        sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                    }
                 }
                 buyBid.html(bidhtml);
                 sellBid.html(sellhtml);

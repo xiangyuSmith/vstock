@@ -14,6 +14,8 @@ public class Refund implements Serializable {
     public final static String[] refundstatus = {"0:待退款","1:已退款"};
     public final static String[] refundO = {"0:卖家","1:买家"};
     public final static String refNo = "STXRN";
+    public final static String REFUND_NOTIFIY = "0";     //待退款
+    public final static String REFUND_SUCESS = "1";    //已退款
 
     @Id
     private Integer id;

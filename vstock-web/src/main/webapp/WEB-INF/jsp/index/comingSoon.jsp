@@ -18,19 +18,19 @@
         .time{background:#1e1e1e url(/assets/i/comingSoon/date_bg.jpg) center no-repeat;    padding-left: 135px; margin:0 auto; height:130px; width:839px; overflow:hidden;}
         .time span{float:left;line-height:25px;height:87px;overflow:hidden;}
         .time span.danwei_first{padding-left:42px;}
-        .time span.danwei{ padding-left:137px;}
+        .time span.danwei{ padding-left:138px;}
         .clear{height:0;clear:both;overflow:hidden;}
     </style>
 </head>
 <body>
     <article>
         <div class="am-u-md-12">
-            <div class="am-center am-text-center am-margin-top-xl am-margin-bottom-xl">
+            <div class="am-center am-text-center am-margin-top-xl" style="margin-bottom: 80px;">
                 <img src="/assets/i/comingSoon/logo.png" /><br/>
                 <span class="layout-font-size-36 am-margin-top-sm" style="color: #575757;display: inline-block;">敬请期待</span>
             </div>
         </div>
-        <div class="time am-margin-top-xl" id="time1">
+        <div class="time" id="time1">
             <span style="display: none;"><img id="day_01" alt="" src="/assets/i/comingSoon/allnum.png"></span>
             <span style="display: none;"><img id="day_02" alt="" src="/assets/i/comingSoon/allnum.png"></span>
             <span style="display: none;" class="danwei"></span>
@@ -44,8 +44,8 @@
             <span><img id="second_02" alt="" src="/assets/i/comingSoon/allnum.png"></span>
             <br class="clear">
         </div>
-        <div class="am-center am-margin-top-lg">
-            <img class="am-center" src="/assets/i/comingSoon/comingSoon_foot.png">
+        <div class="am-center" style="margin-top: 80px;">
+            <img style="width: 450px;" class="am-center" src="/assets/i/comingSoon/comingSoon_foot.png">
         </div>
     </article>
     <script type="text/javascript">
