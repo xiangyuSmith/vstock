@@ -89,6 +89,11 @@ public class IndexController extends BaseController {
         return "/problem/index";
     }
 
+    @RequestMapping("noviceGuide")
+    public String noviceGuide() {
+        return "/problem/noviceindex";
+    }
+
     @RequestMapping("getNewBid")
     @ResponseBody
     public ResultModel getNewBid() {
