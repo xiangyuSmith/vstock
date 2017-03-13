@@ -282,15 +282,49 @@
                         <span class="a-content layout-font-size-18">
                             <span class="a-title layout-font-size-22">
                             A：</span>不包邮。我们会按照不同的地区，收取相应的运费。如下：
-                            <span>
-                                上海、浙江、江苏	12
-                                广东、吉林、黑龙江	18
-                                安徽	14
-                                重庆、四川、福建、甘肃、广西、贵州、海南、辽宁、内蒙古、宁夏、青海、云南	18
-                                北京、河北、河南、湖北、湖南、江西、山东、山西、陕西、天津	18
-                                新疆	20
-                                西藏	26
-                            </span>
+                            <table border="1" cellpadding="0" cellspacing="0" width="100%" class="am-text-center">
+                                <tr>
+                                    <td width="50%" height="50">地区</td>
+                                    <td width="50%" height="50">价格(元)</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">上海、浙江、江苏</td>
+                                    <td width="50%" height="50">12</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">广东、吉林、黑龙江</td>
+                                    <td width="50%" height="50">18</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">安徽</td>
+                                    <td width="50%" height="50">14</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">重庆、四川、福建、甘肃、广西、贵州、海南、辽宁、内蒙古、宁夏、青海、云南</td>
+                                    <td width="50%" height="50">18</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">北京、河北、河南、湖北、湖南、江西、山东、山西、陕西、天津</td>
+                                    <td width="50%" height="50">18</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">新疆</td>
+                                    <td width="50%" height="50">20</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%" height="50">西藏</td>
+                                    <td width="50%" height="50">26</td>
+                                </tr>
+                            </table>
+                            <%--<span>--%>
+                                <%--上海、浙江、江苏	12--%>
+                                <%--广东、吉林、黑龙江	18--%>
+                                <%--安徽	14--%>
+                                <%--重庆、四川、福建、甘肃、广西、贵州、海南、辽宁、内蒙古、宁夏、青海、云南	18--%>
+                                <%--北京、河北、河南、湖北、湖南、江西、山东、山西、陕西、天津	18--%>
+                                <%--新疆	20--%>
+                                <%--西藏	26--%>
+                            <%--</span>--%>
                         </span>
                     </div>
                 </div>
