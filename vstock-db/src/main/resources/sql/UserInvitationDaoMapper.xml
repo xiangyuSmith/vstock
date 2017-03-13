@@ -46,7 +46,7 @@
                 AND ui.id = #{obj.id,jdbcType=INTEGER}
             </if>
             <if test="obj.code != null and obj.code != ''">
-                and ui.code = #{code,jdbcType=VARCHAR}
+                and ui.code = #{obj.code,jdbcType=VARCHAR}
             </if>
             <if test="obj.status != null">
                 AND ui.status = #{obj.status,jdbcType=INTEGER}
@@ -82,6 +82,13 @@
         FROM user_invitation ui
         <include refid="SelectAllByPage_Where_Clause"/>
         ORDER BY ui.create_time DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findByCode" parameterType="com.vstock.db.entity.UserInvitation" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_invitation ui
+        <include refid="SelectAllByPage_Where_Clause"/>
     </select>
 
     <select id="findCount" parameterType="com.vstock.db.entity.UserInvitation" resultType="Integer">

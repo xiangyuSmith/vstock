@@ -14,6 +14,9 @@ public interface IUserInvitationDao {
     //分页查询所有
     List<UserInvitation> findAll(@Param("obj") UserInvitation record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    //查询
+    UserInvitation findByCode(@Param("obj") UserInvitation record);
+
     //查询所有总数
     int findCount(@Param("obj") UserInvitation record);
 
