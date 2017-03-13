@@ -98,7 +98,7 @@ public class TradeController extends BaseController{
         int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
         int isBond = status==0?1:0;
         String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
-        Trade trade = new Trade(isBond,addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, null,
+        Trade trade = new Trade(isBond,addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, "0",
                 new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
         if(tradeId == 0){
@@ -236,17 +236,22 @@ public class TradeController extends BaseController{
             double amount = Double.parseDouble(extra_common_param[3]);
             String ischeck = extra_common_param[4];
             String bname = extra_common_param[5];
+            Trade t = new Trade();
+            t.setId(tradeId);
+            List<Trade> tradeList = tradeService.findTrade(t,lagePage);
             if(!"1".equals(ischeck)){
                 //更新叫价 & 峰值
-                Trade t = new Trade();
-                t.setId(tradeId);
-                List<Trade> tradeList = tradeService.findTrade(t,lagePage);
                 Trade trade = tradeList.get(0);
                 int sort = 0;
                 if(trade.getStatus() == 0){
                     sort = 1;
                 }else{
-                    sort = 2;
+                    if(trade.getIsBond() == 1){
+                        //如果支付过保证金，此单为卖家叫价
+                        sort = 1;
+                    }else{
+                        sort = 2;
+                    }
                 }
                 PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),trade.getBftSize(),sort,lagePage);
                 if(pricePeak != null){
@@ -279,14 +284,18 @@ public class TradeController extends BaseController{
             Bid b = new Bid();
             b.setId(t_pay.getBidId());
             Bid bid = bidService.findByBid(b,lagePage);
-            if(type == 3){
-                User user = userService.findById(String.valueOf(t_pay.getSellerId()));
-                mobile = user.getMobile();
-                content = "您出价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有卖家出售，请务必在24小时内完成支付，否则本次交易将失效。如有任何疑问，请联系v－stock客服。";
-            }else{
+            if(type == 2){
                 User user = userService.findById(String.valueOf(t_pay.getBuyersId()));
                 mobile = user.getMobile();
-                content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
+                content = "您出价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有卖家出售，请务必在24小时内完成支付，否则本次交易将失效。如有任何疑问，请联系v－stock客服。";
+            }
+            if(type == 3){
+                Trade tCheck = tradeList.get(0);
+                if(tCheck.getIsBond() != 1){
+                    User user = userService.findById(String.valueOf(t_pay.getSellerId()));
+                    mobile = user.getMobile();
+                    content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
+                }
             }
             Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
             trade.setStatus(tradeStatus);
@@ -324,7 +333,24 @@ public class TradeController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         String ischeck = getParam("ischeck","0");
         String bname = getParam("bname");
+        Trade record = new Trade();
+        record.setId(tradeId);
+        List<Trade> tradeList  = tradeService.findAllTrade(record);
         Map<String, String> sParaTemp = new HashMap<String, String>();
+        BigDecimal amountFinal;
+        if(type == 2){
+            amountFinal = new BigDecimal(0.01);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|10|"+ischeck+"|"+bname);
+            sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
+            sParaTemp.put("out_trade_no", String.valueOf(tradeList.get(0).getTradeNo()));
+        }else {
+//        BigDecimal amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
+            amountFinal = tradeList.get(0).getTransactionMoney();
+//            amountFinal = new BigDecimal(0.02);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amount+"|"+ischeck+"|"+bname);
+            sParaTemp.put("subject", String.valueOf("购买商品") + bname);
+            sParaTemp.put("out_trade_no", String.valueOf(tradeId));
+        }
         sParaTemp.put("service", AlipayConfig.service);
         sParaTemp.put("partner", AlipayConfig.partner);
         sParaTemp.put("seller_id", AlipayConfig.seller_id);
@@ -334,10 +360,7 @@ public class TradeController extends BaseController{
         sParaTemp.put("return_url", AlipayConfig.return_trade_url);
         sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
-        sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amount+"|"+ischeck+"|"+bname);
-        sParaTemp.put("out_trade_no", String.valueOf(tradeId));
-        sParaTemp.put("subject", String.valueOf("购买商品") + bname);
-        sParaTemp.put("total_fee", String.valueOf(0.01));
+        sParaTemp.put("total_fee", String.valueOf(amountFinal.doubleValue()));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";

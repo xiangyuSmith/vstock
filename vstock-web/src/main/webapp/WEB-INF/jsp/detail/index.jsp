@@ -478,8 +478,11 @@
                         }
                     });
                     function createPay(){
-                        type = type==1?2:3;
-                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname;
+                        if(type == 2){
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=1"+"&tradeId="+ res.data.tradeId +"&bname="+bname;
+                        }else{
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname;
+                        }
                         return;
 //                        sendRequest("/trade/createTradePay",{
 //                            "bname": bname,

@@ -21,7 +21,8 @@
                 <span class="layout-font-size-16">联系方式</span>
                 <p>
                     <span class="layout-font-size-14">客服邮箱：</span><br/>
-                    <span class="layout-font-size-14">service@v-stock.com</span>
+                    <span class="layout-font-size-14">service@v-stock.com</span><br/>
+                    <span class="layout-font-size-14">或扫码关注公众号联系客服</span>
                 </p>
                 <p>
                     <span class="layout-font-size-14">工作时间：</span><br/>

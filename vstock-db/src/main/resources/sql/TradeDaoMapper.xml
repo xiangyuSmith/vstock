@@ -7,6 +7,7 @@
         <result column="sellerId" property="sellerId" jdbcType="INTEGER"/>
         <result column="buyersId" property="buyersId" jdbcType="INTEGER"/>
         <result column="bidId" property="bidId" jdbcType="INTEGER"/>
+        <result column="isBond" property="isBond" jdbcType="INTEGER"/>
         <result column="tradeNo" property="tradeNo" jdbcType="VARCHAR"/>
         <result column="basicinformationId" property="basicinformationId" jdbcType="INTEGER"/>
         <result column="userAddressId" property="userAddressId" jdbcType="INTEGER"/>
@@ -229,6 +230,7 @@
         t.buyers_id as buyersId,
         t.trade_no as tradeNo,
         t.bid_id as bidId,
+        t.is_bond as isBond,
         t.basicinformation_id as basicinformationId,
         t.user_address_id as userAddressId,
         t.transaction_money as transactionMoney,
