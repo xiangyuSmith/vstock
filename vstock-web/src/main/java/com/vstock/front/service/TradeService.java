@@ -225,9 +225,9 @@ public class TradeService {
                 //判断确认收款创建卖家退款单
                 if (i > 0 && record.getStatus() == 40){
                     Bid bid = new Bid();
-                    Refund refund = new Refund();
                     bid.setId(record.getBidId());
                     bid = bidService.findbid(bid);
+                    Refund refund = new Refund();
                     refund.setRefundNo(OddNoUtil.refundNo());
                     refund.setTradeNo(record.getTradeNo());
                     refund.setRefundObj("1");

@@ -1,10 +1,7 @@
 package com.vstock.front.support.job;
 
 import com.vstock.db.entity.*;
-import com.vstock.ext.util.DateUtils;
-import com.vstock.ext.util.Page;
-import com.vstock.ext.util.ToolDateTime;
-import com.vstock.ext.util.ToolSpring;
+import com.vstock.ext.util.*;
 import com.vstock.front.service.*;
 import org.apache.log4j.Logger;
 import org.quartz.Job;
@@ -28,6 +25,8 @@ public class QuartzJob implements Job {
     PaymentService paymentService = (PaymentService) ToolSpring.getBean("payment");
 
     PricePeakService pricePeakService = (PricePeakService) ToolSpring.getBean("pricePeak");
+
+    RefundService refundService = (RefundService) ToolSpring.getBean("refund");
 
     BasiciformationRoseService basiciformationRoseService = (BasiciformationRoseService) ToolSpring.getBean("basiciformationRose");
 
@@ -98,6 +97,23 @@ public class QuartzJob implements Job {
                 b.setStatus(String.valueOf(status));
                 int x = bidService.update(b);
                 if(status == 11){
+                    //叫价过期，生成退款单
+                    Refund refund = new Refund();
+                    if("0".equals(bid.getType())){
+                        refund.setType("4");
+                    }else{
+                        refund.setType("3");
+                    }
+                    refund.setRefundNo(OddNoUtil.refundNo());
+                    refund.setTradeNo(String.valueOf(bid.getId()));
+                    refund.setRefundObj(bid.getType());
+                    refund.setBtfId(bid.getBasicinformationId());
+                    refund.setBtfName(bid.getBftName());
+                    refund.setRefundPrice(bid.getBidBond());
+                    refund.setStatus(Refund.REFUND_NOTIFIY);
+                    refund.setRemarks("叫价/出价过期");
+                    refund.setCreateDate(DateUtils.getCurrentTimeAsString());
+                    refundService.insert(refund);
                     //如果为过期状态，则更新峰值表
                     PricePeak pricePeak = pricePeakService.getHighestAndlowest(bid.getBasicinformationId(),bid.getBftSize(), DateUtils.dateToString(new Date()),lagePage);
                     if(pricePeak != null){
@@ -142,37 +158,46 @@ public class QuartzJob implements Job {
 
     private int tradeSend( List<Trade> trades,int time,int status,int type){
         int result = 1;
+        int ischeck = 0;
         long difference = 0;
         Trade t = new Trade();
-        Payment p = new Payment();
         Bid b = new Bid();
         String buySaleType = "0";
         for (Trade trade : trades) {
             difference = isdifference(trade.getTransactionDate(),time);
+            b.setId(trade.getBidId());
+            Bid bid = bidService.findbid(b);
             if(type == 1){
                 //判断是卖家出售-买家付款（24小时），还是买家直接购买付款（15分钟）
-                b.setId(trade.getBidId());
-                Bid bid = bidService.findbid(b);
                 if(bid.getUserId() == trade.getSellerId()){
                     //该订单为买家直接购买
                     time = 60*15;
                 }else{
                     time = 60*60*24;
+                    ischeck = 1;
                 }
                 difference= isdifference(trade.getTransactionDate(),time);
-//                p.setOrder_record_id(trade.getId());
-//                p.setPayment_type(3);
-//                p.setPayment_status(Payment.PAY_STATUS_SUCCESS);
-//                Payment payment = paymentService.findByTrade(p);
-//                if(payment != null){
-//                    difference= isdifference(trade.getTransactionDate(),60*15);
-//                }
             }else{
                 buySaleType = "1";
             }
             if(difference <= 0){
+                //买家24小时未付款
+                if(ischeck == 1){
+                    Refund refund = new Refund();
+                    refund.setRefundNo(OddNoUtil.refundNo());
+                    refund.setTradeNo(trade.getTradeNo());
+                    refund.setRefundObj("1");
+                    refund.setBtfId(bid.getBasicinformationId());
+                    refund.setBtfName(bid.getBftName());
+                    refund.setRefundPrice(bid.getBidBond());
+                    refund.setStatus(Refund.REFUND_NOTIFIY);
+                    refund.setType("5");
+                    refund.setCreateDate(DateUtils.getCurrentTimeAsString());
+                    refundService.insert(refund);
+                }
                 t.setId(trade.getId());
                 t.setStatus(status);
+                t.setBuysaleType(buySaleType);
                 int x = tradeService.update(t);
                 result = result * x;
             }

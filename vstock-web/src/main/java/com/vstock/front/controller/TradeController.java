@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.DateUtils;
+import com.vstock.ext.util.OddNoUtil;
 import com.vstock.ext.util.Page;
 import com.vstock.front.service.*;
 import com.vstock.front.service.interfaces.IVstockConfigService;
@@ -41,6 +42,8 @@ public class TradeController extends BaseController{
     PaymentService paymentService;
     @Autowired
     UserService userService;
+    @Autowired
+    RefundService refundService;
 
     @RequestMapping
     @ResponseBody
@@ -296,6 +299,19 @@ public class TradeController extends BaseController{
                     mobile = user.getMobile();
                     content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
                 }
+                //买家付鞋款，生成买家保证金退款单
+                Refund refund = new Refund();
+                refund.setType("3");
+                refund.setRefundNo(OddNoUtil.refundNo());
+                refund.setTradeNo(tCheck.getTradeNo());
+                refund.setRefundObj(bid.getType());
+                refund.setBtfId(bid.getBasicinformationId());
+                refund.setBtfName(bid.getBftName());
+                refund.setRefundPrice(bid.getBidBond());
+                refund.setStatus(Refund.REFUND_NOTIFIY);
+                refund.setRemarks("买家已付鞋款");
+                refund.setCreateDate(DateUtils.getCurrentTimeAsString());
+                refundService.insert(refund);
             }
             Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
             trade.setStatus(tradeStatus);
