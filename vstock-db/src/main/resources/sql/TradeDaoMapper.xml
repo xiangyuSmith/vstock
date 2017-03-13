@@ -257,6 +257,12 @@
         <include refid="Base_Column_List"/>
         FROM trade t
         <include refid="SelectAllByPage_Where_Clause"/>
+        <if test="startDateTime != null and startDateTime != ''">
+            and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDateTime != null and endDateTime != ''">
+            and t.transaction_date &lt; #{endDateTime,jdbcType=TIMESTAMP}
+        </if>
         and ((t.status = 1 and t.is_bond = 1) or (t.status != 0 and t.status != 1 and t.status != 41))
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
     </select>
