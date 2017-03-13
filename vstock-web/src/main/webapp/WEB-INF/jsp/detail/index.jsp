@@ -129,7 +129,8 @@
                 <div class="am-fr am-u-md-3 am-u-sm-6 str-sudio am-padding-right-0">
                     <button id="sell" class="am-btn am-btn-lg am-fr am-margin-top-lg am-margin-right-lg" style="background-color: #3BD379;color: #fff;">出售</button>
                 </div>
-                <input id="sell-click" type="hidden" data-am-modal="{target: '#my-popup-saleList',width: 900}" />
+                <input id="sell-click" type="hidden" data-am-modal="{target: '#my-description-sale',width: 900}" />
+                <input id="sell-click-bid" type="hidden" data-am-modal="{target: '#my-popup-saleList',width: 900}" />
                 <input id="identify-click" type="hidden" data-am-modal="{target: '#my-popup-identify',width: 644}" />
                 <input id="identify-tips-click" type="hidden" data-am-modal="{target: '#my-popup-identify-tips', width: 490}" />
                 <input id="login-click" type="hidden" data-am-modal="{target: '#my-popup-login', width: 350}" />
@@ -164,7 +165,8 @@
                 <div class="am-fr am-u-md-3 am-u-sm-6 str-sudio am-padding-right-0">
                     <button id="buy" class="am-btn am-btn-lg am-fr am-margin-top-lg am-margin-right-lg" style="background-color: #FE5B5F;color: #fff;">购买</button>
                 </div>
-                <input id="buy-click" type="hidden" data-am-modal="{target: '#my-popup-purchaselistwindow',width: 900}" />
+                <input id="buy-click" type="hidden" data-am-modal="{target: '#my-description-buyer',width: 900}" />
+                <input id="buy-pop-click" type="hidden" data-am-modal="{target: '#my-popup-purchaselistwindow',width: 900}" />
             </div>
         </div>
         <div class="am-g am-text-center am-padding-lg">
@@ -220,6 +222,8 @@
 <%@include file="../common/assets/assets.jsp" %>
 <%@include file="../common/popup/sellbidwindow.jsp" %>
 <%@include file="../common/popup/buyerbidwindow.jsp" %>
+<%@include file="../common/popup/buyerdescription.jsp" %>
+<%@include file="../common/popup/saledescription.jsp" %>
 <%@include file="../common/popup/salelistwindow.jsp" %>
 <%@include file="../common/popup/purchaselistwindow.jsp" %>
 <%@include file="../common/popup/selldetailedlist.jsp" %>
@@ -731,6 +735,16 @@
                         { show: 300, hide: 100 }
                     });
         });
+
+        $('#buyer-close').click(function () {
+            $('#my-description').click();
+            $('#buy-pop-click').click();
+        });
+
+        $('#sale-close').click(function () {
+            $('#my-sale-description').click();
+            $('#sell-click-bid').click();
+        })
     });
 </script>
 </body>
