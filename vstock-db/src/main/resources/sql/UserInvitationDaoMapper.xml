@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IUserInvitationDao">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.UserInvitation">
+        <id property="id" column="id"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="reservedField" property="reservedField" jdbcType="VARCHAR"/>
+        <result column="reservedField1" property="reservedField1" jdbcType="VARCHAR"/>
+        <result column="reservedField2" property="reservedField2" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND ui.id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="code != null and code != ''">
+                and ui.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                AND ui.status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and ui.create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="reservedField != null and reservedField != ''">
+                and ui.reserved_field = #{reservedField,jdbcType=VARCHAR}
+            </if>
+            <if test="reservedField1 != null and reservedField1 != ''">
+                and ui.reserved_field1 = #{reservedField1,jdbcType=VARCHAR}
+            </if>
+            <if test="reservedField2 != null and reservedField2 != ''">
+                and ui.reserved_field2 = #{reservedField2,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND ui.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.code != null and obj.code != ''">
+                and ui.code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.status != null">
+                AND ui.status = #{obj.status,jdbcType=INTEGER}
+            </if>
+            <if test="obj.createTime != null and obj.createTime != ''">
+                and ui.create_time = #{obj.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.reservedField != null and obj.reservedField != ''">
+                and ui.reserved_field = #{obj.reservedField,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.reservedField1 != null and obj.reservedField1 != ''">
+                and ui.reserved_field1 = #{obj.reservedField1,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.reservedField2 != null and obj.reservedField2 != ''">
+                and ui.reserved_field2 = #{obj.reservedField2,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        ui.id as id,
+        ui.code as code,
+        ui.status as status,
+        ui.create_time as createTime,
+        ui.reserved_field as reservedField,
+        ui.reserved_field1 as reservedField1,
+        ui.reserved_field2 as reservedField2
+    </sql>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.UserInvitation" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user_invitation ui
+        <include refid="SelectAllByPage_Where_Clause"/>
+        ORDER BY ui.create_time DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findCount" parameterType="com.vstock.db.entity.UserInvitation" resultType="Integer">
+        SELECT COUNT(*) FROM user_invitation ui
+        <include refid="SelectAllByPage_Where_Clause"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `user_invitation`
+        (`id`,`code`,`status`,`create_time`,`reserved_field`,`reserved_field1`,`reserved_field2`)
+        VALUES(null,#{code},#{status},#{createTime},#{reservedField},#{reservedField1},#{reservedField2})
+    </insert>
+
+    <update id="update">
+        UPDATE `user_invitation`
+        <set>
+            <if test="code != null and code != ''">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reservedField != null and reservedField != ''">
+                reserved_field = #{reservedField,jdbcType=VARCHAR},
+            </if>
+            <if test="reservedField1 != null and reservedField1 != ''">
+                reserved_field1 = #{reservedField1,jdbcType=VARCHAR},
+            </if>
+            <if test="reservedField2 != null and reservedField2 != ''">
+                reserved_field2 = #{reservedField2,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
