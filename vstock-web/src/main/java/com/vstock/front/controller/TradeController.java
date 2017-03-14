@@ -102,7 +102,7 @@ public class TradeController extends BaseController{
         int isBond = status==0?1:0;
         String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
         Trade trade = new Trade(isBond,addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, "0",
-                new BigDecimal(amount), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
+                new BigDecimal(amount).setScale(2, BigDecimal.ROUND_HALF_UP), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
         if(tradeId == 0){
             resultModel.setRetCode(0);
