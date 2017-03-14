@@ -180,6 +180,7 @@ public class TradeService {
         if(record.getTradeNo() == ""){
             record.setTradeNo(null);
         }
+        record.setTransactionMoney(record.getTransactionMoney().setScale(2, BigDecimal.ROUND_HALF_UP));
         List<Trade> tradeList = this.findAllTrade(trade);
         if (tradeList.size() > 0 ){
             String sign = ToolMD5.encodeMD5Hex(new StringBuilder()
