@@ -310,7 +310,7 @@
                             phoneNumber = "--";
                         }
                         var html = "";
-                        if("show-tr-address" != $("#new-address-tbody tr:eq(0)").attr("class")){
+                        if("show-tr-address" != $("#new-address-tbody tr:eq(0)").attr("class") && $("#new-address-tbody tr:eq(0)").attr("class")){
                             html = '<tr class="show-tr-address '+checkTr+'">' +
                                     '<td><input id="doc-ipt-o-'+address.id+'" type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address.id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
                                     '<td> '+address.consigneeName+'</td>' +
@@ -337,6 +337,7 @@
                                     '<img src="/assets/i/loading.gif" />'+
                                     '</div>'+
                                     '</div>';
+                            $(".buyer_submit_trade_S").removeAttr("disabled");
                             $("#new-address-div-content").append(html);
                         }
                         jisuan(address.id);

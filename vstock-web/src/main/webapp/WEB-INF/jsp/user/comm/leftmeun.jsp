@@ -551,6 +551,7 @@
                         html += '<div id="not-address-tips" class="am-text-center">'+
                                     '<span style="color:#8D8D8D;">为了方便您进行交易，请先设置收货地址</span>'+
                                 '</div>';
+                        $(".buyer_submit_trade_S").attr("disabled","disabled");
                     }else {
                         html = '<table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">'+
                                 '<tbody id="new-address-tbody">'+html+'</tbody> </table>';
