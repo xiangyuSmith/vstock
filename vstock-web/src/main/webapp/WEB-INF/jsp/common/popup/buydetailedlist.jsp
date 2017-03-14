@@ -6,7 +6,7 @@
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buy-detailed">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <input id="bftId" type="hidden" value="${basicinformation.id}" />
-        <div class="am-modal-hd" style="background-color: #FF5A60;">
+        <div class="am-modal-hd" style="background-color: #FF4A4E;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-fl am-text-lg">购买清单</span>
             </div>
@@ -186,7 +186,7 @@
             <div class="am-u-md-4 am-text-left">
                 <div class="am-padding-sm">
                     <div class="am-text-center am-margin-top-xs">
-                        <a href="javascript:;" id="buyer_submit_trade_" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
+                        <a href="javascript:;" style="background-color: #FF4A4E;" id="buyer_submit_trade_" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
                     </div>
                 </div>
             </div>

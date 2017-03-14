@@ -81,7 +81,7 @@
                         </div>
                         <div class="am-u-md-6 am-margin-top-xs">
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <a href="javascript:;" id="now-buyer-bid" style="background-color: #3bd278" class="am-btn am-btn-success" data-am-modal="{target: '#my-popup-buyer-bid', width: 900, height: 520}">叫价</a>
+                                <a href="javascript:;" id="now-buyer-bid" style="background-color: #00CD61" class="am-btn am-btn-success" data-am-modal="{target: '#my-popup-buyer-bid', width: 900, height: 520}">叫价</a>
                             </div>
                         </div>
                     </div>
@@ -108,10 +108,10 @@
                             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <c:choose>
                                     <c:when test="${not empty pricePeak2.minimumSellingPrice}">
-                                        <a href="javascript:;" id="now-seller-buy" class="am-btn am-btn-danger" data-am-modal="{target: '#my-popup-buy-detailed', width: 900, height: 520}">购买</a>
+                                        <a href="javascript:;" style="background-color: #FF4A4E;" id="now-seller-buy" class="am-btn am-btn-danger" data-am-modal="{target: '#my-popup-buy-detailed', width: 900, height: 520}">购买</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="javascript:;" class="am-btn am-btn-danger" disabled="disabled">购买</a>
+                                        <a href="javascript:;" style="background-color: #FF4A4E;" class="am-btn am-btn-danger" disabled="disabled">购买</a>
                                     </c:otherwise>
                                 </c:choose>
                             </div>

@@ -2,7 +2,7 @@
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-popup-buyer-bid">
     <div class="am-modal-dialog pre-bid" style="background-color: #e2e2e2;">
         <input id="bftId" type="hidden" value="${basicinformation.id}" />
-        <div class="am-modal-hd" style="background-color: #FF5A60;">
+        <div class="am-modal-hd" style="background-color: #FF4A4E;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
                 <span class="am-fl am-text-lg">买家出价</span>
             </div>
@@ -118,7 +118,7 @@
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16">保证金：<span class="question-tips question-tips-buy" data-type="0.0.0.4" style="background: url('/assets/i/detail_icon.png');background-position: -538px -28px"></span></span><span class="am-u-md-6 am-padding-0 layout-font-size-20 am-text-right">￥10.00</span><br/>
                     <span class="am-u-md-6 am-padding-0 layout-font-size-16" style="height: 38px;line-height: 38px;">支付金额：</span><span class="am-u-md-6 am-padding-0 layout-font-size-22 am-text-right" style="color: #E75C58;font-weight: bold;">10.00元</span><br/>
                     <div class="am-text-center am-margin-top-xl">
-                        <a href="javascript:;" id="buyer_btn_step_final" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
+                        <a href="javascript:;" style="background-color: #FF4A4E;" id="buyer_btn_step_final" class="am-btn am-btn-danger am-btn-lg am-radius  am-btn-block" >提交</a>
                     </div>
                 </div>
             </div>
