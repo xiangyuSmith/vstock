@@ -101,6 +101,9 @@ public class UserService {
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
                 user.setNick(real_name);
+                if (user.getNick() == null || "".equals(user.getNick())){
+                    user.setNick(user_id.substring(user_id.length()-4,user_id.length())+"V");
+                }
                 user.setLast_login_time(DateUtils.getCurrentTimeAsString());
                 user.setLast_login_ip(this.ipadder(request));
                 if(email != null){
