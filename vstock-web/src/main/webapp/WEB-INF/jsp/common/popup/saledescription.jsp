@@ -12,7 +12,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-left-xl" style="width: 811px;height: 312px;border: inherit; background-image: url('/assets/i/saledis.png');"></div>
             <div class="am-u-md-12">
                 <div class="am-u-md-12 am-margin-top-xl">
-                    <a href="javascript:;" id="sale-close" class="am-btn am-btn-success am-btn-lg am-radius am-btn-block am-center" style="width: 30%;" >我知道了</a>
+                    <a href="javascript:;" id="sale-close" class="am-btn am-btn-success am-btn-lg am-radius am-btn-block am-center" style="width: 30%;background-color: #00CD61;" >我知道了</a>
                 </div>
                 <div class="am-u-md-12 am-margin-top-xl">
                     <span class="am-center">温馨提示：如了解更多交易相关的问题，可以打开“常见问题”查询</span>
