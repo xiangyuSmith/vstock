@@ -322,6 +322,7 @@
 //                            $("#not-address-tips").css("display","none");
                             $(".checked-tr").after(html);
                         }else{
+                            $("#new-address-div-content").html("");
                             html = '<table id="new-address" class="am-table am-table-bordered am-table-centered am-table-striped am-table-hover am-margin-bottom-xs">'+
                                     '<tbody id="new-address-tbody"><tr class="show-tr-address '+checkTr+'">' +
                                     '<td><input id="doc-ipt-o-'+address.id+'" type="radio" name="check-address" data-userAddress="'+address.id+'" checked="checked" /></td><td><label for="doc-ipt-o-'+address.id+'" style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;">[默认]</span>'+address.localArea+address.detailedAddress+'</label></td>' +
