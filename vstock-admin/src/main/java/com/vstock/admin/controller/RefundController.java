@@ -138,7 +138,7 @@ public class RefundController extends BaseController {
                 i = bidService.update(bid);
             }else {
                 Trade trade = new Trade();
-                if (tradeId == null && "".equals(tradeId)){
+                if (tradeId == null || "".equals(tradeId)){
                     Trade trades = new Trade();
                     trades.setTradeNo(record.getTradeNo());
                     trades = tradeService.findTrade(trades);
