@@ -81,6 +81,7 @@
                         <p class="layout-font-size-18 am-margin-bottom-sm">卖家最低叫价：</p>
                         <div class="am-form-group am-form-icon">
                             <i class="am-icon-cny layout-font-size-18 am-margin-top-xs" style="margin-top: -7px;color: #585858;"></i>
+                            <input id="buyer_detailed_amount_price" type="hidden" value="<fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#00.00#"/>" readonly/>
                             <input id="buyer_detailed_amount" type="text" class="am-form-field" value="<fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.00#"/>" readonly/>
                         </div>
                     </div>
@@ -105,11 +106,11 @@
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm" style="border-bottom: 1px solid #ccc;"></div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
                         <span class="am-u-md-6 am-padding-0 layout-font-size-18">总计：</span>
-                        <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right countMoney">1600</span>
+                        <span class="am-u-md-6 am-padding-0 layout-font-size-18 am-text-right countMoney">-</span>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
                         <span class="am-u-md-7 am-padding-0 layout-font-size-18">支付金额：</span>
-                        <span class="am-u-md-5 am-padding-0 layout-font-size-20 am-text-right countMoney" style="font-weight: bold;color: #EA5957;">1600</span>
+                        <span class="am-u-md-5 am-padding-0 layout-font-size-20 am-text-right countMoney" style="font-weight: bold;color: #EA5957;">-</span>
                     </div>
                 </div>
             </div>
@@ -196,7 +197,7 @@
     $(function(){
         var $editAddress = "";
         var countMoney = 0;
-        var amount = $("#buyer_detailed_amount").val();
+        var amount = $("#buyer_detailed_amount_price").val();
         var addressId = $("#new-address").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
         if(addressId == undefined){
             $("#yunFee").text("-");
@@ -224,7 +225,9 @@
                     $("#yunFee").text(res.data);
                     var yunFee = $.trim($("#yunFee").text());
                     if(yunFee != "-" && yunFee != 0 && yunFee != ""){
-                        countMoney = parseFloat(yunFee) + parseFloat(amount);
+                        var m1 = parseFloat(amount);
+                        var m2 = parseFloat(yunFee);
+                        countMoney = m1 + m2;
                     }
                     $(".countMoney").text(countMoney.toFixed(2));
                 }else{

@@ -47,6 +47,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     public void initData() {
         unloginUrls.add("/user");
         unloginUrls.add("/bid");
+//        unloginUrls.add("/index");
     }
 
     @Override
@@ -74,6 +75,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             resultModel.setRelogin(false);
             if(checkNotNeedLogin(uri)){
 //                response.sendRedirect(basePath + "/index");
+//                response.sendRedirect("/comingSoon");
                 return false;
             }
         }

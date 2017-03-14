@@ -45,16 +45,6 @@
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
-                    <span class="am-fr">用户名：</span>
-                </div>
-                <div class="am-u-sm-3 am-u-md-3 am-margin-left-0 am-padding-left-0 am-u-end">
-                    <c:if test="${not empty user}">
-                        <span>${user.nick}</span>
-                    </c:if>
-                </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
-                <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">身份认证：</span>
                 </div>
                 <div class="am-u-sm-3 am-u-md-3 am-margin-left-0 am-padding-left-0 am-u-end">

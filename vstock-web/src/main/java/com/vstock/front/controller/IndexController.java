@@ -166,11 +166,6 @@ public class IndexController extends BaseController {
         return "/index/test";
     }
 
-    @RequestMapping("comingSoon")
-    public String comingSoon() {
-        return "/index/comingSoon";
-    }
-
     @RequestMapping("testIndex")
     public String testIndex() {
         return "/user/comm/leftmeun";

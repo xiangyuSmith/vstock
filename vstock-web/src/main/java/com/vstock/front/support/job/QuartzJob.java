@@ -168,17 +168,21 @@ public class QuartzJob implements Job {
                 if(bid.getUserId() == trade.getSellerId()){
                     //该订单为买家直接购买
                     time = 60*15;
+                    difference= isdifference(trade.getTransactionDate(),time);
                 }else{
                     time = 60*60*24;
-                    ischeck = 1;
+                    difference= isdifference(trade.getTransactionDate(),time);
+                    if(difference <= 0){
+                        ischeck = 1;
+                    }
                 }
-                difference= isdifference(trade.getTransactionDate(),time);
             }else{
                 buySaleType = "1";
             }
             if(difference <= 0){
                 //买家24小时未付款
                 if(ischeck == 1){
+                    ischeck = 0;
                     Refund refund = new Refund();
                     refund.setRefundNo(OddNoUtil.refundNo());
                     refund.setTradeNo(trade.getTradeNo());
@@ -195,6 +199,7 @@ public class QuartzJob implements Job {
                     //判断是否为买家叫价
                     if(trade.getIsBond() == 1){
                         //买家保证金赔付给卖家
+                        refund.setType("6");
                         refund.setRemarks("买家支付过期，赔付卖家违约金");
                         refundService.insert(refund);
                     }

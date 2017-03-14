@@ -50,7 +50,7 @@
     </article>
     <script type="text/javascript">
         var overa;
-        overa = new Date(2017, 03, 14, 00, 00);//倒计时时间（PS：月数要-1，原因你懂得）
+        overa = new Date(2017, 03, 15, 12, 00);//倒计时时间（PS：月数要-1，原因你懂得）
         var localNow = new Date();
         function clock1(){
             var local = new Date();

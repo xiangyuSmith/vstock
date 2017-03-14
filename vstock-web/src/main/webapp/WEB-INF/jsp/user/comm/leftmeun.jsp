@@ -573,8 +573,11 @@
                     if (type == 3){
                         var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
                     }
-
-                    location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
+                    if(type == 2){
+                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&ischeck=1&size="+size+"&tradeId="+tradeId+"&bname=0";
+                    }else{
+                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
+                    }
                     return;
 //                    sendRequest("/trade/createTradePay",{
 //                        tradeId : tradeId,

@@ -57,13 +57,16 @@ public class TradeController extends BaseController{
         String type = getParam("type");
         int addressId = Integer.valueOf(getParam("addressId", "0"));
         int bftId = getParamToInt("bId");
+        BigDecimal yunFee = BigDecimal.ZERO;
         UserAddress u = new UserAddress();
         u.setId(addressId);
         UserAddress userAddress = userAddressService.findAddressById(u);
-        BigDecimal yunFee = tradeService.findAllYunFee(userAddress.getLocalArea());
-        if(yunFee == null){
-            resultModel.setRetMsg("运费信息异常");
-            return resultModel;
+        if(!"1".equals(type)){
+            yunFee = tradeService.findAllYunFee(userAddress.getLocalArea());
+            if(yunFee == null){
+                resultModel.setRetMsg("运费信息异常");
+                return resultModel;
+            }
         }
         Bid bid = new Bid();
         bid.setBidMoney(new BigDecimal(amount).setScale(2,   BigDecimal.ROUND_HALF_UP));
@@ -307,7 +310,7 @@ public class TradeController extends BaseController{
                     refund.setRefundObj(bid.getType());
                     refund.setBtfId(bid.getBasicinformationId());
                     refund.setBtfName(bid.getBftName());
-                    refund.setRefundPrice(tCheck.getTransactionMoney().add(tCheck.getTradeFreight()));
+                    refund.setRefundPrice(bid.getBidBond());
                     refund.setStatus(Refund.REFUND_NOTIFIY);
                     refund.setRemarks("买家已付鞋款");
                     refund.setCreateDate(DateUtils.getCurrentTimeAsString());
