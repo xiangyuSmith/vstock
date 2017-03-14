@@ -158,22 +158,22 @@ function moneytips(type,num){
     if(type == 0){
         switch (num){
             case 1:
-                html = "您不是叫价最低的卖家，优先成交最低的出价；";
+                html = "您不是叫价最低的卖家，优先成交最低的出价";
                 break;
             case 2:
-                html = "您的叫价和当前卖家最低叫价相同。我们将优先成交叫价最前的。";
+                html = "您的叫价和当前卖家最低叫价相同。我们将优先成交叫价最前的";
                 break;
             case 3:
-                html = "您将是叫价最低的卖家。";
+                html = "您将是叫价最低的卖家";
                 break;
             case 4:
-                html = "您的叫价和买家最高出价相同，您可以选择直接出售；";
+                html = "您的叫价和买家最高出价相同，您可以选择直接出售";
                 break;
             case 5:
-                html = "您的叫价应大于买家最高出价，您可以选择直接出售；";
+                html = "您的叫价应大于买家最高出价，您可以选择直接出售";
                 break;
             case 6:
-                html = "您将是叫价最低的卖家。";
+                html = "您将是叫价最低的卖家";
                 break;
             default:
                 $("#sell_money_tips_div").css("display","none");
@@ -186,22 +186,22 @@ function moneytips(type,num){
     }else{
         switch (num){
             case 1:
-                html = "买家出价需小于最低卖家叫价，您可以选择直接购买；";
+                html = "买家出价需小于最低卖家叫价，您可以选择直接购买";
                 break;
             case 2:
-                html = "您的出价和卖家最低叫价相同，您可以选择直接购买；";
+                html = "您的出价和卖家最低叫价相同，您可以选择直接购买";
                 break;
             case 3:
-                html = "您将是出价最高的买家；";
+                html = "您将是出价最高的买家";
                 break;
             case 4:
-                html = "您不是出价最高的买家，优先成交最高的出价；";
+                html = "您不是出价最高的买家，优先成交最高的出价";
                 break;
             case 5:
-                html = "您的出价和当前最高出价相同。我们将优先成交出价最前的。";
+                html = "您的出价和当前最高出价相同。我们将优先成交出价最前的";
                 break;
             case 6:
-                html = "您将是出价最高的买家；";
+                html = "您将是出价最高的买家";
                 break;
             default:
                 $("#bid_money_tips_div").css("display","none");

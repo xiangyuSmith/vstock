@@ -99,17 +99,13 @@ public class QuartzJob implements Job {
                 if(status == 11){
                     //叫价过期，生成退款单
                     Refund refund = new Refund();
-                    if("0".equals(bid.getType())){
-                        refund.setType("4");
-                    }else{
-                        refund.setType("3");
-                    }
                     refund.setRefundNo(OddNoUtil.refundNo());
                     refund.setTradeNo(String.valueOf(bid.getId()));
                     refund.setRefundObj(bid.getType());
                     refund.setBtfId(bid.getBasicinformationId());
                     refund.setBtfName(bid.getBftName());
                     refund.setRefundPrice(bid.getBidBond());
+                    refund.setType("1");
                     refund.setStatus(Refund.REFUND_NOTIFIY);
                     refund.setRemarks("叫价/出价过期");
                     refund.setCreateDate(DateUtils.getCurrentTimeAsString());
@@ -186,14 +182,22 @@ public class QuartzJob implements Job {
                     Refund refund = new Refund();
                     refund.setRefundNo(OddNoUtil.refundNo());
                     refund.setTradeNo(trade.getTradeNo());
-                    refund.setRefundObj("1");
+                    //退给卖家保证金
+                    refund.setRefundObj("0");
                     refund.setBtfId(bid.getBasicinformationId());
                     refund.setBtfName(bid.getBftName());
                     refund.setRefundPrice(bid.getBidBond());
                     refund.setStatus(Refund.REFUND_NOTIFIY);
-                    refund.setType("5");
+                    refund.setType("4");
                     refund.setCreateDate(DateUtils.getCurrentTimeAsString());
+                    refund.setRemarks("买家支付过期，退卖家保证金");
                     refundService.insert(refund);
+                    //判断是否为买家叫价
+                    if(trade.getIsBond() == 1){
+                        //买家保证金赔付给卖家
+                        refund.setRemarks("买家支付过期，赔付卖家违约金");
+                        refundService.insert(refund);
+                    }
                 }
                 t.setId(trade.getId());
                 t.setStatus(status);

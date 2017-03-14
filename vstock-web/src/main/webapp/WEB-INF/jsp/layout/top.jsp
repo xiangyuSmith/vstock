@@ -24,7 +24,7 @@
                     <li class="am-dropdown" data-am-dropdown="">
                         <c:choose>
                             <c:when test="${not empty vUser}">
-                                <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎你：</span>${vUser.mobile} &nbsp;<i class="am-icon-caret-down"></i></a>
+                                <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎您：</span>${vUser.nick} &nbsp;<i class="am-icon-caret-down"></i></a>
                                 <ul class="am-dropdown-content">
                                     <li><a href="${ctx}/user/index" rel="nofollow">个人中心</a></li>
                                     <li><a href="javascript:;" class="login-out" rel="nofollow">注销</a></li>
@@ -35,7 +35,7 @@
                             </c:otherwise>
                         </c:choose>
                     </li>
-                    <li><a href="/sorts" class="v-a-boder" rel="nofollow">SELL</a></li>
+                    <li style="display: none;"><a href="/sorts" class="v-a-boder" rel="nofollow">SELL</a></li>
                 </ul>
             </nav>
         </div>

@@ -16,7 +16,7 @@ public class QuartzInit {
         job.setJobName("trade_bid_list");
         job.setJobGroup("bid");
         job.setJobStatus(1);
-        job.setCronExpression("0/5 * * * * ?");
+        job.setCronExpression("0/30 * * * * ?");
         quartzOvr(job);
     }
 
