@@ -15,6 +15,12 @@
         color: #000!important;
     }
     .x-ul li ul li a{ color: #000!important; }
+    .noviceGuide{
+        width: 709px;
+        height: 600px;
+        margin-left: -610px;
+        background-color: red;
+    }
 </style>
 <header class="m-hd am-margin-bottom-0">
     <section data-am-sticky class="am-show-md-up" style="height: 80px;padding: 15px 0;">
@@ -47,6 +53,9 @@
                                     <li><a href="/index/noviceGuide" rel="nofollow">新手指引</a></li>
                                     <li><a href="/index/problem" rel="nofollow">常见问题</a></li>
                                 </ul>
+                                <div class="noviceGuide">
+
+                                </div>
                             </li>
                             <li class="am-dropdown" data-am-dropdown="">
                                 <c:choose>
