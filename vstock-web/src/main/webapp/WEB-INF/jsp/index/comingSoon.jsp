@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta dynamic-meta name="description" content="">
+    <meta dynamic-meta name="keywords" content="v站,v-stock,球鞋,球鞋交易,椰子,adidas,球鞋价格分析,侃爷,炒鞋,sneaker">
+    <meta name="application-name" content="v-stock" />
+    <meta name="msapplication-tooltip" content="v-stock" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <title>v-stock即将发布-敬请期待</title>
     <link rel="stylesheet" href="${ctx}/assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="${ctx}/assets/css/admin.css"/>
@@ -50,12 +58,12 @@
     </article>
     <script type="text/javascript">
         var overa;
-        overa = new Date(2017, 03, 15, 12, 00);//倒计时时间（PS：月数要-1，原因你懂得）
+        overa = new Date(2017, 03, 15, 12, 00);
         var localNow = new Date();
         function clock1(){
             var local = new Date();
             var intDiff = overa.getTime() - local.getTime();
-            if(intDiff <= 0){document.getElementById('time1');//显示活动结束 .innerHTML = "活动已经结束了";
+            if(intDiff <= 0){document.getElementById('time1');
                 return false;}
             var day    = Math.floor(intDiff / (1000 * 60 * 60 * 24));
             var hour   = Math.floor(intDiff / (1000 * 60 * 60)) - (day * 24);

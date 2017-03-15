@@ -47,7 +47,6 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     public void initData() {
         unloginUrls.add("/user");
         unloginUrls.add("/bid");
-//        unloginUrls.add("/index");
     }
 
     @Override

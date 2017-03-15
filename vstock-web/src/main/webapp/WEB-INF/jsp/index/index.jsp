@@ -29,6 +29,9 @@
         .sellBid,.buyBid{ height: 108px!important; }
         .panel-body{ display:none; }
         ul li{ list-style-type:none; }
+        .undefined{
+            display: none!important;
+        }
     </style>
 </head>
 <body>
@@ -153,7 +156,16 @@
                                     <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                     <div>
                                         <div style="font-size: 16px;">最近30天售出</div>
-                                        <div style="font-size: 22px;">${b.resultData.transactionRecord}双</div>
+                                        <div style="font-size: 22px;">
+                                            <c:choose>
+                                                <c:when test="${not empty b.resultData.transactionRecord}">
+                                                    ${b.resultData.transactionRecord}
+                                                </c:when>
+                                                <c:otherwise>
+                                                    0
+                                                </c:otherwise>
+                                            </c:choose>
+                                            双</div>
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +193,16 @@
                                 <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div style="font-size: 16px;">最低叫价</div>
-                                    <div class="layout-font-size-24">￥${b.minimumBid}</div>
+                                    <div class="layout-font-size-24">￥
+                                        <c:choose>
+                                            <c:when test="${not empty b.minimumBid}">
+                                                ${b.minimumBid}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +229,16 @@
                                 <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
                                     <div style="font-size: 16px;">最高出价</div>
-                                    <div class="layout-font-size-24">￥${b.highestBid}</div>
+                                    <div class="layout-font-size-24">￥
+                                        <c:choose>
+                                            <c:when test="${not empty b.highestBid}">
+                                                ${b.highestBid}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +264,16 @@
                             <div class="am_listimg_info">
                                 <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
-                                    <div class="layout-font-size-24">￥${b.cofferprice}（<fmt:formatNumber value="${b.cofferprices}" type="currency" pattern="#,#00" />%）</div>
+                                    <div class="layout-font-size-24">￥
+                                        <c:choose>
+                                            <c:when test="${not empty b.cofferprice}">
+                                                <fmt:formatNumber value="${b.cofferprice}" type="currency" pattern="#,#00" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                        （<fmt:formatNumber value="${b.cofferprices}" type="currency" pattern="#,#00" />%）</div>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +299,16 @@
                             <div class="am_listimg_info">
                                 <div class="am-gallery-title"><span title="${b.name}" style="font-size: 22px;"><b>${b.name}</b></span></div>
                                 <div>
-                                    <div class="layout-font-size-22">官方售价:￥${b.cofferprice}</div>
+                                    <div class="layout-font-size-22">官方售价:￥
+                                        <c:choose>
+                                            <c:when test="${not empty b.cofferprice}">
+                                                <fmt:formatNumber value="${b.cofferprice}" type="currency" pattern="#,#00" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </div>
                         </div>

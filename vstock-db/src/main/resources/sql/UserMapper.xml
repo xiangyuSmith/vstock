@@ -5,7 +5,7 @@
     <insert id="insertUser" parameterType="com.vstock.db.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user`
         (`id`,`mobile`,`password`,`salt`,`nick`,`size`,`invitationId`,`create_time`)
-        VALUES(null,#{mobile},#{password},#{salt},#{nick},#{invitationId},`size`,now())
+        VALUES(null,#{mobile},#{password},#{salt},#{nick},#{size},#{invitationId},now())
     </insert>
 
     <select id="findUser"  resultType="com.vstock.db.entity.User">

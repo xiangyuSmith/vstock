@@ -134,7 +134,7 @@ public class BidController extends BaseController{
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname);
         sParaTemp.put("out_trade_no", String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
-        sParaTemp.put("total_fee", String.valueOf(0.01));
+        sParaTemp.put("total_fee", String.valueOf(10));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";

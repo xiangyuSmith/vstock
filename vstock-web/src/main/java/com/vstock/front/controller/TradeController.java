@@ -359,15 +359,15 @@ public class TradeController extends BaseController{
         Map<String, String> sParaTemp = new HashMap<String, String>();
         BigDecimal amountFinal;
         if(type == 2){
-            amountFinal = new BigDecimal(0.01);
-            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|10|"+ischeck+"|"+bname);
+            amountFinal = new BigDecimal(10);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
             sParaTemp.put("out_trade_no", String.valueOf(tradeId)+"01100");
         }else {
-//        BigDecimal amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
+            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
-            amountFinal = new BigDecimal(0.02);
-            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amount+"|"+ischeck+"|"+bname);
+//            amountFinal = new BigDecimal(0.02);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", String.valueOf(tradeId));
         }

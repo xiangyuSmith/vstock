@@ -86,25 +86,32 @@
                     本店所有商品 <span class="am-icon-caret-down"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    <li class="am-active"><a href="#">分类1...</a></li>
-                    <li><a href="#">分类2...</a></li>
-                    <li><a href="#">分类3...</a></li>
+                    <c:forEach items="${brandList}" var="brand" >
+                        <li><a href="/sorts?brandName=${brand}" rel="nofollow">${brand}</a></li>
+                    </c:forEach>
                 </ul>
             </li>
-            <li class="am-active"><a href="#">即将发布</a></li>
-            <li><a href="#">作品集</a></li>
-            <li><a href="#">常见问题</a></li>
+            <li class="am-active"><a href="/sorts?type=5" rel="nofollow">即将发布</a></li>
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    帮助中心<span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li><a href="/index/noviceGuide" rel="nofollow">新手指引</a></li>
+                    <li><a href="/index/problem" rel="nofollow">常见问题</a></li>
+                </ul>
+            </li>
             <li class="am-dropdown" data-am-dropdown>
                 <c:choose>
                     <c:when test="${not empty vUser}">
-                        <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎你：</span>${vUser.mobile} &nbsp;<i class="am-icon-caret-down"></i></a>
+                        <a href="${ctx}/user/index" rel="nofollow" class="am-dropdown-toggle" data-am-dropdown-toggle=""><span>欢迎你：</span>${vUser.nick} &nbsp;<i class="am-icon-caret-down"></i></a>
                         <ul class="am-dropdown-content">
                             <li><a href="${ctx}/user/index" rel="nofollow">个人中心</a></li>
                             <li><a href="javascript:;" class="login-out" rel="nofollow">注销</a></li>
                         </ul>
                     </c:when>
                     <c:otherwise>
-                        <a href="javascript:;" rel="nofollow" data-am-modal="{target: '#my-popup', width: 350}">注册/登录</a>
+                        <a href="javascript:;" rel="nofollow" data-am-modal="{target: '#my-popup-login', width: 350}">注册/登录</a>
                     </c:otherwise>
                 </c:choose>
             </li>
