@@ -54,7 +54,7 @@
     </div>
 </div>
 <article class="am-show-lg-only">
-    <div class="am-container-sell" style="height: 135px;">
+    <div class="am-container-sell" style="height: 135px;overflow: hidden;">
         <div class="am-u-md-6 am-padding-right-sm">
             <div class="am-u-md-12" style="background-color: #eefdf2;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #3fcd65;">买家</span></div>
@@ -331,6 +331,7 @@
 <%@include file="../layout/bottom.jsp" %>
 <script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
 <script src="${ctx}/assets/js/jquery.bootstrap.newsbox.min.js"></script>
+<script src="${ctx}/assets/js/jquery.cookie.js"></script>
 <script type="text/javascript">
     $("[data-toggle='popover']").popover({
         trigger:'hover focus'
@@ -368,7 +369,7 @@
                         var mobile = buyList[i].user.nick;
                         var bftName = buyList[i].bftName;
                         var bidMoney = buyList[i].bidMoney;
-                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>叫价：'+bidMoney+'元</p></td></tr></table></li>';
                     }
                 }
                 if(sellList != undefined){
@@ -472,6 +473,23 @@
         $("body").on("keyup",".index_search_top",function(){
             $("#index_search").val($(this).val());
         });
+
+        $(".guide_btn").click(function(){
+            $.cookie('guide','1',{expires:365});
+            hideCookie();
+        });
+        if($.cookie('guide') == 1){
+            hideCookie();
+        }else{
+            $(".noviceGuide").fadeIn(200);
+            $(".noviceGuide_bg").fadeIn(200);
+            $("body").css("overflow-y","hidden");
+        }
+        function hideCookie(){
+            $(".noviceGuide").fadeOut(200);
+            $(".noviceGuide_bg").fadeOut(200);
+            $("body").css("overflow-y","scroll");
+        }
     });
     $(window).scroll(function () {
         var a = document.getElementById("index_search_div").offsetTop;
