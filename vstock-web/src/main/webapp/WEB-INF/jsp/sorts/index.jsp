@@ -102,6 +102,9 @@
     var year = "";
     var brand = "";
     var totalheight = 0;
+    if (brandName){
+        brand = brandName;
+    }
     $(function(){
         $(".brand-btn").click(function(){
             var $this = $(this);
