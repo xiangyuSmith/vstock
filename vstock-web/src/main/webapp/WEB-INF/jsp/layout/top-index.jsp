@@ -38,6 +38,11 @@
             margin-left: -385px;
         }
     }
+    @media (max-width: 638px){
+        .noviceGuide_bg{
+            display: none!important;
+        }
+    }
 </style>
 <header class="m-hd am-margin-bottom-0">
     <div class="noviceGuide_bg"></div>
