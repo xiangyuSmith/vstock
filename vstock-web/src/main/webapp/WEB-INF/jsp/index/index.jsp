@@ -2,7 +2,7 @@
 <html>
 <head>
     <%@include file="../layout/head.jsp" %>
-    <title>首页</title>
+    <title>v - stock</title>
     <style type="text/css">
         .am-container-sell{ max-width: 1000px; margin: auto; }
         .am-imglist{ margin-top:50px; }

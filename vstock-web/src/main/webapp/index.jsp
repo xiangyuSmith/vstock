@@ -1,2 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%response.sendRedirect("/index");%>
+<html>
+    <head>
+        <meta name="baidu-site-verification" content="tqyujhSLzi" />
+    </head>
+    <body>
+        <%response.sendRedirect("/index");%>
+    </body>
+</html>
+
