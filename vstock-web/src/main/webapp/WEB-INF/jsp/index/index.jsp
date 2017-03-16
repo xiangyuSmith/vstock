@@ -110,7 +110,9 @@
     <div style="margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center am-container-content" >
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-28 am-padding-left-sm" id="frist_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="frist_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                                                                                                                                                                 data-container="body" data-toggle="popover" data-placement="auto top"
+                                                                                                                                                                                                                                 data-content="通过每日市场价值，统计30天的交易量曲线。"></span></span>
                 <div id="containerA" style="height: 136px;"></div>
                 <span class="layout-font-size-34 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change"></span>
@@ -118,7 +120,9 @@
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-28 am-padding-left-sm" id="sen_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="sen_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                                                                                                                                                               data-container="body" data-toggle="popover" data-placement="auto top"
+                                                                                                                                                                                                                               data-content="通过每日市场价值，统计30天的交易量曲线。"></span></span>
                 <div id="containerB" style="height: 136px;"></div>
                 <span class="layout-font-size-34 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="nike_change"></span>
@@ -126,7 +130,9 @@
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-28 am-padding-left-sm" id="th_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="th_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                                                                                                                                                              data-container="body" data-toggle="popover" data-placement="auto top"
+                                                                                                                                                                                                                              data-content="通过每日市场价值，统计30天的交易量曲线。"></span></span>
                 <div id="containerC" style="height: 136px;"></div>
                 <span class="layout-font-size-34 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change"></span>
