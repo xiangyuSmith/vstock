@@ -91,8 +91,12 @@ public class TradeController {
     public Map<String,Object> saveTrade(HttpServletRequest request){
         Map<String,Object> param = new HashMap<String,Object>();
         Trade record = new Trade();
+        String remarks = request.getParameter("remarks");
         record.setId(Integer.parseInt(request.getParameter("id")));
         record.setStatus(Integer.parseInt(request.getParameter("status")));
+        if (remarks != null && !"".equals(remarks)){
+            record.setSign(remarks);
+        }
         record.setUpdateDate(DateUtils.getCurrentTimeAsString());
         int i = tradeService.save(record);
         param.put("reGode",i);

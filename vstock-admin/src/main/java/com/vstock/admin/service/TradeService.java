@@ -7,7 +7,6 @@ import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -28,6 +27,8 @@ public class TradeService {
     UserService userService;
     @Autowired
     RefundService refundService;
+    @Autowired
+    BackCommodityService backCommodityService;
 
     /**
      * 分页查询所有记录
@@ -201,21 +202,20 @@ public class TradeService {
         if (record.getId() == null && "".equals(record.getId())){
             return this.insert(record);
         }else {
+            String remarks = "";
+            if (record.getSign() != null || !"".equals(record.getSign())){
+                remarks = record.getSign();
+                record.setSign(null);
+            }
             int i = this.updateAll(record);
             if (21 == record.getStatus()){
                 Trade trade = new Trade();
                 trade.setId(record.getId());
                 record = this.findTrade(trade);
-                BigDecimal amount = refundService.refundLiquidated(record);
-                Refund refund = new Refund();
-                refund.setTradeNo(record.getTradeNo());
-                refund.setRefundObj("1");
-                refund.setBtfId(record.getBasicinformationId());
-                refund.setBtfName(record.getBftName());
-                refund.setRefundPrice(amount);
-                refund.setStatus("0");
-                refund.setType("0");
-                i = refundService.save(refund);
+                int a = refundService.refundLiquidated(record,remarks);
+                if (a > 0) {
+                    i = backCommodityService.savefail(record, remarks);
+                }
             }
             return i;
         }
