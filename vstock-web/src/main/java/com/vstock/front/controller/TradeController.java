@@ -242,6 +242,7 @@ public class TradeController extends BaseController{
             double amount = Double.parseDouble(extra_common_param[3]);
             String ischeck = extra_common_param[4];
             String bname = extra_common_param[5];
+            String isUserHome = extra_common_param[6];
             Trade t = new Trade();
             t.setId(tradeId);
             List<Trade> tradeList = tradeService.findTrade(t,lagePage);
@@ -321,7 +322,7 @@ public class TradeController extends BaseController{
             trade.setStatus(tradeStatus);
             trade.setUpdateDate(DateUtils.dateToString(new Date()));
             tradeService.update(trade);
-            if("0".equals(bname)){
+            if("1".equals(isUserHome)){
                 return "redirect:/user/index";
             }else{
                 return "redirect:/detail?proName="+bname;
@@ -353,6 +354,7 @@ public class TradeController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         String ischeck = getParam("ischeck","0");
         String bname = getParam("bname");
+        String isUserHome = getParam("isUserHome");
         Trade record = new Trade();
         record.setId(tradeId);
         List<Trade> tradeList  = tradeService.findAllTrade(record);
@@ -360,16 +362,16 @@ public class TradeController extends BaseController{
         BigDecimal amountFinal;
         if(type == 2){
             amountFinal = new BigDecimal(10);
-            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
-            sParaTemp.put("out_trade_no", String.valueOf(tradeId)+"01100");
+            sParaTemp.put("out_trade_no", "100_"+String.valueOf(tradeId));
         }else {
             amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
 //            amountFinal = new BigDecimal(0.02);
-            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
-            sParaTemp.put("out_trade_no", String.valueOf(tradeId));
+            sParaTemp.put("out_trade_no", "200_"+String.valueOf(tradeId));
         }
         sParaTemp.put("service", AlipayConfig.service);
         sParaTemp.put("partner", AlipayConfig.partner);
