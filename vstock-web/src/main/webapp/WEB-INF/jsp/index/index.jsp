@@ -2,7 +2,7 @@
 <html>
 <head>
     <%@include file="../layout/head.jsp" %>
-    <title>首页</title>
+    <title>v - stock</title>
     <style type="text/css">
         .am-container-sell{ max-width: 1000px; margin: auto; }
         .am-imglist{ margin-top:50px; }
@@ -32,6 +32,7 @@
         .undefined{
             display: none!important;
         }
+        .panDong{ color:#000; }
     </style>
 </head>
 <body>
@@ -54,7 +55,7 @@
     </div>
 </div>
 <article class="am-show-lg-only">
-    <div class="am-container-sell" style="height: 135px;">
+    <div class="am-container-sell" style="height: 135px;overflow: hidden;">
         <div class="am-u-md-6 am-padding-right-sm">
             <div class="am-u-md-12" style="background-color: #eefdf2;padding: 3px;">
                 <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #3fcd65;">买家</span></div>
@@ -67,7 +68,11 @@
                                         <table cellpadding="4">
                                             <tr>
                                                 <td>
-                                                    <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    <a class="panDong" href="/detail?proName=${buybid.bftName}">
+                                                        <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p>
+                                                        <p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p>
+                                                        <p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -91,7 +96,9 @@
                                         <table cellpadding="4">
                                             <tr>
                                                 <td>
-                                                    <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    <a class="panDong" href="/detail?proName=${sellbid.bftName}">
+                                                        <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></p>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -110,7 +117,9 @@
     <div style="margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center am-container-content" >
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-28 am-padding-left-sm" id="frist_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="frist_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                                                                                                                                                                 data-container="body" data-toggle="popover" data-placement="auto top"
+                                                                                                                                                                                                                                 data-content="通过每日市场价值，统计30天的交易量曲线。"></span></span>
                 <div id="containerA" style="height: 136px;"></div>
                 <span class="layout-font-size-34 am-padding-left-sm" id="jordan_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="jordan_change"></span>
@@ -118,7 +127,9 @@
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-28 am-padding-left-sm" id="sen_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="sen_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                                                                                                                                                               data-container="body" data-toggle="popover" data-placement="auto top"
+                                                                                                                                                                                                                               data-content="通过每日市场价值，统计30天的交易量曲线。"></span></span>
                 <div id="containerB" style="height: 136px;"></div>
                 <span class="layout-font-size-34 am-padding-left-sm" id="nike_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="nike_change"></span>
@@ -126,7 +137,9 @@
         </div>
         <div class="am-u-md-4 am-padding-0">
             <div class="am-text-left" style="max-width: 256px; margin:0 auto">
-                <span class="layout-font-size-28 am-padding-left-sm" id="th_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数</span>
+                <span class="layout-font-size-28 am-padding-left-sm" id="th_brand" style="font-weight: bold;"></span><span class="layout-font-size-26 am-padding-left-sm" style="font-weight: bold;font-family: '黑体'">指数<span class="question-tips" data-type="0.0.0.1" style="background: url('/assets/i/detail_icon.png');background-position: -535px -28px"
+                                                                                                                                                                                                                              data-container="body" data-toggle="popover" data-placement="auto top"
+                                                                                                                                                                                                                              data-content="通过每日市场价值，统计30天的交易量曲线。"></span></span>
                 <div id="containerC" style="height: 136px;"></div>
                 <span class="layout-font-size-34 am-padding-left-sm" id="yezzy_current" style="color: #060606;font-weight: bold;"></span><br/>
                 <span class="layout-font-size-22 am-padding-left-sm" id="yezzy_change"></span>
@@ -325,6 +338,7 @@
 <%@include file="../layout/bottom.jsp" %>
 <script src="${ctx}/assets/js/highcharts/_settings_hcharts.js"></script>
 <script src="${ctx}/assets/js/jquery.bootstrap.newsbox.min.js"></script>
+<script src="${ctx}/assets/js/jquery.cookie.js"></script>
 <script type="text/javascript">
     $("[data-toggle='popover']").popover({
         trigger:'hover focus'
@@ -362,7 +376,7 @@
                         var mobile = buyList[i].user.nick;
                         var bftName = buyList[i].bftName;
                         var bidMoney = buyList[i].bidMoney;
-                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><a class="panDong" href="/detail?proName='+bftName+'"><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>叫价：'+bidMoney+'元</p></a></td></tr></table></li>';
                     }
                 }
                 if(sellList != undefined){
@@ -370,7 +384,7 @@
                         var mobile = sellList[i].user.nick;
                         var bftName = sellList[i].bftName;
                         var bidMoney = sellList[i].bidMoney;
-                        sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                        sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><a class="panDong" href="/detail?proName='+bftName+'"><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></a></td></tr></table></li>';
                     }
                 }
                 buyBid.html(bidhtml);
@@ -466,6 +480,23 @@
         $("body").on("keyup",".index_search_top",function(){
             $("#index_search").val($(this).val());
         });
+
+        $(".guide_btn").click(function(){
+            $.cookie('guide','1',{expires:365});
+            hideCookie();
+        });
+        if($.cookie('guide') == 1){
+            hideCookie();
+        }else{
+            $(".noviceGuide").fadeIn(200);
+            $(".noviceGuide_bg").fadeIn(200);
+            $("body").css("overflow-y","hidden");
+        }
+        function hideCookie(){
+            $(".noviceGuide").fadeOut(200);
+            $(".noviceGuide_bg").fadeOut(200);
+            $("body").css("overflow-y","scroll");
+        }
     });
     $(window).scroll(function () {
         var a = document.getElementById("index_search_div").offsetTop;

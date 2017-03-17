@@ -38,7 +38,7 @@
                 <div class="title">分类</div>
                 <ul id="brandClass" class="am-nav left-list">
                     <c:forEach items="${brandList}" var="brand" >
-                        <li><a href="javasript:;" class="brand-btn<c:if test="${brandName==brand}"> active</c:if>">${brand}</a></li>
+                        <li><a href="javascript:void(0);" class="brand-btn<c:if test="${brandName==brand}"> active</c:if>">${brand}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -102,6 +102,9 @@
     var year = "";
     var brand = "";
     var totalheight = 0;
+    if (brandName){
+        brand = brandName;
+    }
     $(function(){
         $(".brand-btn").click(function(){
             var $this = $(this);

@@ -15,8 +15,37 @@
         color: #000!important;
     }
     .x-ul li ul li a{ color: #000!important; }
+    .noviceGuide_bg{ position: fixed;z-index:1012;width: 100%;height: 100%;background-color: #000;opacity: 0.8;display: none; }
+    .noviceGuide{ position: absolute; z-index:1013; width: 710px; height: 520px; margin-left: -550px;display: none; }
+    .guide_btn{ background: url("/assets/i/guide/guide_btn.png");width: 320px;height: 80px;cursor: pointer; }
+    .guide_btn:HOVER{ background-position: -329px 0px;  }
+    body{ overflow-y: hidden; }
+    @media (max-width: 1450px){
+        .noviceGuide{
+            position: absolute;
+            z-index: 1013;
+            width: 580px;
+            height: 409px;
+            margin-left: -438px;
+        }
+    }
+    @media (max-width: 1000px){
+        .noviceGuide{
+            position: absolute;
+            z-index: 1013;
+            width: 510px;
+            height: 360px;
+            margin-left: -385px;
+        }
+    }
+    @media (max-width: 638px){
+        .noviceGuide_bg{
+            display: none!important;
+        }
+    }
 </style>
 <header class="m-hd am-margin-bottom-0">
+    <div class="noviceGuide_bg"></div>
     <section data-am-sticky class="am-show-md-up" style="height: 80px;padding: 15px 0;">
         <div style="line-height: 30px;">
             <div class="am-u-md-12">
@@ -47,6 +76,10 @@
                                     <li><a href="/index/noviceGuide" rel="nofollow">新手指引</a></li>
                                     <li><a href="/index/problem" rel="nofollow">常见问题</a></li>
                                 </ul>
+                                <div class="noviceGuide">
+                                    <img src="/assets/i/guide/guide_content.png" style="width: 100%;height: 100%;" /><br/>
+                                    <div class="guide_btn"></div>
+                                </div>
                             </li>
                             <li class="am-dropdown" data-am-dropdown="">
                                 <c:choose>

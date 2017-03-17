@@ -74,6 +74,7 @@ public class BidController extends BaseController{
             String size = extra_common_param[4];
             double amount = Double.parseDouble(extra_common_param[5]);
             String bname = extra_common_param[6];
+            String isUserHome = extra_common_param[7];
             String trade_no = getParam("trade_no");
             String buyer_email = getParam("buyer_email");
             String body = getParam("body");
@@ -103,7 +104,7 @@ public class BidController extends BaseController{
             bidObj.setInvalidDate(DateUtils.dateToString(new Date()));
             bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
             bidService.update(bidObj);
-            if("0".equals(bname)){
+            if("1".equals(isUserHome)){
                 return "redirect:/user/index";
             }else{
                 return "redirect:/detail?proName="+bname;
@@ -121,6 +122,7 @@ public class BidController extends BaseController{
         String size = getParam("size");
         double amount = Double.valueOf(getParam("amount", "0"));
         String bname = getParam("bname");
+        String isUserHome = getParam("isUserHome");
         Map<String, String> sParaTemp = new HashMap<String, String>();
         sParaTemp.put("service", AlipayConfig.service);
         sParaTemp.put("partner", AlipayConfig.partner);
@@ -131,7 +133,7 @@ public class BidController extends BaseController{
         sParaTemp.put("return_url", AlipayConfig.return_url);
         sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
-        sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname);
+        sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname+"|"+isUserHome);
         sParaTemp.put("out_trade_no", String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
         sParaTemp.put("total_fee", String.valueOf(10));

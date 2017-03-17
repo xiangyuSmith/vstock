@@ -308,27 +308,21 @@
             });
         });
 
-        $("body").on("click",".deliver-goods",function(){
-            var $this = $(this);
-            var amount = $this.parent().parent().parent().parent().prev().prev().text();
-            var bftSize = $this.parent().parent().parent().parent().prev().prev().prev().text();
-            alipay($this,amount,bftSize);
-        });
-
         $("body").on("click",".deliver-bid-goods",function(){
             var $this = $(this);
             var amount = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev().text();
             var bftSize = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().text();
-            alipay($this,amount,bftSize);
+            var bftName = $this.parent().parent().parent().parent().parent().prev().prev().prev().prev().prev().prev().prev().text();
+            alipay($this,amount,bftSize,bftName);
         });
 
-        function alipay($this,amount,bftSize){
+        function alipay($this,amount,bftSize,bftName){
             var dataType = $this.attr("bid_type");
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             var type = $this.attr("data-type");
             var bId = $this.attr("bft-id");
             var bid = $this.attr("bid-id");
-            location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+bftSize+"&bid="+bid+"&bname=0";
+            location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+bftSize+"&bid="+bid+"&bname="+bftName+"&isUserHome=1";
             return;
 //            sendRequest("/bid/createPay",{
 //                payStatus : 0,
@@ -442,6 +436,7 @@
             var addId = $this.attr("add-id")
             var type = $this.attr("trade-type");
             var size = $this.attr("trade-size");
+            var bftName = $this.attr("data-bftName");
             var amount = $this.parent().parent().parent().parent().parent().prev().prev().text();
             amount = parseFloat(amount.substring(1,amount.legend).replace(/[^\d\.-]/g, ""));
             sendRequest("/trade/getBuyInfo",{
@@ -575,9 +570,9 @@
                         var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
                     }
                     if(type == 2){
-                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&ischeck=1&size="+size+"&tradeId="+tradeId+"&bname=0";
+                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&ischeck=1&size="+size+"&tradeId="+tradeId+"&bname="+bftName+"&isUserHome=1";
                     }else{
-                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname=0";
+                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname="+bftName+"&isUserHome=1";
                     }
                     return;
 //                    sendRequest("/trade/createTradePay",{

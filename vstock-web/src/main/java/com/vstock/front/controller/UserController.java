@@ -402,8 +402,8 @@ public class UserController extends BaseController {
             resultModel.setRetCode(0);
             return resultModel;
         }
-        if(identify_img_front.getSize()>1000000 || identify_img_back.getSize()>1000000 || identify_img_handheld.getSize()>1000000){
-            resultModel.setRetMsg("上传的身份证照片需小于1MB");
+        if(identify_img_front.getSize()>10000000 || identify_img_back.getSize()>10000000 || identify_img_handheld.getSize()>10000000){
+            resultModel.setRetMsg("上传的身份证照片需小于10MB");
             resultModel.setRetCode(0);
             return resultModel;
         }
@@ -433,9 +433,9 @@ public class UserController extends BaseController {
                     userAccount.setIdentify_img_front(userAccountService.uploadFile(identify_img_front,suid));
                     userAccount.setIdentify_img_back(userAccountService.uploadFile(identify_img_back,suid));
                     userAccount.setIdentify_img_handheld(identify_img_handheldUrl);
-                    int addRet = userAccountService.insert(userAccount);
                     userAccount.setUpdate_time(DateUtils.dateToString(new Date()));
                     userAccount.setStatus(userAccount.ACCOUNT_TYPE_SUCCESS);
+                    int addRet = userAccountService.insert(userAccount);
                     resultModel.setRetCode(addRet);
                     return resultModel;
                 }

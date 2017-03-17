@@ -12,7 +12,7 @@
                 <div class="am-form-group am-margin-top">
                     <label for="assets_purchaseDate" class="am-u-sm-3 am-u-md-3 am-u-lg-3 am-form-label" style="font-weight: lighter;">购买日期:</label>
                     <div class="am-u-sm-7 am-u-md-7 am-u-lg-7 am-u-end">
-                        <input type="date" name="purchaseDate" id="assets_purchaseDate" placeholder="请输入您的购买日期">
+                        <input type="text" name="purchaseDate" id="assets_purchaseDate" placeholder="请输入您的购买日期">
                     </div>
                 </div>
                 <div class="am-form-group">
@@ -44,3 +44,14 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/css/cssdate/datedropper.css">
+<link rel="stylesheet" type="text/css" href="${ctx}/assets/css/cssdate/timedropper.min.css">
+<script src="${ctx}/assets/js/jsdate/datedropper.min.js"></script>
+<script src="${ctx}/assets/js/jsdate/timedropper.min.js"></script>
+<script>
+    $("#assets_purchaseDate").dateDropper({
+        animate: true,
+        format: 'Y-m-d',
+        maxYear: '2100'
+    });
+</script>

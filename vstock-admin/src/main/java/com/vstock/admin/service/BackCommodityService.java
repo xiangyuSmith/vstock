@@ -2,6 +2,7 @@ package com.vstock.admin.service;
 
 import com.vstock.db.dao.IBackCommodityDao;
 import com.vstock.db.entity.BackCommodity;
+import com.vstock.db.entity.Trade;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +76,22 @@ public class BackCommodityService {
             }
             return this.insert(record);
         }
+    }
+
+    /**
+     * 验货失败产生退货单
+     * @param record
+     * @param remarks
+     * @return
+     */
+    public int savefail(Trade record, String remarks){
+        BackCommodity backCommodity = new BackCommodity();
+        backCommodity.setBtfId(record.getBasicinformationId());
+        backCommodity.setTradeNo(record.getTradeNo());
+        backCommodity.setBackPerson("波哥");
+        backCommodity.setConsignee(record.getSellerName());
+        backCommodity.setReasons(remarks);
+        return this.save(backCommodity);
     }
 
 }

@@ -102,16 +102,34 @@ public class RefundService {
     }
 
     /**
-     * 验货不合格退回金额
+     * 验货不合格退回金额，生成退款单
      * @param record
      * @return
      */
-    public BigDecimal refundLiquidated(Trade record){
+    public int refundLiquidated(Trade record, String remarks){
+        int i = 0;
         Bid bid = new Bid();
-        Page page = new Page(10,"1");
         bid.setId(record.getBidId());
+        Page page = new Page(10,"1");
         List<Bid> bidList = bidService.findAll(bid,page);
-        return record.getTransactionMoney().add(bidList.get(0).getBidBond().add(record.getTradeFreight()));
+        for (int a = 0; a <= bidList.size(); a++ ) {
+            Refund refund = new Refund();
+            refund.setTradeNo(record.getTradeNo());
+            refund.setRefundObj("1");
+            refund.setBtfId(record.getBasicinformationId());
+            refund.setBtfName(record.getBftName());
+            if (a == 0) {
+                refund.setRefundPrice(record.getTransactionMoney().add(record.getTradeFreight()));
+                refund.setType("0");
+            }else {
+                refund.setRefundPrice(bidList.get(0).getBidBond());
+                refund.setType("6");
+            }
+            refund.setRemarks(remarks);
+            refund.setStatus("0");
+            i = this.save(refund);
+        }
+        return i;
     }
 
     /**
@@ -136,7 +154,7 @@ public class RefundService {
             List<Trade> tradeList = tradeService.findModel(record);
             if (tradeList.size() > 0) {
                 if (type == 0) {
-                    amount = this.refundLiquidated(tradeList.get(0));
+                    amount = tradeList.get(0).getTransactionMoney();
                 }else{
                     amount = tradeList.get(0).getBid().getBidBond();
                 }

@@ -480,9 +480,9 @@
                     function createPay(){
                         type = type==1?2:3;
                         if(type == 3){
-                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname;
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";;
                         }else{
-                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=1"+"&tradeId="+ res.data.tradeId +"&bname="+bname;
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=1"+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";;
                         }
                         return;
 //                        sendRequest("/trade/createTradePay",{
@@ -570,7 +570,7 @@
                             $("#alert-confirm-content").html("是否去支付?");
                             $('#my-confirm').modal({
                                 onConfirm : function() {
-                                    location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname;
+                                    location.href = "/bid/createPayAlipay?payStatus=0&amount="+amount+"&type="+type+"&bId="+bId+"&size="+size+"&bid="+ res.data+"&bname="+bname+"&isUserHome=0";
                                     return;
 //                                    sendRequest("/bid/createPay",{
 //                                        'amount': amount,
