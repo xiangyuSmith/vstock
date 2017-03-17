@@ -169,16 +169,16 @@
     jQuery(function($){
         
         $('.finance-sbt-btn').click(function () {
-            var $this = $(this);
-            var id = $this.attr('data-id');
-            var tradeNo = $this.attr('tradeNo');
-            var typee = $this.attr('data-type');
-            var btf_id = $this.attr('btf_id');
-            var upstatus = "61";
-            if (typee == 1){upstatus = "51";}
             $('#my-confirm').modal({
                 relatedTarget: this,
                 onConfirm: function(options) {
+                    var $this = $(this.relatedTarget);
+                    var id = $this.attr('data-id');
+                    var tradeNo = $this.attr('tradeNo');
+                    var typee = $this.attr('data-type');
+                    var btf_id = $this.attr('btf_id');
+                    var upstatus = "61";
+                    if (typee == 1){upstatus = "51";}
                     $.post("/resfund/saveRefund",{
                         'id' : id,
                         'tradeNo' : tradeNo,
