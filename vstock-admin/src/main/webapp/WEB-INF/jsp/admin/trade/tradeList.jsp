@@ -75,7 +75,7 @@
                         <a href="javascript:void(0);" class="am-btn am-btn-primary am-radius am-fr am-margin-right-xl testPass-btn"data-type="20">检验通过</a>
                     </div>
                     <div class="am-u-sm-6 am-u-md-4 am-u-lg-6">
-                        <a href="javascript:void(0);" class="am-btn am-btn-danger am-radius testPass-btn" data-type="21">检验失败</a>
+                        <a href="javascript:void(0);" class="am-btn am-btn-danger am-radius" data-am-modal="{target: '#refund-remarks', width: 400}">检验失败</a>
                     </div>
                 </div>
             </c:if>
@@ -91,6 +91,29 @@
         <input type="hidden" id="endTime" value="${record.updateDate}"/>
     </form>
 </div>
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="refund-remarks">
+    <div class="am-modal-dialog pre-sale">
+        <div class="am-modal-hd" style="background-color: #4aaa4a;">
+            <div class="am-active am-g am-margin-bottom-sm" style="color: #FFFFFF;">
+                <span class="am-text-xl am-fl">失败原因</span>
+            </div>
+            <a href="javascript: void(0);" class="am-close am-close-spin" data-am-modal-close>×</a>
+        </div>
+        <div class="am-modal-bd am-g" style="background-color: #FFFFFF;">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm">
+                <textarea type="text" id="reasons" name="reasons" style="min-width: 312px;" class="am-input-lg am-padding-left-xs" placeholder="失败原因"></textarea>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm">
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                    <a href="javascript: void(0);" data-type="21" class="am-btn am-btn-primary am-radio testPass-btn">确定</a>
+                </div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6">
+                    <a href="javascript: void(0);" class="am-btn am-btn-danger am-radio" data-am-modal-close>取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <jsp:include page="../common/bottom.jsp" flush="true"/>
 <script type="text/javascript">
     jQuery(function($){
@@ -100,9 +123,11 @@
 
         $('.testPass-btn').click(function () {
             var status = $(this).attr('data-type');
+            var remarks = $(this)
             $.post("/trade/saveTrade",{
                 'id': $('#id').val(),
-                'status' : status
+                'status' : status,
+                'remarks':$('#reasons').val()
             },function(res){
                 if (res.reGode == 1){
                     $('#tradeindex').submit();
