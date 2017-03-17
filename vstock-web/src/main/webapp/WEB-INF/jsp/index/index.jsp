@@ -32,6 +32,7 @@
         .undefined{
             display: none!important;
         }
+        .panDong{ color:#000; }
     </style>
 </head>
 <body>
@@ -67,7 +68,11 @@
                                         <table cellpadding="4">
                                             <tr>
                                                 <td>
-                                                    <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p><p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p><p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    <a class="panDong" href="/detail?proName=${buybid.bftName}">
+                                                        <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p>
+                                                        <p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p>
+                                                        <p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -91,7 +96,9 @@
                                         <table cellpadding="4">
                                             <tr>
                                                 <td>
-                                                    <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    <a class="panDong" href="/detail?proName=${sellbid.bftName}">
+                                                        <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></p>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -369,7 +376,7 @@
                         var mobile = buyList[i].user.nick;
                         var bftName = buyList[i].bftName;
                         var bidMoney = buyList[i].bidMoney;
-                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>叫价：'+bidMoney+'元</p></td></tr></table></li>';
+                        bidhtml += '<li class="news-item"><table cellpadding="4"><tr><td><a class="panDong" href="/detail?proName='+bftName+'"><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>叫价：'+bidMoney+'元</p></a></td></tr></table></li>';
                     }
                 }
                 if(sellList != undefined){
@@ -377,7 +384,7 @@
                         var mobile = sellList[i].user.nick;
                         var bftName = sellList[i].bftName;
                         var bidMoney = sellList[i].bidMoney;
-                        sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></td></tr></table></li>';
+                        sellhtml += '<li class="news-item"><table cellpadding="4"><tr><td><a class="panDong" href="/detail?proName='+bftName+'"><p>'+mobile.substr(0,1)+'**'+'</p><p title="'+bftName+'">'+bftName.substr(0,30)+'</p><p>出价：'+bidMoney+'元</p></a></td></tr></table></li>';
                     }
                 }
                 buyBid.html(bidhtml);
