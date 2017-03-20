@@ -80,7 +80,7 @@
             and basicinformation.bftSize = #{bftSize}
         </if>
         <if test="productName != null and productName != ''">
-            and (basicinformation.colores LIKE CONCAT('%',#{productName},'%') or basicinformation.bartNo LIKE CONCAT('%',#{productName},'%'))
+            and (basicinformation.name LIKE CONCAT('%',#{productName},'%') or basicinformation.colores LIKE CONCAT('%',#{productName},'%') or basicinformation.bartNo LIKE CONCAT('%',#{productName},'%'))
         </if>
         <if test="type != null and type != ''">
             and basicinformation.type = #{type}
