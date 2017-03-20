@@ -15,81 +15,10 @@
 <script src="${ctx}/assets/js/jquery.validate/jquery.validate.min.js"></script>
 <script src="${ctx}/assets/js/jquery.validate/messages_zh.js"></script>
 <script src="${ctx}/assets/js/jquery.toaster.js"></script>
-
-<script>
-    Echo.init({
-        offset: 0,
-        throttle: 0
-    });
-    function uaredirect(f) {
-        try {
-            if (document.getElementById("bdmark") != null) {
-                return
-            }
-            var b = false;
-            if (arguments[1]) {
-                var e = window.location.host;
-                var a = window.location.href;
-                if (isSubdomain(arguments[1], e) == 1) {
-                    f = f + "/#m/" + a;
-                    b = true
-                } else {
-                    if (isSubdomain(arguments[1], e) == 2) {
-                        f = f + "/#m/" + a;
-                        b = true
-                    } else {
-                        f = a;
-                        b = false
-                    }
-                }
-            } else {
-                b = true
-            }
-            if (b) {
-                var c = window.location.hash;
-                if (!c.match("fromapp")) {
-                    if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|SymbianOS)/i))) {
-                        location.replace(f)
-                    }
-                }
-            }
-        } catch(d) {}
-    }
-    function isSubdomain(c, d) {
-        this.getdomain = function(f) {
-            var e = f.indexOf("://");
-            if (e > 0) {
-                var h = f.substr(e + 3)
-            } else {
-                var h = f
-            }
-            var g = /^www\./;
-            if (g.test(h)) {
-                h = h.substr(4)
-            }
-            return h
-        };
-        if (c == d) {
-            return 1
-        } else {
-            var c = this.getdomain(c);
-            var b = this.getdomain(d);
-            if (c == b) {
-                return 1
-            } else {
-                c = c.replace(".", "\\.");
-                var a = new RegExp("\\." + c + "$");
-                if (b.match(a)) {
-                    return 2
-                } else {
-                    return 0
-                }
-            }
-        }
-    };
-    uaredirect("手机站","WEB站");
+<script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1261516476'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261516476%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
 </script>
-
 <%@include file="../common/popup/loginwindow.jsp" %>
 
 <div class="am-modal am-modal-alert" tabindex="-1" id="forex-alert" style="z-index: 2110">
