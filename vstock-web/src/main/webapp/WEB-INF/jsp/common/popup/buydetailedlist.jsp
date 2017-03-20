@@ -218,22 +218,24 @@
             jisuan($(this).attr("data-userAddress"));
         });
         function jisuan(addressId){
-            sendRequest("/trade/getYunfee",{
-                "addressId": addressId
-            },function(res){
-                if(res.retCode == 1){
-                    $("#yunFee").text(res.data);
-                    var yunFee = $.trim($("#yunFee").text());
-                    if(yunFee != "-" && yunFee != 0 && yunFee != ""){
-                        var m1 = parseFloat(amount);
-                        var m2 = parseFloat(yunFee);
-                        countMoney = m1 + m2;
+            if(addressId != undefined && addressId != ''){
+                sendRequest("/trade/getYunfee",{
+                    "addressId": addressId
+                },function(res){
+                    if(res.retCode == 1){
+                        $("#yunFee").text(res.data);
+                        var yunFee = $.trim($("#yunFee").text());
+                        if(yunFee != "-" && yunFee != 0 && yunFee != ""){
+                            var m1 = parseFloat(amount);
+                            var m2 = parseFloat(yunFee);
+                            countMoney = m1 + m2;
+                        }
+                        $(".countMoney").text(countMoney.toFixed(2));
+                    }else{
+                        alertTips(2,"提示",res.retMsg);
                     }
-                    $(".countMoney").text(countMoney.toFixed(2));
-                }else{
-                    alertTips(2,"提示",res.retMsg);
-                }
-            });
+                });
+            }
         }
 
         $("#loading-address").click(function(){
@@ -327,6 +329,7 @@
                                     '</tbody></table>';
                             $("#not-address-tips").css("display","none");
                             $("#new-address-div-content").append(html);
+                            jisuan(address.id);
                         }else{
                             html = '<tr class="show-tr-address">' +
                                     '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span><span class="addressInfo"> '+address.localArea+address.detailedAddress+'</span></label></td>' +
@@ -364,9 +367,13 @@
                         $(".show-tr-address ").eq(1).find("input[type='radio']").prop("checked","checked");
                         $(".show-tr-address ").eq(1).addClass("checked-tr");
                         $(".show-tr-address ").eq(1).find("span[class='am-margin-right-xs default-span-tips']").css("display","inline-block");
+                        var newAddressId = $(".show-tr-address ").eq(1).find("input[type='radio']").attr("data-userAddress");
+                        jisuan(newAddressId);
                     }
                     $this.parent().parent().parent().remove();
                     if($("#new-address tr").length == 0){
+                        $("#yunFee").text("-");
+                        $(".countMoney").text("-");
                         $("#new-address-div-content").html('<div id="not-address-tips" class="am-text-center"><span style="color:#8D8D8D;">为了方便您进行交易，请先设置收货地址</span></div>');
                     }
                 }else {

@@ -101,7 +101,7 @@ public class BidController extends BaseController{
             Bid bidObj = new Bid();
             bidObj.setId(bid);
             bidObj.setPaymentId(paymentId);
-            bidObj.setInvalidDate(DateUtils.dateToString(new Date()));
+            bidObj.setBidDate(DateUtils.dateToString(new Date()));
             bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
             bidService.update(bidObj);
             if("1".equals(isUserHome)){
@@ -136,7 +136,7 @@ public class BidController extends BaseController{
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname+"|"+isUserHome);
         sParaTemp.put("out_trade_no", String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
-        sParaTemp.put("total_fee", String.valueOf(10));
+        sParaTemp.put("total_fee", String.valueOf(0.01));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";
@@ -221,7 +221,7 @@ public class BidController extends BaseController{
         int i  = bidService.findCount(record);
         if(i > 0){
             resultModel.setRetCode(3);
-            resultModel.setRetMsg("不能重复叫价");
+            resultModel.setRetMsg("请到个人中心修改叫价金额");
             return resultModel;
         }
         record.setStatus("0");

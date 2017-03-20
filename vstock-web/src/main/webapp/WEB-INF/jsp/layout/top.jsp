@@ -35,7 +35,7 @@
                             </c:otherwise>
                         </c:choose>
                     </li>
-                    <li style="display: none;"><a href="/sorts" class="v-a-boder" rel="nofollow">SELL</a></li>
+                    <li class="stock_sell"><a href="/sorts" class="v-a-boder" rel="nofollow">SELL</a></li>
                 </ul>
             </nav>
         </div>

@@ -16,6 +16,10 @@
 <script src="${ctx}/assets/js/jquery.validate/messages_zh.js"></script>
 <script src="${ctx}/assets/js/jquery.toaster.js"></script>
 <script type="text/javascript">
+    Echo.init({
+        offset: 0,
+        throttle: 0
+    });
     var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
     document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1261516476'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261516476%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
 </script>
@@ -44,6 +48,16 @@
         <div class="am-modal-footer">
             <span class="am-modal-btn" data-am-modal-cancel>取消</span>
             <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-trade-confirm" style="z-index: 2112">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="alert-confirmTrade-title"></div>
+        <div class="am-modal-bd" id="alert-confirmTrade-content"></div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>再看看</span>
+            <span class="am-modal-btn" data-am-modal-confirm>去支付</span>
         </div>
     </div>
 </div>

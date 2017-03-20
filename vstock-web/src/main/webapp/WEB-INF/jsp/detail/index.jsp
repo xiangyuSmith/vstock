@@ -472,9 +472,25 @@
                             createPay();
                         },
                         onCancel:function(){
-                            $('#my-popup-buy-detailed').modal('close');
-                            $('#my-popup-sell-detailed').modal('close');
-                            location.reload();
+                            if(type == 0){
+                                //买家购买：必须在15分钟内到个人中心继续完成支付，否则交易将被关闭
+                                $("#alert-confirmTrade-title").html("提示");
+                                $("#alert-confirmTrade-content").html("必须在15分钟内到个人中心继续完成支付，否则交易将被关闭");
+                                $('#my-trade-confirm').modal({
+                                    onConfirm: function () {
+                                        location.href = "/user/index";
+                                    },
+                                    onCancel: function () {
+                                        $('#my-popup-buy-detailed').modal('close');
+                                        $('#my-popup-sell-detailed').modal('close');
+                                        location.reload();
+                                    }
+                                });
+                            }else{
+                                $('#my-popup-buy-detailed').modal('close');
+                                $('#my-popup-sell-detailed').modal('close');
+                                location.reload();
+                            }
                         }
                     });
                     function createPay(){

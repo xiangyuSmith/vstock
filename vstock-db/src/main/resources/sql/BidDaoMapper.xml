@@ -467,6 +467,9 @@
             <if test="invalidDate != null and invalidDate != ''">
                 invalid_date = #{invalidDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="bidDate != null and bidDate != ''">
+                bid_date = #{bidDate,jdbcType=TIMESTAMP},
+            </if>
             <if test="status != null and status != ''">
                 status = #{status,jdbcType=VARCHAR},
             </if>

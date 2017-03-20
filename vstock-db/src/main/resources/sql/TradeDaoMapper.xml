@@ -372,6 +372,9 @@
             <if test="obj.updateDate != null and obj.updateDate != ''">
                 update_date = #{obj.updateDate,jdbcType=TIMESTAMP},
             </if>
+            <if test="obj.transactionDate != null and obj.transactionDate != ''">
+                transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP},
+            </if>
             <if test="obj.status != null and obj.status != ''">
                 status = #{obj.status,jdbcType=VARCHAR},
             </if>
