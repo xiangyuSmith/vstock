@@ -22,12 +22,34 @@
         text-align: left;
         padding: 10px;
     }
+    .for_list{
+        position: absolute;width: 500px;overflow: hidden;border: 1px solid #ccc;box-shadow: 1px 1px 3px #ededed;background-color: #fff;display: none;
+    }
+    .for_list ul {
+        padding:0;
+    }
+    .for_list li {
+        width: 500px;
+        color: #000;
+        list-style: none;
+        font-size: 14px;
+        line-height: 25px;
+        padding: 0 8px;
+        position: relative;
+        cursor: default;
+    }
+    .for_list li:hover{
+        background-color: #f0f0f0;
+    }
 </style>
 <!-- content start -->
 <div class="admin-content">
     <div class="admin-content-body">
         <div class="am-cf am-padding">
-            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">数据中心</strong> / <small>数据审查</small></div>
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">数据中心</strong> / <small>数据审查2</small></div>
+        </div>
+        <div class="for_list">
+            <ul class="for_list_ul"></ul>
         </div>
         <div class="am-g">
             <form action="/dataAudit/list" class="am-form am-form-inline" id="selectTiao"  method="POST">
@@ -156,28 +178,10 @@
                                 <td><a href="${dictionariesData.commodityData.productUrl}" target="_blank"  style="color: royalblue;">商品地址</a></td>
                                 <td>${dictionariesData.colorly}</td>
                                 <td class="identifications">
-                                    <select data-am-selected="{searchBox: 1,maxHeight: 240}" class="identification">
-                                        <c:choose>
-                                            <c:when test="${not empty dictionariesData.identification}">
-                                                <option value="${dictionariesData.identification}">${dictionariesData.identification}</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value=""></option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </select>
+                                    <input type="text" class="identification" />
                                 </td>
                                 <td class="girards">
-                                    <select data-am-selected="{searchBox: 1,maxHeight: 240}" class="girard" >
-                                        <c:choose>
-                                            <c:when test="${not empty dictionariesData.girard}">
-                                                <option value="${dictionariesData.girard}">${dictionariesData.girard}</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option></option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </select>
+                                    <input type="text" class="girard" />
                                 </td>
                                 <td>
                                     <select class="status">
@@ -216,6 +220,7 @@
     var res = null;
     jQuery(function($){
 
+        var $forList = $(".for_list");
         var artNoArray = null;
         var $keydownObj = null;
         var idenName = "";
@@ -225,6 +230,125 @@
         var viewImgSpan = "";
         var mouseX = 300;
         var mouseY = 300;
+        var $identification = null;
+        var $girard = null;
+        var type=0;
+
+        $(".for_list").click(function(e){
+            e.stopPropagation();
+            $(this).show();
+        });
+        $(document).click(function(){
+            $('.for_list').hide();
+        });
+        //监听input值改变
+        $(".identification").on("input propertychange",function(e){
+            e.stopPropagation();
+            $identification = $(this);
+            type = 1;
+            var name = $(this).val();
+            var $ul = $(".for_list_ul");
+            if($(this).val()!=""){
+                $.post("/basicinfrom/getBftList",{
+                    'name':name,
+                    'type':"1"
+                },function(dataRes){
+                    var html = new Array(i);
+                    if(dataRes.length > 10){
+                        for(var i = 0;i < 10;i++){
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].name+'">'+dataRes[i].name+dataRes[i].chineselogo+'</li>'].join("");
+                        }
+                    }else{
+                        for(var i = 0;i < dataRes.length;i++){
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].name+'">'+dataRes[i].name+dataRes[i].chineselogo+'</li>'].join("");
+                        }
+                    }
+                    $ul.html("");
+                    $ul.append(html.join(""));
+                });
+                $('.for_list').show();
+                if($(".identification").index(this) >= 5){
+                    $forList.css("margin-top","-261px");
+                    $(this).before($forList);
+                }else{
+                    $forList.css("margin-top","1px");
+                    $(this).after($forList);
+                }
+            }else{
+                $ul.html("");
+                $('.for_list').hide();
+            }
+        });
+
+        $(".girard").on("input propertychange",function(e){
+            e.stopPropagation();
+            $girard = $(this);
+            type = 2;
+            var name = $(this).val();
+            var $ul = $(".for_list_ul");
+            if($(this).val()!=""){
+                $.post("/basicinfrom/getBftList",{
+                    'name':name,
+                    'type':"2"
+                },function(dataRes){
+                    var html = new Array(i);
+                    if(dataRes.length > 10){
+                        for(var i = 0;i < 10;i++){
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].artNo+'">'+dataRes[i].artNo+dataRes[i].chineselogo+'</li>'].join("");
+                        }
+                    }else{
+                        for(var i = 0;i < dataRes.length;i++){
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].artNo+'">'+dataRes[i].artNo+dataRes[i].chineselogo+'</li>'].join("");
+                        }
+                    }
+                    $ul.html("");
+                    $ul.append(html.join(""));
+                });
+                $('.for_list').show();
+                if($(".girard").index(this) >= 5){
+                    $forList.css("margin-top","-261px");
+                    $(this).before($forList);
+                }else{
+                    $forList.css("margin-top","1px");
+                    $(this).after($forList);
+                }
+            }else{
+                $ul.html("");
+                $('.for_list').hide();
+            }
+        });
+
+        $(".for_list").on("click",".for_list_ul_li",function(){
+            var name = $(this).attr("data-name");
+            if(type == 1){
+                $identification.val(name);
+                smallImgUrl = $(this).attr("data-small-img");
+                imgUrl = $(this).attr("data-img");
+                viewImgSpan = $(this).attr("data-span");
+                $("#viewImg").attr("src","http://admin.v-stock.com"+smallImgUrl);
+                $("#viewImgHref").attr("href","http://admin.v-stock.com"+imgUrl);
+                $("#viewImgSpan").text(viewImgSpan);
+                $.post("/basicinfrom/getGirard",{
+                    "productName":name
+                },function(result){
+                    $identification.parent().siblings("td[class='girards']").find("input[class='girard']").val(result[0].artNo);
+                });
+            }else{
+                $girard.val(name);
+                smallImgUrl = $(this).attr("data-small-img");
+                imgUrl = $(this).attr("data-img");
+                viewImgSpan = $(this).attr("data-span");
+                $("#viewImg").attr("src","http://admin.v-stock.com"+smallImgUrl);
+                $("#viewImgHref").attr("href","http://admin.v-stock.com"+imgUrl);
+                $("#viewImgSpan").text(viewImgSpan);
+                $.post("/basicinfrom/getNames",{
+                    "artNo":name
+                },function(result){
+                    $girard.parent().siblings("td[class='identifications']").find("input[class='identification']").val(result[0].name);
+                });
+            }
+            $(this).hide();
+        });
 
         //删除事件
         $(".deleteItem").click(function () {
@@ -244,8 +368,8 @@
         $(".submitItem").click(function () {
             var $this = $(this);
             var dicid = $this.attr("data-id");
-            var identification = $this.parent().siblings().find("select[class='identification']").val();
-            var girard = $this.parent().siblings().find("select[class='girard']").val();
+            var identification = $this.parent().siblings().find("input[class='identification']").val();
+            var girard = $this.parent().siblings().find("input[class='girard']").val();
             var status = $this.parent().siblings().find("select[class='status']").val();
             if((identification == "" || girard  == "") && status == ""){
                 $.toaster({ priority : 'warning', title : '无法提交', message : '标识列或货号为空！'});
@@ -264,167 +388,6 @@
                 });
             }
         });
-
-
-        //点击加载下来列表
-        $(".identification").siblings("div").find("button").click(function(){
-            var $select = $(this).parent().siblings("select");
-            if(data != null){
-                //获取select 下 option 的数量
-                var optionsNumber = $select.find("option").size();
-                if(optionsNumber < 1000){
-                    var html = new Array(i);
-                    for(var i = 0;i < data.length;i++){
-                        html[i] = ['<option value="'+data[i].name+'">'+data[i].name+data[i].chineselogo+'</option>'].join("");
-                    }
-                    $select.append(html.join(""));
-                }
-            }else{
-                $.post("/basicinfrom/getNames",{
-                },function(dataRes){
-                    data = dataRes;
-                    //获取select 下 option 的数量
-                    var optionsNumber = $select.find("option").size();
-                    if(optionsNumber < 1000){
-                        var html = new Array(i);
-                        for(var i = 0;i < data.length;i++){
-                            html[i] = ['<option value="'+data[i].name+'">'+data[i].name+data[i].chineselogo+'</option>'].join("");
-                        }
-                        $select.append(html.join(""));
-                    }
-                });
-            }
-        });
-
-        $(".girard").siblings("div").find("button").click(function(){
-            var $select = $(this).parent().siblings("select");
-            if(res != null){
-                var optionsNumber = $select.find("option").size();
-                if(optionsNumber < 1000){
-                    var html = new Array(i);
-                    for(var i = 0;i < res.length;i++){
-                        html[i] = ['<option value="'+res[i].artNo+'" data-small-img="'+res[i].smallImgUrl+'" ' +
-                        'data-img="'+res[i].imgUrl+'" data-span="'+res[i].name+'">'+res[i].artNo+' </option>'].join("");
-                    }
-                    $select.append(html.join(""));
-                }
-            }
-            $.post("/basicinfrom/getGirard",{
-            },function(resData){
-                res = resData;
-                var optionsNumber = $select.find("option").size();
-                if(optionsNumber < 1000){
-                    var html = new Array(i);
-                    for(var i = 0;i < res.length;i++){
-                        html[i] = ['<option value="'+res[i].artNo+'" data-small-img="'+res[i].smallImgUrl+'" ' +
-                        'data-img="'+res[i].imgUrl+'" data-span="'+res[i].name+'">'+res[i].artNo+' </option>'].join("");
-                    }
-                    $select.append(html.join(""));
-                }
-            });
-        });
-
-        //保存编辑
-        $(".saveBrand").click(function(){
-            var $this = $(this);
-            if($this.parent().attr("class") == undefined || $this.parent().attr("class") == ""){
-                var $girard = $this.parent().parent().parent().parent().siblings("td[class='girards']");
-//                var $identification = $this.parent().parent().parent().parent().siblings("td[class='identifications']").find("span[class='identificationSpan']");
-                var $identification = $this.parent().parent().parent().parent().siblings("td[class='identifications']");
-                var $id = $this.parent().parent().parent().parent().siblings("td[class='id']");
-                var girard = $girard.find("select[class='girard']").val();
-                var identificationard = $identification.find("input[type='text']").val();
-                var id = $id.text();
-                $.post("/dataAudit/updateDictionResult",{
-                    'id': id,
-                    'girard': girard,
-                    'identification':identificationard
-                },function(res){
-                    if(res.resultCount == 1){
-                        setTimeout(function(){window.location.reload();},1);
-                    }else{
-                        $.toaster({ priority : 'error', title : '失败', message : '品牌数据更新失败.'});
-                    }
-                });
-            }
-        });
-
-        $(".identification").change(function(){
-           var name = $(this).val();
-            $keydownObj = $(this).parent().siblings("td[class='girards']").find("select[class='girard']");
-            var girard = $(this).parent().siblings().find("select").val();
-            if(idenName != name){
-                $.post(
-                        "/basicinfrom/getGirard",
-                        {"productName":name},
-                        function(result){
-                            artNoArray = result;
-                            $keydownObj.html("");
-                            var s = "";
-                            for (var i = 0;i < result.length;i++){
-                                s = s + '<option value="'+result[i].artNo+'" data-span="'+result[i].name+"  "+result[i].artNo+'" data-img="'+result[i].imgUrl+'" data-small-img="'+result[i].smallImgUrl+'">'+result[i].artNo+'</option>';
-                            }
-                            $keydownObj.append(s);
-                            var idenName = name;
-                        },"json");
-            }
-        });
-
-        $(".girard").change(function(){
-            var $this = $(this);
-            smallImgUrl = $this.find("option").eq(0).attr("data-small-img");
-            imgUrl = $this.find("option").eq(0).attr("data-img");
-            viewImgSpan = $this.find("option").eq(0).attr("data-span");
-            $("#viewImg").attr("src",""+smallImgUrl);
-            $("#viewImgHref").attr("href",""+imgUrl);
-            $("#viewImgSpan").text(viewImgSpan);
-            var identification = $(this).parent().siblings().find("select").val();
-            var $identificationObj = $(this).parent().siblings("td[class='identifications']").find("select[class='identification']");
-            var artNo = $this.val();
-            if(artNoText != artNo){
-                $.post(
-                        "/basicinfrom/getNames",
-                        {"artNo":artNo},
-                        function(result){
-                            $identificationObj.html("");
-                            var s = "";
-                            for (var i = 0;i < result.length;i++){
-                                s = s + '<option value="'+result[i].name+'" data-span="'+result[i].name+"  "+result[i].artNo+'" data-img="'+result[i].imgUrl+'" data-small-img="'+result[i].smallImgUrl+'">'+result[i].name+'</option>';
-                            }
-                            $identificationObj.append(s);
-                            artNoText = artNo;
-                        },"json");
-            }
-        });
-
-        $(".girards").find("ul li").mousemove(function(event){
-            var $this = $(this);
-            var $obj = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")");
-            var dataIndex = $(this).attr("data-index");
-            smallImgUrl = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").attr("data-small-img");
-            imgUrl = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").attr("data-img");
-            viewImgSpan = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").attr("data-span");
-            var artNo = $(this).parent().parent().parent().parent().find("select option:eq("+dataIndex+")").val();
-            $("#viewImg").attr("src",smallImgUrl);
-            $("#viewImgHref").attr("href",imgUrl);
-            $("#viewImgSpan").text(viewImgSpan + "  " + artNo);
-            //show(event,$obj);
-        });
-
-        function show(event,$this) {
-            var infoDiv = $("#infoDiv");
-            mouseOver(event);
-            infoDiv.css("display","block");
-            infoDiv.css("left",mouseX + 10 + "px");
-            infoDiv.css("top",mouseY + 10 + "px");
-        }
-        function mouseOver(obj) {
-            e = obj || window.event;
-            mouseX =  e.layerX|| e.offsetX;
-            mouseY =  e.layerY|| e.offsetY;
-            mouseX += 300;
-            mouseY += 300;
-        }
     });
 </script>
 <!-- content end -->

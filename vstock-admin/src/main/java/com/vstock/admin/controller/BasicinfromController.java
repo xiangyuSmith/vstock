@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/basicinfrom")
@@ -486,6 +488,40 @@ public class BasicinfromController extends BaseController {
         String artNo = request.getParameter("artNo");
         List<Basicinformation> nameLists = basicinformationService.findNames(artNo);
         return nameLists;
+    }
+
+    /**
+     * 模糊检索list
+     */
+    @RequestMapping("getBftList")
+    @ResponseBody
+    public List<Basicinformation> getBftList(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String type = request.getParameter("type");
+        List<Basicinformation> nameLists = search(name,basicinformationService.getBftList(),type);
+        logger.info("start find ...");
+        return nameLists;
+    }
+
+    public List search(String name,List list,String type){
+        List results = new ArrayList();
+        Pattern pattern = Pattern.compile(name,Pattern.CASE_INSENSITIVE);
+        if("1".equals(type)){
+            for(int i=0; i < list.size(); i++){
+                Matcher matcher = pattern.matcher(((Basicinformation)list.get(i)).getName());
+                if(matcher.find()){
+                    results.add(list.get(i));
+                }
+            }
+        }else{
+            for(int i=0; i < list.size(); i++){
+                Matcher matcher = pattern.matcher(((Basicinformation)list.get(i)).getArtNo());
+                if(matcher.find()){
+                    results.add(list.get(i));
+                }
+            }
+        }
+        return results;
     }
 
     /**

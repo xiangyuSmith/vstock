@@ -29,6 +29,16 @@ public class BasicinformationService {
     @Autowired
     IBasicinformationTemporary basicinformationTemporaryDao;
 
+    static List<Basicinformation> bftList = new ArrayList<Basicinformation>();
+
+    public static List<Basicinformation> getBftList() {
+        return bftList;
+    }
+
+    public void finaBftList(){
+        bftList = findNames("");
+    }
+
     //根据时间区间条件分页查询所有
     public List<Basicinformation> findbasicAll(Basicinformation basicinformation,
                                                Page page, String startCsaledate,

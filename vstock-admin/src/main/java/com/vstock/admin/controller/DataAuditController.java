@@ -44,6 +44,7 @@ public class DataAuditController {
         String pageNow = request.getParameter("pageNow");
         String productName = request.getParameter("productName");
         String storeName = request.getParameter("storeName");
+        String type = request.getParameter("type");
         if (dictionaries.getStatus() == null || "".equals(dictionaries.getStatus())) {
             dictionaries.setStatus("0");
         }
@@ -81,6 +82,9 @@ public class DataAuditController {
         if ("".equals(dictionaries.getColorly())) {
             dictionaries.setColorly("1");
         }
+        if (type != null && !"".equals(type)) {
+            linkAddress = linkAddress + "&type=" + type;
+        }
         if (dictionaries.getColorly() != null && !"".equals(dictionaries.getColorly())) {
             linkAddress = linkAddress + "&colorStatus=" + dictionaries.getColorly();
         }
@@ -100,7 +104,12 @@ public class DataAuditController {
         model.addAttribute("stockxStores", list1);
         model.addAttribute("dictionaries", dictionaries);
         model.addAttribute("linkAddress", linkAddress);
-        return "admin/dataAudit/list";
+        model.addAttribute("type", type);
+        if("2".equals(type)){
+            return "admin/dataAudit/list2";
+        }else{
+            return "admin/dataAudit/list";
+        }
     }
 
     /**
