@@ -23,7 +23,7 @@
         ORDER BY createTime DESC
     </select>
 
-    <!--分页查询所有-->
+    <!--查询所有-->
     <select id="findResultDataTime" resultType="com.vstock.db.entity.ResultData">
         SELECT * FROM `resultdata`
         <include refid="SelectAll_Where_Clause"/>
@@ -72,6 +72,9 @@
             </if>
             <if test="resultData.commodityDataId != null and resultData.commodityDataId != ''">
                 and commodityDataId = #{resultData.commodityDataId,jdbcType=VARCHAR}
+            </if>
+            <if test="resultData.basiciformationId != null and resultData.basiciformationId != ''">
+                and basiciformationId = #{resultData.basiciformationId,jdbcType=VARCHAR}
             </if>
             <if test="resultData.storeId != null and resultData.storeId != ''">
                 and storeId = #{resultData.storeId,jdbcType=VARCHAR}

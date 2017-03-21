@@ -229,10 +229,10 @@
                 and csaledate IS NULL
             </if>
             <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
-                and imgUrl LIKE CONCAT('%',#{basicinformation.imgUrl,jdbcType=VARCHAR}.'%')
+                and imgUrl LIKE CONCAT('%',#{basicinformation.imgUrl,jdbcType=VARCHAR},'%')
             </if>
             <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
-                and smallImgUrl LIKE CONCAT('%',#{basicinformation.smallImgUrl,jdbcType=VARCHAR}.'%')
+                and smallImgUrl LIKE CONCAT('%',#{basicinformation.smallImgUrl,jdbcType=VARCHAR},'%')
             </if>
             <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
                 and createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
@@ -293,43 +293,46 @@
     <sql id="update_Where_Clause">
         <set>
             <if test="basicinformation.brand != null and basicinformation.brand != ''">
-                brand = #{basicinformation.brand,jdbcType=VARCHAR}
+                brand = #{basicinformation.brand,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.name != null and basicinformation.name != ''">
-                , name = #{basicinformation.name,jdbcType=VARCHAR}
+                `name` = #{basicinformation.name,jdbcType=VARCHAR},
+            </if>
+            <if test="basicinformation.type != null">
+                `type` = #{basicinformation.type,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.artNo != null and basicinformation.artNo != ''">
-                , artNo = #{basicinformation.artNo,jdbcType=VARCHAR}
+                artNo = #{basicinformation.artNo,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.colores != null and basicinformation.colores != ''">
-                , colores = #{basicinformation.colores,jdbcType=VARCHAR}
+                colores = #{basicinformation.colores,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.csaledate != null and basicinformation.csaledate != ''">
-                , csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR}
+                csaledate = #{basicinformation.csaledate,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.esaledate != null and basicinformation.esaledate != ''">
-                , esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR}
+                esaledate = #{basicinformation.esaledate,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.cofferprice != null and basicinformation.cofferprice != ''">
-                , cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR}
+                cofferprice = #{basicinformation.cofferprice,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.eofferprice != null and basicinformation.eofferprice != ''">
-                , eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR}
+                eofferprice = #{basicinformation.eofferprice,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.chineselogo != null and basicinformation.chineselogo != ''">
-                , chineselogo = #{basicinformation.chineselogo,jdbcType=VARCHAR}
+                chineselogo = #{basicinformation.chineselogo,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.imgUrl != null and basicinformation.imgUrl != ''">
-                , imgUrl = #{basicinformation.imgUrl,jdbcType=VARCHAR}
+                imgUrl = #{basicinformation.imgUrl,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.smallImgUrl != null and basicinformation.smallImgUrl != ''">
-                , smallImgUrl = #{basicinformation.smallImgUrl,jdbcType=VARCHAR}
+                smallImgUrl = #{basicinformation.smallImgUrl,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.createtime != null and basicinformation.createtime != ''">
-                , createtime = #{basicinformation.createtime,jdbcType=VARCHAR}
+                createtime = #{basicinformation.createtime,jdbcType=VARCHAR},
             </if>
             <if test="basicinformation.state != null and basicinformation.state != ''">
-                , state = #{basicinformation.state,jdbcType=VARCHAR}
+                state = #{basicinformation.state,jdbcType=VARCHAR},
             </if>
         </set>
     </sql>

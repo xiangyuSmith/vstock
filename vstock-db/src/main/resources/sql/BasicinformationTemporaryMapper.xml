@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IBasicinformationTemporary">
+
+    <resultMap id="BaseResultMap" type="com.vstock.db.entity.BasicinformationTemporary">
+        <id property="id" column="id"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="artNo" property="artNo" jdbcType="VARCHAR"/>
+        <result column="colores" property="colores" jdbcType="VARCHAR"/>
+        <result column="csaledate" property="csaledate" jdbcType="TIMESTAMP"/>
+        <result column="esaledate" property="esaledate" jdbcType="TIMESTAMP"/>
+        <result column="cofferprice" property="cofferprice" jdbcType="DECIMAL"/>
+        <result column="eofferprice" property="eofferprice" jdbcType="DECIMAL"/>
+        <result column="chineselogo" property="chineselogo" jdbcType="VARCHAR"/>
+        <result column="imgUrl" property="imgUrl" jdbcType="VARCHAR"/>
+        <result column="smallImgUrl" property="smallImgUrl" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+        <result column="transactionRecord" property="transactionRecord" jdbcType="VARCHAR"/>
+        <result column="minimumSellingPrice" property="minimumSellingPrice" jdbcType="DECIMAL"/>
+        <result column="highestBid" property="highestBid" jdbcType="DECIMAL"/>
+        <result column="changeRange" property="changeRange" jdbcType="DECIMAL"/>
+        <result column="percentageChange" property="percentageChange" jdbcType="DECIMAL"/>
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        b.id as id,
+        b.brand as brand,
+        b.name as `name`,
+        b.type as `type`,
+        b.artNo as artNo,
+        b.colores as colores,
+        b.csaledate as csaledate,
+        b.esaledate as esaledate,
+        b.cofferprice as cofferprice,
+        b.eofferprice  as eofferprice,
+        b.chineselogo as chineselogo,
+        b.imgUrl as imgUrl,
+        b.smallImgUrl as smallImgUrl,
+        b.state as state,
+        b.transactionRecord as transactionRecord,
+        b.minimum_selling_price as minimumSellingPrice,
+        b.highest_bid as highestBid,
+        b.change_range as changeRange,
+        b.percentage_change as percentageChange,
+        b.createtime as createtime,
+        b.updatetime as updatetime
+    </sql>
+
+    <insert id="insert" parameterType="com.vstock.db.entity.BasicinformationTemporary" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `basicinformation_temporary`
+        (`id`,`brand`,`name`,`type`,`artNo`,`colores`,`csaledate`,`esaledate`,`cofferprice`,`eofferprice`,
+        `chineselogo`,`imgUrl`,`smallImgUrl`,`state`,`transactionRecord`,`minimum_selling_price`,`highest_bid`,
+        `change_range`,`percentage_change`,`createTime`,`updatetime`)
+        VALUES(#{id},#{brand},#{name},#{type},#{artNo},#{colores},#{csaledate},#{esaledate},#{cofferprice},
+        #{eofferprice},#{chineselogo},#{imgUrl},#{smallImgUrl},#{state},#{transactionRecord},#{minimumSellingPrice},
+        #{highestBid},#{changeRange},#{percentageChange},now(),null)
+    </insert>
+
+    <update id="update" parameterType="com.vstock.db.entity.BasicinformationTemporary">
+        UPDATE `basicinformation_temporary`
+        <include refid="update_Where_Clause"/>
+        WHERE `id` = #{obj.id}
+    </update>
+
+    <delete id="delete" parameterType="com.vstock.db.entity.BasicinformationTemporary">
+        DELETE FROM basicinformation_temporary WHERE `id` = #{id}
+    </delete>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM `basicinformation_temporary` b
+        <include refid="SelectAll_Where_Clause"/>
+    </select>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND b.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.brand != null and obj.brand != ''">
+                and b.brand = #{obj.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.name != null and obj.name != ''">
+                and b.`name` = #{obj.name,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null">
+                and b.`type` = #{obj.type,jdbcType=INTEGER}
+            </if>
+            <if test="obj.artNo != null and obj.artNo != ''">
+                and b.artNo = #{obj.artNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.colores != null and obj.colores != ''">
+                and b.colores = #{obj.colores,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.esaledate != null and obj.esaledate != ''">
+                and b.esaledate = #{obj.esaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.csaledate != null and obj.csaledate != ''">
+                and b.csaledate = #{obj.csaledate,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.cofferprice != null and obj.cofferprice != ''">
+                and b.cofferprice = #{obj.cofferprice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.eofferprice != null and obj.eofferprice != ''">
+                and b.eofferprice = #{obj.eofferprice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.chineselogo != null and obj.chineselogo != ''">
+                and b.chineselogo = #{obj.chineselogo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.imgUrl != null and obj.imgUrl != ''">
+                and b.imgUrl = #{obj.imgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.smallImgUrl != null and obj.smallImgUrl != ''">
+                and b.smallImgUrl = #{obj.smallImgUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.state != null and obj.state != ''">
+                and b.state = #{obj.state,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.transactionRecord != null and obj.transactionRecord != ''">
+                and b.transactionRecord = #{obj.transactionRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.minimumSellingPrice != null and obj.minimumSellingPrice != ''">
+                and b.minimum_selling_price = #{obj.minimumSellingPrice,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.highestBid != null and obj.highestBid != ''">
+                and b.highest_bid = #{obj.highestBid,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.changeRange != null and obj.changeRange != ''">
+                and b.change_range = #{obj.changeRange,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.percentageChange != null and obj.percentageChange != ''">
+                and b.percentage_change = #{obj.percentageChange,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.createtime != null and obj.createtime != ''">
+                and b.createtime = #{obj.createtime,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.updatetime != null and obj.updatetime != ''">
+                and b.updatetime = #{obj.updatetime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="update_Where_Clause">
+        <set>
+            <if test="obj.brand != null and obj.brand != ''">
+                brand = #{obj.brand,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.name != null and obj.name != ''">
+                `name` = #{obj.name,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                `type` = #{obj.type,jdbcType=INTEGER},
+            </if>
+            <if test="obj.artNo != null and obj.artNo != ''">
+                artNo = #{obj.artNo,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.colores != null and obj.colores != ''">
+                colores = #{obj.colores,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.esaledate != null and obj.esaledate != ''">
+                esaledate = #{obj.esaledate,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.csaledate != null and obj.csaledate != ''">
+                csaledate = #{obj.csaledate,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.cofferprice != null and obj.cofferprice != ''">
+                cofferprice = #{obj.cofferprice,jdbcType=DECIMAL},
+            </if>
+            <if test="obj.eofferprice != null and obj.eofferprice != ''">
+                eofferprice = #{obj.eofferprice,jdbcType=DECIMAL},
+            </if>
+            <if test="obj.chineselogo != null and obj.chineselogo != ''">
+                chineselogo = #{obj.chineselogo,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.imgUrl != null and obj.imgUrl != ''">
+                imgUrl = #{obj.imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.smallImgUrl != null and obj.smallImgUrl != ''">
+                smallImgUrl = #{obj.smallImgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.state != null and obj.state != ''">
+                state = #{obj.state,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.transactionRecord != null and obj.transactionRecord != ''">
+                transactionRecord = #{obj.transactionRecord,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.minimumSellingPrice != null and obj.minimumSellingPrice != ''">
+                minimum_selling_price = #{obj.minimumSellingPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="obj.highestBid != null and obj.highestBid != ''">
+                highest_bid = #{obj.highestBid,jdbcType=DECIMAL},
+            </if>
+            <if test="obj.changeRange != null and obj.changeRange != ''">
+                change_range = #{obj.changeRange,jdbcType=DECIMAL},
+            </if>
+            <if test="obj.percentageChange != null and obj.percentageChange != ''">
+                percentage_change = #{obj.percentageChange,jdbcType=DECIMAL},
+            </if>
+            <if test="obj.createtime != null and obj.createtime != ''">
+                createtime = #{obj.createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.updatetime != null and obj.updatetime != ''">
+                updatetime = #{obj.updatetime,jdbcType=VARCHAR},
+            </if>
+        </set>
+    </sql>
+
+</mapper>

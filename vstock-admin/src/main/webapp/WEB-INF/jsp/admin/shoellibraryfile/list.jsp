@@ -234,6 +234,7 @@
                             <th>中文标识</th>
                             <th>图片</th>
                             <th>管理</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -264,6 +265,25 @@
                                                        data-csaledate="${basicinformation.csaledate}" data-esaledate="${basicinformation.esaledate}"
                                                        data-cofferprice="${basicinformation.cofferprice}" data-eofferprice="${basicinformation.eofferprice}" data-chineselogo="${basicinformation.chineselogo}"
                                                        data-imgUrl="${basicinformation.imgUrl}" data-smallImgUrl="${basicinformation.smallImgUrl}" data-createtime="${basicinformation.createtime}"> 删除</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="am-dropdown" data-am-dropdown>
+                                            <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle><span>置顶至</span> <span class="am-icon-caret-down"></span></button>
+                                            <ul class="am-dropdown-content">
+                                                <c:choose>
+                                                    <c:when test="${basicinformation.type != 0}">
+                                                        <li><a href="javascript:void(0)" class="sbtType" data-comid="${basicinformation.id}" date-type="0"> 取消置顶</a></li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <li><a href="javascript:void(0)" class="sbtType" data-comid="${basicinformation.id}" date-type="1"> 爆款推荐</a></li>
+                                                        <li><a href="javascript:void(0)" class="sbtType" data-comid="${basicinformation.id}" date-type="2"> 最低叫价</a></li>
+                                                        <li><a href="javascript:void(0)" class="sbtType" data-comid="${basicinformation.id}" date-type="3"> 最高出价</a></li>
+                                                        <li><a href="javascript:void(0)" class="sbtType" data-comid="${basicinformation.id}" date-type="4"> 最大涨幅</a></li>
+                                                        <li><a href="javascript:void(0)" class="sbtType" data-comid="${basicinformation.id}" date-type="5"> 即将发布</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </ul>
                                         </div>
                                     </td>
@@ -361,6 +381,32 @@
             $("#astartCsaledate").val($("#sstartCsaledate").val());
             $("#endCsaledate").val($("#sendCsaledate").val());
             $("#deletebas").submit();
+        });
+
+        $(".sbtType").click(function () {
+            var $this = $(this);
+            var bftid = $this.attr("data-comid");
+            var bfttype = $this.attr("date-type");
+            var vule = $this.text();
+            $.post("/basicinfrom/saveBasicinfromtemporary",{
+                "id":bftid,
+                "type":bfttype
+            },function(res){
+                if(res.type){
+                    if (res.type > 4){
+                        var mun = res.type - 4;
+                        alert("置顶成功,"+vule+"类型鞋子置顶数量超过"+mun+"双，请及时取消置顶!");
+                    }else if(res.type < 4) {
+                        var mun = 4 - res.type;
+                        alert("置顶成功,"+vule+"类型鞋子置顶数量少"+mun+"双，请及时置顶!");
+                    }else {
+                        alert("置顶成功!");
+                    }
+                    setTimeout(function(){window.location.reload();},50);
+                }else {
+                    alert("置顶失败，请联系管理员！");
+                }
+            });
         });
     });
 </script>

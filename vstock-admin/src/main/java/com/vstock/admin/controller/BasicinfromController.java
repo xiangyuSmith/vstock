@@ -501,4 +501,15 @@ public class BasicinfromController extends BaseController {
         List<Basicinformation> nameLists = basicinformationService.findGirard(productName);
         return nameLists;
     }
+
+    /**
+     * 置顶前台推荐和取消置顶
+     * @param basicinformation
+     * @return
+     */
+    @RequestMapping("saveBasicinfromtemporary")
+    @ResponseBody
+    public Basicinformation saveBasicinfromtemporary(Basicinformation basicinformation) {
+        return basicinformationService.saveBasicinfromtemporary(basicinformation,basicinformation.getType());
+    }
 }

@@ -1,11 +1,15 @@
 package com.vstock.admin.service;
 
-import com.vstock.db.dao.IBasicinformation;
-import com.vstock.db.entity.Basicinformation;
+import com.vstock.db.dao.*;
+import com.vstock.db.entity.*;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +20,14 @@ public class BasicinformationService {
 
     @Autowired
     IBasicinformation basicinformationDao;
+    @Autowired
+    IResultData resultDataDao;
+    @Autowired
+    IPricePeakDao pricePeakDao;
+    @Autowired
+    IBasicinformationRoseDao basicinformationRoseDao;
+    @Autowired
+    IBasicinformationTemporary basicinformationTemporaryDao;
 
     //根据时间区间条件分页查询所有
     public List<Basicinformation> findbasicAll(Basicinformation basicinformation,
@@ -69,5 +81,99 @@ public class BasicinformationService {
     public List<Basicinformation> moveData() {
         Basicinformation basicinformation = new Basicinformation();
         return basicinformationDao.findAll(basicinformation);
+    }
+
+    /**
+     * 判断是否置顶前台或者是取消前台置顶
+     * @param record
+     * @param type
+     * @return
+     */
+    public Basicinformation saveBasicinfromtemporary(Basicinformation record,int type){
+        int i = 0 ;
+        //判断是否是取消置顶
+        if (type != 0) {
+            //修改鞋库信息表
+            i = this.updatebasicinfrom(record);
+            if (i > 0) {//修改成功，获取鞋子信息
+                Basicinformation basicinformation = new Basicinformation();
+                basicinformation.setId(record.getId());
+                List<Basicinformation> basicinformationList = this.findAll(basicinformation);
+                if (basicinformationList.size() > 0) {//赋值给置顶表存储
+                    basicinformation = basicinformationList.get(0);
+                    BasicinformationTemporary basicinformationTemporary = new BasicinformationTemporary();
+                    basicinformationTemporary.setId(Integer.parseInt(basicinformation.getId()));
+                    basicinformationTemporary.setBrand(basicinformation.getBrand());
+                    basicinformationTemporary.setArtNo(basicinformation.getArtNo());
+                    basicinformationTemporary.setName(basicinformation.getName());
+                    basicinformationTemporary.setType(basicinformation.getType());
+                    basicinformationTemporary.setChineselogo(basicinformation.getChineselogo());
+                    basicinformationTemporary.setColores(basicinformation.getColores());
+                    basicinformationTemporary.setCsaledate(basicinformation.getCsaledate());
+                    if (basicinformation.getCofferprice() != null && !"".equals(basicinformation.getCofferprice())) {
+                        basicinformationTemporary.setCofferprice(new BigDecimal(basicinformation.getCofferprice()));
+                    }
+                    basicinformationTemporary.setEsaledate(basicinformation.getEsaledate());
+                    if (basicinformation.getEofferprice() != null && !"".equals(basicinformation.getEofferprice())) {
+                        basicinformationTemporary.setEofferprice(new BigDecimal(basicinformation.getEofferprice()));
+                    }
+                    basicinformationTemporary.setImgUrl(basicinformation.getImgUrl());
+                    basicinformationTemporary.setSmallImgUrl(basicinformation.getSmallImgUrl());
+                    basicinformationTemporary.setState(basicinformation.getState());
+                    //查询获取30天的销售量，查询淘宝数据
+                    ResultData resultData = new ResultData();
+                    resultData.setBasiciformationId(basicinformation.getId());
+                    String startTime = DateUtils.dateToString(DateUtils.wantToLose(new Date(), 30), "yyyy-MM-dd") + " 00:00:00";
+                    String endTime = DateUtils.dateToString(new Date(), "yyyy-MM-dd") + " 23:59:59";
+                    List<ResultData> resultDataList = resultDataDao.findResultDataTime(resultData, startTime, endTime);
+                    if (resultDataList.size() > 0) {
+                        BigDecimal transactionRecord = new BigDecimal("0");
+                        for (ResultData resultDatas : resultDataList) {
+                            if (resultDatas.getTransactionRecord() != null && !"".equals(resultDatas.getTransactionRecord())) {
+                                transactionRecord = transactionRecord.add(new BigDecimal(resultDatas.getTransactionRecord()));
+                            }
+                        }
+                        basicinformationTemporary.setTransactionRecord(transactionRecord.toString());
+                    }
+                    //最高出价和最低叫价
+                    PricePeak pricePeak = new PricePeak();
+                    pricePeak.setBasicinformationId(Integer.parseInt(basicinformation.getId()));
+                    String pstartDate = DateUtils.dateToString(new Date(), "yyyy-MM-dd") + " 00:00:00";
+                    List<PricePeak> pricePeakList = pricePeakDao.findByType(pricePeak, 1, 0, 1000, pstartDate, endTime);
+                    if (pricePeakList.size() > 0) {
+                        basicinformationTemporary.setHighestBid(pricePeakList.get(0).getHighestBid());
+                    }
+                    pricePeakList = pricePeakDao.findByType(pricePeak, 2, 0, 1000, pstartDate, endTime);
+                    if (pricePeakList.size() > 0) {
+                        basicinformationTemporary.setMinimumSellingPrice(pricePeakList.get(0).getMinimumSellingPrice());
+                    }
+                    //获取最大涨幅和涨跌百分比
+                    BasicinformationRose basicinformationRose = new BasicinformationRose();
+                    basicinformationRose.setBasicinformation_id(Integer.parseInt(basicinformation.getId()));
+                    List<BasicinformationRose> basicinformationRoseList = basicinformationRoseDao.findNewRose(basicinformationRose, 0, 1000);
+                    if (basicinformationRoseList.size() > 0) {
+                        basicinformationTemporary.setChangeRange(basicinformationRoseList.get(0).getChange_range());
+                        basicinformationTemporary.setPercentageChange(basicinformationRoseList.get(0).getPercentage_change());
+                    }
+                    i = basicinformationTemporaryDao.insert(basicinformationTemporary);
+                }
+            }
+        }else {
+            i = this.updatebasicinfrom(record);
+            if (i > 0){
+                i = basicinformationTemporaryDao.delete(Integer.parseInt(record.getId()));
+            }
+        }
+        record = new Basicinformation();
+        if (i > 0 && type != 0){
+            BasicinformationTemporary basicinformationTemporary = new BasicinformationTemporary();
+            basicinformationTemporary.setType(type);
+            List<BasicinformationTemporary> basicinformationTemporaryList = basicinformationTemporaryDao.findAll(basicinformationTemporary);
+            i = basicinformationTemporaryList.size();
+            record.setType(i);
+        }else {
+            record.setType(4);
+        }
+        return record;
     }
 }
