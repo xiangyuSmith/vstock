@@ -95,9 +95,10 @@ public class UserService {
         param.put("global_buyer_email", global_buyer_email);
         if (AlipayNotify.verify(param)) {
             User user = new User();
-            user.setPassword(MD5Util.getMD5String(user_id + User.REG_MD5_CODE));
+            user.setAlipayUserId(user_id);
             List<User> userList = userDao.findAll(user,0,1);
             if (userList.size() < 1){
+                user.setPassword(MD5Util.getMD5String(user_id + User.REG_MD5_CODE));
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
                 user.setNick(real_name);

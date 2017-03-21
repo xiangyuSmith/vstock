@@ -4,8 +4,8 @@
 
     <insert id="insertUser" parameterType="com.vstock.db.entity.User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `user`
-        (`id`,`mobile`,`password`,`salt`,`nick`,`size`,`invitationId`,`create_time`)
-        VALUES(null,#{mobile},#{password},#{salt},#{nick},#{size},#{invitationId},now())
+        (`id`,`alipay_user_id`,`mobile`,`password`,`salt`,`nick`,`size`,`invitationId`,`create_time`)
+        VALUES(null,#{alipayUserId},#{mobile},#{password},#{salt},#{nick},#{size},#{invitationId},now())
     </insert>
 
     <select id="findUser"  resultType="com.vstock.db.entity.User">
@@ -18,6 +18,9 @@
             1=1
             <if test="id != null and id != ''">
                 AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="alipayUserId != null and alipayUserId != ''">
+                AND alipay_user_id = #{alipayUserId,jdbcType=VARCHAR}
             </if>
             <if test="uname != null and uname != ''">
                 AND uname = #{uname,jdbcType=VARCHAR}
@@ -34,6 +37,9 @@
     <update id="update">
         UPDATE `user`
         <set>
+            <if test="alipayUserId != null and alipayUserId != ''">
+                alipay_user_id = #{alipayUserId,jdbcType=VARCHAR},
+            </if>
             <if test="mobile != null and mobile != ''">
                 mobile = #{mobile,jdbcType=INTEGER},
             </if>
@@ -86,6 +92,9 @@
             <if test="id != null and id != ''">
                 AND u.id = #{id,jdbcType=INTEGER}
             </if>
+            <if test="alipayUserId != null and alipayUserId != ''">
+                AND alipay_user_id = #{alipayUserId,jdbcType=VARCHAR}
+            </if>
             <if test="mobile != null and mobile != ''">
                 and u.mobile = #{mobile,jdbcType=VARCHAR}
             </if>
@@ -127,6 +136,9 @@
             1=1
             <if test="obj.id != null and obj.id != ''">
                 AND u.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.alipayUserId != null and obj.alipayUserId != ''">
+                AND u.alipay_user_id = #{obj.alipayUserId,jdbcType=VARCHAR}
             </if>
             <if test="obj.mobile != null and obj.mobile != ''">
                 and u.mobile = #{obj.mobile,jdbcType=VARCHAR}

@@ -17,6 +17,8 @@ public class User {
 
     private String id;
 
+    private String alipayUserId;
+
     private String uname;
 
     private String password;
@@ -40,6 +42,14 @@ public class User {
     private String create_time;
 
     private String update_time;
+
+    public String getAlipayUserId() {
+        return alipayUserId;
+    }
+
+    public void setAlipayUserId(String alipayUserId) {
+        this.alipayUserId = alipayUserId;
+    }
 
     public String getId() {
         return id;
@@ -148,8 +158,9 @@ public class User {
     public User() {
     }
 
-    public User(String id, String uname, String password, String mobile, String nick, String size, String salt, String invitationId, String last_login_ip, String last_login_time, Integer status, String create_time, String update_time) {
+    public User(String id, String alipayUserId, String uname, String password, String mobile, String nick, String size, String salt, String invitationId, String last_login_ip, String last_login_time, Integer status, String create_time, String update_time) {
         this.id = id;
+        this.alipayUserId = alipayUserId;
         this.uname = uname;
         this.password = password;
         this.mobile = mobile;
