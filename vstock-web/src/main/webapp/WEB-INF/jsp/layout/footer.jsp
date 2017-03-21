@@ -28,6 +28,10 @@
                     <span class="layout-font-size-14">工作时间：</span><br/>
                     <span class="layout-font-size-14">周一至周五 9:00~18:00</span>
                 </p>
+                <p>
+                    <span class="layout-font-size-14">友情链接：</span><br/>
+                    <a href="https://m.kuaidi100.com/" target="_blank"><span class="layout-font-size-14">快递查询</span></a>
+                </p>
             </section>
             <section class="am-u-sm-12 am-u-md-6 am-u-lg-3 subnav am-padding-left-lg" style="height: 220px;">
                 <span class="layout-font-size-16">V-STOCK公众号</span>
