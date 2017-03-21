@@ -22,6 +22,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -498,8 +499,9 @@ public class BasicinfromController extends BaseController {
     public List<Basicinformation> getBftList(HttpServletRequest request) {
         String name = request.getParameter("name");
         String type = request.getParameter("type");
+        logger.info("start find ... " +  System.currentTimeMillis());
         List<Basicinformation> nameLists = search(name,basicinformationService.getBftList(),type);
-        logger.info("start find ...");
+        logger.info("end find ..." + System.currentTimeMillis());
         return nameLists;
     }
 
@@ -521,7 +523,11 @@ public class BasicinfromController extends BaseController {
                 }
             }
         }
-        return results;
+        if(results.size() > 10){
+            return results.subList(0,10);
+        }else{
+            return results;
+        }
     }
 
     /**
