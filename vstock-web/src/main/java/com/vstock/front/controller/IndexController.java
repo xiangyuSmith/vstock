@@ -6,6 +6,7 @@ import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.*;
+import com.vstock.server.express.ExpressLogistics;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -162,7 +163,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping("test")
     public String test() {
-        Express.getexpress("shunfeng","928462804323");
+        ExpressLogistics.getexpress("shunfeng","928462804323");
         return "/index/test";
     }
 
