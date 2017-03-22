@@ -48,6 +48,7 @@ public class BidController extends BaseController{
         double amount = Double.valueOf(getParam("amount", "0"));
         String overdueTime = getParam("overdueTime");
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        logger.info("发起叫价.当前叫价:"+uid+",叫价时间:"+DateUtils.dateToString(new Date()));
         int resultBid = bidService.createBid(bName,Integer.parseInt(uid),bId,size,amount,overdueTime
                 ,type,new BigDecimal(10),String.valueOf(Bid.STATUS_PENDING),DateUtils.dateToString(new Date()),VstockConfigService.getConfig(IVstockConfigService.BID_VSTOCK_MD5KEY));
         if(resultBid != 0){
@@ -93,7 +94,7 @@ public class BidController extends BaseController{
             payment.setPayment_explain(body);
             int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
             if(payResult == 0){
-                logger.error("payment add fail ...");
+                logger.error("bid payment add fail ...");
             }
             PricePeak pricePeak = pricePeakService.getHighestAndlowest(basicinformationId,size, DateUtils.dateToString(new Date()),lagePage);
             int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),basicinformationId,size,uid,type);
@@ -104,6 +105,7 @@ public class BidController extends BaseController{
             bidObj.setBidDate(DateUtils.dateToString(new Date()));
             bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
             bidService.update(bidObj);
+            logger.info("叫价支付,叫价人:"+bidObj.getUserId()+",叫价支付时间:"+DateUtils.dateToString(new Date()));
             if("1".equals(isUserHome)){
                 return "redirect:/user/index";
             }else{
