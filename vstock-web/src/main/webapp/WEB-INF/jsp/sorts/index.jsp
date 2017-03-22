@@ -177,12 +177,12 @@
         });
 
         function sendMessage(){
+            $(".index_search_top").val("");
             load({
                 "size":size,
                 "price":price,
                 "year":year,
-                "brand":brand,
-                "productName":productName
+                "brand":brand
             });
         }
         document.onkeydown=keyDownSearch;
