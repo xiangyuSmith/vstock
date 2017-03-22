@@ -41,6 +41,10 @@
     .for_list li:hover{
         background-color: #f0f0f0;
     }
+    .calendar-modal{
+        top: 32px!important;
+        left: 100px!important;
+    }
 </style>
 <!-- content start -->
 <div class="admin-content">
@@ -133,7 +137,23 @@
                             </select>
                         </div>
                     </div>
-                    <div class="am-u-md-8">
+                    <div class="am-u-md-4">
+                        <label class="am-padding-right">更新时间:</label>
+                        <div class="am-form-group">
+                            <input id="updatetimeStart" type="text" name="datetimeStart" placeholder="输入开始时间" value="${datetimeStart}">
+                            <div class="dateStartTime"></div>
+                        </div>
+                    </div>
+                    <div class="am-u-md-4 am-u-end">
+                        <label class="am-padding-right">更新时间:</label>
+                        <div class="am-form-group">
+                            <input id="updatetimeEnd" type="text" name="datetimeEnd" placeholder="输入结束时间" value="${datetimeEnd}">
+                            <div class="dateEndTime"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="am-u-md-12 am-padding-bottom">
+                    <div class="am-u-md-12">
                         <button type="submit" class="am-btn am-btn-primary am-fr">查 询</button>
                     </div>
                 </div>
@@ -165,6 +185,7 @@
                         <th>标识</th>
                         <th>货号</th>
                         <th>状态</th>
+                        <th width="10%">更新时间</th>
                         <th width="10%">操作</th>
                     </tr>
                     </thead>
@@ -178,10 +199,10 @@
                                 <td><a href="${dictionariesData.commodityData.productUrl}" target="_blank"  style="color: royalblue;">商品地址</a></td>
                                 <td>${dictionariesData.colorly}</td>
                                 <td class="identifications">
-                                    <input type="text" class="identification" />
+                                    <input type="text" class="identification" <c:if test="${not empty dictionariesData.identification}">value="${dictionariesData.identification}"</c:if> />
                                 </td>
                                 <td class="girards">
-                                    <input type="text" class="girard" />
+                                    <input type="text" class="girard" <c:if test="${not empty dictionariesData.girard}">value="${dictionariesData.girard}"</c:if> />
                                 </td>
                                 <td>
                                     <select class="status">
@@ -190,6 +211,9 @@
                                         <option value="2" <c:if test="${dictionariesData.status==2}">selected</c:if>>延期待审</option>
                                         <option value="3" <c:if test="${dictionariesData.status==3}">selected</c:if>>无用数据</option>
                                     </select>
+                                </td>
+                                <td>
+                                    <c:out value="${fn:substring(dictionariesData.updatetime, 0, 19)}" />
                                 </td>
                                 <td>
                                     <c:choose>
@@ -219,6 +243,9 @@
     var data = null;
     var res = null;
     jQuery(function($){
+        var div1 = "#updatetimeStart";
+        var div2 = "#updatetimeEnd";
+        getDatePic(div1,div2);
 
         var $forList = $(".for_list");
         var artNoArray = null;
@@ -256,11 +283,11 @@
                     var html = new Array(i);
                     if(dataRes.length > 10){
                         for(var i = 0;i < 10;i++){
-                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].name+'">'+dataRes[i].name+dataRes[i].chineselogo+'</li>'].join("");
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].name+'">'+dataRes[i].name+'（'+dataRes[i].chineselogo+'）</li>'].join("");
                         }
                     }else{
                         for(var i = 0;i < dataRes.length;i++){
-                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].name+'">'+dataRes[i].name+dataRes[i].chineselogo+'</li>'].join("");
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].name+'">'+dataRes[i].name+'（'+dataRes[i].chineselogo+'）</li>'].join("");
                         }
                     }
                     $ul.html("");
@@ -294,11 +321,11 @@
                     var html = new Array(i);
                     if(dataRes.length > 10){
                         for(var i = 0;i < 10;i++){
-                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].artNo+'">'+dataRes[i].artNo+dataRes[i].chineselogo+'</li>'].join("");
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].artNo+'">'+dataRes[i].artNo+'（'+dataRes[i].chineselogo+'）</li>'].join("");
                         }
                     }else{
                         for(var i = 0;i < dataRes.length;i++){
-                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].artNo+'">'+dataRes[i].artNo+dataRes[i].chineselogo+'</li>'].join("");
+                            html[i] = ['<li class="for_list_ul_li" data-small-img="'+dataRes[i].smallImgUrl+'"  data-img="'+dataRes[i].imgUrl+'"  data-span="'+dataRes[i].name+'" data-name="'+dataRes[i].artNo+'">'+dataRes[i].artNo+'（'+dataRes[i].chineselogo+'）</li>'].join("");
                         }
                     }
                     $ul.html("");

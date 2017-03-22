@@ -50,7 +50,13 @@
         <if test="commodityName != null and commodityName != ''">
             and cd.commodityName LIKE CONCAT('%',#{commodityName,jdbcType=VARCHAR},'%')
         </if>
-        ORDER BY dic.createTime DESC limit #{startPos},#{pageSize}
+        <if test="datetimeStart != null and datetimeStart != ''">
+            and dic.updatetime &gt;= #{datetimeStart,jdbcType=VARCHAR}
+        </if>
+        <if test="datetimeEnd != null and datetimeEnd != ''">
+            and dic.updatetime &lt;= #{datetimeEnd,jdbcType=VARCHAR}
+        </if>
+        ORDER BY dic.updatetime DESC limit #{startPos},#{pageSize}
     </select>
 
     <select id="findCount" resultType="Integer">
@@ -62,6 +68,12 @@
         </if>
         <if test="commodityName != null and commodityName != ''">
             and cd.commodityName LIKE CONCAT('%',#{commodityName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="datetimeStart != null and datetimeStart != ''">
+            and dic.updatetime &gt;= #{datetimeStart,jdbcType=VARCHAR}
+        </if>
+        <if test="datetimeEnd != null and datetimeEnd != ''">
+            and dic.updatetime &lt;= #{datetimeEnd,jdbcType=VARCHAR}
         </if>
     </select>
 
@@ -80,6 +92,7 @@
         <result property="identification" column="identification"/>
         <result property="girard" column="girard"/>
         <result property="createTime" column="createTime"/>
+        <result property="updatetime" column="updatetime"/>
         <association property="commodityData" column="commodityData" javaType="com.vstock.db.entity.CommodityData">
             <id column="id" property="id"/>
             <result column="commodityName" property="commodityName"/>

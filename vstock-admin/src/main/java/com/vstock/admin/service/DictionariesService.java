@@ -37,13 +37,13 @@ public class DictionariesService {
     }
 
     //链表commodity_data查询所有分页记录
-    public List<Dictionaries> findAll(Dictionaries record, String stockxName, String commodityName, Page page) {
-        return dictionariesDao.findAll(record, stockxName, commodityName, page.getStartPos(), page.getPageSize());
+    public List<Dictionaries> findAll(Dictionaries record, String stockxName, String commodityName, Page page,String datetimeStart , String datetimeEnd) {
+        return dictionariesDao.findAll(record, stockxName, commodityName, page.getStartPos(), page.getPageSize(),datetimeStart , datetimeEnd);
     }
 
     //链表commodity_data查询所有总数
-    public int findCount(Dictionaries record, String stockxName, String commodityName) {
-        return dictionariesDao.findCount(record, stockxName, commodityName);
+    public int findCount(Dictionaries record, String stockxName, String commodityName,String datetimeStart , String datetimeEnd) {
+        return dictionariesDao.findCount(record, stockxName, commodityName,datetimeStart , datetimeEnd);
     }
 
     //根据ID查询
