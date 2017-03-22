@@ -69,4 +69,10 @@ public class LoginController extends BaseController {
         loginService.checkRegister(username, password);
         return "base/index";
     }
+
+    @RequestMapping("logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("admin", "");
+        return "admin/adminLogin/admin_login";
+    }
 }

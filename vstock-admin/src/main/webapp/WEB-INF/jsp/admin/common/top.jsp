@@ -40,7 +40,7 @@
                     <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                    <li><a href="/adminLogin/logout"><span class="am-icon-power-off"></span> 退出</a></li>
                 </ul>
             </li>
         </ul>
