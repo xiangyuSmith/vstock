@@ -45,6 +45,19 @@ public class DataAuditController {
         String productName = request.getParameter("productName");
         String storeName = request.getParameter("storeName");
         String type = request.getParameter("type");
+        String linkAddress = request.getRequestURI() + "?";
+        String datetimeStart = request.getParameter("datetimeStart");
+        String datetimeEnd = request.getParameter("datetimeEnd");
+        if (datetimeStart != null && !"".equals(datetimeStart)){
+            linkAddress = linkAddress + "&datetimeStart=" + datetimeStart;
+            model.addAttribute("datetimeStart", datetimeStart);
+            datetimeStart = datetimeStart + " 00:00:00";
+        }
+        if (datetimeEnd != null && !"".equals(datetimeEnd)){
+            linkAddress = linkAddress + "&datetimeEnd=" + datetimeEnd;
+            model.addAttribute("datetimeEnd", datetimeEnd);
+            datetimeEnd = datetimeEnd + " 23:59:59";
+        }
         if (dictionaries.getStatus() == null || "".equals(dictionaries.getStatus())) {
             dictionaries.setStatus("0");
         }
@@ -54,13 +67,12 @@ public class DataAuditController {
         if ("1".equals(storeName)) {
             storeName = "";
         }
-        String linkAddress = request.getRequestURI() + "?";
         if (dictionaries.getStatus() != null && !"".equals(dictionaries.getStatus())) {
             linkAddress = linkAddress + "&status=" + dictionaries.getStatus();
         }
-        int dCListCount = dictionariesService.findCount(dictionaries, storeName, productName);
+        int dCListCount = dictionariesService.findCount(dictionaries, storeName, productName , datetimeStart , datetimeEnd);
         Page page = new Page(dCListCount, pageNow);
-        List<Dictionaries> dCList = dictionariesService.findAll(dictionaries, storeName, productName, page);
+        List<Dictionaries> dCList = dictionariesService.findAll(dictionaries, storeName, productName, page, datetimeStart , datetimeEnd);
         List<StockxStore> stockxStores = stockxStoreService.findList();
         List<StockxStore> list1 = new ArrayList<StockxStore>();
         Set<String> set = new HashSet<String>();
