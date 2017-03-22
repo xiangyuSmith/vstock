@@ -60,7 +60,7 @@
 //		sParaTemp.put("exter_invoke_ip", exter_invoke_ip);
 		
 		//建立请求
-		String sHtmlText = AlipaySubmit.buildRequest(alipaylogin.alipayLogin(),"get","确认");
+		String sHtmlText = AlipaySubmit.buildRequest(Alipaylogin.alipayLogin(),"get","确认");
 		out.println(sHtmlText);
 	%>
 	<body>
