@@ -103,6 +103,30 @@ public class LoginController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 连续发送第二条使用
+     * @return
+     */
+    @RequestMapping("sendSmsT")
+    @ResponseBody
+    public ResultModel sendSmsT() {
+        ResultModel resultModel = new ResultModel();
+        int mobile_code = (int)((Math.random()*9+1)*100000);
+        String mobile = getParam("mobile");
+        String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
+        String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
+        String content = new String("您的验证码是：" + mobile_code + "。请不要把验证码泄露给其他人。");
+        if(Sendsms.sendHuyi(mobile,account,key,content)){
+            WebUtils.setSessionAttribute(request, User.SESSION_USER_SIGN_TCODE, mobile_code);
+            WebUtils.setSessionAttribute(request, User.SESSION_USER_SIGN_TMOBILE, mobile);
+            resultModel.setRetCode(resultModel.RET_OK);
+        }else{
+            resultModel.setRetMsg("服务器繁忙，请稍后再试");
+            resultModel.setRetCode(0);
+        }
+        return resultModel;
+    }
+
     @RequestMapping("logout")
     @ResponseBody
     public ResultModel logout() {

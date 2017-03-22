@@ -470,4 +470,50 @@ public class UserController extends BaseController {
         resultModel.setRetCode(i);
         return resultModel;
     }
+
+    @RequestMapping("sendSmsCode")
+    @ResponseBody
+    public ResultModel sendSmsCode(){
+        ResultModel resultModel = new ResultModel();
+        String sendSmsCode = getParam("sendSmsCode","");
+        if(!sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
+            resultModel.setRetMsg("验证码错误");
+        }else {
+            resultModel.setRetCode(ResultModel.RET_OK);
+        }
+        return resultModel;
+    }
+
+    @RequestMapping("bindphone")
+    @ResponseBody
+    public ResultModel bindphone(){
+        ResultModel resultModel = new ResultModel();
+        String suid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        String mobile = request.getParameter("mobile");
+        String sendSmsCode = getParam("sendSmsCode","");
+        String sendSmsCodeT = getParam("sendSmsCodeT","");
+        if(!sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))){
+            resultModel.setRetMsg("旧验证码错误");
+            return resultModel;
+        }
+        if(!sendSmsCodeT.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_TCODE)))){
+            resultModel.setRetMsg("新验证码错误");
+            return resultModel;
+        }
+        User isuser = userService.findUser(mobile);
+        if(isuser != null){
+            resultModel.setRetMsg("手机号已存在");
+            return resultModel;
+        }
+        User user = new User();
+        user.setId(suid);
+        user.setMobile(mobile);
+        int i = userService.update(user);
+        if (i > 0) {
+            resultModel.setRetCode(ResultModel.RET_OK);
+        }else {
+            resultModel.setRetMsg("添加失败！");
+        }
+        return resultModel;
+    }
 }

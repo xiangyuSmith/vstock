@@ -16,7 +16,7 @@
             text-align: center;
             background: #0e90d2;
             color:#fff;
-            background: url("/stockx/assets/admin/image/home.jpg");
+            background: url("/assets/admin/image/home.jpg");
         }
         .header h1 {
             font-size: 200%;

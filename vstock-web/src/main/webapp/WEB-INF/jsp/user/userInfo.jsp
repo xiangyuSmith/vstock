@@ -37,9 +37,16 @@
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">手机号码：</span>
                 </div>
-                <div class="am-u-sm-3 am-u-md-3 am-margin-left-0 am-padding-left-0 am-u-end">
+                <div class="am-u-sm-2 am-u-md-2 am-margin-left-0 am-padding-left-0">
                     <c:if test="${not empty user}">
                         <span id="mobile_reg">${user.mobile}</span>
+                    </c:if>
+                </div>
+                <div class="am-u-sm-2 am-u-md-2 am-margin-left-0 am-padding-left-0 am-u-end">
+                    <c:if test="${not empty user}">
+                        <a href="javascript:void(0);" data-am-modal="{target: '#binding-pas', closeViaDimmer: 0, width: 400, height: 370}">
+                            更改绑定
+                        </a>
                     </c:if>
                 </div>
             </div>
@@ -96,6 +103,39 @@
                                     </div>
                                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
                                         <a href="javascript:void(0);" id="userpass-sbt" class="am-btn am-btn-danger am-center">确定</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-modal am-modal-no-btn" tabindex="-1" id="binding-pas">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd layout-font-size-30" style="font-weight: bolder;">
+                                绑定手机设置
+                                <a href="javascript: void(0)" id="new-phone-close" class="am-close am-close-spin" data-am-modal-close>×</a>
+                            </div>
+                            <div class="am-modal-bd am-g">
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
+                                        <span style="display: inline-block;width: 24px;height: 28px;float: left;margin-top: -5px;margin-right:5px;background: url('/assets/i/personal_center_map.png');background-position: -1747px -23px;" ></span><span>点击“发送验证码”至您的手机<c:out value="${fn:substring(user.mobile,0,3)}****${fn:substring(user.mobile,7,11)}"></c:out></span>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                        <input class="am-form-field" style="min-height: 50px;" type="text" maxlength="6" id="old-code" placeholder="验证码" required/>
+                                        <span class="am-input-group-label" id="old-code-sbt" style="border-bottom: none;"><a href="javascript:void(0);" id="bindingse">发送验证码</a></span>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group">
+                                        <input class="am-form-field" style="min-height: 50px;" type="text" id="new-phone" placeholder="请输入新的手机号" disabled="disabled" required/>
+                                        <span class="am-input-group-label" style="border-bottom: none;"><a href="javascript:void(0);" id="new-bindingse">发送验证码</a></span>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom-sm">
+                                        <input class="am-form-field" style="min-height: 50px;" type="text" maxlength="6" placeholder="请输入新验证码" id="new-code" disabled="disabled" required/>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom-sm">
+                                        <span style="display:none" id="newphone-tips" class="am-fl"><span style="display: inline-block;width: 25px; height: 20px;float: left;margin: 0 5px;background: url('/assets/i/detail_icon.png');background-position: -405px -23px;" ></span><span class="am-text-danger" id="newphone"></span></span>
+                                    </div>
+                                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-input-group am-margin-bottom">
+                                        <a href="javascript:void(0);" id="bind-newphone" class="am-btn am-btn-danger am-center">确定</a>
                                     </div>
                                 </div>
                             </div>
@@ -201,6 +241,26 @@
         $("body").on("click","#address-btn",function(){
             $(".am-close").click();
         });
+
+        $('#old-code').bind('input propertychange', function() {
+                sendRequest("/user/sendSmsCode",{
+                    "sendSmsCode":$('#old-code').val()
+                },function(res){
+                    if (res.retCode == 1){
+                        $('#old-code').attr("disabled","disabled");
+                        $('#new-phone').removeAttr("disabled");
+                        $('#new-code').removeAttr("disabled");
+                        $('#newphone').html("");
+                        $('#newphone-tips').css("display","none");
+//                        $('#bindingse').html("");
+//                        $('#bindingse').text("发送验证码");
+                    }else {
+                        $('#newphone').html("");
+                        $('#newphone').text(res.retMsg);
+                        $('#newphone-tips').css("display","inline-block");
+                    }
+                })
+            })
 
 //        var $this;
 //        $(".mark-hover").hover(function(){

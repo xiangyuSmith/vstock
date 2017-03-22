@@ -733,6 +733,7 @@
             });
         });
 
+        var sendStatus = 0;
         $("body").on("click","#sendSms",function(){
             var $this = $(this);
             var mobile = $("#mobile_reg").text();
@@ -740,15 +741,65 @@
                 alertTips(3,"提示","请填写手机号");
                 return;
             }
-            sendsms($this,mobile);
+            sendsms($this,mobile,null);
         });
 
-        var sendStatus = 0;
-        function sendsms($this,mobile){
+        $("body").on("click","#bindingse",function(){
+            var $this = $(this);
+            var mobile = $("#mobile_reg").text();
+            if(mobile == ""){
+                alertTips(3,"提示","请填写手机号");
+                return;
+            }
+            sendsms($this,mobile,null);
+        });
+
+        var sendStatusT = 0;
+        $("body").on("click","#new-bindingse",function(){
+            var $this = $(this);
+            var mobile = $("#new-phone").val();
+            if(mobile == ""){
+                alertTips(3,"提示","请填写手机号");
+                return;
+            }
+            $('#old-code-sbt').css("display","none");
+            if (sendStatusT == 0){
+                sendStatusT = 1;
+                sendStatus = 0;
+            }
+            sendsms($this,mobile,"1");
+        });
+
+        $("body").on("click","#bind-newphone",function(){
+            sendRequest("/user/bindphone",{
+                "sendSmsCode":$('#old-code').val(),
+                "sendSmsCodeT":$('#new-code').val(),
+                "mobile":$('#new-phone').val()
+            },function(res){
+                if (res.retCode == 1){
+                    alertTips(1,"提示","修改绑定成功！");
+                    $('#newphone').html("");
+                    $('#newphone-tips').css("display","none");
+                    $("#new-phone-close").click();
+                    $("#binding-pas").modal('close');
+                    ajaxContent("../user/userInfo", "" ,"tradeforex_tilie",1);
+                }else {
+                    $('#newphone').html("");
+                    $('#newphone').text(res.retMsg);
+                    $('#newphone-tips').css("display","inline-block");
+                }
+            })
+        });
+
+        function sendsms($this,mobile,type){
             if(sendStatus == 0){
+                var url = "/login/sendSms";
+                if (type){
+                    url = "/login/sendSmsT";
+                }
                 $this.attr("disabled","true");
                 $this.text("正在发送...");
-                sendRequest("/login/sendSms",{
+                sendRequest(url,{
                     "mobile":mobile
                 },function(res){
                     if(res.retCode==1){
@@ -757,6 +808,7 @@
                         var int = setInterval(function(){
                             if (wait == 0) {
                                 sendStatus = 0;
+                                sendStatusT = 0;
                                 $this.text("重新发送");
                                 $this.removeAttr("disabled");
                                 clearInterval(int);
