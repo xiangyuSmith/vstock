@@ -6,7 +6,7 @@ import com.vstock.server.alipay.util.AlipaySubmit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Alipaylogin {
+public class alipaylogin {
 
     public static Map<String, String> alipayLogin(){
         Map<String, String> param = new HashMap<String, String>();
