@@ -270,6 +270,15 @@
                 <artifactId>sdk-java</artifactId>
                 <version>20170307171631</version>
             </dependency>
+            <dependency>
+                <groupId>com.alipay</groupId>
+                <artifactId>sdk-java-source</artifactId>
+                <version>20170307171631</version>
+            </dependency>
+            <dependency>
+                <groupId>me.hao0</groupId>
+                <artifactId>alipay</artifactId>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

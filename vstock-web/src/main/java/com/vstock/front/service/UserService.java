@@ -1,5 +1,6 @@
 package com.vstock.front.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.dao.IUserInvitationDao;
 import com.vstock.db.entity.User;
@@ -67,51 +68,25 @@ public class UserService {
 
     /**
      * 支付宝登录
-     * @param request
      * @return
      */
-    public ResultModel alipayLogin(HttpServletRequest request){
+    public ResultModel alipayLogin(HttpServletRequest request , JSONObject json){
         ResultModel resultModel = new ResultModel();
-        Map<String, String> param = new HashMap<String, String>();
-        String is_success = request.getParameter("is_success");
-        String notify_id = request.getParameter("notify_id");
-        String token = request.getParameter("token");
-        String real_name = request.getParameter("real_name");
-        String email = request.getParameter("email");
-        String user_id = request.getParameter("user_id");
-        String sign = request.getParameter("sign");
-        String sign_type = request.getParameter("sign_type");
-        String target_url = request.getParameter("target_url");
-        String global_buyer_email = request.getParameter("global_buyer_email");
-        param.put("is_success", is_success);
-        param.put("notify_id", notify_id);
-        param.put("token", token);
-        param.put("real_name", real_name);
-        param.put("email", email);
-        param.put("user_id", user_id);
-        param.put("sign", sign);
-        param.put("sign_type", sign_type);
-        param.put("target_url", target_url);
-        param.put("global_buyer_email", global_buyer_email);
-        if (AlipayNotify.verify(param)) {
+        if (json.size() > 0){
             User user = new User();
-            user.setAlipayUserId(user_id);
+            user.setAlipayUserId(json.get("alipay_user_id").toString());
             List<User> userList = userDao.findAll(user,0,1);
             if (userList.size() < 1){
-                user.setPassword(MD5Util.getMD5String(user_id + User.REG_MD5_CODE));
+                user.setPassword(MD5Util.getMD5String(user.getAlipayUserId() + User.REG_MD5_CODE));
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
-                user.setNick(real_name);
-                if (user.getNick() == null || "".equals(user.getNick())){
-                    user.setNick(user_id.substring(user_id.length()-4,user_id.length())+"V");
+                if (json.containsKey("nick_name")) {
+                    user.setNick(json.get("nick_name").toString());
+                }else {
+                    user.setNick(user.getAlipayUserId().substring(user.getAlipayUserId().length()-4,user.getAlipayUserId().length())+"V");
                 }
                 user.setLast_login_time(DateUtils.getCurrentTimeAsString());
                 user.setLast_login_ip(this.ipadder(request));
-                if(email != null){
-                    if (!email.contains("@")){
-                        user.setMobile(email);
-                    }
-                }
                 resultModel.setRetCode(this.insertUser(user));
                 WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
             }else {
