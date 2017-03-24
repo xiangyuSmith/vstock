@@ -2,6 +2,7 @@ package com.vstock.admin.service;
 
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.entity.User;
+import com.vstock.db.entity.UserActivity;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,15 @@ public class UserService {
      */
     public List<User> findAll(User record, Page page){return userDao.findAll(record,page.getStartPos(),page.getPageSize());}
 
+    public List<UserActivity> findActivityAll(Page page){ return userDao.findActivityAll(page.getStartPos(),page.getPageSize()); }
     /**
      * 查询所有总数
      * @param record
      * @return
      */
     public int findCount(User record){return userDao.findCount(record);}
+
+    public int findActivityCount(){return userDao.findActivityCount();}
 
     //拼接查詢條件
     public String linkAddress(String linkAddress, User record){
