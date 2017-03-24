@@ -175,7 +175,7 @@ public class LoginController extends BaseController {
     public String alipay(ModelMap model) {
 
         String url = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm";
-        url = url + "?app_id=" + User.ALIPAY_APP_ID + "&scope=auth_userinfo&redirect_uri=" + User.ALIPAY_LOGIN_URL;
+        url = url + "?app_id=" + AlipayConfig.ALIPAY_APP_ID + "&scope=auth_userinfo&redirect_uri=" + AlipayConfig.ALIPAY_LOGIN_URL;
         model.addAttribute("url",url);
         return "/common/alipay/login/login";
     }
