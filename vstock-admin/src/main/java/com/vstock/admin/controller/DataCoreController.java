@@ -61,6 +61,9 @@ public class DataCoreController {
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String bids = request.getParameter("bids");
+        String basiciformationId = request.getParameter("basiciformationId");
+        String productName = request.getParameter("productName");
+        String girard = request.getParameter("girard");
         if ("".equals(bids) || bids == null) {
             resultData.setBid(0);
         } else {
@@ -194,6 +197,7 @@ public class DataCoreController {
             num = num + 1;
             //System.out.println("数字为"+num);
             if (num>=group_data.size()-1){
+            //if (num>=3){
                 break;
             }
         }
