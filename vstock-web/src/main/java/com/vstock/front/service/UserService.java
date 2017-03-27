@@ -1,14 +1,19 @@
 package com.vstock.front.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.dao.IUserInvitationDao;
+import com.vstock.db.entity.Express;
 import com.vstock.db.entity.User;
 import com.vstock.db.entity.UserInvitation;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
+import com.vstock.ext.util.StringUtil;
 import com.vstock.server.alipay.util.AlipayNotify;
+import com.vstock.server.express.ExpressLogistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,51 +73,25 @@ public class UserService {
 
     /**
      * 支付宝登录
-     * @param request
      * @return
      */
-    public ResultModel alipayLogin(HttpServletRequest request){
+    public ResultModel alipayLogin(HttpServletRequest request , JSONObject json){
         ResultModel resultModel = new ResultModel();
-        Map<String, String> param = new HashMap<String, String>();
-        String is_success = request.getParameter("is_success");
-        String notify_id = request.getParameter("notify_id");
-        String token = request.getParameter("token");
-        String real_name = request.getParameter("real_name");
-        String email = request.getParameter("email");
-        String user_id = request.getParameter("user_id");
-        String sign = request.getParameter("sign");
-        String sign_type = request.getParameter("sign_type");
-        String target_url = request.getParameter("target_url");
-        String global_buyer_email = request.getParameter("global_buyer_email");
-        param.put("is_success", is_success);
-        param.put("notify_id", notify_id);
-        param.put("token", token);
-        param.put("real_name", real_name);
-        param.put("email", email);
-        param.put("user_id", user_id);
-        param.put("sign", sign);
-        param.put("sign_type", sign_type);
-        param.put("target_url", target_url);
-        param.put("global_buyer_email", global_buyer_email);
-        if (AlipayNotify.verify(param)) {
+        if (json.size() > 0){
             User user = new User();
-            user.setAlipayUserId(user_id);
+            user.setAlipayUserId(json.get("alipay_user_id").toString());
             List<User> userList = userDao.findAll(user,0,1);
             if (userList.size() < 1){
-                user.setPassword(MD5Util.getMD5String(user_id + User.REG_MD5_CODE));
+                user.setPassword(MD5Util.getMD5String(user.getAlipayUserId() + User.REG_MD5_CODE));
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
-                user.setNick(real_name);
-                if (user.getNick() == null || "".equals(user.getNick())){
-                    user.setNick(user_id.substring(user_id.length()-4,user_id.length())+"V");
+                if (json.containsKey("nick_name")) {
+                    user.setNick(json.get("nick_name").toString());
+                }else {
+                    user.setNick(user.getAlipayUserId().substring(user.getAlipayUserId().length()-4,user.getAlipayUserId().length())+"V");
                 }
                 user.setLast_login_time(DateUtils.getCurrentTimeAsString());
                 user.setLast_login_ip(this.ipadder(request));
-                if(email != null){
-                    if (!email.contains("@")){
-                        user.setMobile(email);
-                    }
-                }
                 resultModel.setRetCode(this.insertUser(user));
                 WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
             }else {
@@ -159,6 +139,52 @@ public class UserService {
             }
         }
         return ip;
+    }
+
+    public List<List<Express>> obtainLogistics(String expresName, String expresNum){
+        List<List<Express>> expressListlist = new ArrayList<List<Express>>();
+        List<Express> expressList = new ArrayList<Express>();
+        //判断快递公司和单号不为空
+        if (expresName != null && !"".equals(expresName) && expresNum != null && !"".equals(expresNum)){
+            //传入快递公司名称，转化为快递100接口参数名
+            expresName = StringUtil.expressName(expresName);
+            //调用快递100接口获取物流信息
+            JSONObject jsonObject = ExpressLogistics.getexpress(expresName,expresNum);
+            Object data = jsonObject.get("data");
+            JSONArray jsonArray = (JSONArray)data;
+            String ifweek = "";
+            //循环获取每天的详细信息
+            for (int i = 0; i < jsonArray.size(); i++){
+                Express express = new Express();
+                JSONObject json = (JSONObject)jsonArray.get(i);
+                Object ftime = json.get("ftime");
+                Object context = json.get("context");
+                Object time = json.get("time");
+                String week = DateUtils.getweek(time.toString());
+                express.setExpressName(context.toString());
+                express.setCreateDate(ftime.toString());
+                express.setStatus(week);
+                //判断是否第一条信息
+                if (i == 0) {
+                    expressList.add(express);
+                    ifweek = week;
+                }else {
+                    //判断是否与前一条信息是同一天
+                    if (ifweek.equals(week)){
+                        expressList.add(express);
+                        if (i+1 == jsonArray.size()){
+                            expressListlist.add(expressList);
+                        }
+                    }else {//把同一天的信息放在一个Listzhong
+                        expressListlist.add(expressList);
+                        expressList = new ArrayList<Express>();
+                        expressList.add(express);
+                        ifweek = week;
+                    }
+                }
+            }
+        }
+        return expressListlist;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.vstock.db.dao;
 
 import com.vstock.db.entity.User;
+import com.vstock.db.entity.UserActivity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,5 +19,9 @@ public interface IUserDao {
 
     List<User> findAll(@Param("obj") User user, @Param("startPos")Integer startPos, @Param("pageSize")Integer pageSize);
 
+    List<UserActivity> findActivityAll(@Param("startPos")Integer startPos, @Param("pageSize")Integer pageSize);
+
     int findCount(User user);
+
+    int findActivityCount();
 }

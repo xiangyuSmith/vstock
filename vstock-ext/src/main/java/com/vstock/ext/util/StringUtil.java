@@ -2551,4 +2551,24 @@ public class StringUtil {
         return (String[]) list.toArray(new String[list.size()]);
     }
 
+    /**
+     * 传入快递名称获取对应快递100接口的拼音字段
+     * @param name
+     * @return
+     */
+    public static String expressName(String name){
+        String bindName = "顺丰快递:shunfeng,ems:ems,中国邮政:youzhengguonei,百世快递:huitongkuaidi,天天快递:tiantian," +
+                "国通快递:guotongkuaidi,快捷快递:kuaijiesudi,申通快递:shentong,圆通快递:yuantong,韵达快递:yunda," +
+                "中通快递:zhongtong,全峰快递:quanfengkuaidi,宅急送:zhaijisong,如风达:rufengda,速尔快递:suer,德邦物流:debangwuliu," +
+                "佳吉快运:jiajiwuliu";
+        String[] str =  bindName.split(",");
+        for (String pinyinName : str){
+            String[] kuaidi = pinyinName.split(":");
+            if (kuaidi[0].equals(name)){
+                return kuaidi[1];
+            }
+        }
+        return name;
+    }
+
 }
