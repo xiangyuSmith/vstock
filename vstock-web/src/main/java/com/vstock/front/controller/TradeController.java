@@ -361,17 +361,17 @@ public class TradeController extends BaseController{
         Map<String, String> sParaTemp = new HashMap<String, String>();
         BigDecimal amountFinal;
         if(type == 2){
-            amountFinal = new BigDecimal(0.01);
+            amountFinal = new BigDecimal(10);
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
             sParaTemp.put("out_trade_no", "100_"+String.valueOf(tradeId));
         }else {
 //            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
-            amountFinal = new BigDecimal(0.01);
+            amountFinal = new BigDecimal(10);
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
-            sParaTemp.put("out_trade_no", "200_"+String.valueOf(tradeId));
+            sParaTemp.put("out_trade_no", "200_"+System.currentTimeMillis()+String.valueOf(tradeId));
         }
         sParaTemp.put("service", AlipayConfig.service);
         sParaTemp.put("partner", AlipayConfig.partner);
