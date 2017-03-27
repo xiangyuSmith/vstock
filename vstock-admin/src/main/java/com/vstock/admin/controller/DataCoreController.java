@@ -94,8 +94,10 @@ public class DataCoreController {
         //URL指向要访问的数据库名mydata
         String url = "jdbc:mysql://localhost:3306/stockx";
         //MySQL配置时的用户名
-        String user = "test";
+        //String user = "test";
+        String user = "dever";
         //MySQL配置时的密码
+        //String password = "dev2Alixx@Wxx!";
         String password = "123123";
         Map<Integer,ResultData> resultdata_cache = new HashMap<Integer,ResultData>();
         Map<Integer,Basicinformation> basicinfomation_cache = new HashMap<Integer,Basicinformation>();
