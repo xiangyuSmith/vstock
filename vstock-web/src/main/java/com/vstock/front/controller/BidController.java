@@ -136,9 +136,9 @@ public class BidController extends BaseController{
         sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname+"|"+isUserHome);
-        sParaTemp.put("out_trade_no", String.valueOf(bid));
+        sParaTemp.put("out_trade_no", "bid_"+System.currentTimeMillis()+String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
-        sParaTemp.put("total_fee", String.valueOf(0.01));
+        sParaTemp.put("total_fee", String.valueOf(10));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";
