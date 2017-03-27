@@ -1,15 +1,19 @@
 package com.vstock.front.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.dao.IUserInvitationDao;
+import com.vstock.db.entity.Express;
 import com.vstock.db.entity.User;
 import com.vstock.db.entity.UserInvitation;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
+import com.vstock.ext.util.StringUtil;
 import com.vstock.server.alipay.util.AlipayNotify;
+import com.vstock.server.express.ExpressLogistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +139,52 @@ public class UserService {
             }
         }
         return ip;
+    }
+
+    public List<List<Express>> obtainLogistics(String expresName, String expresNum){
+        List<List<Express>> expressListlist = new ArrayList<List<Express>>();
+        List<Express> expressList = new ArrayList<Express>();
+        //判断快递公司和单号不为空
+        if (expresName != null && !"".equals(expresName) && expresNum != null && !"".equals(expresNum)){
+            //传入快递公司名称，转化为快递100接口参数名
+            expresName = StringUtil.expressName(expresName);
+            //调用快递100接口获取物流信息
+            JSONObject jsonObject = ExpressLogistics.getexpress(expresName,expresNum);
+            Object data = jsonObject.get("data");
+            JSONArray jsonArray = (JSONArray)data;
+            String ifweek = "";
+            //循环获取每天的详细信息
+            for (int i = 0; i < jsonArray.size(); i++){
+                Express express = new Express();
+                JSONObject json = (JSONObject)jsonArray.get(i);
+                Object ftime = json.get("ftime");
+                Object context = json.get("context");
+                Object time = json.get("time");
+                String week = DateUtils.getweek(time.toString());
+                express.setExpressName(context.toString());
+                express.setCreateDate(ftime.toString());
+                express.setStatus(week);
+                //判断是否第一条信息
+                if (i == 0) {
+                    expressList.add(express);
+                    ifweek = week;
+                }else {
+                    //判断是否与前一条信息是同一天
+                    if (ifweek.equals(week)){
+                        expressList.add(express);
+                        if (i+1 == jsonArray.size()){
+                            expressListlist.add(expressList);
+                        }
+                    }else {//把同一天的信息放在一个Listzhong
+                        expressListlist.add(expressList);
+                        expressList = new ArrayList<Express>();
+                        expressList.add(express);
+                        ifweek = week;
+                    }
+                }
+            }
+        }
+        return expressListlist;
     }
 
 }

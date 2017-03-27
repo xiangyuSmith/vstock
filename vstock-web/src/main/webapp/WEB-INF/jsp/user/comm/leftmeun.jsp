@@ -825,6 +825,196 @@
             }
         }
 
+        $("body").on("click",".express-get",function(){
+            var $this = $(this);
+            sendRequest("/user/getExpress",{
+                "tradeId":$this.attr("data-id"),
+                "expresNum":$this.attr("courierNumber")
+            },function(res){
+                if (res.length > 0){
+                    var html = "";
+                    if (res.length != 1) {
+                        for (var a = 0; a < res.length - 1; a++) {
+                            var expresArr = res[a];
+                            for (var i = 0; i < expresArr.length; i++) {
+                                var expresNum = expresArr[i];
+                                if (a < res.length - 2) {
+                                    if (i == 0) {
+                                        var htmltext = "<tr>\n" +
+                                                "<td class=\"am-padding-left-sm am-padding-right-sm\">\n" +
+                                                "<div class=\"col2\">\n" +
+                                                "<span class=\"step\">\n" +
+                                                "<span class=\"line1\"></span>\n" +
+                                                "</span>\n" +
+                                                "</div>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left-sm\">\n" +
+                                                "<span>" + expresNum.createDate.substr(0, 10) + "</span>\n" +
+                                                "<span class=\"span-sty\"></span>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left\">\n" +
+                                                "<span>周" + expresNum.status.substr(2, 2) + "</span>\n" +
+                                                "<span class=\"span-sty\"></span>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left\">\n" +
+                                                "<span>" + expresNum.createDate.substr(11, expresNum.createDate.length) + "</span>\n" +
+                                                "<span class=\"span-sty\"></span>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left-xl\" style=\"display: inline;\">" + expresNum.expressName + "</td>\n" +
+                                                "</tr>";
+                                    }else {
+                                        var htmltext = "<tr>\n" +
+                                                "<td class=\"am-padding-left-sm am-padding-right-sm\">\n" +
+                                                "<div class=\"col2\">\n" +
+                                                "<span class=\"step\">\n" +
+                                                "<span class=\"line1\"></span>\n" +
+                                                "</span>\n" +
+                                                "</div>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left-sm\">\n" +
+                                                "<span></span>\n" +
+                                                "<span class=\"span-sty\"></span>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left\">\n" +
+                                                "<span></span>\n" +
+                                                "<span class=\"span-sty\"></span>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left\">\n" +
+                                                "<span>" + expresNum.createDate.substr(11, expresNum.createDate.length) + "</span>\n" +
+                                                "<span class=\"span-sty\"></span>\n" +
+                                                "</td>\n" +
+                                                "<td class=\"am-padding-left-xl\" style=\"display: inline;\">" + expresNum.expressName + "</td>\n" +
+                                                "</tr>";
+                                    }
+                                    html = html + htmltext;
+                                } else {
+                                    if (i == expresArr.length-1) {
+                                        if (i == 0) {
+                                            var htmltext = "<tr>\n" +
+                                                    "<td class=\"am-padding-left-sm am-padding-right-sm\">\n" +
+                                                    "<div class=\"col2\">\n" +
+                                                    "<span class=\"step\">\n" +
+                                                    "</span>\n" +
+                                                    "</div>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-sm\">\n" +
+                                                    "<span>" + expresNum.createDate.substr(0, 10) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span>周" + expresNum.status.substr(2, 2) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span>" + expresNum.createDate.substr(12, expresNum.createDate.length) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-xl\" style=\"display: inline;\">" + expresNum.expressName + "</td>\n" +
+                                                    "</tr>";
+                                        }else {
+                                            var htmltext = "<tr>\n" +
+                                                    "<td class=\"am-padding-left-sm am-padding-right-sm\">\n" +
+                                                    "<div class=\"col2\">\n" +
+                                                    "<span class=\"step\">\n" +
+                                                    "</span>\n" +
+                                                    "</div>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-sm\">\n" +
+                                                    "<span></span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span></span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span>" + expresNum.createDate.substr(12, expresNum.createDate.length) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-xl\" style=\"display: inline;\">" + expresNum.expressName + "</td>\n" +
+                                                    "</tr>";
+                                        }
+                                        html = html + htmltext;
+                                    }else {
+                                        if (i == 0) {
+                                            var htmltext = "<tr>\n" +
+                                                    "<td class=\"am-padding-left-sm am-padding-right-sm\">\n" +
+                                                    "<div class=\"col2\">\n" +
+                                                    "<span class=\"step\">\n" +
+                                                    "<span class=\"line1\"></span>\n" +
+                                                    "</span>\n" +
+                                                    "</div>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-sm\">\n" +
+                                                    "<span>" + expresNum.createDate.substr(0, 10) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span>周" + expresNum.status.substr(2, 2) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span>" + expresNum.createDate.substr(11, expresNum.createDate.length) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-xl\" style=\"display: inline;\">" + expresNum.expressName + "</td>\n" +
+                                                    "</tr>";
+                                        }else {
+                                            var htmltext = "<tr>\n" +
+                                                    "<td class=\"am-padding-left-sm am-padding-right-sm\">\n" +
+                                                    "<div class=\"col2\">\n" +
+                                                    "<span class=\"step\">\n" +
+                                                    "<span class=\"line1\"></span>\n" +
+                                                    "</span>\n" +
+                                                    "</div>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-sm\">\n" +
+                                                    "<span></span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span></span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left\">\n" +
+                                                    "<span>" + expresNum.createDate.substr(11, expresNum.createDate.length) + "</span>\n" +
+                                                    "<span class=\"span-sty\"></span>\n" +
+                                                    "</td>\n" +
+                                                    "<td class=\"am-padding-left-xl\" style=\"display: inline;\">" + expresNum.expressName + "</td>\n" +
+                                                    "</tr>";
+                                        }
+                                        html = html + htmltext;
+                                }
+                                }
+                            }
+                        }
+                        html = "<tbody>"+html+"</tbody>";
+                        $('#queryResult').html("");
+                        $('#queryResult').html(html);
+                        $('#expressName-value').text(res[res.length-1][0].expressName);
+                        $('#expressNum-value').text(res[res.length-1][0].status);
+                    }else {
+                        $('#expressName-value').text(res[0].expressName);
+                        $('#expressNum-value').text(res[0].status);
+                        html = "<div>\n" +
+                                "<span  class=\"am-text-center am-padding-right-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</span>\n" +
+                                "</div>";
+                        html = "<tbody>"+html+"</tbody>";
+                        $('#queryResult').html("");
+                        $('#queryResult').html(html);
+                    }
+                }else {
+                    html = "<div>\n" +
+                            "<span  class=\"am-text-center am-padding-right-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</span>\n" +
+                            "</div>";
+                    html = "<tbody>"+html+"</tbody>";
+                    $('#queryResult').html("");
+                    $('#queryResult').html(html);
+                    alertTips(2,"提示","物流信息错误，请联系客服！");
+                }
+            })
+        });
+
     });
 </script>
 </html>

@@ -557,4 +557,15 @@ public class DateUtils {
         }
         return "";
     }
+
+    /**
+     * 传入String类型时间获取对应的星期
+     * @param date
+     * @return
+     */
+    public static String getweek(String date){
+        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+        Date dateweek = getDate(date,"yyyy-MM-dd");
+        return dateFm.format(dateweek);
+    }
 }

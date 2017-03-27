@@ -151,7 +151,7 @@
                                 <div class="doc-dropdown-justify-js">
                                     <div class="am-dropdown doc-dropdown-js">
                                         <c:choose>
-                                            <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52}">
+                                            <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52 || trade.status == 10 || trade.status == 30 || trade.status == 20}">
                                                 <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                             </c:when>
                                             <c:otherwise>
@@ -165,6 +165,9 @@
                                             <c:if test="${trade.status == 30}">
                                                 <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
                                             </c:if>
+                                            <c:when test="${trade.status == 10 || trade.status == 30 || trade.status == 20}">
+                                                <li><a class="am-btn am-btn-xs am-text-left express-get" courierNumber="${trade.courierNumber}" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
+                                            </c:when>
                                             <c:if test="${trade.status == 41 || trade.status == 52}">
                                                 <li>
                                                     <input type="hidden"class="tradeSave" explain="删除" status="51" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3"/>
@@ -209,6 +212,7 @@
     </div>
 </div>
 <%@include file="popup/userBuyAddress.jsp" %>
+<%@include file="popup/expressList.jsp"%>
 <a href="javascript:;" id="now-seller-buy-detailed" style="display: none;" data-am-modal="{target: '#my-popup-buy-userBuyAddress', width: 900, height: 520}">购买</a>
 <script>
     $(function(){

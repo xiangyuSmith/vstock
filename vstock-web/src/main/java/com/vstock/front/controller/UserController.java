@@ -22,10 +22,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.RoundingMode;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -515,5 +512,28 @@ public class UserController extends BaseController {
             resultModel.setRetMsg("添加失败！");
         }
         return resultModel;
+    }
+
+    @RequestMapping("getExpress")
+    @ResponseBody
+    public List<List<Express>> getExpress(){
+        LogisticsInformation logisticsInformation = new LogisticsInformation();
+        List<List<Express>> expressListlist = new ArrayList<List<Express>>();
+        String tradeId = getParam("tradeId","");
+        String expresNum = getParam("expresNum","");
+        if (tradeId != null && !"".equals(tradeId)) {
+            logisticsInformation.setTradeId(Integer.parseInt(tradeId));
+            List<LogisticsInformation> logisticsInformationList = logisticsInformationService.findAll(logisticsInformation);
+            if (logisticsInformationList.size() > 0) {
+                expressListlist = userService.obtainLogistics(logisticsInformationList.get(0).getCompanyName(), expresNum);
+                Express record = new Express();
+                record.setExpressName(logisticsInformationList.get(0).getCompanyName());
+                record.setStatus(expresNum);
+                List<Express> expressList = new ArrayList<Express>();
+                expressList.add(record);
+                expressListlist.add(expressList);
+            }
+        }
+        return expressListlist;
     }
 }
