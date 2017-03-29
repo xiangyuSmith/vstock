@@ -1,21 +1,31 @@
 package com.vstock.admin.controller;
 
+import com.vstock.admin.service.BasicinformationService;
 import com.vstock.admin.service.CommodityDataService;
 import com.vstock.admin.service.StockxStoreService;
 import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.sql.*;
+
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.Enumeration;
 
 /**
  * Created by xiangyu on 2016/7/18.
@@ -27,9 +37,12 @@ public class DataCoreController {
     private static Logger logger = Logger.getLogger(DataCoreController.class);
 
     @Autowired
+    BasicinformationService basicinformationService;
+    @Autowired
     CommodityDataService commodityDataService;
     @Autowired
     StockxStoreService stockxStoreService;
+    private Statement stmt;
 
     /**
      * 球鞋数据分析查询
@@ -41,11 +54,16 @@ public class DataCoreController {
      */
     @RequestMapping("index")
     public String index(ResultData resultData, HttpServletRequest request, ModelMap model) {
+        long zz,yy,xx= System.currentTimeMillis();
+
         List<String> list = new ArrayList<String>();
         String pageNow = request.getParameter("pageNow");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         String bids = request.getParameter("bids");
+        String basiciformationId = request.getParameter("basiciformationId");
+        String productName = request.getParameter("productName");
+        String girard = request.getParameter("girard");
         if ("".equals(bids) || bids == null) {
             resultData.setBid(0);
         } else {
@@ -68,11 +86,129 @@ public class DataCoreController {
         endTime = endTime + " 23:59:59";
         String linkAddress = request.getRequestURI() + "?1=1";
         linkAddress = commodityDataService.linkAddress(linkAddress, list, resultData);
-        List<Integer> totalCount = commodityDataService.findResultDataFactoryCount(resultData, startTime, endTime);
-        Page page = new Page(totalCount.size(), pageNow);
-        List<Basicinformation> resultDataFactoryList = commodityDataService.findResultDataFactoryAll(resultData, startTime, endTime, page);
+
+        Connection con;
+        Connection con2;
+        //驱动程序名
+        String driver = "com.mysql.jdbc.Driver";
+        //URL指向要访问的数据库名mydata
+        String url = "jdbc:mysql://localhost:3306/stockx";
+        //MySQL配置时的用户名
+        //String user = "test";
+        String user = "dever";
+        //MySQL配置时的密码
+        String password = "dev2Alixx@Wxx!";
+        //String password = "123123";
+        Map<Integer,ResultData> resultdata_cache = new HashMap<Integer,ResultData>();
+        Map<Integer,Basicinformation> basicinfomation_cache = new HashMap<Integer,Basicinformation>();
+        //按照basicinformationid分组数据
+        Map<Integer,List<ResultData>> group_data = new HashMap<Integer,List<ResultData>>(); //id分组数据
+
+        //遍历查询结果集
+        try {
+            //加载驱动程序
+            Class.forName(driver);
+            //1.getConnection()方法，连接MySQL数据库！！
+            con = DriverManager.getConnection(url, user, password);
+            con2 = DriverManager.getConnection(url, user, password);
+            if (!con.isClosed())
+                System.out.println("Succeeded connecting to the Database!");
+
+            yy = System.currentTimeMillis();
+            zz = yy - xx;
+            logger.info("数据库链接时间:" +  zz);
+            Statement stmt =  con.createStatement(); //创建Statement对象
+            Statement stmt2 =  con2.createStatement(); //创建Statement对象
+            //取值resultdata
+            String sql = "select * from resultdata";    //要执行的SQL
+            ResultSet rs = stmt.executeQuery(sql);//创建数据对象
+
+            while (rs.next()) {
+                ResultData data1 = new ResultData();
+                data1.setId(rs.getString(1));
+                data1.setBasiciformationId(rs.getString(3));
+                data1.setTransactionRecord(rs.getString(10));
+                data1.setCreateTime(rs.getString(11));
+                resultdata_cache.put(rs.getInt(1),data1);
+                Integer basicid = Integer.parseInt(data1.getBasiciformationId());
+                //分组
+                List<ResultData> data_list = group_data.get(basicid);
+                if(data_list==null) {
+                    data_list =  new ArrayList<ResultData>();
+                }
+                data_list.add(data1);
+                group_data.put(basicid,data_list);
+            }
+
+            //取值basicinfomation
+            String sql2 = "select * from basicinformation";    //要执行的SQL
+            ResultSet rs2 = stmt2.executeQuery(sql2);//创建数据对象
+            while (rs2.next()) {
+                Basicinformation data2 = new Basicinformation();
+                data2.setId(rs2.getString(1));
+                data2.setName(rs2.getString(3));
+                data2.setArtNo(rs2.getString(5));
+                basicinfomation_cache.put(rs2.getInt(1),data2);
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch(Exception e) {
+            System.out.println("有异常！！");
+        }
+        finally{
+            System.out.println("数据库数据成功获取！！");
+        }
+
+        yy = System.currentTimeMillis();
+        zz = yy - xx;
+        logger.info("数据库查询时间:" +  zz);
+
+        //输出内容
+        List<Basicinformation> resultDataFactoryList = new LinkedList<Basicinformation>();
+        Integer num = 0;
+        //轮询分组内的数据
+        Iterator group_data_poniter=group_data.entrySet().iterator();
+        Integer key;
+        List<ResultData> value;
+        //进行分组
+        while(group_data_poniter.hasNext()){
+            Map.Entry entry2 = (Map.Entry)group_data_poniter.next();
+            //key為basicinfomation的鍵值
+            key=Integer.parseInt(entry2.getKey().toString());
+            value=(List<ResultData>)entry2.getValue();
+            //组内排序取出时间最新的数据
+            int i = 0;
+            ResultData tmpData1 = (ResultData)value.get(i);
+            ResultData tmpData2;
+            ResultData rd = tmpData1;
+            String time1 = tmpData1.getCreateTime();
+            for(i=0;i<value.size()-1;i++) {
+                tmpData1 = (ResultData)value.get(i);
+                tmpData2 = (ResultData)value.get(i+1);
+                String time2 = tmpData2.getCreateTime();
+                time1 = DateUtils.compareDateUp(time1,time2);
+                rd = time1 == time2 ? tmpData2 : tmpData1;
+            }
+            //选出最新的赋值给resultDataFactoryList
+            Integer basicid = (Integer.parseInt(rd.getBasiciformationId())) ;
+            Basicinformation bd = basicinfomation_cache.get(basicid);
+            bd.setResultData(rd);
+            resultDataFactoryList.add(bd);
+            num = num + 1;
+            //System.out.println("数字为"+num);
+            if (num>=group_data.size()-1){
+            //if (num>=3){
+                break;
+            }
+        }
+        yy = System.currentTimeMillis();
+        zz = yy - xx;
+        logger.info("程序运行时间:" +  zz);
+
         model.addAttribute("commodityDataList", resultDataFactoryList);
-        model.addAttribute("page", page);
+        model.addAttribute("page", pageNow);
         model.addAttribute("resultData", resultData);
         model.addAttribute("linkAddress", linkAddress);
         return "admin/storeAnalysis/commodityShow";
