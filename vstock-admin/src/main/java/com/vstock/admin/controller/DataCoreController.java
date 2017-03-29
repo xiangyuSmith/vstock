@@ -97,8 +97,8 @@ public class DataCoreController {
         //String user = "test";
         String user = "dever";
         //MySQL配置时的密码
-        //String password = "dev2Alixx@Wxx!";
-        String password = "123123";
+        String password = "dev2Alixx@Wxx!";
+        //String password = "123123";
         Map<Integer,ResultData> resultdata_cache = new HashMap<Integer,ResultData>();
         Map<Integer,Basicinformation> basicinfomation_cache = new HashMap<Integer,Basicinformation>();
         //按照basicinformationid分组数据
