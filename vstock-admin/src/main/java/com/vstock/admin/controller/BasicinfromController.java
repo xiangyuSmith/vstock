@@ -460,6 +460,12 @@ public class BasicinfromController extends BaseController {
         }
 
         int resultCount = 0;
+        if("".equals(basicinformation.getCsaledate())){
+            basicinformation.setCsaledate(null);
+        }
+        if("".equals(basicinformation.getEsaledate())){
+            basicinformation.setEsaledate(null);
+        }
         if (state != null && !"".equals(state)) {
             basicinformation.setState(state);
             resultCount = basicinformationService.updatebasicinfrom(basicinformation);

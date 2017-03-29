@@ -108,16 +108,16 @@
                                     <label>中文标识 : </label> <input type="text" name="chineselogo" class="am-input-s" placeholder="请填写中文标识" required />
                                 </div>
                                 <div class="am-form-group">
-                                    <label>发售价（国内） : </label> <input type="text" name="cofferprice" class="am-input-sm" placeholder="请填写发售价（国内）" required />
+                                    <label>发售价（国内） : </label> <input type="text" name="cofferprice" class="am-input-sm" placeholder="请填写发售价（国内）" />
                                 </div>
                                 <div class="am-form-group">
-                                    <label>发售价（国外） : </label> <input type="text" name="eofferprice" class="am-input-sm" placeholder="请填写发售价（国外）" required />
+                                    <label>发售价（国外） : </label> <input type="text" name="eofferprice" class="am-input-sm" placeholder="请填写发售价（国外）" />
                                 </div>
                                 <div class="am-form-group">
-                                    <label>发售日期（国内） : </label> <input type="date" name="csaledate" class="am-input-sm" placeholder="请填写发售日期（国内）" required />
+                                    <label>发售日期（国内） : </label> <input type="date" name="csaledate" class="am-input-sm" placeholder="请填写发售日期（国内）" />
                                 </div>
                                 <div class="am-form-group">
-                                    <label>发售日期（国外） : </label> <input type="date" name="esaledate" class="am-input-sm" placeholder="请填写发售日期（国外）" required />
+                                    <label>发售日期（国外） : </label> <input type="date" name="esaledate" class="am-input-sm" placeholder="请填写发售日期（国外）" />
                                 </div>
                                 <div class="am-form-group">
                                     <label>图片（存储路径） : </label>
