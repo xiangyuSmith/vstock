@@ -98,10 +98,7 @@
                     </c:if>
                     </tbody>
                 </table>
-                <jsp:include page="../common/paging.jsp" flush="true">
-                    <jsp:param name="page" value="${page}"/>
-                    <jsp:param name="linkAddress" value="${linkAddress}"/>
-                </jsp:include>
+                <!-- 分页 -->
             </div>
         </div>
     </div>
