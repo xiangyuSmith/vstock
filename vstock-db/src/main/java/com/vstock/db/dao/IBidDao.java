@@ -34,7 +34,7 @@ public interface IBidDao {
     int insert(Bid record);
 
     //修改数据
-    int update(@Param("status")String status,@Param("paymentId")Integer paymentId, @Param("bidMoney")BigDecimal bidMoney, @Param("invalidDate")String invalidDate, @Param("id")Integer id);
+    int update(@Param("status")String status,@Param("paymentId")Integer paymentId, @Param("bidMoney")BigDecimal bidMoney, @Param("invalidDate")String invalidDate, @Param("id")Integer id,@Param("bidDate") String bidDate);
 
     //关联峰值表分页查询
     List<Bid> findAndPricePeak(@Param("obj")Bid record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);

@@ -4,10 +4,7 @@ import com.vstock.db.dao.IAdminDao;
 import com.vstock.db.dao.IMenu;
 import com.vstock.db.entity.Admin;
 import com.vstock.db.entity.Menu;
-import com.vstock.ext.util.CookieTool;
-import com.vstock.ext.util.DictKeys;
-import com.vstock.ext.util.MD5Util;
-import com.vstock.ext.util.Page;
+import com.vstock.ext.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,20 +67,16 @@ public class AdminService {
         Admin admin = null;
         admin = AdminDao.findAdmin(username);
         if (admin == null) {
-            return DictKeys.login_info_0;// 用户不存在
+            return DictKeys.login_info_0;
         }
-        //验证密码
         if (MD5Util.getSha(password + (MD5Util.getSha(admin.getSalt() + DictKeys.reg_login_miyan))).equals(admin.getPassword())) {
-            //更新登录信息
-            admin.setLastLogin(new Date());
+            admin.setLastLogin(DateUtils.dateToString(new Date()));
+            int loginMaxAge = 30 * 24 * 60 * 60;
             try {
                 AdminDao.updateAdmin(admin);
             } catch (Exception e) {
                 System.out.print(e.getMessage());
             }
-
-            //存储cookie
-            int loginMaxAge = 30 * 24 * 60 * 60;   //定义账户密码的生命周期，这里是一个月。单位为秒
             CookieTool.addCookie(response, "adminName", admin.getUsername(), loginMaxAge);
             //TODO 验证是否记住密码
             CookieTool.addCookie(response, "adminPwd", admin.getPassword(), loginMaxAge);

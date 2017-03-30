@@ -496,9 +496,9 @@
                     function createPay(){
                         type = type==1?2:3;
                         if(type == 3){
-                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";;
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";
                         }else{
-                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=1"+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";;
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=1"+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";
                         }
                         return;
 //                        sendRequest("/trade/createTradePay",{
