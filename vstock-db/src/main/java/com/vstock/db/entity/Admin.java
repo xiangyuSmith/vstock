@@ -4,11 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.Date;
-
-/**
- * Created by xiangyu on 2016/5/11.
- */
 @Document
 public class Admin {
 
@@ -24,9 +19,9 @@ public class Admin {
 
     private String salt;
 
-    private Date create_time;
+    private String create_time;
 
-    private Date last_login;
+    private String last_login;
 
     public String getRoleId() {
         return roleId;
@@ -68,19 +63,19 @@ public class Admin {
         this.salt = salt;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return create_time;
     }
 
-    public void setCreateTime(Date create_time) {
+    public void setCreateTime(String create_time) {
         this.create_time = create_time;
     }
 
-    public Date getLastLogin() {
+    public String getLastLogin() {
         return last_login;
     }
 
-    public void setLastLogin(Date last_login) {
+    public void setLastLogin(String last_login) {
         this.last_login = last_login;
     }
 

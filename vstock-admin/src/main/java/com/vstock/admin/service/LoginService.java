@@ -3,6 +3,7 @@ package com.vstock.admin.service;
 import com.vstock.db.dao.IAdminDao;
 import com.vstock.db.entity.Admin;
 import com.vstock.ext.util.CookieTool;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.DictKeys;
 import com.vstock.ext.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,7 @@ public class LoginService {
         //验证密码
         if (MD5Util.getSha(password + (MD5Util.getSha(admin.getSalt() + DictKeys.reg_login_miyan))).equals(admin.getPassword())) {
             //更新登录信息
-            admin.setLastLogin(new Date());
+            admin.setLastLogin(DateUtils.dateToString(new Date()));
             try {
                 AdminDao.updateAdmin(admin);
             } catch (Exception e) {
