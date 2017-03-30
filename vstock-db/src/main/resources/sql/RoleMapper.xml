@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vstock.db.dao.IRoleDao">
+
+    <sql id="SelectAll_Where_Count">
+        <where>
+            1=1
+            <if test="roleId != null and roleId != ''">
+                AND r.id = #{roleId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <update id="update" parameterType="com.vstock.db.entity.Role">
+        UPDATE `role` r
+        <set>
+            <if test="role.role_permissions != null and role.role_permissions != ''">
+                r.role_permissions = #{role.role_permissions,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE r.id = #{role.id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `role` (`id`,`name`,`create_time`) VALUES(null,#{name},now())
+    </insert>
+
+    <select id="findById" parameterType="com.vstock.db.entity.Role" resultType="com.vstock.db.entity.Role">
+        select * from `role` r
+        <include refid="SelectAll_Where_Count"/>
+    </select>
+
+    <select id="findPermissions" parameterType="com.vstock.db.entity.Permissions" resultType="com.vstock.db.entity.Permissions">
+        SELECT * FROM `permissions` p
+    </select>
+
+    <select id="findAll" parameterType="com.vstock.db.entity.Role" resultType="com.vstock.db.entity.Role">
+        SELECT * FROM `role` r  ORDER BY r.id ASC
+    </select>
+
+    <select id="findRoleAll" parameterType="com.vstock.db.entity.Role" resultType="com.vstock.db.entity.Role">
+        SELECT * FROM `role` r  ORDER BY r.id ASC
+        limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findRoleCount" parameterType="com.vstock.db.entity.Role" resultType="Integer">
+        SELECT COUNT(*) FROM `role` r ORDER BY r.id ASC
+    </select>
+
+    <sql id="SelectAll_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND r.id = #{id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Clause">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND u.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+</mapper>
