@@ -92,10 +92,10 @@
                                 <td>${user.create_time}</td>
                                 <td>
                                     <c:if test="${user.status == 1}">
-                                        <a href="javascript:void(0);" status="0" data_id="${user.id}" style="color: #ffffff" class="am-btn am-btn-danger am-radius disable_btn">禁用</a>
+                                        <a href="javascript:void(0);" status="0" data_id="${user.id}" style="color: #ffffff" class="am-btn am-btn-xs am-btn-danger am-radius disable_btn">禁用</a>
                                     </c:if>
                                     <c:if test="${user.status == 0}">
-                                        <a href="javascript:void(0);" status="1" data_id="${user.id}" style="color: #ffffff" class="am-btn am-btn-success am-radius disable_btn">恢复</a>
+                                        <a href="javascript:void(0);" status="1" data_id="${user.id}" style="color: #ffffff" class="am-btn am-btn-xs am-btn-success am-radius disable_btn">恢复</a>
                                     </c:if>
                                 </td>
                             </tr>

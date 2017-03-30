@@ -1,6 +1,7 @@
 package com.vstock.admin.controller;
 
 import com.vstock.admin.service.LoginService;
+import com.vstock.db.entity.Admin;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.util.DictKeys;
 import org.apache.log4j.Logger;
@@ -8,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by xiangyu on 2016/7/18.
@@ -68,6 +72,16 @@ public class LoginController extends BaseController {
         String password = request.getParameter("password");
         loginService.checkRegister(username, password);
         return "base/index";
+    }
+
+    @RequestMapping("registerAjax")
+    @ResponseBody
+    public Map<String,Object> registerAjax(HttpServletRequest request) {
+        Map<String,Object> params = new HashMap<String,Object>();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Admin admin = loginService.checkRegister(username, password);
+        return params;
     }
 
     @RequestMapping("logout")

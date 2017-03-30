@@ -40,7 +40,7 @@ public class UserController {
         List<UserActivity> userActivityList = userService.findActivityAll(page);
         model.put("userActivityList",userActivityList);
         model.put("page",page);
-        return "admin/user/indexActivity";
+        return "admin/system/indexActivity";
     }
 
     @RequestMapping("sendUserActivityInfo")

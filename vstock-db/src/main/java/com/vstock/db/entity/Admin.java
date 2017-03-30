@@ -16,6 +16,8 @@ public class Admin {
     @Field
     private String id;
 
+    private String roleId;
+
     private String username;
 
     private String password;
@@ -25,6 +27,14 @@ public class Admin {
     private Date create_time;
 
     private Date last_login;
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
     public String getId() {
         return id;

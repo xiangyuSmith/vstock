@@ -7,6 +7,7 @@ import com.vstock.db.entity.Menu;
 import com.vstock.ext.util.CookieTool;
 import com.vstock.ext.util.DictKeys;
 import com.vstock.ext.util.MD5Util;
+import com.vstock.ext.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,17 @@ public class AdminService {
     @Autowired
     IMenu menuDao;
 
+    public Admin findById(String adminId){ return AdminDao.findById(adminId); }
+
+    public int findAdminCount() {
+        return AdminDao.findAdminCount();
+    }
+
+    public List<Admin> findAdminAll(Page page){
+        return AdminDao.findAdminAll(page.getStartPos(), page.getPageSize());
+    }
+
+    public int update(Admin a){ return AdminDao.updateAdmin(a); }
     /**
      * 注册管理员
      *

@@ -8,6 +8,20 @@
         VALUES(null,#{username},#{password},#{salt},now())
     </insert>
 
+    <select id="findAdminCount" parameterType="com.vstock.db.entity.Admin" resultType="Integer">
+        SELECT COUNT(*) FROM `admin` a ORDER BY a.id ASC
+    </select>
+
+    <select id="findById" parameterType="com.vstock.db.entity.Admin" resultType="com.vstock.db.entity.Admin">
+        SELECT * FROM `admin` a  ORDER BY a.id ASC
+        <include refid="SelectAll_Where_Count"/>
+    </select>
+
+    <select id="findAdminAll" parameterType="com.vstock.db.entity.Admin" resultType="com.vstock.db.entity.Admin">
+        SELECT * FROM `admin` a  ORDER BY a.id ASC
+        limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findAdmin" resultType="com.vstock.db.entity.Admin">
         SELECT *
         FROM `admin`
@@ -17,9 +31,25 @@
     </select>
 
     <update id="updateAdmin">
-        UPDATE `admin`
-        SET `last_login`=#{last_login}
+        UPDATE `admin` a
+        <set>
+            <if test="last_login != null and last_login != ''">
+                a.last_login = #{last_login}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                a.roleId = #{roleId}
+            </if>
+        </set>
         WHERE `id` = #{id}
     </update>
+
+    <sql id="SelectAll_Where_Count">
+        <where>
+            1=1
+            <if test="adminId != null and adminId != ''">
+                AND a.id = #{adminId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
 
 </mapper>
