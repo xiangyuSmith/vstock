@@ -16,7 +16,7 @@ public class ExpressLogistics {
      * @return
      */
     public static JSONObject getexpress(String expressName, String expressNum){
-        HttpClient client = new org.apache.commons.httpclient.HttpClient();
+        HttpClient client = new HttpClient();
         String Url = "https://m.kuaidi100.com/query"+"?type="+expressName+"&postid="+expressNum;
         JSONObject jsonObject = new JSONObject();
         PostMethod method = new PostMethod(Url);
