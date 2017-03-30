@@ -101,6 +101,7 @@ public class BasicinformationService {
      */
     public Basicinformation saveBasicinfromtemporary(Basicinformation record,int type){
         int i = 0 ;
+        int delType = 0;
         //判断是否是取消置顶
         if (type != 0) {
             //修改鞋库信息表
@@ -171,6 +172,12 @@ public class BasicinformationService {
         }else {
             i = this.updatebasicinfrom(record);
             if (i > 0){
+                BasicinformationTemporary basicinformationTemporary = new BasicinformationTemporary();
+                basicinformationTemporary.setId(Integer.parseInt(record.getId()));
+                List<BasicinformationTemporary> basicinformationTemporaryList = basicinformationTemporaryDao.findAll(basicinformationTemporary);
+                if (basicinformationTemporaryList.size() > 0){
+                    delType = basicinformationTemporaryList.get(0).getType();
+                }
                 i = basicinformationTemporaryDao.delete(Integer.parseInt(record.getId()));
             }
         }
@@ -182,7 +189,15 @@ public class BasicinformationService {
             i = basicinformationTemporaryList.size();
             record.setType(i);
         }else {
-            record.setType(4);
+            if (delType != 0){
+                BasicinformationTemporary bas = new BasicinformationTemporary();
+                bas.setType(delType);
+                List<BasicinformationTemporary> basicinformationTemporaryList = basicinformationTemporaryDao.findAll(bas);
+                i = basicinformationTemporaryList.size();
+                record.setType(i);
+            }else {
+                record.setType(4);
+            }
         }
         return record;
     }
