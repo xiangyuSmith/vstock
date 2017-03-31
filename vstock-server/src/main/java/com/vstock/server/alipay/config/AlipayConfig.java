@@ -19,7 +19,8 @@ public class AlipayConfig {
 	public static String partner = "2088711791661586";
 
 	//域名
-	public static String now_url = "http://116.228.89.158:1236";
+//	public static String now_url = "http://www.v-stock.com";
+	public static String now_url = "116.228.89.158:1236";
 
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = partner;
@@ -42,6 +43,9 @@ public class AlipayConfig {
 
 	// 支付宝的公钥,查看地址：https://b.alipay.com/order/pidAndKey.htm
 	public static String alipay_public_key  = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
+
+	// vstock应用支付宝公钥
+	public static String alipay_app_public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
 
 	//APP沙箱支付宝登录获取信息公钥
 	public static final String ALIPAY_PUBLIC_RSA="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTN72xmKt6yFRDRyvHNaYlQ252\n" +
@@ -83,7 +87,7 @@ public class AlipayConfig {
 	public static String login_return_url = "http://www.v-stock.com/login/alipayLogin";
 
 	//支付调用App登录用APPID
-	public static final String ALIPAY_APP_ID="2015121901009933";
+	public static final String ALIPAY_APP_ID="2017020805565784";
 
 	//支付宝调用历史获取用户信息回调地址
 	public static final String ALIPAY_LOGIN_URL="http://www.v-stock.com/login/alipayLogin";
