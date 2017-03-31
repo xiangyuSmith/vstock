@@ -32,7 +32,7 @@ public class AlipayRefund {
         sParaTemp.put("_input_charset",AlipayConfig.input_charset);
         sParaTemp.put("sign_type",AlipayConfig.sign_type);
         sParaTemp.put("sign",AlipayConfig.private_key);
-        sParaTemp.put("notify_url","http://116.228.89.158:1235/resfund/returnRefund"+url);
+        sParaTemp.put("notify_url",AlipayConfig.ALIPAY_REFUND_URL+url);
         sParaTemp.put("seller_email",AlipayConfig.seller_email);
         sParaTemp.put("refund_date",UtilDate.getDateFormatter());
         sParaTemp.put("batch_no",UtilDate.getDate()+UtilDate.getThree()+i);
