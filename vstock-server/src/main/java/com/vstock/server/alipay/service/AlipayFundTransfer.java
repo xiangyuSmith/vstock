@@ -9,6 +9,14 @@ import com.vstock.server.alipay.config.AlipayConfig;
 
 public class AlipayFundTransfer {
 
+    /**
+     * 支付宝转账接口
+     * @param out_biz_no //订单号
+     * @param payee_account  //转账账号
+     * @param amount  //金额
+     * @param remark  //备注
+     * @param ext_param  //说明
+     */
     public static void alipayfundServer(String out_biz_no,String payee_account,String amount,String remark,String ext_param){
         String url = "https://openapi.alipay.com/gateway.do";
         AlipayClient alipayClient = new DefaultAlipayClient(
