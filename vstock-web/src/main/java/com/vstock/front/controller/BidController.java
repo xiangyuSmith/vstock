@@ -94,18 +94,19 @@ public class BidController extends BaseController{
             payment.setPayment_explain(body);
             int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
             if(payResult == 0){
-                logger.error("bid payment add fail ...");
+                logger.info("bid payment add fail ...");
             }
             PricePeak pricePeak = pricePeakService.getHighestAndlowest(basicinformationId,size, DateUtils.dateToString(new Date()),lagePage);
             int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),basicinformationId,size,uid,type);
             int paymentId = payment.getId();
+            logger.info("更新叫价");
             Bid bidObj = new Bid();
             bidObj.setId(bid);
             bidObj.setPaymentId(paymentId);
             bidObj.setBidDate(DateUtils.dateToString(new Date()));
             bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
-            bidService.update(bidObj);
-            logger.info("叫价支付,叫价人:"+bidObj.getUserId()+",叫价支付时间:"+DateUtils.dateToString(new Date()));
+            int bidStatus = bidService.update(bidObj);
+            logger.info("叫价支付,叫价人:"+bidObj.getUserId()+",叫价支付时间:"+DateUtils.dateToString(new Date())+",叫价状态:"+bidStatus);
             if("1".equals(isUserHome)){
                 return "redirect:/user/index";
             }else{
@@ -138,7 +139,7 @@ public class BidController extends BaseController{
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname+"|"+isUserHome);
         sParaTemp.put("out_trade_no", "bid_"+System.currentTimeMillis()+String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
-        sParaTemp.put("total_fee", String.valueOf(10));
+        sParaTemp.put("total_fee", String.valueOf(0.01));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";

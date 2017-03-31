@@ -158,75 +158,6 @@ public class TradeController extends BaseController{
         }
     }
 
-//    @ResponseBody
-//    @RequestMapping("createTradePay")
-//    public ResultModel createTradePay() {
-//        ResultModel resultModel = new ResultModel();
-//        setLastPage(0,1);
-//        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
-//        int type = getParamToInt("type");
-//        int tradeId = getParamToInt("tradeId");
-//        double amount = Double.valueOf(getParam("amount", "0"));
-//        String ischeck = getParam("ischeck","0");
-//        if(!"1".equals(ischeck)){
-//            //更新叫价 & 峰值
-//            Trade t = new Trade();
-//            t.setId(tradeId);
-//            List<Trade> tradeList = tradeService.findTrade(t,lagePage);
-//            Trade trade = tradeList.get(0);
-//            int sort = 0;
-//            if(trade.getStatus() == 0){
-//                sort = 1;
-//            }else{
-//                sort = 2;
-//            }
-//            PricePeak pricePeak = pricePeakService.getHighestAndlowest(trade.getBasicinformationId(),trade.getBftSize(),sort,lagePage);
-//            updateTradeInfo(trade.getBidId(),trade.getTradeFreight(),pricePeak.getId(),type,tradeId);
-//        }
-//        Payment payment = new Payment();
-//        payment.setPayment_user_id(Long.parseLong(uid));
-//        payment.setOrder_record_id(tradeId);
-//        payment.setPayment_status(10);
-//        payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
-//        payment.setPayment_type(type);
-//        payment.setPayment_date(DateUtils.dateToString(new Date()));
-//        payment.setPayment_over_date(DateUtils.getNowdateAddmm());
-//        payment.setPayment_money(new BigDecimal(amount));
-//        payment.setPayment_explain("支付说明");
-//        int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
-//        if(payResult == 0){
-//            System.out.print("支付失败");
-//        }
-//        int tradeStatus = tradeService.checkTradeStatus(tradeId,lagePage);
-//        Trade trade = new Trade();
-//        trade.setId(tradeId);
-//        List<Trade> t_pay_list = tradeService.findAll(trade,lagePage);
-//        Trade t_pay = t_pay_list.get(0);
-//        String mobile = "";
-//        String content = "";
-//        String key = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_KEY);
-//        String account = VstockConfigService.getConfig(IVstockConfigService.SENDSMS_IHUYI_ACCOUNT);
-//        Bid b = new Bid();
-//        b.setId(t_pay.getBidId());
-//        Bid bid = bidService.findByBid(b,lagePage);
-//        if(type == 3){
-//            User user = userService.findById(String.valueOf(t_pay.getBuyersId()));
-//            mobile = user.getMobile();
-//            content = "您出价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有卖家出售，请务必在24小时内完成支付，否则本次交易将失效。如有任何疑问，请联系v－stock客服。";
-//        }else{
-//            User user = userService.findById(String.valueOf(t_pay.getSellerId()));
-//            mobile = user.getMobile();
-//            content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
-//        }
-//        Sendsms.sendHuyi(String.valueOf(mobile),account,key,content);
-//        trade.setStatus(tradeStatus);
-//        trade.setUpdateDate(DateUtils.dateToString(new Date()));
-//        tradeService.update(trade);
-//
-//        resultModel.setRetCode(resultModel.RET_OK);
-//        return resultModel;
-//    }
-
     @RequestMapping("createTradePay")
     public String createTradePay() {
         Map requestParams = request.getParameterMap();
@@ -307,7 +238,7 @@ public class TradeController extends BaseController{
                     Refund refund = new Refund();
                     refund.setType("3");
                     refund.setRefundNo(OddNoUtil.refundNo());
-                    refund.setTradeNo(tCheck.getTradeNo());
+                    refund.setTradeNo(String.valueOf(bid.getId()));
                     refund.setRefundObj(bid.getType());
                     refund.setBtfId(bid.getBasicinformationId());
                     refund.setBtfName(bid.getBftName());
@@ -361,14 +292,14 @@ public class TradeController extends BaseController{
         Map<String, String> sParaTemp = new HashMap<String, String>();
         BigDecimal amountFinal;
         if(type == 2){
-            amountFinal = new BigDecimal(10);
+            amountFinal = new BigDecimal(0.01);
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
-            sParaTemp.put("out_trade_no", "100_"+String.valueOf(tradeId));
+            sParaTemp.put("out_trade_no", "100_"+System.currentTimeMillis()+String.valueOf(tradeId));
         }else {
 //            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
-            amountFinal = new BigDecimal(10);
+            amountFinal = new BigDecimal(0.01);
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", "200_"+System.currentTimeMillis()+String.valueOf(tradeId));
