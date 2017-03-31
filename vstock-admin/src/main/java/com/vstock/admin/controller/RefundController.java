@@ -8,6 +8,7 @@ import com.vstock.db.entity.Refund;
 import com.vstock.db.entity.Trade;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.util.Page;
+import com.vstock.server.alipay.util.AlipayNotify;
 import com.vstock.server.util.StatusUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,61 @@ public class RefundController extends BaseController {
         return param;
     }
 
+    //退款调用支付宝借口
+    @RequestMapping("alipayRefund")
+    public String alipayRefund(Refund record, ModelMap model, HttpServletRequest request) {
+        String upstatus = request.getParameter("upstatus");
+        Map<String, String> sParaTemp = refundService.refundObj(record,upstatus);
+        model.addAttribute("sParaTemp",sParaTemp);
+        return "admin/common/alipay/alipayapi";
+    }
+
+    @RequestMapping("returnRefund")
+    @ResponseBody
+    public String returnRefund(Refund record, HttpServletRequest request){
+        Map<String, String> params = new HashMap<String, String>();
+        String rescode = "";
+        String upstatus = request.getParameter("upstatus");
+        String tradeId = request.getParameter("tradeId");
+        String notify_time = request.getParameter("notify_time");
+        String notify_type = request.getParameter("notify_type");
+        String notify_id = request.getParameter("notify_id");
+        String sign_type = request.getParameter("sign_type");
+        String sign = request.getParameter("sign");
+        String batch_no = request.getParameter("batch_no");
+        String success_num = request.getParameter("success_num");
+        String result_details = request.getParameter("result_details");
+        params.put("notify_time",notify_time);
+        params.put("notify_type",notify_type);
+        params.put("notify_id",notify_id);
+        params.put("sign_type",sign_type);
+        params.put("sign",sign);
+        params.put("batch_no",batch_no);
+        params.put("success_num",success_num);
+        params.put("result_details",result_details);
+        if (AlipayNotify.verify(params)) {
+            if ("1".equals(success_num)) {
+                refundService.refundAndTransfer(record, upstatus, tradeId);
+            }
+            rescode = "success";
+        }
+        return rescode;
+    }
+
+    @RequestMapping("transferAccounts")
+    @ResponseBody
+    public Map<String,Object> transferAccounts(Refund record, HttpServletRequest request){
+        Map<String,Object> param = new HashMap<String,Object>();
+        String upstatus = request.getParameter("upstatus");
+        String tradeId = request.getParameter("tradeId");
+        int i = refundService.transferAccountsObj(record);
+        if (i > 0) {
+            i = refundService.refundAndTransfer(record, upstatus, tradeId);
+        }
+        param.put("reGode",i);
+        return param;
+    }
+
     //退款保存方法
     @RequestMapping("saveRefund")
     @ResponseBody
@@ -128,28 +184,7 @@ public class RefundController extends BaseController {
         Map<String,Object> param = new HashMap<String,Object>();
         String upstatus = request.getParameter("upstatus");
         String tradeId = request.getParameter("tradeId");
-        String btfId = request.getParameter("btfId");
-        int i = refundService.save(record);
-        if (i > 0 && !"4".equals(record.getType())){
-            if (upstatus != null && !"".equals(upstatus) && Integer.parseInt(record.getType()) == 1){
-                Bid bid = new Bid();
-                bid.setId(Integer.parseInt(btfId));
-                bid.setStatus(upstatus);
-                i = bidService.update(bid);
-            }else {
-                Trade trade = new Trade();
-                if (tradeId == null || "".equals(tradeId)){
-                    Trade trades = new Trade();
-                    trades.setTradeNo(record.getTradeNo());
-                    trades = tradeService.findTrade(trades);
-                    trade.setId(trades.getId());
-                }else {
-                    trade.setId(Integer.parseInt(tradeId));
-                }
-                trade.setStatus(Integer.parseInt(upstatus));
-                i = tradeService.update(trade);
-            }
-        }
+        int i = refundService.refundAndTransfer(record,upstatus,tradeId);
         param.put("reGode",i);
         return param;
     }

@@ -9,6 +9,9 @@ import com.vstock.server.alipay.config.AlipayConfig;
 
 public class AlipayFundTransfer {
 
+    private static final int RET_OK = 1;
+    private static final int RET_FAIL = 0;
+
     /**
      * 支付宝转账接口
      * @param out_biz_no //订单号
@@ -17,7 +20,7 @@ public class AlipayFundTransfer {
      * @param remark  //备注
      * @param ext_param  //说明
      */
-    public static void alipayfundServer(String out_biz_no,String payee_account,String amount,String remark,String ext_param){
+    public static int alipayfundServer(String out_biz_no,String payee_account,String amount,String remark,String ext_param){
         String url = "https://openapi.alipay.com/gateway.do";
         AlipayClient alipayClient = new DefaultAlipayClient(
                 url,
@@ -41,12 +44,15 @@ public class AlipayFundTransfer {
             AlipayFundTransToaccountTransferResponse response = alipayClient.execute(request);
             if(response.isSuccess()){
                 System.out.println("调用成功");
+                return RET_OK;
             } else {
                 System.out.println("调用失败");
+                return RET_FAIL;
             }
         }catch (Exception e){
             System.out.println("调用失败,原因:"+e.getMessage());
         }
+        return RET_FAIL;
     }
 
     //测试

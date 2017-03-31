@@ -195,7 +195,7 @@
         r.remarks as remarks
     </sql>
 
-    <select id="findAll" parameterType="com.vstock.db.entity.PricePeak" resultMap="BaseResultMap">
+    <select id="findAll" parameterType="com.vstock.db.entity.Refund" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM refund r
@@ -203,19 +203,19 @@
         ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="find" parameterType="com.vstock.db.entity.PricePeak" resultType="com.vstock.db.entity.PricePeak">
+    <select id="find" parameterType="com.vstock.db.entity.Refund" resultType="com.vstock.db.entity.Refund">
         SELECT
         <include refid="Base_Column_List"/>
         FROM refund r
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
-    <select id="findCount" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
+    <select id="findCount" parameterType="com.vstock.db.entity.Refund" resultType="Integer">
         SELECT COUNT(*) FROM refund r
         <include refid="SearchAllByPage_Where_Clause"/>
     </select>
 
-    <select id="findAllDate" parameterType="com.vstock.db.entity.PricePeak" resultMap="BaseResultMap">
+    <select id="findAllDate" parameterType="com.vstock.db.entity.Refund" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM refund r
@@ -224,7 +224,7 @@
         ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
-    <select id="findCountDate" parameterType="com.vstock.db.entity.PricePeak" resultType="Integer">
+    <select id="findCountDate" parameterType="com.vstock.db.entity.Refund" resultType="Integer">
         SELECT COUNT(*) FROM refund r
         <include refid="SearchAllByPage_Where_Clause"/>
         <include refid="SearchAllByPage_Where_Date"/>

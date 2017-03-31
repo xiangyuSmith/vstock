@@ -97,6 +97,7 @@
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top am-margin-bottom-sm">
                         <a href="/resfund/insertRefund" class="am-btn am-btn-danger am-fl am-btn-sm am-margin-left am-padding-left-sm"><i class="am-icon-plus am-margin-right-xs"></i>新增</a>
+                        <a href="/resfund/insertRefund" class="am-btn am-btn-success am-fl am-btn-sm am-margin-left am-padding-left-sm"><i class="am-icon-money am-margin-right-xs"></i>批量退款</a>
                         <button href="javascript: void(0);" type="submit" class="am-btn am-btn-primary am-fr">查询</button>
                     </div>
                 </form>
@@ -107,8 +108,9 @@
                 <table class="am-table am-table-bd am-table-striped admin-content-table">
                     <thead>
                     <tr>
-                        <th>退款单号</th>
+                        <th><input type="checkbox" id="SelectAll"/></th>
                         <th>退款类型</th>
+                        <th>退款单号</th>
                         <th>订单号</th>
                         <th>商品名称</th>
                         <th>退款对象</th>
@@ -121,7 +123,7 @@
                     <c:if test="${not empty refundList}">
                         <c:forEach items="${refundList}" var="refund">
                             <tr>
-                                <td>${refund.refundNo}</td>
+                                <td><input type="checkbox" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>/></td>
                                 <td><c:forEach items="${typeList}" var="type"><c:if test="${type.type == refund.type}">${type.btfName}</c:if></c:forEach></td>
                                 <td>${refund.tradeNo}</td>
                                 <td>
@@ -138,7 +140,16 @@
                                 <td><fmt:formatNumber value="${refund.refundPrice}" type="currency" pattern="#,##0.0#"/></td>
                                 <td><c:forEach items="${statusList}" var="status"><c:if test="${status.status == refund.status}">${status.btfName}</c:if></c:forEach></td>
                                 <td>${refund.createDate}</td>
-                                <td><a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" btf_id="${refund.btfId}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>确认付款</a></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${refund.type == 1 || refund.type == 3 || refund.type == 4 || refund.type == 5 || refund.type == 0}">
+                                            <a href="/resfund/alipayRefund?id=${refund.id}&tradeNo=${refund.tradeNo}&type=${refund.type}&status=1&upstatus=51" class="am-btn am-btn-sm am-btn-success am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>退款</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" btf_id="${refund.btfId}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>转账</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
                         </c:forEach>
                     </c:if>
@@ -167,7 +178,19 @@
 <jsp:include page="../common/bottom.jsp" flush="true"/>
 <script type="text/javascript">
     jQuery(function($){
-        
+
+        $("#SelectAll").click(function () {selectAll();});
+
+        //复选框事件
+        //全选、取消全选的事件
+        function selectAll(){
+            if ($("#SelectAll").is(":checked")) {
+                $(":checkbox:enabled").prop("checked", true);
+            } else {
+                $(":checkbox").attr("checked", false);
+            }
+        }
+
         $('.finance-sbt-btn').click(function () {
             $('#my-confirm').modal({
                 relatedTarget: this,
@@ -176,13 +199,11 @@
                     var id = $this.attr('data-id');
                     var tradeNo = $this.attr('tradeNo');
                     var typee = $this.attr('data-type');
-                    var btf_id = $this.attr('btf_id');
                     var upstatus = "61";
                     if (typee == 1){upstatus = "51";}
-                    $.post("/resfund/saveRefund",{
+                    $.post("/resfund/transferAccounts",{
                         'id' : id,
                         'tradeNo' : tradeNo,
-                        'btfId' : btf_id,
                         'type': typee,
                         'upstatus':upstatus,
                         'status' : 1

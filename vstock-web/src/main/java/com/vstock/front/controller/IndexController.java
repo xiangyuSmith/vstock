@@ -6,7 +6,7 @@ import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.*;
-import com.vstock.server.express.ExpressLogistics;
+import com.vstock.server.alipay.service.AlipayRefund;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -162,14 +162,17 @@ public class IndexController extends BaseController {
     }
 
     @RequestMapping("test")
-    public String test() {
-        ExpressLogistics.getexpress("shunfeng","928462804323");
+    public String test(ModelMap model) {
+//        String detail_data = "2017033121001004920225206224^10^协商退款";
+//        String seller_user_id = "2088412547710924";
+//        Map<String, String> sParaTemp = AlipayRefund.refund("1",detail_data,"");
+//        model.addAttribute("sParaTemp",sParaTemp);
         return "/index/test";
     }
 
     @RequestMapping("testIndex")
     public String testIndex() {
-        return "/user/comm/leftmeun";
+        return "/index/test";
     }
 
     @RequestMapping("testSale")

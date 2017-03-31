@@ -1,17 +1,21 @@
 package com.vstock.admin.service;
 
+import com.vstock.db.dao.IPaymentDao;
 import com.vstock.db.dao.IRefundDao;
-import com.vstock.db.entity.Bid;
-import com.vstock.db.entity.Refund;
-import com.vstock.db.entity.Trade;
+import com.vstock.db.dao.IUserAccountDao;
+import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.OddNoUtil;
 import com.vstock.ext.util.Page;
+import com.vstock.server.alipay.service.AlipayFundTransfer;
+import com.vstock.server.alipay.service.AlipayRefund;
+import com.vstock.server.util.StatusUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RefundService {
@@ -19,10 +23,25 @@ public class RefundService {
     IRefundDao refundDao;
 
     @Autowired
+    IPaymentDao paymentDao;
+
+    @Autowired
+    IUserAccountDao userAccountDao;
+
+    @Autowired
     BidService bidService;
 
     @Autowired
     TradeService tradeService;
+
+    /**
+     * 查询支付记录
+     * @param record
+     * @return
+     */
+    public Payment findPayment(Payment record){
+        return paymentDao.findByTrade(record);
+    }
 
     /**
      * 查询所有记录
@@ -161,6 +180,129 @@ public class RefundService {
             }
         }
         return amount;
+    }
+
+    /**
+     * 修改退款单状态和叫价单或者订单的状态
+     * @param record    退款单对象
+     * @param upstatus  修改状态
+     * @param tradeId   订单ID
+     * @return
+     */
+    public int refundAndTransfer(Refund record,String upstatus,String tradeId){
+        int i = this.save(record);
+        if (i > 0){
+            if (upstatus != null && !"".equals(upstatus) && (Integer.parseInt(record.getType()) == 1 || Integer.parseInt(record.getType()) == 3)){
+                Bid bid = new Bid();
+                bid.setId(Integer.parseInt(record.getTradeNo()));
+                bid.setStatus(upstatus);
+                i = bidService.update(bid);
+            }else {
+                Trade trade = new Trade();
+                if (tradeId == null || "".equals(tradeId)){
+                    Trade trades = new Trade();
+                    trades.setTradeNo(record.getTradeNo());
+                    trades = tradeService.findTrade(trades);
+                    trade.setId(trades.getId());
+                }else {
+                    trade.setId(Integer.parseInt(tradeId));
+                }
+                trade.setStatus(Integer.parseInt(upstatus));
+                i = tradeService.update(trade);
+            }
+        }
+        return i;
+    }
+
+    /**
+     * 单笔退款方法
+     * @param record
+     * @param upstatus
+     * @return
+     */
+    public Map<String, String> refundObj(Refund record, String upstatus){
+        List<Refund> refundList = StatusUtil.refundType();
+        String url = "?id="+record.getId()+"&tradeNo="+record.getTradeNo()+"&type="+record.getType()+"&status="+record.getStatus()+"&upstatus="+upstatus;
+        String detail_data ="";
+        Refund refundf = new Refund();
+        refundf.setId(record.getId());
+        refundf = this.find(refundf);
+        refundf.setRefundPrice(new BigDecimal(0.01));
+        //判断是叫价退款、还是订单退款
+        if (Integer.parseInt(record.getType()) == 1 || Integer.parseInt(record.getType()) == 3){
+            Bid bid = new Bid();
+            bid.setId(Integer.parseInt(record.getTradeNo()));
+            Page page = new Page(10,"1");
+            List<Bid> bidList = bidService.findBid(bid,page);
+            if (bidList.size() > 0){
+                bid = bidList.get(0);
+                Payment payment = new Payment();
+                payment.setId(bid.getPaymentId());
+                payment = this.findPayment(payment);
+                if (payment != null){
+                    for (Refund  refund : refundList) {
+                        if (refund.getType().equals(record.getType())) {
+                            detail_data = payment.getPayment_number() + "^" + refundf.getRefundPrice().setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue() + "^"+refund.getBtfName();
+                        }
+                    }
+                }
+            }
+        }else {
+            Payment payment = new Payment();
+            payment.setId(Integer.parseInt(record.getTradeNo()));
+            payment = this.findPayment(payment);
+            if (payment != null){
+                for (Refund  refund : refundList) {
+                    if (refund.getType().equals(record.getType())) {
+                        detail_data = payment.getPayment_number() + "^" + refundf.getRefundPrice().setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue() + "^"+refund.getBtfName();
+                    }
+                }
+            }
+        }
+        return AlipayRefund.refund("1",detail_data,url);
+    }
+
+    /**
+     * 转账借口
+     * @param record  退款单对象
+     * @return
+     */
+    public int transferAccountsObj(Refund record){
+        int i = 0;
+        List<Refund> refundList = StatusUtil.refundType();
+        Refund refund = new Refund();
+        refund.setId(record.getId());
+        refund = this.find(refund);
+        if (refund != null){
+            Trade trade = new Trade();
+            trade.setTradeNo(refund.getTradeNo());
+            trade = tradeService.findTrade(trade);
+            if (trade != null){
+                UserAccount userAccount = new UserAccount();
+                if ("0".equals(refund.getRefundObj())){
+                    userAccount = userAccountDao.findAccountByUid(trade.getSellerId().toString());
+                }else {
+                    userAccount = userAccountDao.findAccountByUid(trade.getSellerId().toString());
+                    //判断个人身份认证信息中是否有支付宝账号
+                    if (userAccount == null){
+                        Payment payment = new Payment();
+                        payment.setOrder_record_id(trade.getId());
+                        payment.setPayment_user_id(trade.getBuyersId());
+                        payment.setPayment_status(10);
+                        Page page = new Page(10,"1");
+                        List<Payment> paymentList = paymentDao.findAll(payment,page.getStartPos(),page.getPageSize());
+                        if (paymentList.size() > 0){//查找最近一条付款记录的支付宝账号，为买家账号转账
+                            userAccount.setAlipay_account(paymentList.get(paymentList.size()-1).getPayment_alipay_name());
+                        }
+                    }
+                }
+                for (Refund refundT : refundList) {
+                    if (refundT.getType().equals(refund.getType()))
+                    i = AlipayFundTransfer.alipayfundServer(refund.getRefundNo(), userAccount.getAlipay_account(), refund.getRefundPrice().setScale(2,BigDecimal.ROUND_HALF_UP).toString(), refund.getBtfName(), refundT.getBtfName());
+                }
+            }
+        }
+        return i;
     }
 
     public String linkAddress(Refund record,String startTime,String endTime, String linkAddress){

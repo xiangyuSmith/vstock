@@ -20,10 +20,13 @@ public class AlipayConfig {
 
 	//域名
 //	public static String now_url = "http://www.v-stock.com";
-	public static String now_url = "116.228.89.158:1236";
+	public static String now_url = "http://116.228.89.158:1235";
 
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = partner;
+
+	//卖家支付宝账号
+	public static String seller_email="chenc9831@vip.qq.com";
 
 	//商户的私钥,需要PKCS8格式，RSA公私钥生成：https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.nBDxfy&treeId=58&articleId=103242&docType=1
 	public static String private_key = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANM3vbGYq3rIVENH\n" +
