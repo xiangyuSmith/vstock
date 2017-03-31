@@ -214,6 +214,11 @@ public class TradeService {
                 record = this.findTrade(trade);
                 int a = refundService.refundLiquidated(record,remarks);
                 if (a > 0) {
+                    //验货失败
+                    User user = new User();
+                    user.setId(String.valueOf(record.getSellerId()));
+                    user.setStatus(0);
+                    userService.update(user);
                     i = backCommodityService.savefail(record, remarks);
                 }
             }
