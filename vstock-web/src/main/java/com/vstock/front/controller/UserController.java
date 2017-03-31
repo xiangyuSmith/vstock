@@ -222,15 +222,17 @@ public class UserController extends BaseController {
         record.setStatus(0);
         List<UserAssets> userAssetsList = userAssetsService.findUserAssets(record);
         for (int i = 0; i < userAssetsList.size(); i++){
-            if(userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value().compareTo(userAssetsList.get(i).getMoney()) == 1){
-                userAssetsList.get(i).getBasicinformationRose().setType(1);
-            }else if (userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value().compareTo(userAssetsList.get(i).getMoney()) == -1){
-                userAssetsList.get(i).getBasicinformationRose().setType(0);
-            }else {
-                userAssetsList.get(i).getBasicinformationRose().setType(1);
+            if(userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value() != null){
+                if(userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value().compareTo(userAssetsList.get(i).getMoney()) == 1){
+                    userAssetsList.get(i).getBasicinformationRose().setType(1);
+                }else if (userAssetsList.get(i).getBasicinformationRose().getCurrent_market_value().compareTo(userAssetsList.get(i).getMoney()) == -1){
+                    userAssetsList.get(i).getBasicinformationRose().setType(0);
+                }else {
+                    userAssetsList.get(i).getBasicinformationRose().setType(1);
+                }
+                userAssetsList.get(i).getBasicinformationRose().setChange_range(userAssetsList.get(i).getBasicinformationRose()
+                        .getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),4, RoundingMode.HALF_UP));
             }
-            userAssetsList.get(i).getBasicinformationRose().setChange_range(userAssetsList.get(i).getBasicinformationRose()
-                    .getCurrent_market_value().divide(userAssetsList.get(i).getMoney(),4, RoundingMode.HALF_UP));
         }
         BasicinformationRose basicinformationRose = userAssetsService.findUserAssBasRose(record);
         model.put("basicinformationRose",basicinformationRose);

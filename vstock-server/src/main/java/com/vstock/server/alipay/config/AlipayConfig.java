@@ -20,7 +20,7 @@ public class AlipayConfig {
 
 	//域名
 //	public static String now_url = "http://www.v-stock.com";
-	public static String now_url = "116.228.89.158:1236";
+	public static String now_url = "http://116.228.89.158:1236";
 
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = partner;
@@ -84,14 +84,13 @@ public class AlipayConfig {
 	//支付宝登录需要授权执行的目标服务地址
 	public static String target_service = "user.auth.quick.login";
 
-	public static String login_return_url = "http://www.v-stock.com/login/alipayLogin";
+	public static String login_return_url =  now_url + "/login/alipayLogin";
 
 	//支付调用App登录用APPID
 	public static final String ALIPAY_APP_ID="2017020805565784";
 
 	//支付宝调用历史获取用户信息回调地址
-	public static final String ALIPAY_LOGIN_URL="http://www.v-stock.com/login/alipayLogin";
-//	public static final String ALIPAY_LOGIN_URL="http://116.228.89.158:1235/login/alipayLogin";
+	public static final String ALIPAY_LOGIN_URL= now_url + "/login/alipayLogin";
 
 
 //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

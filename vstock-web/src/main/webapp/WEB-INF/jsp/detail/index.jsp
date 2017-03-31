@@ -45,6 +45,7 @@
 <%@include file="../layout/top-search.jsp" %>
 <article>
     <input class="loginType" type="hidden" value="${resultModel.relogin}" />
+    <input type="hidden" id="vUserStatus" value="${vUser.status}">
     <input class="basicinformationName" type="hidden" value="${basicinformation.name}" />
     <input class="basicinformationId" type="hidden" value="${basicinformation.id}" />
     <div class="am-container-content" style="margin-top: 4.2rem">
@@ -292,6 +293,11 @@
             }
         });
         $("#sell").click(function(){
+            var vUserStatus = $("#vUserStatus").val();
+            if(vUserStatus == 0){
+                alertTips(2,"提示","您的账号无法出售，请联系客服!");
+                return false;
+            }
             if(loginType == "false"){
                 $("#login-click").click();
             }else{
