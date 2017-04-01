@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,17 @@ public class IndexController extends BaseController {
     @Autowired
     UserService userService;
 
+    public List<ResultData>  removeDuplicate(List<ResultData> list)   {
+        for  ( int  i  =   0 ; i  <  list.size()  -   1 ; i ++ )   {
+            for  ( int  j  =  list.size()  -   1 ; j  >  i; j -- )   {
+                if  (list.get(j).getStoreName().equals(list.get(i).getStoreName()))   {
+                    list.remove(j);
+                }
+            }
+        }
+        return list;
+    }
+
     @RequestMapping
     public String index(ModelMap modelMap) {
         setLastPage(0, 10);
@@ -47,7 +59,7 @@ public class IndexController extends BaseController {
         List<Bid> sellBidList = bidService.findNewAll(bid, lagePage);
         bid.setType("1");
         List<Bid> buyBidList = bidService.findNewAll(bid, lagePage);
-        List<Basicinformation> baolist = basicinformationService.findByBao(1);
+        List<Basicinformation> baolist = basicinformationService.findByType(1);
         List<Basicinformation> miniMoneyList = basicinformationService.findByType(2);
         List<Basicinformation> heightMoneyList = basicinformationService.findByType(3);
         List<Basicinformation> bigRoseList = basicinformationService.findByType(4);
@@ -60,6 +72,28 @@ public class IndexController extends BaseController {
             }
             if (prMini != null) {
                 miniMoneyList.get(i).setMinimumBid(prMini.getMinimumSellingPrice().doubleValue());
+            }
+        }
+        ResultData r = new ResultData();
+        int transactionCount;
+        for (Basicinformation b : baolist) {
+            transactionCount = 0;
+            r.setBasiciformationId(b.getId());
+            List<ResultData> resultDataList = resultDataService.findResultDataAll(r);
+            resultDataList = removeDuplicate(resultDataList);
+
+            if(resultDataList.size() > 0){
+                for (ResultData resultdata : resultDataList) {
+                    if(resultdata.getTransactionRecord() != null && !"".equals(resultdata.getTransactionRecord())){
+                        transactionCount = transactionCount + Integer.parseInt(resultdata.getTransactionRecord());
+                    }
+                }
+                resultDataList.get(0).setTransactionRecord(String.valueOf(transactionCount));
+                b.setResultData(resultDataList.get(0));
+            }else{
+                ResultData rd = new ResultData();
+                rd.setTransactionRecord(String.valueOf(transactionCount));
+                b.setResultData(rd);
             }
         }
         //最大涨幅

@@ -54,66 +54,64 @@
         </div>
     </div>
 </div>
-<c:if test="${not empty buyBidList} || ${not empty sellBidList}">
-    <article class="am-show-lg-only">
-        <div class="am-container-sell" style="height: 135px;overflow: hidden;">
-            <div class="am-u-md-6 am-padding-right-sm">
-                <div class="am-u-md-12" style="background-color: #eefdf2;padding: 3px;">
-                    <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #3fcd65;">买家</span></div>
-                    <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <ul class="buyBid">
-                                    <c:forEach items="${buyBidList}" var="buybid">
-                                        <li class="news-item">
-                                            <table cellpadding="4">
-                                                <tr>
-                                                    <td>
-                                                        <a class="panDong" href="/detail?proName=${buybid.bftName}">
-                                                            <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p>
-                                                            <p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p>
-                                                            <p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="am-u-md-6 am-padding-0">
-                <div class="am-u-md-12" style="background-color: #ffeef0;padding: 3px;">
-                    <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #E26472;">卖家</span></div>
-                    <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <ul class="sellBid">
-                                    <c:forEach items="${sellBidList}" var="sellbid">
-                                        <li class="news-item">
-                                            <table cellpadding="4">
-                                                <tr>
-                                                    <td>
-                                                        <a class="panDong" href="/detail?proName=${sellbid.bftName}">
-                                                            <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></p>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
+<article class="am-show-lg-only">
+    <div class="am-container-sell" style="height: 135px;overflow: hidden;">
+        <div class="am-u-md-6 am-padding-right-sm">
+            <div class="am-u-md-12" style="background-color: #eefdf2;padding: 3px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #3fcd65;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #3fcd65;">买家</span></div>
+                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="buyBid">
+                                <c:forEach items="${buyBidList}" var="buybid">
+                                    <li class="news-item">
+                                        <table cellpadding="4">
+                                            <tr>
+                                                <td>
+                                                    <a class="panDong" href="/detail?proName=${buybid.bftName}">
+                                                        <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p>
+                                                        <p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p>
+                                                        <p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </article>
-</c:if>
+        <div class="am-u-md-6 am-padding-0">
+            <div class="am-u-md-12" style="background-color: #ffeef0;padding: 3px;">
+                <div class="am-u-md-3" style="height: 80%;border-right: 1px solid #E26472;line-height: 110px;text-align: center;margin-top: 15px;"><span class="layout-font-size-30" style="color: #E26472;">卖家</span></div>
+                <div class="am-u-md-9" style="height: 100%;font-size: 36px;color: #221714;padding-top: 17px;">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <ul class="sellBid">
+                                <c:forEach items="${sellBidList}" var="sellbid">
+                                    <li class="news-item">
+                                        <table cellpadding="4">
+                                            <tr>
+                                                <td>
+                                                    <a class="panDong" href="/detail?proName=${sellbid.bftName}">
+                                                        <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></p>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
 <article class="am-show-lg-only am-text-center">
     <div style="margin-top: 60px;margin-bottom: 74px;overflow: hidden;" class="am-margin-top-xl am-text-center am-container-content" >
         <div class="am-u-md-4 am-padding-0">
