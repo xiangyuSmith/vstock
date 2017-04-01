@@ -159,6 +159,7 @@
                 AND b.type = #{type}
             </otherwise>
         </choose>
+        ORDER BY b.createtime DESC LIMIT 0,4;
     </select>
 
     <select id="findByBao" resultMap="ResultDataMap">
