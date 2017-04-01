@@ -125,6 +125,7 @@
                             <tr>
                                 <td><input type="checkbox" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>/></td>
                                 <td><c:forEach items="${typeList}" var="type"><c:if test="${type.type == refund.type}">${type.btfName}</c:if></c:forEach></td>
+                                <td>${refund.refundNo}</td>
                                 <td>${refund.tradeNo}</td>
                                 <td>
                                     <c:choose>
