@@ -95,6 +95,31 @@ public class BidController extends BaseController{
             int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
             if(payResult == 0){
                 logger.info("bid payment add fail ...");
+            }else {//添加成功
+                if (payment.getId() == -1){//返回ID为-1重新查询获取ID
+                    System.out.println("|---------------------------------------------------------------------|");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|添加支付是否成功返回值："+payResult+"|");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|---------------------------------------------------------------------|");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|添加支付是否成功返回对象ID："+payment.getId()+"|");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|---------------------------------------------------------------------|");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|添加支付是否成功返回对象中支付宝订单："+payment.getPayment_number()+"|");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|                                                                     |");
+                    System.out.println("|---------------------------------------------------------------------|");
+                    Payment paymentO = new Payment();
+                    paymentO.setPayment_number(payment.getPayment_number());
+                    payment = paymentService.findByTrade(paymentO);
+                }
             }
             PricePeak pricePeak = pricePeakService.getHighestAndlowest(basicinformationId,size, DateUtils.dateToString(new Date()),lagePage);
             int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),basicinformationId,size,uid,type);
