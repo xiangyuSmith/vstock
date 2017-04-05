@@ -29,6 +29,8 @@
                         <c:choose>
                             <c:when test="${not empty basicinformation.id}">
                                 <input type="hidden" name="id" value="${basicinformation.id}">
+                                <input type="hidden" name="state" value="${basicinformation.state}"/>
+                                <%--<input type="hidden" name="bid" value="${basicinformation.bid}"/>--%>
                                 <div class="am-form-group">
                                     <label>品 &nbsp;&nbsp;牌 : </label>
                                     <input type="hidden" id="brand" class="am-input-sm" value="${basicinformation.brand}">
@@ -80,8 +82,6 @@
                                     <%-- 缩略图 --%>
                                     <input type="file" name="files" id="files" /><img src="" id="imgs" />
                                 </div>
-                                <input type="hidden" name="state" value="${basicinformation.state}" readonly/>
-                                <input type="hidden" name="bid" value="${basicinformation.bid}"/>
                             </c:when>
                             <c:otherwise>
                                 <div class="am-form-group">
