@@ -52,9 +52,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 doc-example am-padding-left-0 am-padding-right-0">
                 <pre class="am-pre-scrollable" style="background-color:#FFFFF4;color:#2B292A; min-height: 288px;">
                     <table id="queryResult" class="result-info result-info-down" cellspacing="0">
-                        <div>
-                            <span  class="am-text-center am-padding-right-xl" style="color:#8D8D8D;">正在加载中...........</span>
-                        </div>
+                        <tbody><tr><td class="am-padding-left-xl" style="color:#8D8D8D;">正在加载中...........</td></tr></tbody>
                     </table>
                 </pre>
             </div>

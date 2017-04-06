@@ -996,9 +996,9 @@
                     }else {
                         $('#expressName-value').text(res[0].expressName);
                         $('#expressNum-value').text(res[0].status);
-                        html = "<div>\n" +
-                                "<span  class=\"am-text-center am-padding-right-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</span>\n" +
-                                "</div>";
+                        html = "<tbody>\n" +
+                                "<tr><td class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</td></tr>\n" +
+                                "</tbody>";
                         html = "<tbody>"+html+"</tbody>";
                         $('#queryResult').html("");
                         $('#queryResult').html(html);
