@@ -52,49 +52,9 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 doc-example am-padding-left-0 am-padding-right-0">
                 <pre class="am-pre-scrollable" style="background-color:#FFFFF4;color:#2B292A; min-height: 288px;">
                     <table id="queryResult" class="result-info result-info-down" cellspacing="0">
-                       <tr>
-                         <td class="am-padding-left-sm am-padding-right-sm">
-                         <div class="col2">
-                          <span class="step">
-                         <span class="line1"></span>
-                            </span>
-                            </div>
-                            </td>
-                            <td class="am-padding-left-sm">
-                            <span>2017-02-27</span>
-                            <span class="span-sty"></span>
-                            </td>
-                            <td class="am-padding-left">
-                            <span>周一</span>
-                            <span class="span-sty"></span>
-                            </td>
-                            <td class="am-padding-left">
-                            <span>18:53:13</span>
-                            <span class="span-sty"></span>
-                            </td>
-                            <td class="am-padding-left-xl" style="display: inline;">98456651561</td>
-                            </tr>
-                        <tr>
-                         <td class="am-padding-left-sm am-padding-right-sm">
-                         <div class="col2">
-                          <span class="step">
-                            </span>
-                            </div>
-                            </td>
-                            <td class="am-padding-left-sm">
-                            <span>2017-02-27</span>
-                            <span class="span-sty"></span>
-                            </td>
-                            <td class="am-padding-left">
-                            <span>周一</span>
-                            <span class="span-sty"></span>
-                            </td>
-                            <td class="am-padding-left">
-                            <span>18:53:13</span>
-                            <span class="span-sty"></span>
-                            </td>
-                            <td class="am-padding-left-xl" style="display: inline;">98456651561</td>
-                            </tr>
+                        <div>
+                            <span  class="am-text-center am-padding-right-xl" style="color:#8D8D8D;">正在加载中...........</span>
+                        </div>
                     </table>
                 </pre>
             </div>
