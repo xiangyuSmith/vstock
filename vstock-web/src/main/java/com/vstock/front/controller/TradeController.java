@@ -103,8 +103,10 @@ public class TradeController extends BaseController{
         //TODO 加入订单，关联买家叫价
         int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
         int isBond = status==0?1:0;
+        //拼接订单的收货地址
+        String receivingInformation = userAddress.getLocalArea()+"-"+userAddress.getDetailedAddress()+"-"+userAddress.getConsigneeName()+"-"+userAddress.getPhoneNumber()+"-"+userAddress.getLandlineNumber();
         String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
-        Trade trade = new Trade(isBond,addressId,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, "0",
+        Trade trade = new Trade(isBond,addressId,receivingInformation,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, "0",
                 new BigDecimal(amount).setScale(2, BigDecimal.ROUND_HALF_UP), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
         int tradeId = tradeService.createTradeOne(trade, VstockConfigService.getConfig(IVstockConfigService.TRADE__BOGE_VSTOCK_MD5KEY));
         if(tradeId == 0){

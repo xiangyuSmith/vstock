@@ -174,6 +174,12 @@ public class TradeService {
         return trade.getId();
     }
 
+    /**
+     * 校验码验证
+     * @param record   订单对象
+     * @param tradeMd5Key   加密言
+     * @return  成功（失败）
+     */
     public boolean verificationSgin(Trade record,String tradeMd5Key){
         Trade trade = new Trade();
         trade.setId(record.getId());
