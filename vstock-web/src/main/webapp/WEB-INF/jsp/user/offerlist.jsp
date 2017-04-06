@@ -66,7 +66,7 @@
                                         <c:if test="${bid.status == 2}">
                                             <li><a class="am-btn am-btn-xs am-text-left deliver-bid-goods" bid-id="${bid.id}" bft-id="${bid.basicinformationId}" data-type="${bid.type}" bid_type="0" href="javascript:void(0)"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">重新支付</span></a></li>
                                         </c:if>
-                                        <c:if test="${bid.status == 11}">
+                                        <c:if test="${bid.status == 11 || bid.status == 50 || bid.status == 51}">
                                             <li><a class="am-btn am-btn-xs am-text-left" data_type="0" href="${cxt}/detail?proName=${bid.bftName}&size=${bid.bftSize}"><div style="float: left; display: block;width: 20px;height: 18px; background: url('/assets/i/personal_center.png'); background-position: -50px -32px;"></div><span class="am-text-left am-text-sm">重新叫价</span></a></li>
                                         </c:if>
                                         <c:if test="${bid.status == 10}">
@@ -74,7 +74,7 @@
                                             <li><a class="am-btn am-btn-xs am-text-left sale-sub" data_type="0" data_id="${bid.id}" btf-id="${bid.basicinformationId}" href="javascript:void(0)" disabled='true'><i class="am-icon-save am-margin-right-xs"></i><span class="am-text-left am-text-sm">保存</span></a></li>
                                             <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-quit" href="javascript:void(0)" disabled='true'><i class="am-icon-remove am-margin-right-xs"></i><span class="am-text-left am-text-sm">取消</span></a></li>
                                         </c:if>
-                                        <c:if test="${bid.status == 1 || bid.status == 11 || bid.status == 30}">
+                                        <c:if test="${bid.status == 1 || bid.status == 11 || bid.status == 30 || bid.status == 50 || bid.status == 51}">
                                             <li><a class="am-btn am-btn-xs am-text-left am-link-muted sale-del" del_data_id="${bid.id}" data-type="${bid.type}" btf-id="${bid.basicinformationId}"  href="javascript:void(0)"><img class="am-margin-right-xs" src="/assets/i/delete.png"/><span class="am-text-left am-text-sm">删除</span></a></li>
                                         </c:if>
                                     </ul>

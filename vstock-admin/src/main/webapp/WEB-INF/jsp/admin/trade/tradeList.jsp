@@ -40,6 +40,36 @@
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>收货地区：</label>
+                    <span><c:if test="${not empty trade.receivingInformation}">${fn:split(trade.receivingInformation,'-')[0]}</c:if></span>
+                </div>
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>详细地址：</label>
+                    <span><c:if test="${not empty trade.receivingInformation}">${fn:split(trade.receivingInformation,'-')[1]}</c:if></span>
+                </div>
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>收货人：</label>
+                    <span><c:if test="${not empty trade.receivingInformation}">${fn:split(trade.receivingInformation,'-')[2]}</c:if></span>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>手机号码：</label>
+                    <span>
+                        <c:if test="${not empty trade.receivingInformation}">
+                            <c:choose>
+                                <c:when test="${not empty fn:split(trade.receivingInformation,'-')[3]}">
+                                    ${fn:split(trade.receivingInformation,'-')[3]}
+                                </c:when>
+                                <c:when test="${not empty fn:split(trade.receivingInformation,'-')[4]}">
+                                    ${fn:split(trade.receivingInformation,'-')[4]}
+                                </c:when>
+                                <c:otherwise></c:otherwise>
+                            </c:choose>
+                        </c:if>
+                    </span>
+                </div>
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                     <label>快递公司：</label>
                     <span>${trade.companyName}</span>
                 </div>
@@ -47,6 +77,8 @@
                     <label>快递单号：</label>
                     <span>${trade.courierNumber}</span>
                 </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-lg">
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                     <label>状态：</label>
                     <span>
@@ -57,8 +89,6 @@
                         </c:if>
                     </span>
                 </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-lg">
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                     <label>交易日期：</label>
                     <span>${trade.transactionDate}</span>
