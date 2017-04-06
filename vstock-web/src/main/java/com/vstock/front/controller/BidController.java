@@ -36,6 +36,8 @@ public class BidController extends BaseController{
     @Autowired
     PaymentService paymentService;
 
+    final BigDecimal bidMoney = new BigDecimal(0.01).setScale(2,BigDecimal.ROUND_HALF_UP);
+
     @RequestMapping
     @ResponseBody
     public ResultModel index(){
@@ -68,14 +70,34 @@ public class BidController extends BaseController{
         if(verify_result){
             setLastPage(0,1);
             String[] extra_common_param = getParam("extra_common_param").split("\\|");
+            String bname = extra_common_param[6];
+            String isUserHome = extra_common_param[7];
+            if("1".equals(isUserHome)){
+                return "redirect:/user/index";
+            }else{
+                return "redirect:/detail?proName="+bname;
+            }
+        }
+        return "/error";
+    }
+
+    @RequestMapping("returnBid")
+    @ResponseBody
+    public String returnBid(){
+        //获取支付宝GET过来反馈信息
+        Map requestParams = request.getParameterMap();
+        Map<String,String> params = bidService.eachMap(requestParams);
+        //计算得出通知验证结果
+        boolean verify_result = AlipayNotify.verify(params);
+        if(verify_result){
+            setLastPage(0,1);
+            String[] extra_common_param = getParam("extra_common_param").split("\\|");
             String uid = extra_common_param[0];
             int type = Integer.parseInt(extra_common_param[1]);
             int basicinformationId = Integer.parseInt(extra_common_param[2]);
             int bid = Integer.parseInt(extra_common_param[3]);
             String size = extra_common_param[4];
             double amount = Double.parseDouble(extra_common_param[5]);
-            String bname = extra_common_param[6];
-            String isUserHome = extra_common_param[7];
             String trade_no = getParam("trade_no");
             String buyer_email = getParam("buyer_email");
             String body = getParam("body");
@@ -90,7 +112,7 @@ public class BidController extends BaseController{
             payment.setPayment_type(type);
             payment.setPayment_date(DateUtils.dateToString(new Date()));
             payment.setPayment_over_date(DateUtils.getNowdateAddmm());
-            payment.setPayment_money(new BigDecimal(amount));
+            payment.setPayment_money(bidMoney);
             payment.setPayment_explain(body);
             int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
             if(payResult == 0){
@@ -132,13 +154,10 @@ public class BidController extends BaseController{
             bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
             int bidStatus = bidService.update(bidObj);
             logger.info("叫价支付,叫价人:"+bidObj.getUserId()+",叫价支付时间:"+DateUtils.dateToString(new Date())+",叫价状态:"+bidStatus);
-            if("1".equals(isUserHome)){
-                return "redirect:/user/index";
-            }else{
-                return "redirect:/detail?proName="+bname;
-            }
+            return "success";
+        }else{
+            return "fail";
         }
-        return "/error";
     }
 
     @RequestMapping("createPayAlipay")
@@ -164,7 +183,7 @@ public class BidController extends BaseController{
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname+"|"+isUserHome);
         sParaTemp.put("out_trade_no", "bid_"+System.currentTimeMillis()+String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
-        sParaTemp.put("total_fee", String.valueOf(0.01));
+        sParaTemp.put("total_fee", String.valueOf(bidMoney));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";
@@ -190,21 +209,6 @@ public class BidController extends BaseController{
         }
         param.put("sgin",sgin);
         return param;
-    }
-
-    @RequestMapping("returnBid")
-    @ResponseBody
-    public String returnBid(){
-        //获取支付宝GET过来反馈信息
-        Map requestParams = request.getParameterMap();
-        Map<String,String> params = bidService.eachMap(requestParams);
-        //计算得出通知验证结果
-        boolean verify_result = AlipayNotify.verify(params);
-        if(verify_result){
-            return "success";
-        }else{
-            return "fail";
-        }
     }
 
     @RequestMapping("ischeck")

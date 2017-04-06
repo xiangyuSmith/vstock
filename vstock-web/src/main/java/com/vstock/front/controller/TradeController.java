@@ -45,6 +45,8 @@ public class TradeController extends BaseController{
     @Autowired
     RefundService refundService;
 
+    final BigDecimal bidMoney = new BigDecimal(0.01).setScale(2,BigDecimal.ROUND_HALF_UP);
+
     @RequestMapping
     @ResponseBody
     public ResultModel index(){
@@ -101,10 +103,10 @@ public class TradeController extends BaseController{
             userTradeId = Integer.parseInt(uid);
         }
         //TODO 加入订单，关联买家叫价
-        int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
-        int isBond = status==0?1:0;
         //拼接订单的收货地址
         String receivingInformation = userAddress.getLocalArea()+"-"+userAddress.getDetailedAddress()+"-"+userAddress.getConsigneeName()+"-"+userAddress.getPhoneNumber()+"-"+userAddress.getLandlineNumber();
+        int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
+        int isBond = status==0?1:0;
         String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
         Trade trade = new Trade(isBond,addressId,receivingInformation,yunFee,size, DateUtils.dateToString(new Date()), DateUtils.dateToString(new Date()), status, "0",
                 new BigDecimal(amount).setScale(2, BigDecimal.ROUND_HALF_UP), bid1.getBasicinformationId(), bid1.getId(), bidId, userTradeId,orderNo);
@@ -166,6 +168,27 @@ public class TradeController extends BaseController{
         Map<String,String> params = bidService.eachMap(requestParams);
         //计算得出通知验证结果
         boolean verify_result = AlipayNotify.verify(params);
+        if(verify_result){setLastPage(0,1);
+            String[] extra_common_param = getParam("extra_common_param").split("\\|");
+            String bname = extra_common_param[5];
+            String isUserHome = extra_common_param[6];
+            if("1".equals(isUserHome)){
+                return "redirect:/user/index";
+            }else{
+                return "redirect:/detail?proName="+bname;
+            }
+        }
+        return "/error";
+    }
+
+    @RequestMapping("returnTradePay")
+    @ResponseBody
+    public String returnTradePay(){
+        //获取支付宝GET过来反馈信息
+        Map requestParams = request.getParameterMap();
+        Map<String,String> params = bidService.eachMap(requestParams);
+        //计算得出通知验证结果
+        boolean verify_result = AlipayNotify.verify(params);
         if(verify_result){
             setLastPage(0,1);
             String[] extra_common_param = getParam("extra_common_param").split("\\|");
@@ -174,12 +197,12 @@ public class TradeController extends BaseController{
             int tradeId = Integer.parseInt(extra_common_param[2]);
             double amount = Double.parseDouble(extra_common_param[3]);
             String ischeck = extra_common_param[4];
-            String bname = extra_common_param[5];
-            String isUserHome = extra_common_param[6];
+            String trade_no = getParam("trade_no");
+            String buyer_email = getParam("buyer_email");
             Trade t = new Trade();
             t.setId(tradeId);
             List<Trade> tradeList = tradeService.findTrade(t,lagePage);
-            if(!"1".equals(ischeck)){
+            if("2".equals(ischeck)){
                 //更新叫价 & 峰值
                 Trade trade = tradeList.get(0);
                 int sort = 0;
@@ -202,12 +225,15 @@ public class TradeController extends BaseController{
             payment.setPayment_user_id(Long.parseLong(uid));
             payment.setOrder_record_id(tradeId);
             payment.setPayment_status(10);
+            payment.setPayment_alipay_name(buyer_email);
+            payment.setPayment_number(trade_no);
             payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
             payment.setPayment_type(type);
             payment.setPayment_date(DateUtils.dateToString(new Date()));
             payment.setPayment_over_date(DateUtils.getNowdateAddmm());
             payment.setPayment_money(new BigDecimal(amount));
-            payment.setPayment_explain("支付说明");
+            if(type == 2){ payment.setPayment_explain("支付说明:卖家出售-支付保证金"); }
+            if(type == 3){ payment.setPayment_explain("支付说明:买家购买-支付鞋款"); }
             int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
             if(payResult == 0){
                 System.out.print("支付失败");
@@ -255,24 +281,6 @@ public class TradeController extends BaseController{
             trade.setStatus(tradeStatus);
             trade.setTransactionDate(DateUtils.dateToString(new Date()));
             tradeService.update(trade);
-            if("1".equals(isUserHome)){
-                return "redirect:/user/index";
-            }else{
-                return "redirect:/detail?proName="+bname;
-            }
-        }
-        return "/error";
-    }
-
-    @RequestMapping("returnTradePay")
-    @ResponseBody
-    public String returnTradePay(){
-        //获取支付宝GET过来反馈信息
-        Map requestParams = request.getParameterMap();
-        Map<String,String> params = bidService.eachMap(requestParams);
-        //计算得出通知验证结果
-        boolean verify_result = AlipayNotify.verify(params);
-        if(verify_result){
             return "success";
         }else{
             return "fail";
@@ -294,14 +302,15 @@ public class TradeController extends BaseController{
         Map<String, String> sParaTemp = new HashMap<String, String>();
         BigDecimal amountFinal;
         if(type == 2){
-            amountFinal = new BigDecimal(0.01);
+            amountFinal = bidMoney;
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
             sParaTemp.put("out_trade_no", "100_"+System.currentTimeMillis()+String.valueOf(tradeId));
         }else {
+            //如果是线上环境则用下面这句
 //            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
-            amountFinal = new BigDecimal(0.01);
+            amountFinal = bidMoney;
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", "200_"+System.currentTimeMillis()+String.valueOf(tradeId));

@@ -294,41 +294,53 @@
         });
         $("#sell").click(function(){
             var vUserStatus = $("#vUserStatus").val();
-            if(vUserStatus == 0){
-                alertTips(2,"提示","您的账号无法出售，请联系客服!");
-                return false;
-            }
-            if(loginType == "false"){
-                $("#login-click").click();
-            }else{
-                loadingshow();
-                sendRequest("/user/cardIdentify",null,function(res){
-                    loadingclose();
-                    if(res.retCode == 1){
-                        $("#sell-click").click();
-                    }else{
-                        $("#identify-tips-click").click();
+            loadingshow();
+            sendRequest("/login/islogin",null,function(res){
+                loadingclose();
+                if(res.relogin == false){
+                    $("#login-click").click();
+                }else{
+                    if(vUserStatus == 0){
+                        alertTips(2,"提示","您的账号无法出售，请联系客服!");
+                        return false;
                     }
-                })
-            }
+                    loadingshow();
+                    sendRequest("/user/cardIdentify",null,function(res){
+                        loadingclose();
+                        if(res.retCode == 1){
+                            $("#sell-click").click();
+                        }else{
+                            $("#identify-tips-click").click();
+                        }
+                    })
+                }
+            });
         });
         $("#join-assets").click(function(){
-            if(loginType == "false"){
-                $("#login-click").click();
-            }else{
-                $("#join-assets-click").click();
-            }
+            loadingshow();
+            sendRequest("/login/islogin",null,function(res){
+                loadingclose();
+                if(res.relogin == false){
+                    $("#login-click").click();
+                }else{
+                    $("#join-assets-click").click();
+                }
+            });
         });
         $("#goAuthentication").click(function(){
             $("#my-popup-identify-tips").modal('close');
             $("#identify-click").click();
         });
         $("#buy").click(function(){
-            if(loginType == "false"){
-                $("#login-click").click();
-            }else{
-                $("#buy-click").click();
-            }
+            loadingshow();
+            sendRequest("/login/islogin",null,function(res){
+                loadingclose();
+                if(res.relogin == false){
+                    $("#login-click").click();
+                }else{
+                    $("#buy-click").click();
+                }
+            });
         });
 
         $("#now-sell-bid").click(function(){
@@ -502,9 +514,9 @@
                     function createPay(){
                         type = type==1?2:3;
                         if(type == 3){
-                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";
-                        }else{
                             location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=1"+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";
+                        }else{
+                            location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&bId="+bId+"&size="+size+"&ischeck=2"+"&tradeId="+ res.data.tradeId +"&bname="+bname+"&isUserHome=0";
                         }
                         return;
 //                        sendRequest("/trade/createTradePay",{

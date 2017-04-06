@@ -4,7 +4,7 @@
         <input id="bftId" type="hidden" value="${basicinformation.id}" />
         <div class="am-modal-hd" style="background-color: #00CD61;">
             <div class="am-active am-g am-padding-bottom-sm" style="color: #FFFFFF;">
-                <span class="am-fl am-text-lg am-margin-left-sm">购买流程</span>
+                <span class="am-fl am-text-lg am-margin-left-sm">出售流程</span>
             </div>
             <a href="javascript: void(0)" id="my-sale-description" class="am-close am-close-spin" data-am-modal-close>×</a>
         </div>
