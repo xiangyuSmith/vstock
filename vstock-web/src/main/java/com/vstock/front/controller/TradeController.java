@@ -202,7 +202,7 @@ public class TradeController extends BaseController{
             Trade t = new Trade();
             t.setId(tradeId);
             List<Trade> tradeList = tradeService.findTrade(t,lagePage);
-            if("2".equals(ischeck)){
+            if(!"1".equals(ischeck)){
                 //更新叫价 & 峰值
                 Trade trade = tradeList.get(0);
                 int sort = 0;
