@@ -994,19 +994,19 @@
                         $('#expressName-value').text(res[res.length-1][0].expressName);
                         $('#expressNum-value').text(res[res.length-1][0].status);
                     }else {
-                        $('#expressName-value').text(res[0].expressName);
-                        $('#expressNum-value').text(res[0].status);
-                        html = "<tbody>\n" +
-                                "<tr><td class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</td></tr>\n" +
-                                "</tbody>";
+                        $('#expressName-value').text(res[0][0].expressName);
+                        $('#expressNum-value').text(res[0][0].status);
+                        html = "<>\n" +
+                                "<td class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</td>\n" +
+                                "</tr>";
                         html = "<tbody>"+html+"</tbody>";
                         $('#queryResult').html("");
                         $('#queryResult').html(html);
                     }
                 }else {
-                    html = "<div>\n" +
-                            "<span  class=\"am-text-center am-padding-right-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</span>\n" +
-                            "</div>";
+                    html = "<tr>\n" +
+                            "<td  class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</td>\n" +
+                            "</tr>";
                     html = "<tbody>"+html+"</tbody>";
                     $('#queryResult').html("");
                     $('#queryResult').html(html);
