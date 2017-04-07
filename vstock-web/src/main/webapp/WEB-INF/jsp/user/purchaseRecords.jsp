@@ -105,7 +105,7 @@
             <div style="float: left; display: block;width: 37px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -983px -18px;"></div>
             <span class="am-fl layout-font-size-26">购买记录</span>
             <c:if test="${not empty tradeList}">
-                <span class="am-fr" style="color: #249bd3;line-height: 38px;"><a href="javascript:void(0)" data-url="../user/buysell?type=1" class="offer-btn layout-font-size-18">更多记录</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -18px;"></div></span>
+                <span class="am-fr" style="color: #249bd3;line-height: 38px;"><a href="javascript:void(0)" data-url="../user/buysell?type=1&pageNow=1" class="offer-btn layout-font-size-18">更多记录</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -18px;"></div></span>
             </c:if>
         </caption>
         <c:choose>
