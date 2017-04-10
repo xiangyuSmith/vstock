@@ -383,6 +383,9 @@
     <update id="update">
         UPDATE `trade`
         <set>
+            <if test="obj.isBond != null">
+                is_bond = #{obj.isBond,jdbcType=INTEGER},
+            </if>
             <if test="obj.updateDate != null and obj.updateDate != ''">
                 update_date = #{obj.updateDate,jdbcType=TIMESTAMP},
             </if>

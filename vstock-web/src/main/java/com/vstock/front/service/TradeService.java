@@ -126,6 +126,7 @@ public class TradeService {
         t.setStatus(record.getStatus());
         t.setUpdateDate(record.getUpdateDate());
         t.setBuysaleType(record.getBuysaleType());
+        t.setIsBond(record.getIsBond());
         return tradeDao.update(t);
     }
 
