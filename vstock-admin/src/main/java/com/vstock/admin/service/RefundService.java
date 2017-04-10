@@ -190,28 +190,33 @@ public class RefundService {
      * @return
      */
     public int refundAndTransfer(Refund record,String upstatus,String tradeId){
-        int i = this.save(record);
-        if (i > 0){
-            if (upstatus != null && !"".equals(upstatus) && (Integer.parseInt(record.getType()) == 1 || Integer.parseInt(record.getType()) == 3)){
-                Bid bid = new Bid();
-                bid.setId(Integer.parseInt(record.getTradeNo()));
-                bid.setStatus(upstatus);
-                i = bidService.update(bid);
-            }else {
-                Trade trade = new Trade();
-                if (tradeId == null || "".equals(tradeId)){
-                    Trade trades = new Trade();
-                    trades.setTradeNo(record.getTradeNo());
-                    trades = tradeService.findTrade(trades);
-                    trade.setId(trades.getId());
-                }else {
-                    trade.setId(Integer.parseInt(tradeId));
+        //判断退款订单是否修改过
+        int a = this.findCount(record);
+        if ( a == 0) {
+            a = this.save(record);
+            if (a > 0) {
+                if (upstatus != null && !"".equals(upstatus) && (Integer.parseInt(record.getType()) == 1 || Integer.parseInt(record.getType()) == 3)) {
+                    Bid bid = new Bid();
+                    bid.setId(Integer.parseInt(record.getTradeNo()));
+                    bid.setStatus(upstatus);
+                    a = bidService.update(bid);
+                } else {
+                    Trade trade = new Trade();
+                    if (tradeId == null || "".equals(tradeId)) {
+                        Trade trades = new Trade();
+                        trades.setTradeNo(record.getTradeNo());
+                        trades = tradeService.findTrade(trades);
+                        trade.setId(trades.getId());
+                    } else {
+                        trade.setId(Integer.parseInt(tradeId));
+                    }
+                    trade.setStatus(Integer.parseInt(upstatus));
+                    a = tradeService.update(trade);
                 }
-                trade.setStatus(Integer.parseInt(upstatus));
-                i = tradeService.update(trade);
             }
+            return a;
         }
-        return i;
+        return a;
     }
 
     /**
