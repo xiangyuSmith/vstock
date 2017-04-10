@@ -50,7 +50,12 @@
                         <c:forEach items="${statusList}" var="status">
 
                             <c:if test="${status.id == trade.status}">
-                                <c:if test="${type == 0}">${status.bftName}</c:if>
+                                <c:if test="${type == 0}">
+                                <c:choose>
+                                    <c:when test="${trade.status == 1}">等待买家支付</c:when>
+                                    <c:otherwise>${status.bftName}</c:otherwise>
+                                </c:choose>
+                                </c:if>
                                 <c:if test="${type == 1}">
                                     <c:choose>
                                         <c:when test="${trade.status == 60}">

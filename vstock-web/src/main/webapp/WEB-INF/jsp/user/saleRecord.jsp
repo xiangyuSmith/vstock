@@ -138,7 +138,10 @@
                     <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
                     <c:forEach items="${statusList}" var="status">
                         <c:if test="${status.id == trade.status}">
-                            <td class="am-text-sm">${status.bftName}</td>
+                            <c:choose>
+                                <c:when test="${trade.status == 1}"><td class="am-text-sm">等待买家支付</td></c:when>
+                                <c:otherwise><td class="am-text-sm">${status.bftName}</td></c:otherwise>
+                            </c:choose>
                         </c:if>
                     </c:forEach>
                     <td>
