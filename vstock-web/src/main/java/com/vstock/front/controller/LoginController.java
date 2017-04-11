@@ -171,6 +171,19 @@ public class LoginController extends BaseController {
         return resultModel;
     }
 
+    @RequestMapping("islogin")
+    @ResponseBody
+    public ResultModel islogin() {
+        ResultModel resultModel = new ResultModel();
+        String uid = (String) WebUtils.getSessionAttribute(request,User.SESSION_USER_ID);
+        if("".equals(uid) || uid == null){
+            resultModel.setRelogin(false);
+        }else{
+            resultModel.setRelogin(true);
+        }
+        return resultModel;
+    }
+
     @RequestMapping("alipay")
     public String alipay(ModelMap model) {
         String url = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm";

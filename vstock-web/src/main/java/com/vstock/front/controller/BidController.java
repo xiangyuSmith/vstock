@@ -36,6 +36,8 @@ public class BidController extends BaseController{
     @Autowired
     PaymentService paymentService;
 
+    final BigDecimal bidMoney = new BigDecimal(10).setScale(2,BigDecimal.ROUND_HALF_UP);
+
     @RequestMapping
     @ResponseBody
     public ResultModel index(){
@@ -68,70 +70,8 @@ public class BidController extends BaseController{
         if(verify_result){
             setLastPage(0,1);
             String[] extra_common_param = getParam("extra_common_param").split("\\|");
-            String uid = extra_common_param[0];
-            int type = Integer.parseInt(extra_common_param[1]);
-            int basicinformationId = Integer.parseInt(extra_common_param[2]);
-            int bid = Integer.parseInt(extra_common_param[3]);
-            String size = extra_common_param[4];
-            double amount = Double.parseDouble(extra_common_param[5]);
             String bname = extra_common_param[6];
             String isUserHome = extra_common_param[7];
-            String trade_no = getParam("trade_no");
-            String buyer_email = getParam("buyer_email");
-            String body = getParam("body");
-            //TODO 校验 sign
-            //TODO 支付保证金，若成功，则叫价 （ 固定状态和数据，接第三方后更改 ）
-            Payment payment = new Payment();
-            payment.setPayment_user_id(Long.parseLong(uid));
-            payment.setPayment_status(10);
-            payment.setPayment_alipay_name(buyer_email);
-            payment.setPayment_number(trade_no);
-            payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
-            payment.setPayment_type(type);
-            payment.setPayment_date(DateUtils.dateToString(new Date()));
-            payment.setPayment_over_date(DateUtils.getNowdateAddmm());
-            payment.setPayment_money(new BigDecimal(amount));
-            payment.setPayment_explain(body);
-            int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
-            if(payResult == 0){
-                logger.info("bid payment add fail ...");
-            }else {//添加成功
-                if (payment.getId() == -1){//返回ID为-1重新查询获取ID
-                    System.out.println("|---------------------------------------------------------------------|");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|添加支付是否成功返回值："+payResult+"|");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|---------------------------------------------------------------------|");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|添加支付是否成功返回对象ID："+payment.getId()+"|");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|---------------------------------------------------------------------|");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|添加支付是否成功返回对象中支付宝订单："+payment.getPayment_number()+"|");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|                                                                     |");
-                    System.out.println("|---------------------------------------------------------------------|");
-                    Payment paymentO = new Payment();
-                    paymentO.setPayment_number(payment.getPayment_number());
-                    payment = paymentService.findByTrade(paymentO);
-                }
-            }
-            PricePeak pricePeak = pricePeakService.getHighestAndlowest(basicinformationId,size, DateUtils.dateToString(new Date()),lagePage);
-            int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),basicinformationId,size,uid,type);
-            int paymentId = payment.getId();
-            logger.info("更新叫价");
-            Bid bidObj = new Bid();
-            bidObj.setId(bid);
-            bidObj.setPaymentId(paymentId);
-            bidObj.setBidDate(DateUtils.dateToString(new Date()));
-            bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
-            int bidStatus = bidService.update(bidObj);
-            logger.info("叫价支付,叫价人:"+bidObj.getUserId()+",叫价支付时间:"+DateUtils.dateToString(new Date())+",叫价状态:"+bidStatus);
             if("1".equals(isUserHome)){
                 return "redirect:/user/index";
             }else{
@@ -139,6 +79,93 @@ public class BidController extends BaseController{
             }
         }
         return "/error";
+    }
+
+    @RequestMapping("returnBid")
+    @ResponseBody
+    public String returnBid(){
+        //获取支付宝GET过来反馈信息
+        Map requestParams = request.getParameterMap();
+        Map<String,String> params = bidService.eachMap(requestParams);
+        //计算得出通知验证结果
+        boolean verify_result = AlipayNotify.verify(params);
+        if(verify_result){
+            setLastPage(0,1);
+            String[] extra_common_param = getParam("extra_common_param").split("\\|");
+            String uid = extra_common_param[0];
+            int type = Integer.parseInt(extra_common_param[1]);
+            int basicinformationId = Integer.parseInt(extra_common_param[2]);
+            int bid = Integer.parseInt(extra_common_param[3]);
+            String size = extra_common_param[4];
+            double amount = Double.parseDouble(extra_common_param[5]);
+            String trade_no = getParam("trade_no");
+            String buyer_email = getParam("buyer_email");
+            String body = getParam("body");
+            //校验是否为叫价待付款
+            Bid bFind = new Bid();
+            bFind.setId(bid);
+            bFind = bidService.findbid(bFind);
+            if(String.valueOf(bFind.STATUS_PENDING).equals(bFind.getStatus())){
+                //TODO 支付保证金，若成功，则叫价 （ 固定状态和数据，接第三方后更改 ）
+                Payment payment = new Payment();
+                payment.setPayment_user_id(Long.parseLong(uid));
+                payment.setPayment_status(10);
+                payment.setPayment_alipay_name(buyer_email);
+                payment.setPayment_number(trade_no);
+                payment.setPayment_mode(Payment.PAY_SOURCE_ALIPAY);
+                payment.setPayment_type(type);
+                payment.setPayment_date(DateUtils.dateToString(new Date()));
+                payment.setPayment_over_date(DateUtils.getNowdateAddmm());
+                payment.setPayment_money(bidMoney);
+                payment.setPayment_explain(body);
+                int payResult = paymentService.cteatePay(payment,VstockConfigService.getConfig(IVstockConfigService.PAY__BOGE_VSTOCK_MD5KEY));
+                if(payResult == 0){
+                    logger.info("bid payment add fail ...");
+                }else {//添加成功
+                    if (payment.getId() == -1){//返回ID为-1重新查询获取ID
+                        System.out.println("|---------------------------------------------------------------------|");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|添加支付是否成功返回值："+payResult+"|");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|---------------------------------------------------------------------|");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|添加支付是否成功返回对象ID："+payment.getId()+"|");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|---------------------------------------------------------------------|");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|添加支付是否成功返回对象中支付宝订单："+payment.getPayment_number()+"|");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|                                                                     |");
+                        System.out.println("|---------------------------------------------------------------------|");
+                        Payment paymentO = new Payment();
+                        paymentO.setPayment_number(payment.getPayment_number());
+                        payment = paymentService.findByTrade(paymentO);
+                    }
+                }
+                PricePeak pricePeak = pricePeakService.getHighestAndlowest(basicinformationId,size, DateUtils.dateToString(new Date()),lagePage);
+                int resultPeak = pricePeakService.isAmount(pricePeak,new BigDecimal(amount),basicinformationId,size,uid,type);
+                int paymentId = payment.getId();
+                logger.info("更新叫价");
+                Bid bidObj = new Bid();
+                bidObj.setId(bid);
+                bidObj.setPaymentId(paymentId);
+                bidObj.setBidDate(DateUtils.dateToString(new Date()));
+                bidObj.setStatus(String.valueOf(bidObj.STATUS_INIT));
+                int bidStatus = bidService.update(bidObj);
+                logger.info("叫价支付,叫价人:"+bidObj.getUserId()+",叫价支付时间:"+DateUtils.dateToString(new Date())+",叫价状态:"+bidStatus);
+                return "success";
+            }else{
+                logger.info("叫价 - 支付宝重复回调，叫价单号 : " + bid);
+                return "success";
+            }
+        }else{
+            return "fail";
+        }
     }
 
     @RequestMapping("createPayAlipay")
@@ -164,7 +191,7 @@ public class BidController extends BaseController{
         sParaTemp.put("extra_common_param", uid+"|"+type+"|"+basicinformationId+"|"+bid+"|"+size+"|"+amount+"|"+bname+"|"+isUserHome);
         sParaTemp.put("out_trade_no", "bid_"+System.currentTimeMillis()+String.valueOf(bid));
         sParaTemp.put("subject", String.valueOf("商品叫价") + bname + ",尺码:" + size + "码");
-        sParaTemp.put("total_fee", String.valueOf(0.01));
+        sParaTemp.put("total_fee", String.valueOf(bidMoney));
         sParaTemp.put("body", "描述");
         modelMap.addAttribute("sParaTemp",sParaTemp);
         return "/common/alipay/alipayapi";
@@ -190,21 +217,6 @@ public class BidController extends BaseController{
         }
         param.put("sgin",sgin);
         return param;
-    }
-
-    @RequestMapping("returnBid")
-    @ResponseBody
-    public String returnBid(){
-        //获取支付宝GET过来反馈信息
-        Map requestParams = request.getParameterMap();
-        Map<String,String> params = bidService.eachMap(requestParams);
-        //计算得出通知验证结果
-        boolean verify_result = AlipayNotify.verify(params);
-        if(verify_result){
-            return "success";
-        }else{
-            return "fail";
-        }
     }
 
     @RequestMapping("ischeck")

@@ -105,7 +105,7 @@
             <div style="float: left; display: block;width: 37px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -983px -18px;"></div>
             <span class="am-fl layout-font-size-26">购买记录</span>
             <c:if test="${not empty tradeList}">
-                <span class="am-fr" style="color: #249bd3;line-height: 38px;"><a href="javascript:void(0)" data-url="../user/buysell?type=1" class="offer-btn layout-font-size-18">更多记录</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -18px;"></div></span>
+                <span class="am-fr" style="color: #249bd3;line-height: 38px;"><a href="javascript:void(0)" data-url="../user/buysell?type=1&pageNow=1" class="offer-btn layout-font-size-18">更多记录</a><div style="float: right; display: block;width: 25px;height: 45px; background: url('/assets/i/personal_center_map.png'); background-position: -940px -18px;"></div></span>
             </c:if>
         </caption>
         <c:choose>
@@ -151,7 +151,7 @@
                                 <div class="doc-dropdown-justify-js">
                                     <div class="am-dropdown doc-dropdown-js">
                                         <c:choose>
-                                            <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52 || trade.status == 10 || trade.status == 30 || trade.status == 20}">
+                                            <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52}">
                                                 <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                             </c:when>
                                             <c:otherwise>
@@ -164,8 +164,6 @@
                                             </c:if>
                                             <c:if test="${trade.status == 30}">
                                                 <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
-                                            </c:if>
-                                            <c:if test="${trade.status == 10 || trade.status == 30 || trade.status == 20}">
                                                 <li><a class="am-btn am-btn-xs am-text-left express-get" courierNumber="${trade.courierNumber}" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
                                             </c:if>
                                             <c:if test="${trade.status == 41 || trade.status == 52}">

@@ -34,17 +34,16 @@ public class RegisterController extends BaseController{
             resultModel.setRetMsg("验证码错误");
             return resultModel;
         }
-        String yaoqingCode = getParam("yaoqingCode","");
         //查看邀请码
-        UserInvitation userInvitation = userService.findInvitation(yaoqingCode);
-        if(userInvitation == null){
-            resultModel.setRetMsg("邀请码错误");
-            return resultModel;
-        }
-        if("1".equals(userInvitation.getStatus())){
-            resultModel.setRetMsg("该邀请码已被使用");
-            return resultModel;
-        }
+//        UserInvitation userInvitation = userService.findInvitation(yaoqingCode);
+//        if(userInvitation == null){
+//            resultModel.setRetMsg("邀请码错误");
+//            return resultModel;
+//        }
+//        if("1".equals(userInvitation.getStatus())){
+//            resultModel.setRetMsg("该邀请码已被使用");
+//            return resultModel;
+//        }
         String mobile = request.getParameter("mobile");
         String pwd = request.getParameter("password");
         String nick = request.getParameter("nick");
@@ -66,11 +65,6 @@ public class RegisterController extends BaseController{
         user.setSalt(salt);
         user.setNick(nick);
         user.setSize(size);
-        user.setInvitationId(String.valueOf(userInvitation.getId()));
-        UserInvitation invitationRecord = new UserInvitation();
-        invitationRecord.setId(userInvitation.getId());
-        invitationRecord.setStatus(String.valueOf(invitationRecord.INVITATION_Already_USE));
-        int resultInvitation = userService.updateInvitation(invitationRecord);
         int result = userService.insertUser(user);
         if(result == 1){
             resultModel.setRetMsg("注册成功，即将自动登录...");

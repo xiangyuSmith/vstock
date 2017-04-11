@@ -826,6 +826,12 @@
         }
 
         $("body").on("click",".express-get",function(){
+            var fhtml = "<tr>\n" +
+                    "<td class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">正在加载中...........</td>\n" +
+                    "</tr>";
+            fhtml = "<tbody>"+fhtml+"</tbody>";
+            $('#queryResult').html("");
+            $('#queryResult').html(fhtml);
             var $this = $(this);
             sendRequest("/user/getExpress",{
                 "tradeId":$this.attr("data-id"),
@@ -994,19 +1000,19 @@
                         $('#expressName-value').text(res[res.length-1][0].expressName);
                         $('#expressNum-value').text(res[res.length-1][0].status);
                     }else {
-                        $('#expressName-value').text(res[0].expressName);
-                        $('#expressNum-value').text(res[0].status);
-                        html = "<div>\n" +
-                                "<span  class=\"am-text-center am-padding-right-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</span>\n" +
-                                "</div>";
+                        $('#expressName-value').text(res[0][0].expressName);
+                        $('#expressNum-value').text(res[0][0].status);
+                        html = "<tr>\n" +
+                                "<td class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</td>\n" +
+                                "</tr>";
                         html = "<tbody>"+html+"</tbody>";
                         $('#queryResult').html("");
                         $('#queryResult').html(html);
                     }
                 }else {
-                    html = "<div>\n" +
-                            "<span  class=\"am-text-center am-padding-right-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</span>\n" +
-                            "</div>";
+                    html = "<tr>\n" +
+                            "<td  class=\"am-padding-left-xl\" style=\"color:#8D8D8D;\">抱歉，暂无物流信息！</td>\n" +
+                            "</tr>";
                     html = "<tbody>"+html+"</tbody>";
                     $('#queryResult').html("");
                     $('#queryResult').html(html);

@@ -138,14 +138,17 @@
                     <td class="am-text-sm"><fmt:formatNumber value="${trade.transactionMoney}" type="number" pattern="￥0.00"/></td>
                     <c:forEach items="${statusList}" var="status">
                         <c:if test="${status.id == trade.status}">
-                            <td class="am-text-sm">${status.bftName}</td>
+                            <c:choose>
+                                <c:when test="${trade.status == 1}"><td class="am-text-sm">等待买家支付</td></c:when>
+                                <c:otherwise><td class="am-text-sm">${status.bftName}</td></c:otherwise>
+                            </c:choose>
                         </c:if>
                     </c:forEach>
                     <td>
                         <div class="doc-dropdown-justify-js">
                             <div class="am-dropdown doc-dropdown-js">
                                 <c:choose>
-                                    <c:when test="${trade.status == 0 || trade.status == 2 || trade.status == 41 || trade.status == 51 || trade.status == 10 || trade.status == 30 || trade.status == 20}">
+                                    <c:when test="${trade.status == 0 || trade.status == 2 || trade.status == 41 || trade.status == 51 || trade.status == 10 || trade.status == 21 || trade.status == 20}">
                                         <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                     </c:when>
                                     <c:otherwise>
@@ -160,7 +163,7 @@
                                         <c:when test="${trade.status == 2}">
                                             <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)" data-am-modal="{target: '#deliverDoods-pop', width: 600}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
                                         </c:when>
-                                        <c:when test="${trade.status == 10 || trade.status == 30 || trade.status == 20}">
+                                        <c:when test="${trade.status == 10 || trade.status == 21 || trade.status == 20}">
                                             <li><a class="am-btn am-btn-xs am-text-left express-get" courierNumber="${trade.courierNumber}" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
                                         </c:when>
                                         <c:when test="${trade.status == 41 || trade.status == 51}">
