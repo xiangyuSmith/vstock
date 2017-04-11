@@ -48,7 +48,7 @@ public class TradeController extends BaseController{
     @Autowired
     RefundService refundService;
 
-    final BigDecimal bidMoney = new BigDecimal(0.01).setScale(2,BigDecimal.ROUND_HALF_UP);
+    final BigDecimal bidMoney = new BigDecimal(10).setScale(2,BigDecimal.ROUND_HALF_UP);
 
     @RequestMapping
     @ResponseBody
@@ -335,9 +335,9 @@ public class TradeController extends BaseController{
             sParaTemp.put("out_trade_no", "100_"+System.currentTimeMillis()+String.valueOf(tradeId));
         }else {
             //如果是线上环境则用下面这句
-//            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
+            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
-            amountFinal = bidMoney;
+//            amountFinal = bidMoney;
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", "200_"+System.currentTimeMillis()+String.valueOf(tradeId));
