@@ -36,7 +36,7 @@ public class BidController extends BaseController{
     @Autowired
     PaymentService paymentService;
 
-    final BigDecimal bidMoney = new BigDecimal(0.01).setScale(2,BigDecimal.ROUND_HALF_UP);
+    final BigDecimal bidMoney = new BigDecimal(10).setScale(2,BigDecimal.ROUND_HALF_UP);
 
     @RequestMapping
     @ResponseBody
