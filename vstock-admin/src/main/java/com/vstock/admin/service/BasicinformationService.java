@@ -60,6 +60,12 @@ public class BasicinformationService {
 
     //添加数据
     public int insertbasicinfrom(Basicinformation record) {
+        if ("".equals(record.getCofferprice())){
+            record.setCofferprice(null);
+        }
+        if ("".equals(record.getEofferprice())){
+            record.setEofferprice(null);
+        }
         return basicinformationDao.insert(record);
     }
 
