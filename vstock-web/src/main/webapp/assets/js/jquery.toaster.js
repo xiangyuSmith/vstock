@@ -26,7 +26,7 @@
 	}
 })();
 /**********************************************************************************/
-
+var $toast_tatol = [];
 (function ($,undefined)
 {
 	var toasting =
@@ -50,8 +50,17 @@
 			return toaster;
 		},
 
+
 		notify : function (title, message, priority)
 		{
+			if($toast_tatol.length>0) {
+				for($i=0;$i<$toast_tatol.length;$i++)
+				{
+					var $last_toast = $toast_tatol[$i];
+					$last_toast.remove();
+				}
+			}
+
 			var $toaster = this.gettoaster();
 			var $toast  = $(settings.toast.template.replace('%priority%', priority)).hide().css(settings.toast.css).addClass(settings.toast['class']);
 
@@ -68,6 +77,7 @@
 			if (settings.donotdismiss.indexOf(priority) === -1)
 			{
 				var timeout = (typeof settings.timeout === 'number') ? settings.timeout : ((typeof settings.timeout === 'object') && (priority in settings.timeout)) ? settings.timeout[priority] : 1500;
+				$toast_tatol.push($toast);
 				setTimeout(function()
 				{
 					settings.toast.remove($toast, function()
@@ -76,6 +86,7 @@
 					});
 				}, timeout);
 			}
+
 		}
 	};
 
@@ -101,10 +112,10 @@
 		{
 			'template' :
 			'<div class="alert alert-%priority% alert-dismissible" role="alert">' +
-				'<button type="button" class="close" data-dismiss="alert">' +
+				/*'<button type="button" class="close" data-dismiss="alert">' +
 					'<span aria-hidden="true">&times;</span>' +
 					'<span class="sr-only">Close</span>' +
-				'</button>' +
+				'</button>' +*/
 				'<span class="title"></span>: <span class="message"></span>' +
 			'</div>',
 
@@ -169,5 +180,12 @@
 	{
 		settings = {};
 		$.extend(settings, defaults);
+	};
+
+	$.toaster.clearMessage = function ()
+	{
+		this.reset();
+		settings.toast.remove();
+
 	};
 })(jQuery);
