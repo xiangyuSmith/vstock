@@ -44,6 +44,16 @@ public class RefundService {
     }
 
     /**
+     * 查询所有支付记录
+     * @param record
+     * @return
+     */
+    public List<Payment> findPaymentAll(Payment record){
+        Page page = new Page(10,"1");
+        return paymentDao.findAll(record,page.getStartPos(),page.getPageSize());
+    }
+
+    /**
      * 查询所有记录
      * @param record
      * @return
@@ -232,7 +242,7 @@ public class RefundService {
         Refund refundf = new Refund();
         refundf.setId(record.getId());
         refundf = this.find(refundf);
-        refundf.setRefundPrice(new BigDecimal(0.01));
+//        refundf.setRefundPrice(new BigDecimal(0.01));
         //判断是叫价退款、还是订单退款
         if (Integer.parseInt(record.getType()) == 1 || Integer.parseInt(record.getType()) == 3){
             Bid bid = new Bid();
@@ -253,9 +263,42 @@ public class RefundService {
                 }
             }
         }else {
+            Trade trade = new Trade();
+            trade.setTradeNo(record.getTradeNo());
+            trade = tradeService.findTrade(trade);
             Payment payment = new Payment();
-            payment.setId(Integer.parseInt(record.getTradeNo()));
-            payment = this.findPayment(payment);
+            payment.setPayment_status(10);
+            //判断是否是卖家叫价出售
+            if (Integer.parseInt(record.getType()) == 4){
+                Bid bid = new Bid();
+                bid.setId(trade.getBidId());
+                Page page = new Page(10,"1");
+                List<Bid> bidList = bidService.findAll(bid,page);
+                if (bidList.size() > 0){
+                    if ("0".equals(bidList.get(0).getType())) {
+                        payment.setId(bidList.get(0).getPaymentId());
+                        payment = this.findPayment(payment);
+                    }else {
+                        payment.setOrder_record_id(trade.getId());
+                        List<Payment> paymentList = this.findPaymentAll(payment);
+                        //判断订单是否绑定两笔支付成功的记录
+                        if (paymentList.size() > 1) {
+                            payment = paymentList.get(1);
+                        } else {
+                            payment = paymentList.get(0);
+                        }
+                    }
+                }
+            }else {
+                payment.setOrder_record_id(trade.getId());
+                List<Payment> paymentList = this.findPaymentAll(payment);
+                //判断订单是否绑定两笔支付成功的记录
+                if (paymentList.size() > 1) {
+                    payment = paymentList.get(1);
+                } else {
+                    payment = paymentList.get(0);
+                }
+            }
             if (payment != null){
                 for (Refund  refund : refundList) {
                     if (refund.getType().equals(record.getType())) {
