@@ -112,6 +112,27 @@ public class RefundService {
     public int findCountDate(Refund record,String startTime,String endTime){return refundDao.findCountDate(record,startTime,endTime);}
 
     /**
+     * 根据时间区间分页查询退款记录
+     * @param record    对象
+     * @param page      分页
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return
+     */
+    public List<Refund> findRefundAll(Refund record,Page page,String startTime,String endTime){
+        return refundDao.findRefundAll(record,startTime,endTime,page.getStartPos(),page.getPageSize());
+    }
+
+    /**
+     * 根据时间区间查询所有退款记录
+     * @param record       对象
+     * @param startTime     开始时间
+     * @param endTime       结束时间
+     * @return
+     */
+    public int findRefundCount(Refund record,String startTime,String endTime){return refundDao.findRefundCount(record,startTime,endTime);}
+
+    /**
      * 保存方法
      * @param record
      * @return

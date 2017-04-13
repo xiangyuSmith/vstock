@@ -110,6 +110,22 @@ public class StatusUtil {
     }
 
     /**
+     * 获取退款表类型（仅仅需要退款）
+     * @return
+     */
+    public static List<Refund> onlyrfType(){
+        List<Refund> refundList = new ArrayList<Refund>();
+        for (String str : Refund.onlyrfType){
+            Refund record = new Refund();
+            String[] type = str.split(":");
+            record.setType(type[0]);
+            record.setBtfName(type[1]);
+            refundList.add(record);
+        }
+        return refundList;
+    }
+
+    /**
      * 获取退款对象信息
      * @return
      */

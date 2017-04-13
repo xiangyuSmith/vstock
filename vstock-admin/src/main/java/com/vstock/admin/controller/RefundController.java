@@ -56,20 +56,43 @@ public class RefundController extends BaseController {
         if (endTime != null && !"".equals(endTime)){
             endTime = endTime + " 23:59:59";
         }
-        int totalCount =  refundService.findCountDate(record,startTime,endTime);
-        Page page = new Page(totalCount,pageNow);
-        List<Refund> refundList = refundService.findAllDate(record,page,startTime,endTime);
-        linkAddress = refundService.linkAddress(record,startTime,endTime,linkAddress);
         List<Refund> statusList = StatusUtil.refundStatus();
-        List<Refund> typeList = StatusUtil.refundType();
-        List<Refund> objList = StatusUtil.refundO();
-        model.put("linkAddress",linkAddress);
         model.put("statusList",statusList);
-        model.put("typeList",typeList);
+        List<Refund> objList = StatusUtil.refundO();
         model.put("objList",objList);
-        model.put("refundList",refundList);
-        model.put("page",page);
-        model.put("record",record);
+        //判断是否是需要转账
+        if ("5".equals(record.getType()) || "6".equals(record.getType())){
+            linkAddress = refundService.linkAddress(record,startTime,endTime,linkAddress);
+            List<Refund> typeList = StatusUtil.refundType();
+            model.put("typeList",typeList);
+            int totalCount =  refundService.findCountDate(record,startTime,endTime);
+            Page page = new Page(totalCount,pageNow);
+            List<Refund> refundList = refundService.findAllDate(record,page,startTime,endTime);
+            model.put("page",page);
+            model.put("refundList",refundList);
+            model.put("record",record);
+            //违约金跳转
+            if ("6".equals(record.getType())) {
+                linkAddress = linkAddress + "&type=6";
+                model.put("linkAddress",linkAddress);
+                return "admin/finance/damagesindex";
+            }else {//转账鞋款跳转
+                linkAddress = linkAddress + "&type=5";
+                model.put("linkAddress",linkAddress);
+                return null;
+            }
+        }else{
+            linkAddress = refundService.linkAddress(record,startTime,endTime,linkAddress);
+            model.put("linkAddress",linkAddress);
+            List<Refund> typeList = StatusUtil.onlyrfType();
+            model.put("typeList",typeList);
+            int totalCount =  refundService.findRefundCount(record,startTime,endTime);
+            Page page = new Page(totalCount,pageNow);
+            List<Refund> refundList = refundService.findRefundAll(record,page,startTime,endTime);
+            model.put("page",page);
+            model.put("refundList",refundList);
+            model.put("record",record);
+        }
         return "admin/finance/index";
     }
 

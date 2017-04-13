@@ -230,6 +230,23 @@
         <include refid="SearchAllByPage_Where_Date"/>
     </select>
 
+    <select id="findRefundAll" parameterType="com.vstock.db.entity.Refund" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SearchAllByPage_Where_Date"/>
+        AND r.type NOT IN (5,6)
+        ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findRefundCount" parameterType="com.vstock.db.entity.Refund" resultType="Integer">
+        SELECT COUNT(*) FROM refund r
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SearchAllByPage_Where_Date"/>
+        AND r.type NOT IN (5,6)
+    </select>
+
     <insert id="insert">
         INSERT INTO `refund`
         (`id`,`refund_no`,`trade_no`,`refund_obj`,`btf_id`,`btf_name`,`refund_price`,`status`,`type`,`create_date`,`remarks`)
