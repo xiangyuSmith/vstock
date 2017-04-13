@@ -41,7 +41,6 @@ public class Trade implements Serializable {
     private BigDecimal transactionMoney;
     private BigDecimal tradeFreight;
     private String receivingInformation;
-    private String courierNumber;
     private Integer status;
     private String buysaleType;
     private Integer isBond;
@@ -149,14 +148,6 @@ public class Trade implements Serializable {
         this.receivingInformation = receivingInformation;
     }
 
-    public String getCourierNumber() {
-        return courierNumber;
-    }
-
-    public void setCourierNumber(String courierNumber) {
-        this.courierNumber = courierNumber;
-    }
-
     public Integer getIsBond() {
         return isBond;
     }
@@ -261,7 +252,7 @@ public class Trade implements Serializable {
         this.userAddressId = userAddressId;
     }
 
-    public Trade(Integer id, String tradeNo, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, Integer userAddressId, BigDecimal transactionMoney, BigDecimal tradeFreight, String receivingInformation, String courierNumber, Integer status, String buysaleType, Integer isBond, String notStatus, String transactionDate, String updateDate, String sign, Bid bid, Payment payment, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
+    public Trade(Integer id, String tradeNo, Integer sellerId, Integer buyersId, Integer bidId, Integer basicinformationId, Integer userAddressId, BigDecimal transactionMoney, BigDecimal tradeFreight, String receivingInformation, Integer status, String buysaleType, Integer isBond, String notStatus, String transactionDate, String updateDate, String sign, Bid bid, Payment payment, String bftName, String bftSize, String sellerName, String buyersName, String companyName) {
         this.id = id;
         this.tradeNo = tradeNo;
         this.sellerId = sellerId;
@@ -272,7 +263,6 @@ public class Trade implements Serializable {
         this.transactionMoney = transactionMoney;
         this.tradeFreight = tradeFreight;
         this.receivingInformation = receivingInformation;
-        this.courierNumber = courierNumber;
         this.status = status;
         this.buysaleType = buysaleType;
         this.isBond = isBond;

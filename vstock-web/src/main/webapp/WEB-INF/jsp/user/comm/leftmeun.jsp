@@ -834,8 +834,7 @@
             $('#queryResult').html(fhtml);
             var $this = $(this);
             sendRequest("/user/getExpress",{
-                "tradeId":$this.attr("data-id"),
-                "expresNum":$this.attr("courierNumber")
+                "tradeId":$this.attr("data-id")
             },function(res){
                 if (res.length > 0){
                     var html = "";

@@ -40,6 +40,13 @@ public class TradeController {
     @Autowired
     LogisticsInformationService logisticsInformationService;
 
+    /**
+     * 订单查询
+     * @param record
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("index")
     public String index(Trade record, HttpServletRequest request, ModelMap model) {
         List<String> sizeList = new ArrayList<String>();
@@ -74,18 +81,34 @@ public class TradeController {
         return "admin/trade/index";
     }
 
+    /**
+     * 订单详情
+     * @param record
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("tradeList")
     public String tradeList(Trade record, HttpServletRequest request, ModelMap model) {
         Trade trade = new Trade();
         trade.setId(record.getId());
         trade = tradeService.findTrade(trade);
         List<List<String>> statusList = tradeService.status();
+        LogisticsInformation logisticsInformation = new LogisticsInformation();
+        logisticsInformation.setTradeId(trade.getId());
+        List<LogisticsInformation> logisticsInformationList = logisticsInformationService.findAll(logisticsInformation);
         model.put("statusList",statusList);
+        model.put("logisticsInformationList",logisticsInformationList);
         model.put("record",record);
         model.put("trade",trade);
         return "admin/trade/tradeList";
     }
 
+    /**
+     * 保存订单
+     * @param request
+     * @return
+     */
     @RequestMapping("saveTrade")
     @ResponseBody
     public Map<String,Object> saveTrade(HttpServletRequest request){
@@ -103,6 +126,13 @@ public class TradeController {
         return param;
     }
 
+    /**
+     * 叫价查询
+     * @param record
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("bidindex")
     public String bidindex(Bid record, HttpServletRequest request, ModelMap model) {
         List<String> sizeList = new ArrayList<String>();
@@ -137,6 +167,11 @@ public class TradeController {
         return "admin/trade/bidIndex";
     }
 
+    /**
+     * 检验通过发货
+     * @param request
+     * @return
+     */
     @RequestMapping("saveLogisticsIn")
     @ResponseBody
     public Map<String,Object> saveLogisticsIn(HttpServletRequest request){
@@ -147,10 +182,12 @@ public class TradeController {
         String companyName = request.getParameter("companyName");
         String courierNumber = request.getParameter("courierNumber");
         trade.setId(Integer.parseInt(id));
-        trade.setCourierNumber(courierNumber);
+//        trade.setCourierNumber(courierNumber);
         trade.setStatus(30);
         record.setTradeId(Integer.parseInt(id));
         record.setCompanyName(companyName);
+        record.setType("1");
+        record.setCourierNumber(courierNumber);
         int i = logisticsInformationService.save(record);
         if (i > 0) {
             i = tradeService.save(trade);
@@ -159,6 +196,13 @@ public class TradeController {
         return param;
     }
 
+    /**
+     * 峰值表查询
+     * @param record
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("pricepeak")
     public String pricepeak(PricePeak record, HttpServletRequest request, ModelMap model) {
         List<String> sizeList = new ArrayList<String>();

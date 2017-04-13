@@ -70,15 +70,69 @@
                     </span>
                 </div>
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                    <label>快递公司：</label>
-                    <span>${trade.companyName}</span>
+                    <label>卖家发货快递公司：</label>
+                    <c:if test="${logisticsInformationList != null}">
+                        <c:forEach items="${logisticsInformationList}" var="logisticsInformation">
+                            <c:if test="${logisticsInformation.type == 0}">
+                            <span>${logisticsInformation.companyName}</span>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
                 </div>
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
-                    <label>快递单号：</label>
-                    <span>${trade.courierNumber}</span>
+                    <label>卖家发货快递单号：</label>
+                    <c:if test="${logisticsInformationList != null}">
+                        <c:forEach items="${logisticsInformationList}" var="logisticsInformation">
+                            <c:if test="${logisticsInformation.type == 0}">
+                                <span>${logisticsInformation.courierNumber}</span>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-lg">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>买家收货快递公司：</label>
+                    <c:if test="${logisticsInformationList != null}">
+                        <c:forEach items="${logisticsInformationList}" var="logisticsInformation">
+                            <c:if test="${logisticsInformation.type == 1}">
+                                <span>${logisticsInformation.companyName}</span>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </div>
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>买家收货快递单号：</label>
+                    <c:if test="${logisticsInformationList != null}">
+                        <c:forEach items="${logisticsInformationList}" var="logisticsInformation">
+                            <c:if test="${logisticsInformation.type == 1}">
+                                <span>${logisticsInformation.courierNumber}</span>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </div>
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>退货卖家快递公司：</label>
+                    <c:if test="${logisticsInformationList != null}">
+                        <c:forEach items="${logisticsInformationList}" var="logisticsInformation">
+                            <c:if test="${logisticsInformation.type == 2}">
+                                <span>${logisticsInformation.companyName}</span>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom">
+                <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <label>退货卖家快递单号：</label>
+                    <c:if test="${logisticsInformationList != null}">
+                        <c:forEach items="${logisticsInformationList}" var="logisticsInformation">
+                            <c:if test="${logisticsInformation.type == 2}">
+                                <span>${logisticsInformation.courierNumber}</span>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </div>
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                     <label>状态：</label>
                     <span>
@@ -93,6 +147,8 @@
                     <label>交易日期：</label>
                     <span>${trade.transactionDate}</span>
                 </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-lg">
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end">
                     <label>更新日期：</label>
                     <span>${trade.updateDate}</span>

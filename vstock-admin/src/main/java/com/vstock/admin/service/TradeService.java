@@ -1,9 +1,12 @@
 package com.vstock.admin.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.vstock.db.dao.IPricePeakDao;
 import com.vstock.db.dao.ITradeDao;
 import com.vstock.db.entity.*;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.StringUtil;
+import com.vstock.server.express.ExpressLogistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class TradeService {
 
     @Autowired
     BasicinformationService basicinformationService;
+
+    @Autowired
+    LogisticsInformationService logisticsInformationService;
 
     @Autowired
     UserService userService;
@@ -208,6 +214,22 @@ public class TradeService {
                 record.setSign(null);
             }
             int i = this.updateAll(record);
+            //判断做检验通过和失败时，获取上一个物流信息存储
+            if (21 == record.getStatus() || 20 == record.getStatus()){
+                LogisticsInformation logisticsInformation = new LogisticsInformation();
+                logisticsInformation.setTradeId(record.getId());
+                List<LogisticsInformation> logisticsInformationList = logisticsInformationService.findAll(logisticsInformation);
+                if (logisticsInformationList.size() > 0) {
+                    //传入快递公司名称，转化为快递100接口参数名
+                    String expresName = StringUtil.expressName(logisticsInformationList.get(0).getCompanyName());
+                    //调用快递100接口获取物流信息
+                    JSONObject jsonObject = ExpressLogistics.getexpress(expresName,logisticsInformationList.get(0).getCourierNumber());
+                    logisticsInformation = logisticsInformationList.get(0);
+                    Object data = jsonObject.get("data");
+                    logisticsInformation.setInformation(data.toString());
+                    i = logisticsInformationService.save(logisticsInformation);
+                }
+            }
             if (21 == record.getStatus()){
                 Trade trade = new Trade();
                 trade.setId(record.getId());

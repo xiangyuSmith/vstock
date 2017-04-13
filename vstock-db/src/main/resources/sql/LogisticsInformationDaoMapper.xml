@@ -6,6 +6,8 @@
         <id property="id" column="id"/>
         <result column="tradeId" property="tradeId" jdbcType="INTEGER"/>
         <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
+        <result column="courierNumber" property="courierNumber" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="information" property="information" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
@@ -25,6 +27,12 @@
             </if>
             <if test="companyName != null and companyName != ''">
                 and li.company_name = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and li.courier_number = #{courierNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null and type != ''">
+                and li.type = #{type,jdbcType=VARCHAR}
             </if>
             <if test="information != null and information != ''">
                 and li.information = #{information,jdbcType=VARCHAR}
@@ -59,6 +67,12 @@
             <if test="obj.companyName != null and obj.companyName != ''">
                 and li.company_name = #{obj.companyName,jdbcType=VARCHAR}
             </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and li.courier_number = #{obj.courierNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                and li.type = #{obj.type,jdbcType=VARCHAR}
+            </if>
             <if test="obj.information != null and obj.information != ''">
                 and li.information = #{obj.information,jdbcType=VARCHAR}
             </if>
@@ -91,6 +105,12 @@
             </if>
             <if test="companyName != null and companyName != ''">
                 and li.company_name LIKE CONCAT('%',#{companyName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and li.courier_number LIKE CONCAT('%',#{courierNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="type != null and type != ''">
+                and li.type LIKE CONCAT('%',#{type,jdbcType=VARCHAR},'%')
             </if>
             <if test="information != null and information != ''">
                 and li.information = #{information,jdbcType=VARCHAR}
@@ -125,6 +145,12 @@
             <if test="obj.companyName != null and obj.companyName != ''">
                 and li.company_name LIKE CONCAT('%',#{obj.companyName,jdbcType=VARCHAR},'%')
             </if>
+            <if test="obj.courierNumber != null and obj.courierNumber != ''">
+                and li.courier_number LIKE CONCAT('%',#{obj.courierNumber,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.type != null and obj.type != ''">
+                and li.type LIKE CONCAT('%',#{obj.type,jdbcType=VARCHAR},'%')
+            </if>
             <if test="obj.information != null and obj.information != ''">
                 and li.information = #{obj.information,jdbcType=VARCHAR}
             </if>
@@ -150,6 +176,8 @@
         li.id as id,
         li.trade_id as tradeId,
         li.company_name as companyName,
+        li.courier_number as courierNumber,
+        li.type as type,
         li.information as information,
         li.status as status,
         li.create_date as createDate,
@@ -172,8 +200,8 @@
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `logistics_information`
-        (`id`,`trade_id`,`company_name`,`information`,`status`,`create_date`,`invalid_date`,`sign`,`logistics_explain`)
-        VALUES(null,#{tradeId},#{companyName},#{information},#{status},#{createDate},#{invalidDate},#{sign},#{logisticsExplain})
+        (`id`,`trade_id`,`company_name`,`courier_number`,`type`,`information`,`status`,`create_date`,`invalid_date`,`sign`,`logistics_explain`)
+        VALUES(null,#{tradeId},#{companyName},#{courierNumber},#{type},#{information},#{status},#{createDate},#{invalidDate},#{sign},#{logisticsExplain})
     </insert>
 
     <update id="update" parameterType="com.vstock.db.entity.LogisticsInformation">
@@ -184,6 +212,12 @@
             </if>
             <if test="companyName != null and companyName != ''">
                 company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                courier_number = #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type,jdbcType=VARCHAR},
             </if>
             <if test="information != null and information != ''">
                 information = #{information,jdbcType=VARCHAR},

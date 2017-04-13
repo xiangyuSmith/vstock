@@ -10,6 +10,8 @@ public class LogisticsInformation implements Serializable {
     private Integer id;
     private Integer tradeId;
     private String companyName;
+    private String courierNumber;
+    private String type;
     private String information;
     private String status;
     private String createDate;
@@ -21,10 +23,12 @@ public class LogisticsInformation implements Serializable {
         super();
     }
 
-    public LogisticsInformation(Integer id, Integer tradeId, String companyName, String information, String status, String createDate, String invalidDate, String sign, String logisticsExplain) {
+    public LogisticsInformation(Integer id, Integer tradeId, String companyName, String courierNumber, String type, String information, String status, String createDate, String invalidDate, String sign, String logisticsExplain) {
         this.id = id;
         this.tradeId = tradeId;
         this.companyName = companyName;
+        this.courierNumber = courierNumber;
+        this.type = type;
         this.information = information;
         this.status = status;
         this.createDate = createDate;
@@ -55,6 +59,22 @@ public class LogisticsInformation implements Serializable {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getCourierNumber() {
+        return courierNumber;
+    }
+
+    public void setCourierNumber(String courierNumber) {
+        this.courierNumber = courierNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getInformation() {

@@ -93,7 +93,7 @@
                                                 <li><a class="am-btn am-btn-xs am-text-left trade-save" explain="发货" status="10" utype="2" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="2" href="javascript:void(0)" data-am-modal="{target: '#deliverDoods-pop', width: 600}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">去发货</span></a></li>
                                             </c:when>
                                             <c:when test="${trade.status == 10 || trade.status == 21 || trade.status == 20}">
-                                                <li><a class="am-btn am-btn-xs am-text-left express-get" courierNumber="${trade.courierNumber}" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
+                                                <li><a class="am-btn am-btn-xs am-text-left express-get" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
                                             </c:when>
                                             <c:when test="${trade.status == 41 || trade.status == 51}">
                                                 <li>
@@ -123,7 +123,7 @@
                                         </c:if>
                                         <c:if test="${trade.status == 30}">
                                             <li><a class="am-btn am-btn-xs am-text-left tradeSave" explain="收货" status="40" utype="3" trade-no="${trade.tradeNo}" bidId="${trade.bidId}" data-id="${trade.id}"  trade-type="3" href="javascript:void(0)"><span class="am-text-left am-text-sm">确认收货</span></a></li>
-                                            <li><a class="am-btn am-btn-xs am-text-left express-get" courierNumber="${trade.courierNumber}" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
+                                            <li><a class="am-btn am-btn-xs am-text-left express-get" data-id="${trade.id}" href="javascript:void(0)" data-am-modal="{target: '#express-pop', width: 900}"><i class="am-icon-share am-margin-right-xs"></i><span class="am-text-left am-text-sm">查看物流</span></a></li>
                                         </c:if>
                                         <c:if test="${trade.status == 41 || trade.status == 52}">
                                             <li>

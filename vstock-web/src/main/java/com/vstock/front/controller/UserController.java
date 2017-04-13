@@ -240,6 +240,11 @@ public class UserController extends BaseController {
         return "/user/userAssets";
     }
 
+    /**
+     * 我的资产数据列表
+     * @param model
+     * @return
+     */
     @RequestMapping("userAssetsList")
     public String userAssetsList(ModelMap model){
         String pageNow = request.getParameter("pageNow");
@@ -268,6 +273,10 @@ public class UserController extends BaseController {
         return "/user/comm/addresschoice";
     }
 
+    /**
+     * 获取地址信息
+     * @param response
+     */
     @RequestMapping(value = "/address", method = RequestMethod.POST)
     @ResponseBody
     public void address(HttpServletResponse response){
@@ -279,6 +288,10 @@ public class UserController extends BaseController {
         }
     }
 
+    /**
+     * 我的资产饼型图
+     * @return
+     */
     @RequestMapping("hchar")
     @ResponseBody
     public Map<String,Object> hchar(){
@@ -296,6 +309,10 @@ public class UserController extends BaseController {
         return param;
     }
 
+    /**
+     * 新增地址方法
+     * @return
+     */
     @RequestMapping("saveAdder")
     @ResponseBody
     public Map<String,Object> saveAdder(){
@@ -326,6 +343,10 @@ public class UserController extends BaseController {
         return param;
     }
 
+    /**
+     * 获取地址方法
+     * @return
+     */
     @RequestMapping("getFindByAddress")
     @ResponseBody
     public ResultModel getFindByAddress(){
@@ -349,6 +370,10 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 查询地址
+     * @return
+     */
     @RequestMapping("getAddress")
     @ResponseBody
     public ResultModel getAddress(){
@@ -368,6 +393,10 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 身份证认证
+     * @return
+     */
     @RequestMapping("cardIdentify")
     @ResponseBody
     public ResultModel cardIdentify(){
@@ -383,6 +412,10 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 上次身份证照片
+     * @return
+     */
     @RequestMapping("uploadUserProfile")
     @ResponseBody
     public ResultModel uploadUserProfile(){
@@ -454,22 +487,31 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 发货信息
+     * @param record
+     * @return
+     */
     @RequestMapping("insertlogiscsIn")
     @ResponseBody
     public ResultModel insertlogiscsIn(LogisticsInformation record){
         ResultModel resultModel = new ResultModel();
         Trade trade = new Trade();
-        String courierNumber = getParam("courierNumber","");
-        trade.setCourierNumber(courierNumber);
+        trade.setStatus(10);
         trade.setId(record.getTradeId());
         int i = tradeService.updateAll(trade);
         if (i > 0) {
+            record.setType("0");
             i = logisticsInformationService.save(record);
         }
         resultModel.setRetCode(i);
         return resultModel;
     }
 
+    /**
+     * 更改绑定手机
+     * @return
+     */
     @RequestMapping("sendSmsCode")
     @ResponseBody
     public ResultModel sendSmsCode(){
@@ -483,6 +525,10 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 新手机验证码
+     * @return
+     */
     @RequestMapping("bindphone")
     @ResponseBody
     public ResultModel bindphone(){
@@ -516,21 +562,24 @@ public class UserController extends BaseController {
         return resultModel;
     }
 
+    /**
+     * 动态获取物流信息
+     * @return
+     */
     @RequestMapping("getExpress")
     @ResponseBody
     public List<List<Express>> getExpress(){
         LogisticsInformation logisticsInformation = new LogisticsInformation();
         List<List<Express>> expressListlist = new ArrayList<List<Express>>();
         String tradeId = getParam("tradeId","");
-        String expresNum = getParam("expresNum","");
         if (tradeId != null && !"".equals(tradeId)) {
             logisticsInformation.setTradeId(Integer.parseInt(tradeId));
             List<LogisticsInformation> logisticsInformationList = logisticsInformationService.findAll(logisticsInformation);
             if (logisticsInformationList.size() > 0) {
-                expressListlist = userService.obtainLogistics(logisticsInformationList.get(0).getCompanyName(), expresNum);
+                expressListlist = userService.obtainLogistics(logisticsInformationList.get(0).getCompanyName(), logisticsInformationList.get(0).getCourierNumber());
                 Express record = new Express();
                 record.setExpressName(logisticsInformationList.get(0).getCompanyName());
-                record.setStatus(expresNum);
+                record.setStatus(logisticsInformationList.get(0).getCourierNumber());
                 List<Express> expressList = new ArrayList<Express>();
                 expressList.add(record);
                 expressListlist.add(expressList);

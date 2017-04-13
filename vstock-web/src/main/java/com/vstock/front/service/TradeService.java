@@ -1,5 +1,6 @@
 package com.vstock.front.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.vstock.db.dao.IPaymentDao;
 import com.vstock.db.dao.IRefundDao;
 import com.vstock.db.dao.ITradeDao;
@@ -7,7 +8,9 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.OddNoUtil;
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.StringUtil;
 import com.vstock.ext.util.security.md.ToolMD5;
+import com.vstock.server.express.ExpressLogistics;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,8 @@ public class TradeService {
     BidService bidService;
     @Autowired
     IPaymentDao paymentDao;
+    @Autowired
+    LogisticsInformationService logisticsInformationService;
 
     /**
      * 分页查询所有记录
@@ -232,6 +237,20 @@ public class TradeService {
                 i = this.update(record);
                 //判断确认收款创建卖家退款单
                 if (i > 0 && record.getStatus() == 40){
+                    //确认收货时，获取买家的物流信息存储
+                    LogisticsInformation logisticsInformation = new LogisticsInformation();
+                    logisticsInformation.setTradeId(record.getId());
+                    List<LogisticsInformation> logisticsInformationList = logisticsInformationService.findAll(logisticsInformation);
+                    if (logisticsInformationList.size() > 1) {
+                        //传入快递公司名称，转化为快递100接口参数名
+                        String expresName = StringUtil.expressName(logisticsInformationList.get(1).getCompanyName());
+                        //调用快递100接口获取物流信息
+                        JSONObject jsonObject = ExpressLogistics.getexpress(expresName,logisticsInformationList.get(1).getCourierNumber());
+                        logisticsInformation = logisticsInformationList.get(1);
+                        Object data = jsonObject.get("data");
+                        logisticsInformation.setInformation(data.toString());
+                        logisticsInformationService.save(logisticsInformation);
+                    }
                     Bid bid = new Bid();
                     bid.setId(record.getBidId());
                     bid = bidService.findbid(bid);
