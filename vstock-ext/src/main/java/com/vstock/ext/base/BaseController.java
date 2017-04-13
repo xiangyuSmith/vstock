@@ -1,6 +1,8 @@
 package com.vstock.ext.base;
 
 import com.vstock.ext.util.Page;
+import com.vstock.ext.util.ToolSpring;
+import com.vstock.server.memcached.SpyMemcachedManager;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,8 @@ public class BaseController {
     protected HttpServletRequest request;
 
     protected HttpServletResponse response;
+
+    protected SpyMemcachedManager spyMemcachedManager = (SpyMemcachedManager) ToolSpring.getBean("memcachedManager");
 
     protected Logger log = Logger.getLogger(getClass());
 

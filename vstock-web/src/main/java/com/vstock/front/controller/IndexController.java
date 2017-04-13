@@ -198,10 +198,15 @@ public class IndexController extends BaseController {
 
     @RequestMapping("test")
     public String test(ModelMap model) {
-//        String detail_data = "2017033121001004920225206224^10^协商退款";
-//        String seller_user_id = "2088412547710924";
-//        Map<String, String> sParaTemp = AlipayRefund.refund("1",detail_data,"");
-//        model.addAttribute("sParaTemp",sParaTemp);
+        // 设置/获取
+        spyMemcachedManager.set("zlex", "set/get" , 36000);
+        System.out.println(spyMemcachedManager.get("zlex"));
+        // 替换
+        spyMemcachedManager.replace("zlex", "replace" , 36000);
+        System.out.println(spyMemcachedManager.get("zlex"));
+        // 移除
+        spyMemcachedManager.delete("zlex");
+        System.out.println(spyMemcachedManager.get("zlex"));
         return "/index/test";
     }
 

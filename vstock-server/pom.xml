@@ -42,5 +42,10 @@
             <groupId>com.alipay</groupId>
             <artifactId>sdk-java</artifactId>
         </dependency>
+        <!-- memcached -->
+        <dependency>
+            <groupId>net.spy</groupId>
+            <artifactId>spymemcached</artifactId>
+        </dependency>
     </dependencies>
 </project>

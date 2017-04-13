@@ -21,7 +21,7 @@
         .box-sorts-list ul li{ padding: 20px; }
         .active{ color: #FF5A5F!important; }
         .popover{ min-width:350px!important; }
-        .not-found-list{ margin: 0 auto;margin-top: 80px;line-height: 60px;color: #fff;width: 275px;height: 222px;text-align: center;border-radius: 36px;background: url('/assets/i/sort_kong.png'); }
+        .not-found-list{ margin: 0 auto;margin-top: 80px;line-height: 60px;color: #fff;width: 418px;height: 431px;text-align: center;background: url('/assets/i/sort_kong.png'); }
     </style>
 </head>
 <body>
