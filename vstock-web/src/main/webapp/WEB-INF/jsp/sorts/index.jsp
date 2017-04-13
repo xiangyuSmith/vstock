@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="priceBlock filter">
-                <div class="title">价格</div>
+                <div class="title">市场参考价</div>
                 <div class="form-group"><a class="checkbox priceCheck" href="javascript:;"><input type="checkbox" id="price0" class="price" data-val="0-500"><label for="price0">500元以下</label></a></div>
                 <div class="form-group"><a class="checkbox priceCheck" href="javascript:;"><input type="checkbox" id="price1" class="price" data-val="500-1000"><label for="price1">500元 - 1000元</label></a></div>
                 <div class="form-group"><a class="checkbox priceCheck" href="javascript:;"><input type="checkbox" id="price2" class="price" data-val="1000-2000"><label for="price2">1000元 - 2000元</label></a></div>

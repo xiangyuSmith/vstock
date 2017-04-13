@@ -122,8 +122,8 @@
                                 <td>${bid.basicinformation.name}</td>
                                 <td>${bid.basicinformation.artNo}</td>
                                 <td>${bid.bftSize}</td>
-                                <td><fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,#00.0#"/></td>
-                                <td><fmt:formatNumber value="${bid.bidBond}" type="currency" pattern="#,#00.0#"/></td>
+                                <td><fmt:formatNumber value="${bid.bidMoney}" type="currency" pattern="#,##0.00#"/></td>
+                                <td><fmt:formatNumber value="${bid.bidBond}" type="currency" pattern="#,##0.00#"/></td>
                                 <td>${bid.termValidity}</td>
                                 <td>
                                 <c:if test="${not empty statusList}">

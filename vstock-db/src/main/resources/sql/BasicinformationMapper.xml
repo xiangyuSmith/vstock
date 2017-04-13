@@ -98,7 +98,13 @@
             and basicinformation.bidMoney  &lt;= #{priceEnd}
         </if>
         GROUP BY basicinformation.bid
-        ORDER BY basicinformation.id DESC
+        <if test="type == 5">
+            ORDER BY basicinformation.bcsaledate is null,basicinformation.bcsaledate ASC
+        </if>
+        <if test="type != 5">
+            ORDER BY basicinformation.id DESC
+        </if>
+
         limit #{startPos},#{pageSize}
     </select>
 

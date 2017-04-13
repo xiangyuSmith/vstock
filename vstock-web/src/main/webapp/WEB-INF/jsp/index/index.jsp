@@ -46,7 +46,7 @@
                 <%--</div>--%>
                 <form class="am-topbar-left am-form-inline" role="search" style="width: 100%; margin-top: 110px;">
                     <div id="index_search_div" class="am-form-group am-form-icon" style="color: #EB615F;font-size: 16px;opacity: 0.9;width: 42%;">
-                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、货号......" style="width: 100%;border-radius: 2px;">
+                        <input id="index_search" type="text" class="am-form-field get-input" placeholder="搜索颜色、名称、货号......" style="width: 100%;border-radius: 2px;">
                         <i class="am-icon-search" style="font-size: 2.6rem;z-index: 0;"></i>
                     </div>
                 </form>
@@ -71,7 +71,7 @@
                                                     <a class="panDong" href="/detail?proName=${buybid.bftName}">
                                                         <p><c:out value="${fn:substring(buybid.user.nick, 0, 1)}" />**</p>
                                                         <p title="${buybid.bftName}"><c:out value="${fn:substring(buybid.bftName, 0, 30)}" /></p>
-                                                        <p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p>
+                                                        <p>叫价：<fmt:formatNumber value="${buybid.bidMoney}" type="currency" pattern="#,##0.00#"/>元</p>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -97,7 +97,7 @@
                                             <tr>
                                                 <td>
                                                     <a class="panDong" href="/detail?proName=${sellbid.bftName}">
-                                                        <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,#00.0#"/>元</p></p>
+                                                        <p><c:out value="${fn:substring(sellbid.user.nick, 0, 1)}" />**</p><p title="${sellbid.bftName}"><c:out value="${fn:substring(sellbid.bftName, 0, 30)}" /></p><p>出价：<fmt:formatNumber value="${sellbid.bidMoney}" type="currency" pattern="#,##0.00#"/>元</p></p>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -208,7 +208,7 @@
                                     <div class="layout-font-size-24">￥
                                         <c:choose>
                                             <c:when test="${not empty b.minimumBid}">
-                                                ${b.minimumBid}
+                                                <fmt:formatNumber value="${b.minimumBid}" type="currency" pattern="#,##0.00#"/>
                                             </c:when>
                                             <c:otherwise>
                                                 -
@@ -244,7 +244,7 @@
                                     <div class="layout-font-size-24">￥
                                         <c:choose>
                                             <c:when test="${not empty b.highestBid}">
-                                                ${b.highestBid}
+                                                <fmt:formatNumber value="${b.highestBid}" type="currency" pattern="#,##0.00#"/>
                                             </c:when>
                                             <c:otherwise>
                                                 -

@@ -70,8 +70,8 @@
                                 <td><a href="${record.basicinformation.imgUrl}" target="_blank" title="查看大图"><img src="${record.basicinformation.smallImgUrl}" style="height: 40px; width: 55px;"/></a></td>
                                 <td>${record.basicinformation.name}</td>
                                 <td>${record.peakSize}</td>
-                                <td><fmt:formatNumber value="${record.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/></td>
-                                <td><fmt:formatNumber value="${record.highestBid}" type="currency" pattern="#,#00.0#"/></td>
+                                <td><fmt:formatNumber value="${record.minimumSellingPrice}" type="currency" pattern="#,##0.00#"/></td>
+                                <td><fmt:formatNumber value="${record.highestBid}" type="currency" pattern="#,##0.00#"/></td>
                                 <td>${record.createDate}</td>
                                 <td><a href="/trade/bidindex?basicinformationId=${record.basicinformationId}&bftSize=${record.peakSize}" style="color: blue;">全部价格</a></td>
                             </tr>

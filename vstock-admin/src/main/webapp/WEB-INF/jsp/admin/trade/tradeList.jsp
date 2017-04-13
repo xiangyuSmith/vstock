@@ -31,7 +31,7 @@
                 </div>
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                     <label>金额：</label>
-                    <span><fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></span>
+                    <span><fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,##0.00#"/></span>
                 </div>
                 <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                     <label>运费：</label>

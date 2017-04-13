@@ -12,7 +12,7 @@
         </caption>
         <thead>
         <tr>
-            <th style="width: 30%;">球鞋名称</th>
+            <td style="width: 30%;">球鞋名称</td>
             <c:if test="${type == 0}">
                 <td>出售日期</td>
             </c:if>
@@ -111,10 +111,10 @@
                                 <div class="am-dropdown doc-dropdown-js">
                                     <c:choose>
                                         <c:when test="${trade.status == 1 || trade.status == 30 || trade.status == 41 || trade.status == 52}">
-                                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" select_type="select-btn"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                            <a class="am-btn am-btn-default am-btn-xs am-dropdown-toggle status-user-set" select_type="select-btn"><span class="am-icon-caret-down"></span></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="am-btn am-btn-default am-btn-xs trade-save" disabled="true"><span class="am-icon-caret-down am-margin-left-xs"></span></a>
+                                            <a class="am-btn am-btn-default am-btn-xs trade-save status-user-set" disabled="true"><span class="am-icon-caret-down"></span></a>
                                         </c:otherwise>
                                     </c:choose>
                                     <ul class="am-dropdown-content">
@@ -142,22 +142,22 @@
         </c:if>
         </tbody>
     </table>
-    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" style="text-align: center;">
     <c:choose>
         <c:when test="${page.pageNow == 1}">
-            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=1" class="offer-btn am-btn am-btn-primary am-radius" disabled="disabled ">上一页</a>
+            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=1" class="offer-btn am-btn am-btn-xs am-btn-primary am-radius" disabled="disabled ">上一页</a>
         </c:when>
         <c:otherwise>
-            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=${page.pageNow-1}" class="offer-btn am-btn am-btn-primary am-radius">上一页</a>
+            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=${page.pageNow-1}" class="offer-btn am-btn am-btn-xs am-btn-primary am-radius">上一页</a>
         </c:otherwise>
     </c:choose>
-    <span class="am-margin-left-sm am-margin-right-sm layout-font-size-20">当前第${page.pageNow}页/共${page.totalPageCount}页</span>
+    <span class="am-margin-left-sm am-margin-right-sm layout-font-size-18">当前第 ${page.pageNow} 页/共 ${page.totalPageCount} 页</span>
     <c:choose>
         <c:when test="${page.pageNow == page.totalPageCount}">
-            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=1" class="offer-btn am-btn am-btn-primary am-radius" disabled="disabled">下一页</a>
+            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=1" class="offer-btn am-btn am-btn-xs am-btn-primary am-radius" disabled="disabled">下一页</a>
         </c:when>
         <c:otherwise>
-            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=${page.pageNow+1}" class="offer-btn am-btn am-btn-primary am-radius">下一页</a>
+            <a href="javascript:void(0)" data-url="../user/buysell?type=${type}&pageNow=${page.pageNow+1}" class="offer-btn am-btn am-btn-xs am-btn-primary am-radius">下一页</a>
         </c:otherwise>
     </c:choose>
 </div>

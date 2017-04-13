@@ -46,7 +46,10 @@ public class BidService {
     }
 
     public List<Bid> findNewAll(Bid record, Page page){
-        return bidDao.findNewAll(record,page.getStartPos(),page.getPageSize());
+        List<Bid> bidList = bidDao.findNewAll(record,page.getStartPos(),page.getPageSize());
+        //打乱排序
+        Collections.shuffle(bidList);
+        return bidList;
     }
 
     public List<Bid> findAllBid(Bid record){

@@ -15,8 +15,8 @@
                             <span class="helper"></span>
                             <img class="show-lazy lazy" style="width: 100%;" src="/assets/i/blank.gif" data-echo="${configMap._site_url}${bid.smallImgUrl}" onerror="this.src='/assets/i/default.png;this.onerror=null'" style="display: inline;">
                         </div>
-                        <div class="name" style="padding-left: 5px;height: 70px;">
-                            <div>${bid.name}</div>
+                        <div class="name" style="padding-left: 5px;height: 70px;overflow: hidden;">
+                            <span>${bid.name}</span>
                         </div>
                         <div class="price">
                             <div class="price-line">
@@ -24,7 +24,7 @@
                                 <div style="font-size: 24px;">￥
                                     <c:choose>
                                         <c:when test="${not empty bid.bid.bidMoney}">
-                                            <fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,#00.0#"/>
+                                            <fmt:formatNumber value="${bid.bid.bidMoney}" type="currency" pattern="#,##0.00#"/>
                                         </c:when>
                                         <c:otherwise>
                                             -

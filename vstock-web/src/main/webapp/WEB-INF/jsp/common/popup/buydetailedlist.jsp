@@ -34,7 +34,7 @@
                                 <span style="color: #646464;">￥
                                     <c:choose>
                                         <c:when test="${not empty pricePeak1.highestBid}">
-                                            <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,#00.0#"/>
+                                            <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,##0.00#"/>
                                         </c:when>
                                         <c:otherwise>
                                             -
@@ -50,7 +50,7 @@
                                     <span id="seller_detailed_minimumSellingPrice">
                                         <c:choose>
                                             <c:when test="${not empty pricePeak2.minimumSellingPrice}">
-                                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,##0.00#"/>
                                             </c:when>
                                             <c:otherwise>
                                                 -
@@ -82,7 +82,7 @@
                         <div class="am-form-group am-form-icon">
                             <i class="am-icon-cny layout-font-size-18 am-margin-top-xs" style="margin-top: -7px;color: #585858;"></i>
                             <input id="buyer_detailed_amount_price" type="hidden" value="<fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#00.00#"/>" readonly/>
-                            <input id="buyer_detailed_amount" type="text" class="am-form-field" value="<fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.00#"/>" readonly/>
+                            <input id="buyer_detailed_amount" type="text" class="am-form-field" value="<fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,##0.00#"/>" readonly/>
                         </div>
                     </div>
                     <div class="am-u-md-12 am-padding-0 am-margin-bottom-sm">
@@ -332,7 +332,7 @@
                             jisuan(address.id);
                         }else{
                             html = '<tr class="show-tr-address">' +
-                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span><span class="addressInfo"> '+address.localArea+address.detailedAddress+'</span></label></td>' +
+                                    '<td><input id="doc-ipt-o-"+address.id type="radio" name="check-address" data-userAddress="'+address.id+'"  checked="checked" /></td><td><label for="doc-ipt-o-"+address.id style="font-weight: normal;"><span class="am-margin-right-xs default-span-tips" style="color:#E77779;display: none;">[默认]</span><span class="addressInfo"> '+address.localArea+address.detailedAddress+'</span></label></td>' +
                                     '<td><span class="addressInfo"> '+address.consigneeName+'</span></td>' +
                                     '<td><span> '+phoneNumber+' </span></td>' +
                                     '<td class="do" style="width: 24%;"><div style="float:left;margin-right: 20px;"><a href="javascript:;" class="edit-address" data-userAddress="'+address.id+'" data-am-modal="{target: \'#adders-id\', closeViaDimmer: 0, width: 487, height: 420}">编辑</a>|<a href="javascript:;" class="del-address" data-userAddress="'+address.id+'" data-type="'+address.type+'">删除</a></div><div><a href="javascript:void(0);" data-userAddress="'+address.id+'" class="am-btn-sm am-text-danger set-default-address">设为默认</a></div></td>' +
@@ -340,6 +340,7 @@
                             $("#new-address tr:eq(0)").after(html);
                         }
                         alertTips(1,"","添加地址成功");
+                        $("#adders-id").modal('close');
                     }else{
                         $editAddress.parent().parent().siblings().eq(1).find("label .addressInfo").text(address.localArea+address.detailedAddress);
                         $editAddress.parent().parent().siblings().eq(2).find("span").text(address.consigneeName);

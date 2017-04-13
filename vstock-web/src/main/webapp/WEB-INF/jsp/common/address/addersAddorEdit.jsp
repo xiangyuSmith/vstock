@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="margin: 0px; padding: 0px;"><a href="javascript: void(0);" id="address-btn" class="am-btn am-btn-primary am-fr adder-stn" style="margin-right:38px;" data-am-modal-close>确定</a></div>
+                <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="margin: 0px; padding: 0px;"><a href="javascript: void(0);" id="address-btn" class="am-btn am-btn-primary am-fr adder-stn" style="margin-right:38px;">确定</a></div>
                 <div class="am-u-sm-6 am-u-md-6 am-u-lg-6" style="margin: 0px; padding: 0px;"><a href="javascript: void(0);" class="am-btn am-btn-default am-fl adder-quit" data-am-modal-close>取消</a></div>
             </div>
             <input type="hidden" id="adder-id"/>

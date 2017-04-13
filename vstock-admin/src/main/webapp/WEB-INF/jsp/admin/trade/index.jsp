@@ -104,7 +104,7 @@
                                 <td>${trade.sellerName}</td>
                                 <td>${trade.bftName}</td>
                                 <td>${trade.bftSize}</td>
-                                <td><fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,#00.0#"/></td>
+                                <td><fmt:formatNumber value="${trade.transactionMoney}" type="currency" pattern="#,##0.00#"/></td>
                                 <c:if test="${not empty statusList}">
                                     <c:forEach items="${statusList}" var="status">
                                         <c:if test="${trade.status == status.get(0)}">

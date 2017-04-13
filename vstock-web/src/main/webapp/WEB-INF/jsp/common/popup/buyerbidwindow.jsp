@@ -30,7 +30,7 @@
                                 <span style="color: #646464;">￥
                                     <c:choose>
                                         <c:when test="${not empty pricePeak1.highestBid}">
-                                            <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,#00.0#"/>
+                                            <fmt:formatNumber value="${pricePeak1.highestBid}" type="currency" pattern="#,##0.00#"/>
                                         </c:when>
                                         <c:otherwise>
                                             -
@@ -46,7 +46,7 @@
                                     <span id="seller_bid_minimumSellingPrice">
                                         <c:choose>
                                             <c:when test="${not empty pricePeak2.minimumSellingPrice}">
-                                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,#00.0#"/>
+                                                <fmt:formatNumber value="${pricePeak2.minimumSellingPrice}" type="currency" pattern="#,##0.00#"/>
                                             </c:when>
                                             <c:otherwise>
                                                 -

@@ -193,7 +193,7 @@
                         </td>
                         <td>
                             <c:if test="${userAddresses.type == 1}">
-                                <a href="javascript:void(0);" style="background-color: #FFFFFF;color: #dd514c;" user-id="${userAddresses.id}" class="am-btn am-btn-danger am-radius">默认地址</a>
+                                <a href="javascript:void(0);" style="background-color: #FFFFFF;color: #dd514c;" user-id="${userAddresses.id}" class="am-btn am-btn-xs am-btn-danger am-radius">默认地址</a>
                             </c:if>
                             <c:if test="${userAddresses.type == 0}">
                                 <a href="javascript:void(0);" user-id="${userAddresses.id}" class="up-type am-btn-sm am-text-danger set-default-address">设为默认</a>

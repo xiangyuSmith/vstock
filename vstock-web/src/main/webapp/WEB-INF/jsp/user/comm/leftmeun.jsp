@@ -22,13 +22,17 @@
         .set-default-address{ opacity : 0; }
         .show-tr-address:HOVER .set-default-address{ opacity : 1; }
         .lg-rect-css{font-size: 12px;border-radius: 50%;display: block; width: 18px;height: 18px;float: left;}
+        .am-container-content-user{ max-width: 1180px; margin: auto; }
+        @media (max-width: 1400px){
+            .am-container-content-user{ max-width: 1080px; margin: auto; }
+        }
     </style>
 </head>
 <body>
 <%@include file="../../layout/top-search.jsp"%>
 <div>
-    <div class="am-container-content" style="overflow:hidden;">
-        <div class="am-u-sm-3 am-u-md-3 am-padding-0" id="div1" style="background-color: #F6F5F4;overflow:hidden;min-height: 450px; max-width: 200px;">
+    <div class="am-container-content-user" style="overflow:hidden;">
+        <div class="am-padding-0 am-fl am-margin-left-lg" id="div1" style="background-color: #F6F5F4;overflow:hidden;min-height: 450px; max-width: 20%;">
             <input type="hidden" id="url-type" value="${urlType}"/>
             <%--<c:if test="${not empty vUser}">--%>
                 <%--<div class="am-text-center am-padding-bottom" style="background-color: #EBE9E7;padding: 20px 20px; border-bottom: solid 1px #CECAC5;"></div>--%>
@@ -80,19 +84,18 @@
                 <li><a href="javascript:void(0);" class="home-tab"><div style="float: left; display: block;width: 45px;height: 36px; background: url('/assets/i/personal_center_map.png'); background-position: -639px -16px;"></div><span class="text-color am-text-danger am-link-muted layout-font-size-24 home-last" data-url="../user/userInfo" data-type="4">设置</span></a></li>
             </ul>
         </div>
-        <div class="am-u-sm-9 am-u-md-9 am-padding-top-xl" id="tradeforex_tilie"></div>
-
-        <div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
-            <div class="am-modal-dialog">
-                <div class="am-modal-hd">是否删除</div>
-                <div class="am-modal-bd">
-                    删除后将不再显示出价记录，确定要删除吗？
-                </div>
-                <div class="am-modal-footer">
-                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                    <span class="am-modal-btn" data-am-modal-confirm>确定</span>
-                </div>
-            </div>
+        <div class="am-padding-top-lg am-padding-right-lg am-fl am-padding-sm" style="width: 75%;" id="tradeforex_tilie"></div>
+    </div>
+</div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">是否删除</div>
+        <div class="am-modal-bd">
+            删除后将不再显示出价记录，确定要删除吗？
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
         </div>
     </div>
 </div>

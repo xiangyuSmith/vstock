@@ -25,5 +25,22 @@
 </article>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
+<script>
+    document.onkeydown=keyDownSearch;
+
+    function keyDownSearch(e) {
+        var theEvent = e || window.event;
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+        if (code == 13) {
+            if(!$("#my-popup-login").is(":hidden")){
+                $("#prLogin").click();
+                return false;
+            }
+            location.href = "/sorts?productName="+$(".index_search_top").val();
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>
