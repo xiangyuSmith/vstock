@@ -251,6 +251,7 @@ public class TradeService {
                         logisticsInformation.setInformation(data.toString());
                         logisticsInformationService.save(logisticsInformation);
                     }
+                    //创建一笔退卖家保证金和一笔鞋款转账
                     Bid bid = new Bid();
                     bid.setId(record.getBidId());
                     bid = bidService.findbid(bid);
@@ -264,6 +265,11 @@ public class TradeService {
                     refund.setStatus("0");
                     refund.setType("4");
                     refund.setCreateDate(DateUtils.getCurrentTimeAsString());
+                    refundDao.insert(refund);
+                    refund.setId(null);
+                    refund.setRefundPrice(record.getTransactionMoney());
+                    refund.setRefundNo(OddNoUtil.refundNo());
+                    refund.setType("2");
                     refundDao.insert(refund);
                 }
             }

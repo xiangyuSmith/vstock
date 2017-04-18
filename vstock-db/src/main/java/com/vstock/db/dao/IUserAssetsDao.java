@@ -14,6 +14,9 @@ public interface IUserAssetsDao {
     //分页查询所有
     List<UserAssets> findAll(@Param("obj") UserAssets record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize);
 
+    //查询所有
+    List<UserAssets> find(@Param("obj") UserAssets record);
+
     //查询所有总数
     int findCount(@Param("obj") UserAssets record);
 

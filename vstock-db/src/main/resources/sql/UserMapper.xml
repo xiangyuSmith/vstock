@@ -82,6 +82,13 @@
         limit #{startPos},#{pageSize}
     </select>
 
+    <select id="findAllDate" parameterType="com.vstock.db.entity.User" resultType="com.vstock.db.entity.User">
+        SELECT * FROM `user` u
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SelectAll_Where_Date"/>
+        ORDER BY u.id DESC limit #{startPos},#{pageSize}
+    </select>
+
     <select id="findActivityAll" parameterType="com.vstock.db.entity.UserActivity" resultType="com.vstock.db.entity.UserActivity">
         SELECT * FROM `user_activity` u
         limit #{startPos},#{pageSize}
@@ -91,9 +98,25 @@
         SELECT COUNT(*) FROM `user` u <include refid="SelectAll_Where_Clause"/> ORDER BY u.id DESC
     </select>
 
+    <select id="findCountDate" parameterType="com.vstock.db.entity.User" resultType="Integer">
+        SELECT COUNT(*) FROM `user` u
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SelectAll_Where_Date"/>
+        ORDER BY u.id DESC
+    </select>
+
     <select id="findActivityCount" parameterType="com.vstock.db.entity.UserActivity" resultType="Integer">
         SELECT COUNT(*) FROM `user_activity`
     </select>
+
+    <sql id="SelectAll_Where_Date">
+        <if test="startCreateTime != null and startCreateTime != ''">
+            and u.create_time &gt; #{startCreateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endCreateTime != null and endCreateTime != ''">
+            and u.create_time &lt; #{endCreateTime,jdbcType=TIMESTAMP}
+        </if>
+    </sql>
 
     <sql id="SelectAll_Where_Clause">
         <where>

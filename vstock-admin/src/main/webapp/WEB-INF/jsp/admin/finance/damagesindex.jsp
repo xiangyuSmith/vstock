@@ -109,7 +109,7 @@
                 <table class="am-table am-table-bd am-table-striped admin-content-table">
                     <thead>
                     <tr>
-                        <th><input type="checkbox" id="SelectAll"/></th>
+                        <%--<th><input type="checkbox" id="SelectAll"/></th>--%>
                         <th>退款类型</th>
                         <th>退款单号</th>
                         <th>订单号</th>
@@ -124,7 +124,7 @@
                     <c:if test="${not empty refundList}">
                         <c:forEach items="${refundList}" var="refund">
                             <tr>
-                                <td><input type="checkbox" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>/></td>
+                                <%--<td><input type="checkbox" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>/></td>--%>
                                 <td><c:forEach items="${typeList}" var="type"><c:if test="${type.type == refund.type}">${type.btfName}</c:if></c:forEach></td>
                                 <td>${refund.refundNo}</td>
                                 <td>${refund.tradeNo}</td>
@@ -181,17 +181,17 @@
 <script type="text/javascript">
     jQuery(function($){
 
-        $("#SelectAll").click(function () {selectAll();});
-
-        //复选框事件
-        //全选、取消全选的事件
-        function selectAll(){
-            if ($("#SelectAll").is(":checked")) {
-                $(":checkbox:enabled").prop("checked", true);
-            } else {
-                $(":checkbox").attr("checked", false);
-            }
-        }
+//        $("#SelectAll").click(function () {selectAll();});
+//
+//        //复选框事件
+//        //全选、取消全选的事件
+//        function selectAll(){
+//            if ($("#SelectAll").is(":checked")) {
+//                $(":checkbox:enabled").prop("checked", true);
+//            } else {
+//                $(":checkbox").attr("checked", false);
+//            }
+//        }
 
         $('.finance-sbt-btn').click(function () {
             $('#my-confirm').modal({

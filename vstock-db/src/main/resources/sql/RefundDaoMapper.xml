@@ -181,6 +181,20 @@
         </if>
     </sql>
 
+    <sql id="SearchAllByPage_Where_User">
+        <where>
+            <if test="nick != null and nick != ''">
+                and u.nick LIKE CONCAT('%',#{nick,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and u.mobile LIKE CONCAT('%',#{mobile,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="alipayAccount != null and alipayAccount != ''">
+                and ua.alipay_account LIKE CONCAT('%',#{alipayAccount,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
     <sql id="Base_Column_List">
         r.id as id,
         r.trade_no as tradeNo,
@@ -230,13 +244,46 @@
         <include refid="SearchAllByPage_Where_Date"/>
     </select>
 
+    <select id="findSellerAllDate" parameterType="com.vstock.db.entity.Refund" resultMap="BaseResultMap">
+        select r.id as id,
+        r.trade_no as tradeNo,
+        r.refund_no as refundNo,
+        r.btf_id as btfId,
+        r.btf_name as btfName,
+        r.refund_price as refundPrice,
+        r.status as status,
+        r.type as type,
+        r.create_date as createDate,
+        b.nick AS refundObj,
+        b.alipay_account AS remarks from
+        (select t.trade_no,u.nick,ua.alipay_account from `user` u
+        LEFT JOIN trade t ON u.id = t.seller_id
+        LEFT JOIN user_account ua ON u.id = ua.user_id
+        <include refid="SearchAllByPage_Where_User"/>) b
+        LEFT JOIN refund r ON r.trade_no = b.trade_no
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SearchAllByPage_Where_Date"/>
+        ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findSellerCountDate" parameterType="com.vstock.db.entity.Refund" resultType="Integer">
+        SELECT COUNT(*) FROM
+        (select t.trade_no,u.nick,ua.alipay_account from `user` u
+        LEFT JOIN trade t ON u.id = t.seller_id
+        LEFT JOIN user_account ua ON u.id = ua.user_id
+        <include refid="SearchAllByPage_Where_User"/>) b
+        LEFT JOIN refund r ON r.trade_no = b.trade_no
+        <include refid="SearchAllByPage_Where_Clause"/>
+        <include refid="SearchAllByPage_Where_Date"/>
+    </select>
+
     <select id="findRefundAll" parameterType="com.vstock.db.entity.Refund" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM refund r
         <include refid="SearchAllByPage_Where_Clause"/>
         <include refid="SearchAllByPage_Where_Date"/>
-        AND r.type NOT IN (5,6)
+        AND r.type NOT IN (2,6)
         ORDER BY r.create_date DESC limit #{startPos},#{pageSize}
     </select>
 
@@ -244,7 +291,7 @@
         SELECT COUNT(*) FROM refund r
         <include refid="SearchAllByPage_Where_Clause"/>
         <include refid="SearchAllByPage_Where_Date"/>
-        AND r.type NOT IN (5,6)
+        AND r.type NOT IN (2,6)
     </select>
 
     <insert id="insert">

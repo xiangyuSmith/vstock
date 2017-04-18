@@ -43,7 +43,7 @@
                                 </c:if>
                             </select>
                         </div>
-                        <div class="am-u-lg-4 am-u-end">
+                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
                             <span class="am-text-lg am-text-middle">状态：</span>
                             <select class="am-input-lg" name="status" id="status">
                                 <option value="-1">--请选择--</option>
@@ -59,6 +59,24 @@
                                         </c:choose>
                                     </c:forEach>
                                 </c:if>
+                            </select>
+                        </div>
+                        <div class="am-u-sm-4 am-u-md-4 am-u-lg-4">
+                            <span class="am-text-lg am-text-middle">交易类型：</span>
+                            <select class="am-input-lg" name="isBond" id="isBond">
+                                <option value="-1">--请选择--</option>
+                                <%--<c:if test="${not empty sizeList}">--%>
+                                    <%--<c:forEach items="${sizeList}" var="sizes">--%>
+                                        <%--<c:choose>--%>
+                                            <%--<c:when test="${trade.bftSize == sizes}">--%>
+                                                <option value="0" <c:if test="${trade.isBond == 0}">selected = "selected"</c:if>>买家购买</option>
+                                            <%--</c:when>--%>
+                                            <%--<c:otherwise>--%>
+                                                <option value="1" <c:if test="${trade.isBond == 1}">selected = "selected"</c:if>>卖家出售</option>
+                                            <%--</c:otherwise>--%>
+                                        <%--</c:choose>--%>
+                                    <%--</c:forEach>--%>
+                                <%--</c:if>--%>
                             </select>
                         </div>
                     </div>
@@ -142,6 +160,7 @@
         <input type="hidden" name="sellerName" id="sellId"/>
         <input type="hidden" name="bftName" id="bId"/>
         <input type="hidden" name="bftSize" id="bSize"/>
+        <input type="hidden" name="isBond" id="bisBond"/>
         <input type="hidden" name="status" id="statuse"/>
         <input type="hidden" id="startTime" name="startTime"/>
         <input type="hidden" id="endTime" name="endTime"/>
@@ -162,6 +181,7 @@
             $('#sellId').val($('#sellerId').val());
             $('#bId').val($('#bftId').val());
             $('#bSize').val($('#bftSize').val());
+            $('#bisBond').val($('#isBond').val());
             $('#statuse').val($('#status').val());
             $('#startTime').val($('#dt').val());
             $('#endTime').val($('#dtd').val());

@@ -210,7 +210,58 @@
                 and t.status NOT IN (0)
             </if>
             <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
-                and b.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
+                and t.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.transactionDate != null and obj.transactionDate != ''">
+                and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.updateDate != null and obj.updateDate != ''">
+                and t.end_date = #{obj.updateDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="obj.sign != null and obj.sign != ''">
+                and t.sign LIKE CONCAT('%',#{obj.sign,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SearchAllByPage_Where_Admin">
+        <where>
+            1=1
+            <if test="obj.id != null and obj.id != ''">
+                AND t.id = #{obj.id,jdbcType=INTEGER}
+            </if>
+            <if test="obj.sellerId != null and obj.sellerId != ''">
+                and t.seller_id = #{obj.sellerId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.buyersId != null and obj.buyersId != ''">
+                and t.buyers_id = #{obj.buyersId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bidId != null and obj.bidId != ''">
+                and t.bid_id = #{obj.bidId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.tradeNo != null and obj.tradeNo != ''">
+                and t.trade_no = #{obj.tradeNo,jdbcType=VARCHAR}
+            </if>
+            <if test="obj.basicinformationId != null and obj.basicinformationId != ''">
+                and t.basicinformation_id = #{obj.basicinformationId,jdbcType=INTEGER}
+            </if>
+            <if test="obj.transactionMoney != null and obj.transactionMoney != ''">
+                and t.transaction_money = #{obj.transactionMoney,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
+                and t.trade_freight = #{obj.tradeFreight,jdbcType=DECIMAL}
+            </if>
+            <if test="obj.receivingInformation != null and obj.receivingInformation != ''">
+                and t.receiving_information LIKE CONCAT('%',#{obj.receivingInformation,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="obj.status != null">
+                and t.status = #{obj.status,jdbcType=INTEGER}
+            </if>
+            <if test="obj.isBond != null">
+                and t.is_bond = #{obj.isBond,jdbcType=INTEGER}
+            </if>
+            <if test="obj.bftSize != null and obj.bftSize != '' and obj.bftSize != 0">
+                and t.bft_size = #{obj.bftSize,jdbcType=VARCHAR}
             </if>
             <if test="obj.transactionDate != null and obj.transactionDate != ''">
                 and t.transaction_date = #{obj.transactionDate,jdbcType=TIMESTAMP}
@@ -305,6 +356,52 @@
             and t.transaction_date &lt; #{endDateTime,jdbcType=TIMESTAMP}
         </if>
         ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findAdminAllDate" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">
+        SELECT u.nick AS sellerName, a.nick AS buyersName, b.bft_name,b.bft_size, b.bid_bond as bidBond,
+        <include refid="Base_Column_List"/>
+        FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
+        LEFT JOIN `user` a ON t.buyers_id = a.id
+        LEFT JOIN bid b ON t.bid_id = b.id
+        <include refid="SearchAllByPage_Where_Admin"/>
+        <if test="obj.bftName != null and obj.bftName != ''">
+            and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.buyersName != null and obj.buyersName != ''">
+            and a.nick LIKE CONCAT('%',#{obj.buyersName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.sellerName != null and obj.sellerName != ''">
+            and u.nick LIKE CONCAT('%',#{obj.sellerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startDateTime != null and startDateTime != ''">
+            and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDateTime != null and endDateTime != ''">
+            and t.transaction_date &lt; #{endDateTime,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY t.transaction_date DESC limit #{startPos},#{pageSize}
+    </select>
+
+    <select id="findAdminCountDate" parameterType="com.vstock.db.entity.Trade" resultType="Integer">
+        SELECT COUNT(*) FROM trade t LEFT JOIN `user` u ON t.seller_id = u.id
+        LEFT JOIN `user` a ON t.buyers_id = a.id LEFT JOIN bid b ON t.bid_id = b.id
+        <include refid="SearchAllByPage_Where_Admin"/>
+        <if test="obj.bftName != null and obj.bftName != ''">
+            and b.bft_name LIKE CONCAT('%',#{obj.bftName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.buyersName != null and obj.buyersName != ''">
+            and a.nick LIKE CONCAT('%',#{obj.buyersName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="obj.sellerName != null and obj.sellerName != ''">
+            and u.nick LIKE CONCAT('%',#{obj.sellerName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="startDateTime != null and startDateTime != ''">
+            and t.transaction_date &gt; #{startDateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDateTime != null and endDateTime != ''">
+            and t.transaction_date &lt; #{endDateTime,jdbcType=TIMESTAMP}
+        </if>
     </select>
 
     <select id="findModel" parameterType="com.vstock.db.entity.Trade" resultMap="BaseResultMap">

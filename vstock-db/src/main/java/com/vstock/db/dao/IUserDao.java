@@ -19,9 +19,15 @@ public interface IUserDao {
 
     List<User> findAll(@Param("obj") User user, @Param("startPos")Integer startPos, @Param("pageSize")Integer pageSize);
 
+    //带时间区间查询
+    List<User> findAllDate(@Param("obj") User user, @Param("startPos")Integer startPos, @Param("pageSize")Integer pageSize, @Param("startCreateTime")String startCreateTime, @Param("endCreateTime")String endCreateTime);
+
     List<UserActivity> findActivityAll(@Param("startPos")Integer startPos, @Param("pageSize")Integer pageSize);
 
     int findCount(User user);
+
+    //带时间区间查询
+    int findCountDate(@Param("obj")User user, @Param("startCreateTime")String startCreateTime, @Param("endCreateTime")String endCreateTime);
 
     int findActivityCount();
 }

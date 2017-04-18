@@ -22,6 +22,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by administor on 2016/5/9.
@@ -61,25 +63,50 @@ public class RefundController extends BaseController {
         List<Refund> objList = StatusUtil.refundO();
         model.put("objList",objList);
         //判断是否是需要转账
-        if ("5".equals(record.getType()) || "6".equals(record.getType())){
+        if ("2".equals(record.getType()) || "6".equals(record.getType())){
             linkAddress = refundService.linkAddress(record,startTime,endTime,linkAddress);
             List<Refund> typeList = StatusUtil.refundType();
             model.put("typeList",typeList);
-            int totalCount =  refundService.findCountDate(record,startTime,endTime);
-            Page page = new Page(totalCount,pageNow);
-            List<Refund> refundList = refundService.findAllDate(record,page,startTime,endTime);
-            model.put("page",page);
-            model.put("refundList",refundList);
             model.put("record",record);
             //违约金跳转
             if ("6".equals(record.getType())) {
-                linkAddress = linkAddress + "&type=6";
+                int totalCount =  refundService.findCountDate(record,startTime,endTime);
+                Page page = new Page(totalCount,pageNow);
+                model.put("page",page);
+                List<Refund> refundList = refundService.findAllDate(record,page,startTime,endTime);
+                model.put("refundList",refundList);
                 model.put("linkAddress",linkAddress);
                 return "admin/finance/damagesindex";
             }else {//转账鞋款跳转
-                linkAddress = linkAddress + "&type=5";
+                String mobile = "";
+                String nick = request.getParameter("nick");
+                String alipayAccount = request.getParameter("alipayAccount");
+                model.put("nick",nick);
+                model.put("alipayAccount",alipayAccount);
+                if (nick != null && !"".equals(nick)) {
+                    Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
+                    Matcher m = p.matcher(nick);
+                    if (m.matches()){
+                        mobile = nick;
+                        nick = "";
+                    }
+                    linkAddress = linkAddress + "&nick=" + nick;
+                }
+                if (alipayAccount != null && !"".equals(alipayAccount)) {
+                    linkAddress = linkAddress + "&alipayAccount=" + alipayAccount;
+                }
+                int totalCount =  refundService.findSellerCountDate(record,startTime,endTime,nick,mobile,alipayAccount);
+                Page page = new Page(totalCount,pageNow);
+                model.put("page",page);
+                List<Refund> refundList = refundService.findSellerAllDate(record,page,startTime,endTime,nick,mobile,alipayAccount);
+                model.put("refundList",refundList);
+//                for (int i = 0; i < refundList.size(); i++){
+//                    Map<Object, String> param = refundService.sellerInformation(refundList.get(i).getTradeNo());
+//                    refundList.get(i).setRefundObj(param.get("nick"));
+//                    refundList.get(i).setRemarks(param.get("alipayAccount"));
+//                }
                 model.put("linkAddress",linkAddress);
-                return null;
+                return "admin/finance/settlementindex";
             }
         }else{
             linkAddress = refundService.linkAddress(record,startTime,endTime,linkAddress);

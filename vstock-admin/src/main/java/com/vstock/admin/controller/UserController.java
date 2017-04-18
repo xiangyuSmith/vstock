@@ -65,11 +65,17 @@ public class UserController {
     public String userindex(User record, HttpServletRequest request, ModelMap model) {
         List<String> sizeList = new ArrayList<String>();
         String pageNow = request.getParameter("pageNow");
+        String startCreateTime = request.getParameter("startCreateTime");
+        String endCreateTime = request.getParameter("endCreateTime");
         String linkAddress = request.getRequestURI() + "?1=1";
-        linkAddress = userService.linkAddress(linkAddress,record);
-        int tocount = userService.findCount(record);
+        linkAddress = userService.linkAddress(linkAddress,record,startCreateTime,endCreateTime);
+        int tocount = userService.findCountDate(record,startCreateTime,endCreateTime);
         Page page = new Page(tocount,pageNow);
-        List<User> userList = userService.findAll(record,page);
+        List<User> userList = userService.findAllDate(record,page,startCreateTime,endCreateTime);
+        //获取个人总资产
+        for (int a = 0; a < userList.size(); a++){
+            userList.get(a).setSalt(userService.totalAccount(userList.get(a).getId()));
+        }
         for (int i = 0; i < Basicinformation.sizes.length; i++){
             sizeList.add(Basicinformation.sizes[i]);
         }
@@ -78,6 +84,8 @@ public class UserController {
         model.put("record",record);
         model.put("page",page);
         model.put("linkAddress",linkAddress);
+        model.put("startCreateTime",startCreateTime);
+        model.put("endCreateTime",endCreateTime);
         return "admin/user/index";
     }
 

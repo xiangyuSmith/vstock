@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class Refund implements Serializable {
 
     public final static String[] refundType = {"0:验货失败","1:叫价失败","2:交易成功","3:买家叫价，交易达成","4:卖家退保证金","5:买家退鞋款","6:违约金"};
-    public final static String[] onlyrfType = {"0:验货失败","1:叫价失败","2:交易成功","3:买家叫价，交易达成","4:卖家退保证金"};
+    public final static String[] onlyrfType = {"0:验货失败","1:叫价失败","3:买家叫价，交易达成","4:卖家退保证金","5:买家退鞋款"};
     public final static String[] refundstatus = {"0:待退款","1:已退款"};
     public final static String[] refundO = {"0:卖家","1:买家"};
     public final static String refNo = "STXRN";

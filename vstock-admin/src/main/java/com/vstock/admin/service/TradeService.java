@@ -123,9 +123,19 @@ public class TradeService {
             if (pageNow == null || "".equals(pageNow)){
                 pageNow = "1";
             }
-            int dCListCount = this.findCountDate(record,startDate,endDate);
+            if (record.getIsBond() != null) {
+                if (record.getIsBond() == -1) {
+                    record.setIsBond(null);
+                }
+            }
+            if (record.getStatus() != null) {
+                if (record.getStatus() == -1) {
+                    record.setStatus(null);
+                }
+            }
+            int dCListCount = tradeDao.findAdminCountDate(record,startDate,endDate);
             Page page = new Page(dCListCount, pageNow);
-            List<Trade> tradeList = tradeDao.findAllDate(record,page.getStartPos(),page.getPageSize(),startDate,endDate);
+            List<Trade> tradeList = tradeDao.findAdminAllDate(record,page.getStartPos(),page.getPageSize(),startDate,endDate);
             param.put(page,tradeList);
             return param;
         }catch (Exception ex){
@@ -156,6 +166,9 @@ public class TradeService {
         }
         if (record.getStatus() != null && !"".equals(record.getStatus())){
             linkAddress = linkAddress + "&status=" + record.getStatus();
+        }
+        if (record.getIsBond() != null && !"".equals(record.getIsBond())){
+            linkAddress = linkAddress + "&isBond=" + record.getIsBond();
         }
         return linkAddress;
     }

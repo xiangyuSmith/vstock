@@ -36,4 +36,15 @@ public interface IRefundDao {
     //带时间区间查询退款记录总数
     int findRefundCount(@Param("obj") Refund record,@Param("startTime") String startTime,@Param("endTime") String endTime);
 
+    //带时间区间分页查询所有退款记录
+    List<Refund> findSellerAllDate(@Param("obj") Refund record,@Param("startTime") String startTime,
+                                   @Param("endTime") String endTime,@Param("nick") String nick,
+                                   @Param("mobile") String mobile,@Param("alipayAccount") String alipayAccount,
+                                   @Param(value = "startPos") Integer startPos,@Param("pageSize") Integer pageSize);
+
+    //带时间区间查询退款记录总数
+    int findSellerCountDate(@Param("obj") Refund record,@Param("startTime") String startTime,
+                            @Param("endTime") String endTime,@Param("nick") String nick,
+                            @Param("mobile") String mobile,@Param("alipayAccount") String alipayAccount);
+
 }

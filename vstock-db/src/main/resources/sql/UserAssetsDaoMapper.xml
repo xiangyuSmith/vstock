@@ -192,6 +192,13 @@
         ua.sgin as sgin
     </sql>
 
+    <select id="find" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM user_assets ua
+        <include refid="SearchAllByPage_Where_Clause"/>
+        ORDER BY ua.create_date DESC
+    </select>
+
     <select id="findAll" parameterType="com.vstock.db.entity.UserAssets" resultMap="BaseResultMap">
         SELECT br.current_market_value, br.change_range, br.percentage_change, br.type, br.name,
         <include refid="Base_Column_List"/>

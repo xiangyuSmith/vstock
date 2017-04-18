@@ -30,6 +30,12 @@ public interface ITradeDao {
 
     int findCountDate(@Param("obj")Trade record, @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
 
+    //后台带时间区间分页查询
+    List<Trade> findAdminAllDate(@Param("obj")Trade record, @Param(value = "startPos") Integer startPos, @Param("pageSize") Integer pageSize,
+                            @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
+
+    int findAdminCountDate(@Param("obj")Trade record, @Param(value = "startDateTime") String startDateTime, @Param("endDateTime") String endDateTime);
+
     //添加数据
     int insert(Trade record);
 

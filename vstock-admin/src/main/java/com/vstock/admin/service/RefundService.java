@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ public class RefundService {
 
     @Autowired
     IUserAccountDao userAccountDao;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     BidService bidService;
@@ -131,6 +135,27 @@ public class RefundService {
      * @return
      */
     public int findRefundCount(Refund record,String startTime,String endTime){return refundDao.findRefundCount(record,startTime,endTime);}
+
+    /**
+     * 根据时间区间查询所有转鞋款记录
+     * @param record       对象
+     * @param startTime     开始时间
+     * @param endTime       结束时间
+     * @return
+     */
+    public int findSellerCountDate(Refund record,String startTime,String endTime,String nick,String mobile,String alipayAccount){return refundDao.findSellerCountDate(record,startTime,endTime,nick,mobile,alipayAccount);}
+
+    /**
+     * 根据时间区间分页查询转鞋款记录
+     * @param record    对象
+     * @param page      分页
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return
+     */
+    public List<Refund> findSellerAllDate(Refund record,Page page,String startTime,String endTime,String nick,String mobile,String alipayAccount){
+        return refundDao.findSellerAllDate(record,startTime,endTime,nick,mobile,alipayAccount,page.getStartPos(),page.getPageSize());
+    }
 
     /**
      * 保存方法
@@ -374,6 +399,35 @@ public class RefundService {
         return i;
     }
 
+    /**
+     * 根据订单号，获取卖家昵称和支付宝账号
+     * @param tradeNo   订单号
+     * @return
+     */
+    public Map<Object, String> sellerInformation(String tradeNo){
+        Map<Object, String> param = new HashMap<Object, String>();
+        Trade record = new Trade();
+        record.setTradeNo(tradeNo);
+        record = tradeService.findTrade(record);
+        if (record != null){
+            User user = new User();
+            user.setId(record.getSellerId().toString());
+            user = userService.findUser(user);
+            if (user != null){
+                param.put("nick",user.getNick());
+            }
+            UserAccount userAccount = new UserAccount();
+            userAccount.setUserId(record.getSellerId().toString());
+            userAccount.setStatus("1");
+            List<UserAccount> userAccountList = userAccountDao.findAll(userAccount);
+            if (userAccountList.size() > 0){
+                userAccount = userAccountList.get(0);
+                param.put("alipayAccount",userAccount.getAlipay_account());
+            }
+        }
+        return param;
+    }
+
     public String linkAddress(Refund record,String startTime,String endTime, String linkAddress){
         if (startTime != null && !"".equals(startTime)){
             linkAddress = linkAddress + "&startTime="+startTime;
@@ -388,16 +442,16 @@ public class RefundService {
             linkAddress = linkAddress + "&status="+record.getStatus();
         }
         if (record.getType() != null && !"".equals(record.getType())){
-            linkAddress = linkAddress + "&type()="+record.getType();
+            linkAddress = linkAddress + "&type="+record.getType();
         }
         if (record.getRefundObj() != null && !"".equals(record.getRefundObj())){
-            linkAddress = linkAddress + "&refundObj()="+record.getRefundObj();
+            linkAddress = linkAddress + "&refundObj="+record.getRefundObj();
         }
         if (record.getBtfName() != null && !"".equals(record.getBtfName())){
-            linkAddress = linkAddress + "&btfName()="+record.getBtfName();
+            linkAddress = linkAddress + "&btfName="+record.getBtfName();
         }
         if (record.getTradeNo()!= null && !"".equals(record.getTradeNo())){
-            linkAddress = linkAddress + "&tradeNo()="+record.getTradeNo();
+            linkAddress = linkAddress + "&tradeNo="+record.getTradeNo();
         }
         return linkAddress;
     }
