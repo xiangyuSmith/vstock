@@ -252,7 +252,10 @@ public class TradeService {
                         logisticsInformation = logisticsInformationList.get(1);
                         Object data = jsonObject.get("data");
                         logisticsInformation.setInformation(data.toString());
-                        logisticsInformationService.save(logisticsInformation);
+                        //判断是否是重复提交
+                        if (logisticsInformationService.findCount(logisticsInformation) < 1) {
+                            logisticsInformationService.save(logisticsInformation);
+                        }
                     }
                     //创建一笔退卖家保证金和一笔鞋款转账
                     Bid bid = new Bid();
@@ -268,12 +271,18 @@ public class TradeService {
                     refund.setStatus("0");
                     refund.setType("4");
                     refund.setCreateDate(DateUtils.getCurrentTimeAsString());
-                    refundDao.insert(refund);
+                    //判断是否是重复提交
+                    if (refundDao.findCount(refund) < 1) {
+                        refundDao.insert(refund);
+                    }
                     refund.setId(null);
                     refund.setRefundPrice(record.getTransactionMoney());
                     refund.setRefundNo(OddNoUtil.refundNo());
                     refund.setType("2");
-                    refundDao.insert(refund);
+                    //判断是否是重复提交
+                    if (refundDao.findCount(refund) < 1) {
+                        refundDao.insert(refund);
+                    }
                 }
             }
         }else {
