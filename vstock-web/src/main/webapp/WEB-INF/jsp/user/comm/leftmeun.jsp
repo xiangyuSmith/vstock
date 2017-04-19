@@ -572,10 +572,11 @@
                     if (type == 3){
                         var addressId = $("#new-address-tbody").find("tr td input:radio[name='check-address']:checked").attr("data-userAddress");
                     }
+                    var yunFee = $.trim($("#yunFee").text());
                     if(type == 2){
                         location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&ischeck=1&size="+size+"&tradeId="+tradeId+"&bname="+bftName+"&isUserHome=1";
                     }else{
-                        location.href = "/trade/createTradePayAlipay?type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname="+bftName+"&isUserHome=1";
+                        location.href = "/trade/createTradePayAlipay?yunFee="+yunFee+"&addressId="+addressId+"&type="+type+"&amount="+amount+"&size="+size+"&tradeId="+tradeId+"&bname="+bftName+"&isUserHome=1";
                     }
                     return;
 //                    sendRequest("/trade/createTradePay",{

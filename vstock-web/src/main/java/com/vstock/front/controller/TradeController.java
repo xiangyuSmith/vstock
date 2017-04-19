@@ -48,7 +48,7 @@ public class TradeController extends BaseController{
     @Autowired
     RefundService refundService;
 
-    final BigDecimal bidMoney = new BigDecimal(0.01).setScale(2,BigDecimal.ROUND_HALF_UP);
+    final BigDecimal bidMoney = new BigDecimal(10).setScale(2,BigDecimal.ROUND_HALF_UP);
 
     @RequestMapping
     @ResponseBody
@@ -107,7 +107,8 @@ public class TradeController extends BaseController{
         }
         //TODO 加入订单，关联买家叫价
         //拼接订单的收货地址
-        String receivingInformation = userAddress.getLocalArea()+"-"+userAddress.getDetailedAddress()+"-"+userAddress.getConsigneeName()+"-"+userAddress.getPhoneNumber()+"-"+userAddress.getLandlineNumber();
+        String detailedAddress = userAddress.getDetailedAddress().replaceAll("-","_");
+        String receivingInformation = userAddress.getLocalArea()+"-"+detailedAddress+"-"+userAddress.getConsigneeName()+"-"+userAddress.getPhoneNumber()+"-"+userAddress.getLandlineNumber();
         int status = "0".equals(type) ? Trade.TRADE_NOTIFIY_PAY : Trade.TRADE_NOTIFIY_PAY_BOND;
         int isBond = status==0?2:0;
         String orderNo = DateFormatUtils.format(new Date(), "yyyyMMddHHmmss") + RandomStringUtils.randomNumeric(6);
@@ -200,6 +201,8 @@ public class TradeController extends BaseController{
             int tradeId = Integer.parseInt(extra_common_param[2]);
             double amount = Double.parseDouble(extra_common_param[3]);
             String ischeck = extra_common_param[4];
+            double yunFee = Double.parseDouble(extra_common_param[7]);
+            int addressId = Integer.parseInt(extra_common_param[8]);
             String trade_no = getParam("trade_no");
             String buyer_email = getParam("buyer_email");
             //更新叫价 & 峰值
@@ -207,7 +210,11 @@ public class TradeController extends BaseController{
             t.setId(tradeId);
             List<Trade> tradeList = tradeService.findTrade(t,lagePage);
             Trade tradeUpdate = tradeList.get(0);
-            if((tradeUpdate.getIsBond() == 2 && tradeUpdate.getStatus() == tradeUpdate.TRADE_NOTIFIY_PAY_BOND) || tradeUpdate.getStatus() == tradeUpdate.TRADE_NOTIFIY_PAY ){
+            Payment p = new Payment();
+            p.setPayment_number(trade_no);
+            Payment paymentFind = paymentService.findByTrade(p);
+//            if((tradeUpdate.getIsBond() == 2 && tradeUpdate.getStatus() == tradeUpdate.TRADE_NOTIFIY_PAY_BOND) || tradeUpdate.getStatus() == tradeUpdate.TRADE_NOTIFIY_PAY ){
+            if(paymentFind == null){
                 //校验是否为待支付保证金 或 已下单待支付
                 if(tradeUpdate.getIsBond() == 0 || tradeUpdate.getIsBond() == 2){
                     int sort = 0;
@@ -286,6 +293,17 @@ public class TradeController extends BaseController{
                 if(tradeUpdate.getIsBond() == 2){
                     trade.setIsBond(1);
                 }
+                if(type == 3 && tradeUpdate.getIsBond() == 1){
+                    UserAddress u = new UserAddress();
+                    u.setId(addressId);
+                    UserAddress userAddress = userAddressService.findAddressById(u);
+                    //拼接订单的收货地址
+                    String detailedAddress = userAddress.getDetailedAddress().replaceAll("-","_");
+                    String receivingInformation = userAddress.getLocalArea()+"-"+detailedAddress+"-"+userAddress.getConsigneeName()+"-"+userAddress.getPhoneNumber()+"-"+userAddress.getLandlineNumber();
+                    trade.setReceivingInformation(receivingInformation);
+                    trade.setUserAddressId(addressId);
+                    trade.setTradeFreight(new BigDecimal(yunFee).setScale(2,BigDecimal.ROUND_HALF_UP));
+                }
                 trade.setStatus(tradeStatus);
                 trade.setTransactionDate(DateUtils.dateToString(new Date()));
                 tradeService.update(trade);
@@ -319,6 +337,8 @@ public class TradeController extends BaseController{
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         int type = getParamToInt("type");
         int tradeId = getParamToInt("tradeId");
+        int addressId = Integer.parseInt(getParam("addressId","0"));
+        double yunFee = Double.valueOf(getParam("yunFee", "0"));
         double amount = Double.valueOf(getParam("amount", "0"));
         String ischeck = getParam("ischeck","0");
         String bname = getParam("bname");
@@ -330,15 +350,15 @@ public class TradeController extends BaseController{
         BigDecimal amountFinal;
         if(type == 2){
             amountFinal = bidMoney;
-            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome+"|"+yunFee+"|"+addressId);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
             sParaTemp.put("out_trade_no", "100_"+System.currentTimeMillis()+String.valueOf(tradeId));
         }else {
             //如果是线上环境则用下面这句
-//            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
+            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
 //            amountFinal = tradeList.get(0).getTransactionMoney();
-            amountFinal = bidMoney;
-            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome);
+//            amountFinal = bidMoney;
+            sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome+"|"+yunFee+"|"+addressId);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", "200_"+System.currentTimeMillis()+String.valueOf(tradeId));
         }

@@ -481,6 +481,15 @@
             <if test="obj.buysaleType != null and obj.buysaleType != ''">
                 buysale_type = #{obj.buysaleType,jdbcType=VARCHAR},
             </if>
+            <if test="obj.tradeFreight != null and obj.tradeFreight != ''">
+                trade_freight = #{obj.tradeFreight,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.userAddressId != null and obj.userAddressId != ''">
+                user_address_id = #{obj.userAddressId,jdbcType=VARCHAR},
+            </if>
+            <if test="obj.receivingInformation != null and obj.receivingInformation != ''">
+                receiving_information = #{obj.receivingInformation,jdbcType=VARCHAR},
+            </if>
         </set>
         WHERE id = #{obj.id,jdbcType=INTEGER}
     </update>

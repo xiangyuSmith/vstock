@@ -33,20 +33,20 @@
                     <div class="am-u-md-12" style="padding: 15px 30px 20px 30px;">
                         <a id="prLogin" href="javascript:void(0)" class="am-btn am-btn-danger am-btn-block" style="height: 35px;line-height: 15px;">登录</a>
                     </div>
-                    <%--<div class="am-u-md-12" style="padding: 15px 30px 0px 30px;">--%>
-                        <%--<div class="am-panel-group am-margin-bottom-0" id="accordion">--%>
-                            <%--<div class="am-panel-default">--%>
-                                <%--<div class="">--%>
-                                    <%--<span class="am-panel-title" style="color: #646464;" data-am-collapse="{parent: '#accordion', target: '#do-not-say-1'}">——其他登录方式——</span>--%>
-                                <%--</div>--%>
-                                <%--<div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">--%>
-                                    <%--<div class="am-panel-bd am-padding-top-sm am-padding-bottom-0">--%>
-                                        <%--<a href="/login/alipay"><p class="am-margin-sm"><img src="/assets/i/alipay.png" style="width: 26px;"></p></a>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
+                    <div class="am-u-md-12" style="padding: 15px 30px 0px 30px;">
+                        <div class="am-panel-group am-margin-bottom-0" id="accordion">
+                            <div class="am-panel-default">
+                                <div class="">
+                                    <span class="am-panel-title" style="color: #646464;" data-am-collapse="{parent: '#accordion', target: '#do-not-say-1'}">——其他登录方式——</span>
+                                </div>
+                                <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+                                    <div class="am-panel-bd am-padding-top-sm am-padding-bottom-0">
+                                        <a href="/login/alipay" title="支付宝登录"><p class="am-margin-sm"><img src="/assets/i/alipay.png" style="width: 26px;"></p></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!---------- TYPE_REG ---------->
                 <div data-tab-panel-1 class="am-tab-panel am-g">

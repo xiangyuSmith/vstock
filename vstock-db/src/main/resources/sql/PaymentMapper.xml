@@ -59,6 +59,9 @@
             <if test="obj.order_record_id != null and obj.order_record_id != ''">
                 AND p.order_record_id = #{obj.order_record_id,jdbcType=INTEGER}
             </if>
+            <if test="obj.payment_number != null and obj.payment_number != ''">
+                AND p.payment_number = #{obj.payment_number,jdbcType=VARCHAR}
+            </if>
         </where>
     </sql>
 

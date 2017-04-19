@@ -4,7 +4,7 @@
     .address-list table tr td input{ margin-top: 7px; margin-left: 10px;  }
     .set-default-address{ border: solid 1px #F25C58;background-color: #FFFFFF;padding: 5px 12px;border-radius: 5px; }
     .set-default-address:hover{ color:#fff;  background-color: #F25C58!important; }
-    .lg-dimmer-detailed{ position: absolute !important;margin-left: -72% !important; }
+    .lg-dimmer-detailed{ position: absolute !important;}
     .lg-default-none{display: none;}
 </style>
 <div class="am-modal am-modal-no-btn lg-dimmer-detailed" tabindex="-1" id="my-popup-buy-userBuyAddress" style="top: 260px;">
@@ -16,7 +16,7 @@
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>×</a>
         </div>
         <input type="hidden" value="${configMap._site_url}" id="site_url" />
-        <div class="am-modal-bd am-g" style="background-color: #FFFFFF;">
+        <div class="am-modal-bd am-g am-padding-bottom-none" style="background-color: #FFFFFF;padding-bottom:0;">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top">
                 <div class="am-u-sm-2 am-u-md-2 am-u-lg-2">
                     <img id="buyProductImgId" src="" style="width: 100%;"/>
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="am-u-md-12" style="background-color: #EEEEEE;margin-top: 1px;">
-            <div class="am-text-left address-list am-margin-top-lg">
+            <div class="am-text-left address-list am-margin-top-sm">
                 <div class="am-text-left am-margin-bottom-xs">
                     <span class="layout-font-size-20" style="color: #8D8D8D;">
                         收货地址 <a href="javascript:;" class="add-adders" data-am-modal="{target: '#adders-id', closeViaDimmer: 0, width: 487, height: 420}"><span style="color:#F98888;"> &nbsp;添加新地址</span></a>

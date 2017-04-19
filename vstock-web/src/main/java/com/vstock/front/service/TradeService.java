@@ -132,6 +132,9 @@ public class TradeService {
         t.setUpdateDate(record.getUpdateDate());
         t.setBuysaleType(record.getBuysaleType());
         t.setIsBond(record.getIsBond());
+        t.setUserAddressId(record.getUserAddressId());
+        t.setTradeFreight(record.getTradeFreight());
+        t.setReceivingInformation(record.getReceivingInformation());
         return tradeDao.update(t);
     }
 
