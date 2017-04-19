@@ -245,7 +245,7 @@
     </select>
 
     <select id="findSellerAllDate" parameterType="com.vstock.db.entity.Refund" resultMap="BaseResultMap">
-        select r.id as id,
+        select DISTINCT r.id as id,
         r.trade_no as tradeNo,
         r.refund_no as refundNo,
         r.btf_id as btfId,
@@ -268,7 +268,7 @@
 
     <select id="findSellerCountDate" parameterType="com.vstock.db.entity.Refund" resultType="Integer">
         SELECT COUNT(*) FROM
-        (select t.trade_no,u.nick,ua.alipay_account from `user` u
+        (select DISTINCT t.trade_no,u.nick,ua.alipay_account from `user` u
         LEFT JOIN trade t ON u.id = t.seller_id
         LEFT JOIN user_account ua ON u.id = ua.user_id
         <include refid="SearchAllByPage_Where_User"/>) b

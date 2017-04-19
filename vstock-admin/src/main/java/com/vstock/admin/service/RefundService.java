@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -372,11 +373,23 @@ public class RefundService {
             trade.setTradeNo(refund.getTradeNo());
             trade = tradeService.findTrade(trade);
             if (trade != null){
+                List<UserAccount> userAccountList = new ArrayList<UserAccount>();
                 UserAccount userAccount = new UserAccount();
+                userAccount.setUserId(trade.getSellerId().toString());
                 if ("0".equals(refund.getRefundObj())){
-                    userAccount = userAccountDao.findAccountByUid(trade.getSellerId().toString());
+                    userAccountList = userAccountDao.findAll(userAccount);
+                    if (userAccountList.size() > 0){
+                        userAccount = userAccountList.get(0);
+                    }else {
+                        userAccount = null;
+                    }
                 }else {
-                    userAccount = userAccountDao.findAccountByUid(trade.getSellerId().toString());
+                    userAccountList = userAccountDao.findAll(userAccount);
+                    if (userAccountList.size() > 0){
+                        userAccount = userAccountList.get(0);
+                    }else {
+                        userAccount = null;
+                    }
                     //判断个人身份认证信息中是否有支付宝账号
                     if (userAccount == null){
                         Payment payment = new Payment();
