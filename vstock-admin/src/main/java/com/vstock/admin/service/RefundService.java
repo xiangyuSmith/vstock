@@ -404,8 +404,9 @@ public class RefundService {
                     }
                 }
                 for (Refund refundT : refundList) {
-                    if (refundT.getType().equals(refund.getType()))
-                    i = AlipayFundTransfer.alipayfundServer(refund.getRefundNo(), userAccount.getAlipay_account(), refund.getRefundPrice().setScale(2,BigDecimal.ROUND_HALF_UP).toString(), refund.getBtfName(), refundT.getBtfName());
+                    if (refundT.getType().equals(refund.getType())) {
+                        i = AlipayFundTransfer.alipayfundServer(refund.getRefundNo(), userAccount.getAlipay_account(), refund.getRefundPrice().setScale(2, BigDecimal.ROUND_HALF_UP).toString(), refund.getBtfName(), refundT.getBtfName());
+                    }
                 }
             }
         }
