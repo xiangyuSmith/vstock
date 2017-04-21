@@ -11,6 +11,8 @@ package com.vstock.server.alipay.config;
  *该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
  */
 
+import com.vstock.db.entity.VstockConfig;
+
 public class AlipayConfig {
 
 //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -20,7 +22,8 @@ public class AlipayConfig {
 
 	//域名
 //	public static String now_url = "http://www.v-stock.com";
-	public static String now_url = "http://116.228.89.158:1234";
+	public static String admin_url = "http://admin.v-stock.com";
+	public static String now_url = "http://116.228.89.158:1236";
 
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = partner;
@@ -89,14 +92,16 @@ public class AlipayConfig {
 
 	public static String login_return_url = now_url + "/login/alipayLogin";
 
-	//支付调用App登录用APPID
 	public static final String ALIPAY_APP_ID="2017020805565784";
+
+	//支付调用App登录用APPID
+	public static final String ALIPAY_APP_ID_LOGIN="2015121901009933";
 
 	//支付宝调用历史获取用户信息回调地址
 	public static final String ALIPAY_LOGIN_URL = now_url + "/login/alipayLogin";
 
 	//支付宝调用退款借口异步请求地址
-	public static final String ALIPAY_REFUND_URL = "http://116.228.89.158:1235/resfund/returnRefund";
+	public static final String ALIPAY_REFUND_URL = admin_url + "/resfund/returnRefund";
 
 
 //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
