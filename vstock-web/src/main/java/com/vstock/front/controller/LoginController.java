@@ -84,7 +84,7 @@ public class LoginController extends BaseController {
     public String alipayLogin(){
         ResultModel resultModel = new ResultModel();
         String auth_code = request.getParameter("auth_code");
-        AlipayClient alipayClient =new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",AlipayConfig.ALIPAY_APP_ID, AlipayConfig.private_key,"json","GBK",AlipayConfig.private_key);
+        AlipayClient alipayClient =new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",AlipayConfig.ALIPAY_APP_ID_LOGIN, AlipayConfig.private_key,"json","GBK",AlipayConfig.alipay_app_public_key);
         AlipaySystemOauthTokenRequest requeste = new AlipaySystemOauthTokenRequest();
         requeste.setCode(auth_code);
         requeste.setGrantType("authorization_code");
@@ -92,17 +92,11 @@ public class LoginController extends BaseController {
         JSONObject json = new JSONObject();
         try {
             AlipaySystemOauthTokenResponse oauthTokenResponse = alipayClient.execute(requeste);
-//            System.out.println(oauthTokenResponse.getAccessToken());
-        } catch (AlipayApiException e) {
-            //处理异常
-            e.printStackTrace();
-            String str = e.getMessage();
-            str = str.substring(str.indexOf("{"),str.indexOf("}")+1);
-            jsonObject = JSONObject.parseObject(str);
-        }finally {
+            String accessToken = oauthTokenResponse.getAccessToken();
+            System.out.println(accessToken);
             try {
                 AlipayUserUserinfoShareRequest requests = new AlipayUserUserinfoShareRequest();
-                AlipayUserUserinfoShareResponse userinfoShareResponse = alipayClient.execute(requests, jsonObject.get("access_token").toString());
+                AlipayUserUserinfoShareResponse userinfoShareResponse = alipayClient.execute(requests, accessToken);
             } catch (AlipayApiException e) {
                 //处理异常
                 e.printStackTrace();
@@ -110,6 +104,12 @@ public class LoginController extends BaseController {
                 str = str.substring(str.indexOf("{"),str.indexOf("}")+1);
                 json = JSONObject.parseObject(str);
             }
+        } catch (AlipayApiException e) {
+            //处理异常
+            e.printStackTrace();
+            String str = e.getMessage();
+            str = str.substring(str.indexOf("{"),str.indexOf("}")+1);
+            jsonObject = JSONObject.parseObject(str);
         }
         if (json.size() > 0) {
             resultModel = userService.alipayLogin(request,json);
@@ -187,7 +187,7 @@ public class LoginController extends BaseController {
     @RequestMapping("alipay")
     public String alipay(ModelMap model) {
         String url = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm";
-        url = url + "?app_id=" + AlipayConfig.ALIPAY_APP_ID + "&scope=auth_user,auth_base,auth_zhima,auth_ecard&redirect_uri=" + AlipayConfig.ALIPAY_LOGIN_URL;
+        url = url + "?app_id=" + AlipayConfig.ALIPAY_APP_ID_LOGIN + "&scope=auth_user,auth_base,auth_zhima,auth_ecard&redirect_uri=" + AlipayConfig.ALIPAY_LOGIN_URL;
         model.addAttribute("url",url);
         return "/common/alipay/login/login";
     }
