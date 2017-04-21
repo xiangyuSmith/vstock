@@ -92,7 +92,7 @@
                                             已结算
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" btf_id="${refund.btfId}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>转账</a>
+                                            <a href="javascript: void(0);" data-id="${refund.id}" data-type="${refund.type}" btf_id="${refund.btfId}" tradeNo="${refund.tradeNo}" class="finance-sbt-btn am-btn am-btn-sm am-btn-danger am-radius" style="color: #ffffff;" <c:if test="${refund.status == 1}">disabled="disabled" </c:if>>结算</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>

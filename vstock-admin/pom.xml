@@ -135,6 +135,15 @@
             <artifactId>vstock-server</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- alipay-sdk -->
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>sdk-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>sdk-java-source</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
