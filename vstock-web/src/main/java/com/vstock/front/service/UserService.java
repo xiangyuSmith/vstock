@@ -2,33 +2,26 @@ package com.vstock.front.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.vstock.db.dao.IUserDao;
 import com.vstock.db.dao.IUserInvitationDao;
 import com.vstock.db.entity.Express;
 import com.vstock.db.entity.User;
 import com.vstock.db.entity.UserInvitation;
 import com.vstock.ext.base.ResultModel;
-import com.vstock.ext.util.ConstUtil;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.StringUtil;
-import com.vstock.server.alipay.util.AlipayNotify;
 import com.vstock.server.express.ExpressLogistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import java.awt.image.BufferedImage;
-import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -75,29 +68,36 @@ public class UserService {
      * 支付宝登录
      * @return
      */
-    public ResultModel alipayLogin(HttpServletRequest request , JSONObject json){
+    public ResultModel alipayLogin(HttpServletRequest request , AlipayUserInfoShareResponse response ){
         ResultModel resultModel = new ResultModel();
-        if (json.size() > 0){
+        //判断返回用户信息是否为空
+        if (response != null){
             User user = new User();
-            user.setAlipayUserId(json.get("alipay_user_id").toString());
+            //获取用户支付宝ID
+            user.setAlipayUserId(response.getUserId());
+            //查询用户是否存在
             List<User> userList = userDao.findAll(user,0,1);
-            if (userList.size() < 1){
+            if (userList.size() < 1){//不存在
                 user.setPassword(MD5Util.getMD5String(user.getAlipayUserId() + User.REG_MD5_CODE));
                 user.setStatus(1);
                 user.setCreate_time(DateUtils.getCurrentTimeAsString());
-                if (json.containsKey("nick_name")) {
-                    user.setNick(json.get("nick_name").toString());
-                }else {
+                //判断用户昵称是否为空
+                if (response.getNickName() != null && !"".equals(response.getNickName())) {
+                    user.setNick(response.getNickName());
+                }else {//为空根据ID自动生成昵称
                     user.setNick(user.getAlipayUserId().substring(user.getAlipayUserId().length()-4,user.getAlipayUserId().length())+"V");
                 }
                 user.setLast_login_time(DateUtils.getCurrentTimeAsString());
                 user.setLast_login_ip(this.ipadder(request));
+                //新增用户信息
                 resultModel.setRetCode(this.insertUser(user));
+                //保存sesion中
                 WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, user.getId());
-            }else {
+            }else {//用户存在
                 user.setLast_login_time(DateUtils.getCurrentTimeAsString());
                 user.setLast_login_ip(this.ipadder(request));
                 user.setId(userList.get(0).getId());
+                //更新用户登录信息
                 if (this.update(user) > 0) {
                     resultModel.setRetCode(ResultModel.RET_OK);
                     WebUtils.setSessionAttribute(request, User.SESSION_USER_ID, userList.get(0).getId());

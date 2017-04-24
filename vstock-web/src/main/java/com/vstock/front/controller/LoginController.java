@@ -5,9 +5,9 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
-import com.alipay.api.request.AlipayUserUserinfoShareRequest;
+import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
-import com.alipay.api.response.AlipayUserUserinfoShareResponse;
+import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.vstock.db.entity.User;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
@@ -18,6 +18,7 @@ import com.vstock.front.service.VstockConfigService;
 import com.vstock.front.service.interfaces.IVstockConfigService;
 import com.vstock.server.alipay.config.AlipayConfig;
 import com.vstock.server.ihuyi.Sendsms;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,8 +27,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
-
-import java.util.Map;
 
 /**
  * Created by xiangyu on 2016/11/28.
@@ -83,38 +82,41 @@ public class LoginController extends BaseController {
     @RequestMapping("alipayLogin")
     public String alipayLogin(){
         ResultModel resultModel = new ResultModel();
-        String auth_code = request.getParameter("auth_code");
-        AlipayClient alipayClient =new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",AlipayConfig.ALIPAY_APP_ID_LOGIN, AlipayConfig.private_key,"json","GBK",AlipayConfig.alipay_app_public_key);
+        //获取access_token及用户userId调用方法
+        AlipayClient alipayClient =new DefaultAlipayClient("https://openapi.alipay.com/gateway.do",AlipayConfig.ALIPAY_APP_ID_LOGIN, AlipayConfig.private_key,"json","GBK",AlipayConfig.alipay_app_public_key,AlipayConfig.sign_type);
         AlipaySystemOauthTokenRequest requeste = new AlipaySystemOauthTokenRequest();
-        requeste.setCode(auth_code);
+        //获取auth_code授权码换取access_token授权令牌，以code换取令牌
+        requeste.setCode(request.getParameter("auth_code"));
         requeste.setGrantType("authorization_code");
-        JSONObject jsonObject = new JSONObject();
-        JSONObject json = new JSONObject();
+        //获取用户基本信息方法
+        AlipayClient alipayClients = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", AlipayConfig.ALIPAY_APP_ID_LOGIN, AlipayConfig.private_key, "json", "GBK", AlipayConfig.alipay_app_public_key);
+        AlipayUserInfoShareRequest requests = new AlipayUserInfoShareRequest();
         try {
+            //获取授权令牌
             AlipaySystemOauthTokenResponse oauthTokenResponse = alipayClient.execute(requeste);
-            String accessToken = oauthTokenResponse.getAccessToken();
-            System.out.println(accessToken);
-            try {
-                AlipayUserUserinfoShareRequest requests = new AlipayUserUserinfoShareRequest();
-                AlipayUserUserinfoShareResponse userinfoShareResponse = alipayClient.execute(requests, accessToken);
-            } catch (AlipayApiException e) {
-                //处理异常
-                e.printStackTrace();
-                String str = e.getMessage();
-                str = str.substring(str.indexOf("{"),str.indexOf("}")+1);
-                json = JSONObject.parseObject(str);
+            //获取用户个人信息
+            AlipayUserInfoShareResponse response  = alipayClients.execute(requests, oauthTokenResponse.getAccessToken());
+            if (response.isSuccess()) {
+                resultModel = userService.alipayLogin(request,response);
+            } else {
+                //获取用户信息失败，刷新令牌
+                requeste.setRefreshToken(oauthTokenResponse.getRefreshToken());
+                requeste.setGrantType("refresh_token");
+                //获取新的令牌
+                oauthTokenResponse = alipayClient.execute(requeste);
+                //重新调用用户信息
+                requests = new AlipayUserInfoShareRequest();
+                response = alipayClients.execute(requests, oauthTokenResponse.getAccessToken());
+                if (response.isSuccess()) {
+                    resultModel = userService.alipayLogin(request,response);
+                } else {
+                    resultModel.setRetMsg("用户名或密码错误");
+                }
             }
+            System.out.println(response.getBody());
         } catch (AlipayApiException e) {
             //处理异常
             e.printStackTrace();
-            String str = e.getMessage();
-            str = str.substring(str.indexOf("{"),str.indexOf("}")+1);
-            jsonObject = JSONObject.parseObject(str);
-        }
-        if (json.size() > 0) {
-            resultModel = userService.alipayLogin(request,json);
-        }else{
-            resultModel.setRetMsg("用户名或密码错误");
         }
         return "redirect:/index";
     }
