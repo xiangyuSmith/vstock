@@ -23,7 +23,7 @@ public class AlipayConfig {
 	//域名
 //	public static String now_url = "http://www.v-stock.com";
 	public static String admin_url = "http://admin.v-stock.com";
-	public static String now_url = "http://116.228.89.158:1235";
+	public static String now_url = "http://116.228.89.158:1236";
 
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = partner;

@@ -4,6 +4,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.base.BaseController;
 import com.vstock.ext.base.ResultModel;
 import com.vstock.ext.util.ConstUtil;
+import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.MD5Util;
 import com.vstock.ext.util.ToolDateTime;
 import com.vstock.front.service.*;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/index")
@@ -164,6 +162,18 @@ public class IndexController extends BaseController {
         return resultModel;
     }
 
+    @RequestMapping("isBindMobile")
+    @ResponseBody
+    public ResultModel isBindMobile() {
+        ResultModel resultModel = new ResultModel();
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        User user = userService.findById(uid);
+        if(user.getMobile() == null || "".equals(user.getMobile())){
+            resultModel.setRetCode(resultModel.RET_OK);
+        }
+        return resultModel;
+    }
+
     @RequestMapping("updatePassword")
     @ResponseBody
     public ResultModel updatePassword() {
@@ -171,21 +181,47 @@ public class IndexController extends BaseController {
         User record = new User();
         String password = getParam("password", "");
         String sendSmsCode = getParam("sendSmsCode", "");
+        String nowTime = request.getParameter("timestamp");
         String mobile = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_MOBILE));
+        String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
         if (sendSmsCode.equals(String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_SIGN_CODE)))) {
             if (!"".equals(mobile) && mobile != null && !"".equals(password) && !"".equals(sendSmsCode)) {
                 User user = userService.findUser(mobile);
+                int i = 0;
                 if (user != null) {
-                    record.setId(user.getId());
-                    record.setPassword(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE));
-                    int i = userService.update(record);
-                    if (i == 1) {
-                        resultModel.setRetCode(resultModel.RET_OK);
-                    } else {
-                        resultModel.setRetMsg("请求超时");
+                    if(!"".equals(uid)){
+                        //支付宝登录用户 - 绑定手机 - 手机号已存在
+                        resultModel.setRetMsg("");
+                        return resultModel;
+                    }else{
+                        record.setId(user.getId());
+                        record.setPassword(MD5Util.getMD5String(user.getSalt() + password + User.REG_MD5_CODE));
+                        record.setUpdate_time(DateUtils.dateToString(new Date()));
+                        i = userService.update(record);
+                        logger.info("忘记密码找回密码，状态：" + i);
                     }
                 } else {
-                    resultModel.setRetMsg("手机号码不存在");
+                    //没有根据当前手机号查看用户，则为忘记密码 或 支付宝登录用户
+                    if(!"".equals(uid)){
+                        //支付宝登录用户 - 绑定手机
+                        String salt = MD5Util.getSha(mobile + password + nowTime);
+                        record.setId(uid);
+                        record.setMobile(mobile);
+                        record.setSalt(salt);
+                        record.setPassword(MD5Util.getMD5String(salt + password + User.REG_MD5_CODE));
+                        record.setUpdate_time(DateUtils.dateToString(new Date()));
+                        i = userService.update(record);
+                        logger.info("用户ID"+uid+"，支付宝绑定手机号，状态：" + i);
+                    }else{
+                        //忘记密码 - 手机不存在
+                        resultModel.setRetMsg("手机号码不存在");
+                        logger.info("忘记密码，手机号不存在 ...");
+                    }
+                }
+                if (i == 1) {
+                    resultModel.setRetCode(resultModel.RET_OK);
+                } else {
+                    resultModel.setRetMsg("请求超时");
                 }
             } else {
                 resultModel.setRetMsg("请求超时");

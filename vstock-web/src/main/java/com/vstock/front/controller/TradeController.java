@@ -57,6 +57,7 @@ public class TradeController extends BaseController{
         ResultModel resultModel = new ResultModel();
         setLastPage(0,1);
         String uid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+        logger.info("生成订单:"+uid);
         double amount = Double.valueOf(getParam("amount", "0"));
         String size = getParam("size");
         String type = getParam("type");
@@ -70,6 +71,7 @@ public class TradeController extends BaseController{
             yunFee = tradeService.findAllYunFee(userAddress.getLocalArea());
             if(yunFee == null){
                 resultModel.setRetMsg("运费信息异常");
+                logger.info("用户:"+uid+",运费信息异常");
                 return resultModel;
             }
         }
@@ -82,13 +84,16 @@ public class TradeController extends BaseController{
         Bid bid1 = bidService.findByBid(bid,lagePage);
         if(bid1 == null){
             resultModel.setRetMsg("未找到叫价记录，无法下单");
+            logger.info("用户:"+uid+",未找到叫价记录，无法下单");
             return resultModel;
         }
         if(String.valueOf(bid1.getUserId()).equals(uid)){
             if("1".equals(type)){
                 resultModel.setRetMsg("不能出售自己叫价的鞋子");
+                logger.info("用户:"+uid+",不能出售自己叫价的鞋子");
             }else{
                 resultModel.setRetMsg("不能购买自己出价的鞋子");
+                logger.info("用户:"+uid+",不能购买自己出价的鞋子");
             }
             return resultModel;
         }
@@ -99,6 +104,7 @@ public class TradeController extends BaseController{
             userTradeId = bid1.getUserId();
             if(addressId == 0){
                 resultModel.setRetMsg("您还没有设置收货地址");
+                logger.info("用户:"+uid+",您还没有设置收货地址");
                 return resultModel;
             }
         }else{
@@ -144,6 +150,11 @@ public class TradeController extends BaseController{
         bidT.setBasicinformationId(b.getBasicinformationId());
         bidT.setBftSize(b.getBftSize());
         bidT.setStatus("10");
+        if(type != 2){
+            bidT.setType("0");
+        }else{
+            bidT.setType("1");
+        }
         List<Bid> bidList = bidService.findOrderByMoney(bidT);
         pricePeakService.updatePeak(b,bidList,pricePeakId);
         //修改
@@ -194,6 +205,7 @@ public class TradeController extends BaseController{
         //计算得出通知验证结果
         boolean verify_result = AlipayNotify.verify(params);
         if(verify_result){
+            logger.info("订单 - 支付宝发起回调...");
             setLastPage(0,1);
             String[] extra_common_param = getParam("extra_common_param").split("\\|");
             String uid = extra_common_param[0];
@@ -274,6 +286,9 @@ public class TradeController extends BaseController{
                         mobile = user.getMobile();
                         content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
                     }else{
+                        User user = userService.findById(String.valueOf(t_pay.getSellerId()));
+                        mobile = user.getMobile();
+                        content = "您叫价的鞋子“"+bid.getBftName()+"”，"+bid.getBftSize()+"码，已有买家购买，请及时发货，如有任何疑问请咨询v－stock客服。";
                         //买家付鞋款，生成买家保证金退款单
                         Refund refund = new Refund();
                         refund.setType("3");
@@ -353,6 +368,7 @@ public class TradeController extends BaseController{
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome+"|"+yunFee+"|"+addressId);
             sParaTemp.put("subject", String.valueOf("出售商品:保证金") + bname);
             sParaTemp.put("out_trade_no", "100_"+System.currentTimeMillis()+String.valueOf(tradeId));
+            logger.info("当前用户为卖家:"+uid+",发起支付,支付金额为:"+amountFinal);
         }else {
             //如果是线上环境则用下面这句
 //            amountFinal =  tradeList.get(0).getTradeFreight().add(tradeList.get(0).getTransactionMoney());
@@ -361,6 +377,7 @@ public class TradeController extends BaseController{
             sParaTemp.put("extra_common_param", uid+"|"+type+"|"+tradeId+"|"+amountFinal+"|"+ischeck+"|"+bname+"|"+isUserHome+"|"+yunFee+"|"+addressId);
             sParaTemp.put("subject", String.valueOf("购买商品") + bname);
             sParaTemp.put("out_trade_no", "200_"+System.currentTimeMillis()+String.valueOf(tradeId));
+            logger.info("当前用户为买家:"+uid+",发起支付,支付金额为:"+amountFinal);
         }
         sParaTemp.put("service", AlipayConfig.service);
         sParaTemp.put("partner", AlipayConfig.partner);

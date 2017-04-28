@@ -17,9 +17,9 @@
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="am-input-group am-input-group-lg">
                             <input id="ali_mobile_find" name="mobile_find" class="am-form-field" type="text" placeholder="手机号" maxlength="11" style="border-right: 1px solid #ccc;" required/>
-                                    <span class="am-input-group-btn">
-                                        <a href="javascript:;" id="ali_sendSms-find" class="am-btn am-btn-default" style="font-size: 14px!important;line-height: 27px;background-color: #fff;border:none;border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;">发送验证码</a>
-                                    </span>
+                            <span class="am-input-group-btn">
+                                <a href="javascript:;" id="ali_sendSms-find" class="am-btn am-btn-default" style="font-size: 14px!important;line-height: 27px;background-color: #fff;border:none;border-bottom: 1px solid #ccc;border-left: 1px solid #ccc;">发送验证码</a>
+                            </span>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -29,7 +29,7 @@
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="am-input-group am-input-group-lg am-center">
-                            <input id="ali_password_find" class="am-form-field" name="password" type="password" placeholder="新密码" required/>
+                            <input id="ali_password_find" class="am-form-field" name="password_find" type="password" placeholder="新密码" required/>
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-bottom-xs">
@@ -110,8 +110,6 @@
                         tiphide();
                         alertTips(0,"提示","密码已重置,页面即将刷新....")
                         window.location.reload();
-                        sendRequest("/login/logout",null,function(res) {});
-                        window.location.href = "/index";
                     }else{
                         tipshow(res.retMsg);
                         return;

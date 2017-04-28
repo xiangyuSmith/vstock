@@ -218,6 +218,7 @@
     </div>
 </article>
 <div id="sale_record"></div>
+<a href="javascript:void(0);" id="aliBindPhone" style="display: none;" data-am-modal="{target: '#ali-bind-phone', width: 350, height: 370}"></a>
 <%@include file="../layout/footer.jsp" %>
 <%@include file="../layout/bottom.jsp" %>
 <%@include file="../common/assets/assets.jsp" %>
@@ -233,6 +234,7 @@
 <%@include file="../common/popup/checktips.jsp" %>
 <%@include file="../common/popup/isbidcheck.jsp" %>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
+<%@include file="../common/popup/alipaySetPwd.jsp" %>
 <script>
     $(function(){
         document.onkeydown=keyDownSearch;
@@ -305,14 +307,21 @@
                         return false;
                     }
                     loadingshow();
-                    sendRequest("/user/cardIdentify",null,function(res){
-                        loadingclose();
-                        if(res.retCode == 1){
-                            $("#sell-click").click();
+                    //校验是否绑定手机
+                    sendRequest("/index/isBindMobile",null,function(data){
+                        if(data.retCode == 1){
+                            $("#aliBindPhone").click();
                         }else{
-                            $("#identify-tips-click").click();
+                            sendRequest("/user/cardIdentify",null,function(res){
+                                loadingclose();
+                                if(res.retCode == 1){
+                                    $("#sell-click").click();
+                                }else{
+                                    $("#identify-tips-click").click();
+                                }
+                            })
                         }
-                    })
+                    });
                 }
             });
         });
@@ -338,7 +347,14 @@
                 if(res.relogin == false){
                     $("#login-click").click();
                 }else{
-                    $("#buy-click").click();
+                    //校验是否绑定手机
+                    sendRequest("/index/isBindMobile",null,function(data){
+                        if(data.retCode == 1){
+                            $("#aliBindPhone").click();
+                        }else{
+                            $("#buy-click").click();
+                        }
+                    });
                 }
             });
         });

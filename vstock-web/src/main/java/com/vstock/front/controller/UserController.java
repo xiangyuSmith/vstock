@@ -420,71 +420,73 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResultModel uploadUserProfile(){
         ResultModel resultModel = new ResultModel();
-        String alipayAccount = getParam("alipayAccount");
-        String uname = getParam("uname");
-        String identifyNo = getParam("identifyNo");
-        String suid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
-        UserAccount userAccount = new UserAccount();
-        MultipartRequest multipartRequest = (MultipartRequest) request;
-        MultipartFile identify_img_front = multipartRequest.getFile("identify_img_front");
-        MultipartFile identify_img_back = multipartRequest.getFile("identify_img_back");
-        MultipartFile identify_img_handheld = multipartRequest.getFile("identify_img_handheld");
-        if(!VstockConfigService.isChineseChar(uname)){
-            resultModel.setRetMsg("您输入的姓名有误！");
-            resultModel.setRetCode(0);
-            return resultModel;
-        }
-        if(identify_img_front.getSize()>10000000 || identify_img_back.getSize()>10000000 || identify_img_handheld.getSize()>10000000){
-            resultModel.setRetMsg("上传的身份证照片需小于10MB");
-            resultModel.setRetCode(0);
-            return resultModel;
-        }
-        String identify_img_handheldUrl = userAccountService.uploadFile(identify_img_handheld,suid);
-        //调用合一道接口验证身份信息
-        String  resultJson = userAccountService.httphyd(uname,identifyNo,identify_img_handheldUrl);
-        JSONObject jsonObject = new JSONObject(resultJson);
-        int result = 0;
-        try{
-            result = Integer.parseInt(jsonObject.get("result").toString());
-        }catch (Exception e){
-            logger.warn("hyd sign fail...");
-        }
-        if(result == 1){
-            double similarity = 0;
-            try{
-                similarity = Double.parseDouble(jsonObject.get("similarity").toString());
-            }catch (Exception e){
-                logger.warn("card & Photo matching fail...");
-            }
-            if(similarity>60){
-                if(true){
-                    userAccount.setUserId(suid);
-                    userAccount.setAlipay_account(alipayAccount);
-                    userAccount.setUname(uname);
-                    userAccount.setIdentify_no(identifyNo);
-                    userAccount.setIdentify_img_front(userAccountService.uploadFile(identify_img_front,suid));
-                    userAccount.setIdentify_img_back(userAccountService.uploadFile(identify_img_back,suid));
-                    userAccount.setIdentify_img_handheld(identify_img_handheldUrl);
-                    userAccount.setUpdate_time(DateUtils.dateToString(new Date()));
-                    userAccount.setStatus(userAccount.ACCOUNT_TYPE_SUCCESS);
-                    int addRet = userAccountService.insert(userAccount);
-                    resultModel.setRetCode(addRet);
-                    return resultModel;
-                }
-            }else{
-                resultModel.setRetMsg("身份证照片与本人信息不匹配");
-            }
-        }else{
-            if(result == 2){
-                resultModel.setRetMsg("认证结果:不一致");
-            }else if(result == 3){
-                resultModel.setRetMsg("认证结果:库中无此号，请到户籍所在地进行核实");
-            }else{
-                resultModel.setRetMsg(jsonObject.get("errorMessage").toString());
-            }
-        }
-        resultModel.setRetCode(0);
+        resultModel.setRetCode(1);
         return resultModel;
+//        String alipayAccount = getParam("alipayAccount");
+//        String uname = getParam("uname");
+//        String identifyNo = getParam("identifyNo");
+//        String suid = String.valueOf(WebUtils.getSessionAttribute(request, User.SESSION_USER_ID));
+//        UserAccount userAccount = new UserAccount();
+//        MultipartRequest multipartRequest = (MultipartRequest) request;
+//        MultipartFile identify_img_front = multipartRequest.getFile("identify_img_front");
+//        MultipartFile identify_img_back = multipartRequest.getFile("identify_img_back");
+//        MultipartFile identify_img_handheld = multipartRequest.getFile("identify_img_handheld");
+//        if(!VstockConfigService.isChineseChar(uname)){
+//            resultModel.setRetMsg("您输入的姓名有误！");
+//            resultModel.setRetCode(0);
+//            return resultModel;
+//        }
+//        if(identify_img_front.getSize()>10000000 || identify_img_back.getSize()>10000000 || identify_img_handheld.getSize()>10000000){
+//            resultModel.setRetMsg("上传的身份证照片需小于10MB");
+//            resultModel.setRetCode(0);
+//            return resultModel;
+//        }
+//        String identify_img_handheldUrl = userAccountService.uploadFile(identify_img_handheld,suid);
+//        //调用合一道接口验证身份信息
+//        String  resultJson = userAccountService.httphyd(uname,identifyNo,identify_img_handheldUrl);
+//        JSONObject jsonObject = new JSONObject(resultJson);
+//        int result = 0;
+//        try{
+//            result = Integer.parseInt(jsonObject.get("result").toString());
+//        }catch (Exception e){
+//            logger.warn("hyd sign fail...");
+//        }
+//        if(result == 1){
+//            double similarity = 0;
+//            try{
+//                similarity = Double.parseDouble(jsonObject.get("similarity").toString());
+//            }catch (Exception e){
+//                logger.warn("card & Photo matching fail...");
+//            }
+//            if(similarity>60){
+//                if(true){
+//                    userAccount.setUserId(suid);
+//                    userAccount.setAlipay_account(alipayAccount);
+//                    userAccount.setUname(uname);
+//                    userAccount.setIdentify_no(identifyNo);
+//                    userAccount.setIdentify_img_front(userAccountService.uploadFile(identify_img_front,suid));
+//                    userAccount.setIdentify_img_back(userAccountService.uploadFile(identify_img_back,suid));
+//                    userAccount.setIdentify_img_handheld(identify_img_handheldUrl);
+//                    userAccount.setUpdate_time(DateUtils.dateToString(new Date()));
+//                    userAccount.setStatus(userAccount.ACCOUNT_TYPE_SUCCESS);
+//                    int addRet = userAccountService.insert(userAccount);
+//                    resultModel.setRetCode(addRet);
+//                    return resultModel;
+//                }
+//            }else{
+//                resultModel.setRetMsg("身份证照片与本人信息不匹配");
+//            }
+//        }else{
+//            if(result == 2){
+//                resultModel.setRetMsg("认证结果:不一致");
+//            }else if(result == 3){
+//                resultModel.setRetMsg("认证结果:库中无此号，请到户籍所在地进行核实");
+//            }else{
+//                resultModel.setRetMsg(jsonObject.get("errorMessage").toString());
+//            }
+//        }
+//        resultModel.setRetCode(0);
+//        return resultModel;
     }
 
     /**

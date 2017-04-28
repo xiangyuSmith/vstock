@@ -43,13 +43,21 @@
                     </c:if>
                 </div>
                 <div class="am-u-sm-2 am-u-md-2 am-margin-left-0 am-padding-left-0 am-u-end">
-                    <c:if test="${not empty user}">
-                        <a href="javascript:void(0);" data-am-modal="{target: '#binding-pas', closeViaDimmer: 0, width: 400, height: 370}">
-                            更改绑定
-                        </a>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${not empty user.mobile}">
+                            <a href="javascript:void(0);" data-am-modal="{target: '#binding-pas', closeViaDimmer: 0, width: 400, height: 370}">
+                                更改绑定
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="javascript:void(0);" data-am-modal="{target: '#ali-bind-phone', closeViaDimmer: 0, width: 350, height: 370}">
+                                去绑定
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
+            <c:if test="${not empty user.mobile}">
             <div class="am-u-sm-12 am-u-md-12 am-margin-bottom-sm am-padding-left-0">
                 <div class="am-u-sm-2 am-u-md-2">
                     <span class="am-fr">身份认证：</span>
@@ -143,6 +151,7 @@
                     </div>
                 </div>
             </div>
+            </c:if>
             <%--<div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-margin-top-sm">--%>
                 <%--<button type="button" class="am-btn-default am-radius am-btn am-text-xl am-margin-left-sm" style="border: solid 1px #F25C58; background-color: #FFFFFF;" data-am-modal="{target: '#login-pas', closeViaDimmer: 0, width: 400, height: 300}">设置登录密码</button>--%>
             <%--</div>--%>
@@ -213,6 +222,7 @@
 </form>
 <%@include file="../common/address/addersAddorEdit.jsp" %>
 <%@include file="../common/popup/bindIdentify.jsp" %>
+<%@include file="../common/popup/alipaySetPwd.jsp" %>
 <script type="text/javascript">
     if ($('#user-lodaType').val() != ""){
         $('#load_more').css('display','none');
