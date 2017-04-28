@@ -7,6 +7,7 @@ import com.vstock.db.entity.*;
 import com.vstock.ext.util.Page;
 import com.vstock.ext.util.StringUtil;
 import com.vstock.server.express.ExpressLogistics;
+import com.vstock.server.ihuyi.Sendsms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -292,6 +293,44 @@ public class TradeService {
             }
         }
         return linkAddress;
+    }
+
+    /**
+     * 验证失败
+     * @param record   订单对象
+     * @param key      短信接口密钥
+     * @param account  短信账号
+     */
+    public void failSendsms(Trade record, String key, String account){
+        User user = new User();
+        user.setId(record.getSellerId().toString());
+        user = userService.findUser(user);
+        String content = "您出售的鞋子"+record.getBftName()+" ，经v-stock鉴定为不合格。您的鞋子将被我们退回，交易保证金将作为违约金赔偿给买家。您将被取消在v-stock的卖家资格。如有疑问请及时联系v-stock客服。";
+        Sendsms.sendHuyi(user.getMobile(),account,key,content);
+        user = new User();
+        user.setId(record.getBuyersId().toString());
+        user = userService.findUser(user);
+        content = "您购买的鞋子"+record.getBftName()+" ，经v-stock鉴定为不合格。我们会将鞋子退回给卖家，并赔偿违约金给您。如有疑问请联系v-stock客服。";
+        Sendsms.sendHuyi(user.getMobile(),account,key,content);
+    }
+
+    /**
+     * 验证成功
+     * @param record    订单对象
+     * @param key       短信接口密钥
+     * @param account   短信账号
+     */
+    public void successSendsms(Trade record, String key, String account){
+        User user = new User();
+        user.setId(record.getSellerId().toString());
+        user = userService.findUser(user);
+        String content = "您出售的鞋子"+record.getBftName()+" ，经v-stock鉴定为真。我们将尽快为买家发货。如有疑问请联系v-stock客服。";
+        Sendsms.sendHuyi(user.getMobile(),account,key,content);
+        user = new User();
+        user.setId(record.getBuyersId().toString());
+        user = userService.findUser(user);
+        content = "您购买的鞋子"+record.getBftName()+" ，经v-stock鉴定为真。我们将尽快为您发货，请注意查收。如有疑问请联系v-stock客服。";
+        Sendsms.sendHuyi(user.getMobile(),account,key,content);
     }
 
 }

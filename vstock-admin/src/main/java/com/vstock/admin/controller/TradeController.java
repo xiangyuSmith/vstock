@@ -1,9 +1,6 @@
 package com.vstock.admin.controller;
 
-import com.vstock.admin.service.BidService;
-import com.vstock.admin.service.ExpressService;
-import com.vstock.admin.service.LogisticsInformationService;
-import com.vstock.admin.service.TradeService;
+import com.vstock.admin.service.*;
 import com.vstock.db.entity.*;
 import com.vstock.ext.util.DateUtils;
 import com.vstock.ext.util.Page;
@@ -33,6 +30,9 @@ public class TradeController {
 
     @Autowired
     BidService bidService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     ExpressService expressService;
@@ -122,6 +122,20 @@ public class TradeController {
         }
         record.setUpdateDate(DateUtils.getCurrentTimeAsString());
         int i = tradeService.save(record);
+        //判断是否为检验失败或成功
+        if (i > 0 && (record.getStatus() == 20 || record.getStatus() == 21)){
+            Trade trade = new Trade();
+            trade.setId(record.getId());
+            trade = tradeService.findTrade(trade);
+            String key = "1ef20e77cb3e8c22412ecabced1b995c";
+            String account = "cf_younme";
+            //调用短信接口，发送短信通知的
+            if (record.getStatus() == 20){
+                tradeService.successSendsms(trade,key,account);
+            }else {
+                tradeService.failSendsms(trade,key,account);
+            }
+        }
         param.put("reGode",i);
         return param;
     }
